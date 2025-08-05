@@ -1,5 +1,5 @@
 import React from 'react'
-import MagicBento from './MagicBento'
+import Features from './Features'
 
 
 
@@ -13,7 +13,7 @@ const FeatureSection = () => {
         <p className='text-gray-400 max-w-2xl mx-auto mb-10'>
             Divine into a variety of resourses designed to help you learn & grow in your carrer.
         </p>
-            <MagicBento 
+            <Features 
                 textAutoHide={true}
                 enableStars={true}
                 enableSpotlight={true}

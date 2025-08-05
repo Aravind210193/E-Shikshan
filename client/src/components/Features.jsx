@@ -279,10 +279,10 @@ const GlobalSpotlight = ({ gridRef, disableAnimations = false, enabled = true, s
   return null;
 };
 
-
+    
 // --- MAIN COMPONENT ---
 
-const MagicBento = ({
+const Features = ({
   enableStars = true,
   enableSpotlight = true,
   enableBorderGlow = true,
@@ -373,7 +373,7 @@ const MagicBento = ({
                   {card.title}
                 </h3>
                 <TextType 
-                  text={[card.description," "]}
+                  text={[card.description,card.description]}
                   typingSpeed={60}
                   pauseDuration={2500}
                   showCursor={true}
@@ -425,4 +425,4 @@ const MagicBento = ({
   );
 };
 
-export default MagicBento;
+export default Features;
