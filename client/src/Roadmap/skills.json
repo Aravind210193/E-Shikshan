@@ -2,13 +2,16 @@
     {
         "id":1,
         "name":"Frontend",
-        "value":"frontend",
         "url":"https://roadmap.sh//frontend"
     },
     {
         "id":2,
         "name":"Backend",
-        "value":"backend",
         "url":"https://roadmap.sh//backend"
+    },
+    {
+        "id":3,
+        "name":"FullStack",
+        "url":"https://roadmap.sh/full-stack"
     }
 ]
