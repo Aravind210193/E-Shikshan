@@ -1,0 +1,69 @@
+[
+  {
+    "id": 1,
+    "title": "Femtech Innovation Hackathon",
+    "tagline":"Artificial inteeligence",
+    "image":"/ai.jpeg",
+    "bgimage": "/hack1.jpeg",
+    "prize": "$5,000 + Incubation Support",
+    "startDate":"2025-09-11",
+    "endDate":"2025-09-16",
+    "registrationCloses": "2025-09-10",
+    "submissionDeadline": "2025-09-15",
+    "overview":"HackHERHealth is a hybrid (both in-person and virtual) innovation hackathon aimed at closing the gender health gap by developing gender-specific health solutions. Participants worldwide—from students to professionals—are invited to collaborate across disciplines and leverage cutting-edge technologies, including AI, to tackle real-world challenges in women's health.",
+    "date":"2025-09-12",
+    "registrationUrl":"/login",
+    "howit":["Hybrid Format: Participants can join online or in-person.","Multidisciplinary Approach: Teams are encouraged to combine technical, clinical, policy, and creative strengths.","AI as a Partner: Generative AI tools are leveraged both for ideation and development"],
+    "about": [
+      {
+        "title": "What!",
+        "description": "HackHERHealth is a hybrid (both in-person and virtual) innovation hackathon aimed at closing the gender health gap by developing gender-specific health solutions. Participants worldwide—from students to professionals—are invited to collaborate across disciplines and leverage cutting-edge technologies, including AI, to tackle real-world challenges in women's health.",
+        "icon": "/ai.jpeg"
+      },
+      {
+        "title": "Why!",
+        "description": "Women have historically been underrepresented in clinical trials, often making up just 29–34% of participants. This underrepresentation contributes to a systemic bias in medical research, leading to increased health risks for women. HackHERHealth is designed to confront and correct these disparities.",
+        "icon": "/ai.jpeg"
+      },
+      {
+        "title": "How!",
+        "description": "HackHERHealth leverages AI and diverse expertise to tackle key challenges in closing the gender health gap.",
+        "icon": "/ai.jpeg"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "Students",
+        "description": "In the Femtech Innovation Hackathon (HackHERHealth), participation is open to students from a wide range of academic backgrounds, not just those in technology or medicine. Any student who is currently enrolled in a recognized high school, college, or university can join, whether they are studying engineering, computer science, healthcare, life sciences, design, business, or even the social sciences. Both undergraduate and postgraduate students are welcome, and many events also allow recent graduates to participate.",
+        "icon": "/ai.jpeg"
+      },
+      {
+        "title": "Professionals",
+        "description": "The Femtech Innovation Hackathon (HackHERHealth) welcomes professionals from a variety of fields, creating a truly multidisciplinary environment. Healthcare professionals such as doctors, nurses, midwives, therapists, and public health specialists can join to provide clinical insight and real-world unders.",
+        "icon": "/ai.jpeg"
+      },
+      {
+        "title": "Innovators",
+        "description": "The Femtech Innovation Hackathon (HackHERHealth) is open to innovators from all walks of life who are passionate about creating impactful solutions for women’s health. This includes entrepreneurs with bold new ideas for products or services, inventors developing novel medical devices or wearable technologies, and creative thinkers exploring unconventional approaches to healthcare challenges. ",
+        "icon": "/ai.jpeg"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Improving Women's Journey in Obesity",
+        "description": "The hackathon welcomes a diverse range of participants—from clinicians, healthcare providers, and researchers to technologists, students, and policy experts. No coding experience is required: whether you bring a bold idea, a specialized skill, or none at all, you're encouraged to join.",
+        "icon": "/ai.jpeg"
+      },
+      {
+        "title": "Advancing Accessibility & Precision of Diagnosis for Neurodivergent Girls",
+        "description": "Tackle overlooked symptoms and gender diagnostic bias in ASD & ADHD.",
+        "icon": "/ai.jpeg"
+      },
+      {
+        "title": "Rethinking and Innovating Pregnancy and Postpartum Care in Sweden",
+        "description": "Overcome care fragmentation and language barriers for postpartum women.",
+        "icon": "/ai.jpeg"
+      }
+    ]
+  }
+]

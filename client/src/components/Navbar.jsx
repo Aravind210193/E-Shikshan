@@ -15,7 +15,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
   }
 
   return (
-    <div className="flex justify-between cursor-pointer  items-center px-6  ">
+    <div className="flex justify-between   items-center px-6  ">
         <nav className='w-full'>
             <div className='max-w-7xl mx-auto flex items-center justify-between px-6 '>
 
@@ -57,11 +57,11 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                             <div className='hidden md:flex space-x-3'>
                 
                                 <button onClick={()=>navigate('/login')} className='px-4 py-2 
-                                rounded-md bg-blue-500 text-white hover:bg-blue-600'>
+                                rounded-full cursor-pointer bg-blue-500 text-white hover:bg-blue-600 text-sm '>
                                 Login
                                 </button>  
                 
-                                <button onClick={()=>navigate('/signup')} className='px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600'>
+                                <button onClick={()=>navigate('/signup')} className='cursor-pointer px-4 text-sm py-2 rounded-full bg-green-500 text-white hover:bg-green-600'>
                                 Sign up
                                 </button>
                             </div>
@@ -70,11 +70,11 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                                 {/* <FauserCircle onClick={()=>setShowMenu(!showMenu)} className='text-3xl text-gray-300 hover:text-white curser-pointer' /> */}
                                 <User size={36} onClick={()=>setShowMenu(!showMenu)} className=' hidden md:flex text-3xl rounded-full bg-gray-700 text-gray-300 hover:text-white curser-pointer' />
                                 { showMenu && (
-                            <div className='absolute right-0 mt-2 w-48  rounded-md  py-2'>
+                            <div className='absolute right-0 mt-2 w-48 z-10  rounded-md  py-2'>
                 
-                                <Link to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Profile</Link>
-                                <Link to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Settings</Link>
-                                <Link onClick={()=> setIsLoggedIn(false)}  to='/profile' className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700'>Log out</Link>
+                                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Profile</Link>
+                                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Settings</Link>
+                                <Link  onClick={()=> setIsLoggedIn(false)}  to='/profile' className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700'>Log out</Link>
                             </div>
                                 )}
                             </div>
@@ -111,11 +111,11 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                 {!isLoggedIn ? (
                     <div className='flex  md:flex space-x-3'>
                         <button onClick={()=>navigate('/login')} className='px-4 py-2 
-                        rounded-md bg-blue-500 text-white hover:bg-blue-600'>
+                        rounded-full bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'>
                         Login
                         </button>  
 
-                        <button onClick={()=>navigate('/signup')} className='px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600'>
+                        <button onClick={()=>navigate('/signup')} className='cursor-pointer px-4 py-2 rounded-full bg-green-500 text-white hover:bg-green-600'>
                             Sign up
                         </button>
                     </div>

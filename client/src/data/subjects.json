@@ -1,0 +1,24 @@
+
+{
+    "cs":
+        { 
+        "E1-S1":    [
+            {
+                "title":"C&LA", 
+                "link":"/folders/cs/cla"
+            },
+            {
+                "title":"BEEE",
+                "link":"/folders/cs/beee"
+            }
+        ]
+    },
+    "ece":{
+        "E1-S1":[
+            {
+                "title":"Applied Physics",
+                "link":"/folders/physics"
+            }
+        ]
+    }
+}

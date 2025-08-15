@@ -1,42 +1,32 @@
-import React, { useState } from 'react';
-import SearchBar from '../components/SearchBar';
-import Contentcard from '../components/Contentcard';
-import ContentDetail from '../components/ContentDetail';
-import contentData from '../data/contentData';
-import Folder from '../components/Folder'
+import React, { useState } from 'react'
+import Contentcard from '../components/Contentcard'
+import branchesData from '../data/branches.json'
+
+
 
 const Content = () => {
-  const [query, setQuery] = useState('');
+  const [query,setQuery] = useState(' ');
   const [selectedContent, setSelectedContent] = useState(null);
-
-  const filtered = contentData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-
+  const filtered = branchesData.filter(index => index.title.toLowerCase().includes(query.toLowerCase()));
   return (
-    <div className="p-6">
-     
-      
-      {selectedContent ? (
-        <ContentDetail content={selectedContent} onBack={() => setSelectedContent(null)} />
-      ) : (
-        <>
+
+    <div className='min-h-screen bg-gray-900 border border-gray-700 rounded-2xl p-10'>
        
-          <h1 className="text-xl font-bold mb-4">Content Library</h1>
+      <h1 className='text-white  flex justify-center text-2xl font-bold mb-6'>
+      Branches</h1>
+      <div className='flex  justify-center   gap-6 items-center'>
+        {  
+           branchesData.map((branch,index)=>(
+            
+            <Contentcard key={index} title={branch.title}
+          link={branch.link} />
+          ))
+        }
+        </div> 
 
-          <SearchBar query={query} setQuery={setQuery} />
-           <div className=''  >
-        <Folder size={1} color="#5227FF" className="custom-folder w-20" />
-        <div>Unit 1</div>
-      </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {(query ? filtered : contentData.slice(0, 4)).map(content => (
-              <Contentcard key={content.id} content={content} onSelect={setSelectedContent} />
-            ))}
-          </div>
-        </>
-      )}
-      
     </div>
-  );
-};
 
-export default Content;
+  )
+}
+
+export default Content

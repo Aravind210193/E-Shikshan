@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "logo": "/images.png",
+    "title": "Software Engineer",
+    "organization": "Google",
+    "skills":["professionall in programming language (like Python,Java,c++,javascript)",
+  "knowledge of Data structures & Algorithms","Understading the OOPs concept and Design Pattern","Experience in databases like Sql,NoSql","Familier with version conrol (like Git,Git Hub/Git Lab)","Knowledge of software development methodologies (like Agile,Scrum)","Ability to use IDEs ans developement tools efficiently","Understanding of APIs,web development (HTML,CSS,Java Script,frameworks)","Basic Knowledge of cloud computing (AWS,Azure,GCP)","Understanding of testing & debugging techniques"],
+    "tag": "Full-time",
+    "howto":[],
+    "location": "Bangalore, India",
+    "salary": "₹8,00,000 - ₹25,00,000",
+    "duration": "6 months",
+    "startDate": "Sep 24, 2025",
+    "timePerWeek": "7-10 hours",
+    "mode": "Instructor-paced",
+    "credential": "Certificate or Badge",
+    "description": "Software Engineers design, develop, and maintain software systems.",
+    "about": "This role of the software Engineer is a professionall who design,develops,test,and maintains software systems to solve problems or fulfill specific business needs. Their role goes beyond writing code - they are responsible for understanding requirements,creating efficient solutions,ensuring software quality and collabrting with others.",
+    "responsibilites":["Educational Qualifications","Experience Level","salary range"],
+    "curriculum": [
+      "Learn Programming Fundamentals",
+      "Master Data Structures & Algorithms",
+      "Understand System Design",
+      "Work on Real Projects"
+    ]
+  }
+]
