@@ -1,7 +1,7 @@
 // components/JobCard.jsx
 export default function JobCard({ job }) {
   return (
-    <div className="bg-gradient-to-r from-[#0F2027] to-[#010b0e]  rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+    <div className="bg-gray-500 hover:border-2  rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
       <div className="p-4 flex items-center space-x-4">
         <img src={job.logo} alt={job.title} className="h-12 w-12 object-contain" />
         <div>
@@ -16,7 +16,7 @@ export default function JobCard({ job }) {
           <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">{job.location}</span>
         </div>
         <p className="mt-2 text-green-600 font-semibold">{job.salary}</p>
-        <a href={job.link} className="block mt-3 text-blue-500 text-sm">View Pathway →</a>
+        <button  className="block mt-3 text-blue-500 text-sm">View Pathway →</button>
       </div>
     </div>
   );

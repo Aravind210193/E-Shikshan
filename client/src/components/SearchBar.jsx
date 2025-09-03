@@ -1,16 +1,3 @@
-// import React from 'react';
-// import { SearchIcon } from 'lucide-react';
-// const SearchBar = ({ query, setQuery }) => (
-//   <input
-//     type="text"
-//     value={query}
-//     onChange={(e) => setQuery(e.target.value)}
-//     placeholder="Search here...                      "
-//     className="w-90 h-8 p-2 border mb-4 rounded-full"
-//   />
-// );
-
-// export default SearchBar;
 
 import React from 'react';
 import { Search } from 'lucide-react';

@@ -18,7 +18,7 @@ const Content = () => {
         {  
            branchesData.map((branch,index)=>(
             
-            <Contentcard key={index} title={branch.title}
+          <Contentcard key={index} title={branch.title}
           link={branch.link} />
           ))
         }
