@@ -1,9 +1,10 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import hackathons from "../data/hackathons.json";
 
 export default function HackathonDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const hackathon = hackathons.find((h) => h.id === parseInt(id));
 
   if (!hackathon) {
@@ -11,10 +12,8 @@ export default function HackathonDetails() {
   }
 
   return (
-    
-    <div className="hackathon-details">
-      <div className="bg-gray-800 h-auto w-auto">
-      {/* Header Section with Background Image */}
+    <div className="bg-gray-900 text-white min-h-screen pb-16">
+      {/* Hero Section */}
       <div
         className="relative h-72 flex items-center justify-center text-white"
         style={{
@@ -23,84 +22,98 @@ export default function HackathonDetails() {
           backgroundPosition: "center",
         }}
       >
-        <div className="flex justify-center flex-col items-center bg-opacity-50 p-5 rounded-lg">
+        <div className=" bg-opacity-50 p-6 rounded-lg text-center">
           <h1 className="text-4xl font-bold">{hackathon.title}</h1>
           <p className="mt-2 text-lg">{hackathon.tagline}</p>
           <p className="mt-1 text-sm">{hackathon.date}</p>
           <a
             href={hackathon.registrationUrl}
             target="_blank"
-            rel="noopener noreferre"
-            className="mt-4 inline-block bg-pink-600 text-white px-6 py-2 rounded-lg hover:bg-pink-700"
+            rel="noopener noreferrer"
+            className="mt-4 inline-block bg-pink-600 text-white px-6 py-2 rounded-lg hover:bg-pink-700 transition"
           >
-            Register Now</a>
+            Register Now
+          </a>
         </div>
       </div>
 
       {/* Prize & Dates */}
       <div className="max-w-5xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-        <div className="bg-gray-900 shadow p-5 rounded-lg">
-          <h2 className="font-bold text-lg">💰 Prize</h2>
-          <p>{hackathon.prize}</p>
-        </div>
-        <div className="bg-gray-900 shadow p-5 rounded-lg">
-          <h2 className="font-bold text-lg">📅 Registration Closes</h2>
-          <p>{hackathon.registrationCloses}</p>
-        </div>
-        <div className="bg-gray-900 shadow p-5 rounded-lg">
-          <h2 className="font-bold text-lg">🕒 Submission Deadline</h2>
-          <p>{hackathon.submissionDeadline}</p>
-        </div>
+        <Card title="💰 Prize" content={hackathon.prize} />
+        <Card title="📅 Registration Closes" content={hackathon.registrationCloses} />
+        <Card title="🕒 Submission Deadline" content={hackathon.submissionDeadline} />
       </div>
-      <h1 className="mt-10 flex justify-around font-bold text-2xl">Overview</h1>
-     <div className=" ml-30 w-auto  mt-2 flex justify-center   ">
-        {
-          hackathon.overview
-        }
+
+      {/* Overview */}
+      <div className="max-w-4xl mx-auto mt-10 px-4">
+        <h2 className="text-2xl font-bold text-center mb-4">Overview</h2>
+        <p className="bg-gray-800 p-6 rounded-lg text-lg leading-relaxed text-gray-300">
+          {hackathon.overview}
+        </p>
       </div>
-      <h1 className="flex justify-center text-pink-600 font-semibold mt-3 text-2xl">How it works ?</h1>
-     <div className="mt-10 flex flex-col justify-center ml-20 text-xl">
-        {
-          hackathon.howit.map((item,index)=>(
-            <div key={index}>{item}</div>
-          ))
-        }
-        </div>
-    
 
-      {/* About Section */}
-       <SectionGrid title="About" items={hackathon.about} /> 
+      {/* How it Works */}
+      <div className="max-w-4xl mx-auto mt-12 px-4">
+        <h2 className="text-2xl font-bold text-center mb-6 text-pink-500">How It Works</h2>
+        <ul className="space-y-4 text-lg text-gray-300">
+          {hackathon.howit.map((item, index) => (
+            <li key={index} className="flex items-start space-x-2">
+              <span className="text-pink-500 font-bold">•</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      {/* Who Can Participate Section */}
+      {/* Sections */}
+      <SectionGrid title="About" items={hackathon.about} />
       <SectionGrid title="Who Can Participate" items={hackathon.whoCanParticipate} />
+      <SectionGrid title="Challenges" items={hackathon.challenges} />
 
-      {/* Challenges Section */}
-      <SectionGrid title="Challenges " items={hackathon.challenges} />
-    </div>
+      {/* Back Button */}
+      <div className="flex justify-center mt-12">
+        <button
+          onClick={() => navigate("/hackathons")}
+          className="bg-gray-700 hover:bg-gray-600 px-6 py-2 rounded-lg transition"
+        >
+          Back to Hackathons
+        </button>
+      </div>
     </div>
   );
 }
 
-// Reusable Section Component
+function Card({ title, content }) {
+  return (
+    <div className="bg-gray-800 shadow p-5 rounded-lg">
+      <h2 className="font-bold text-lg mb-2">{title}</h2>
+      <p className="text-gray-300">{content}</p>
+    </div>
+  );
+}
+
 function SectionGrid({ title, items }) {
   return (
-    <div className="max-w-5xl mx-auto mt-12">
-      <h2 className="text-2xl font-bold mb-6">{title}</h2>
+    <div className="max-w-5xl mx-auto mt-12 px-4">
+      <h2 className="text-2xl font-bold mb-6 text-center">{title}</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {items.map((item, idx) => (
           <div
             key={idx}
-            className="bg-[#1a0b1a] border border-gray-200 shadow p-5 rounded-md flex flex-col items-center text-center"
+            className="bg-gray-800 border border-gray-700 shadow p-5 rounded-md flex flex-col items-center text-center"
           >
             {item.icon && (
-              <img src={item.icon} alt={item.title} className="w-30 h-30 mb-3" />
+              <img
+                src={item.icon}
+                alt={item.title}
+                className="w-40 h-30 mb-3 object-contain"
+              />
             )}
             <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-            <p className="text-gray-600">{item.description}</p>
+            <p className="text-gray-400">{item.description}</p>
           </div>
         ))}
       </div>
-      
     </div>
   );
 }

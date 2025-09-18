@@ -1,160 +1,8 @@
-// import React, { useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import Login from "./Login";
-
-// const Signin = () => {
-//   const navigate = useNavigate();
-//   const [showLogin,setShowLogin] = useState(false);
-//   const [formData, setFormData] = useState({
-//     firstName: "",
-//     lastName: "",
-//     email: "",
-//     password: "",
-//     agree: false,
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value, type, checked } = e.target;
-//     setFormData((prev) => ({
-//       ...prev,
-//       [name]: type === "checkbox" ? checked : value,
-//     }));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log(formData); // Just logging for now
-//   };
-
-//   return (
-//     <div className="  md:flex-row  flex flex-col items-center min-h-screen   justify-center bg-[#3c3553] px-4">
-//       <div className="  m-20 flex flex-col md:flex-row max-w-5xl max-h-120   min-w-xl   border-black  rounded-xl shadow-lg overflow-hidden">
-        
-//         {/* Left Side */}
-//         <div className="w-full md:w-1/2 relative">
-//           <img
-//             src="src\assets\login.jpeg"
-//             alt="Nature"
-//             className="w-full object-cover"
-//           />
-//           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-between p-6">
-//             <div className="flex justify-between items-center">
-//               <h1 className="text-white text-lg font-bold">E-SHIKSHAN</h1>
-//               <button onClick ={()=> navigate('/')} className="bg-white/20 px-3 py-1 rounded-full text-white text-sm hover:bg-white/30">
-//                 Back to website →
-//               </button>
-//             </div>
-//             <p className="text-white text-3xl">Empowering Education through Online Learning</p>
-//           </div>
-//         </div>
-
-//         {/* Right Side */}
-//         <div className="w-full  md:w-1/2 bg-[#1d1b29] p-8">
-//         <div className="flex items-center justify-center transiton-transform duration-500">
-      
-//         <Link to='/signup' className="text-lg hover:underline font-bold  p-4">Register</Link>
-//         <Link to='/login' className="text-lg hover:underline font-bold  p-4">Login</Link>
-        
-          
-        
-//         </div>
-//           <form onSubmit={handleSubmit} className="space-y-4">
-//             {/* Name fields */}
-//             <div className="flex flex-col md:flex-row gap-4">
-//               <input
-//                 type="text"
-//                 name="firstName"
-//                 placeholder="First name"
-//                 value={formData.firstName}
-//                 onChange={handleChange}
-//                 className="w-full md:w-1/2 px-4 py-2 rounded-md bg-[#2b273d] text-white placeholder-gray-400 outline-none"
-//               />
-//               <input
-//                 type="text"
-//                 name="lastName"
-//                 placeholder="Last name"
-//                 value={formData.lastName}
-//                 onChange={handleChange}
-//                 className="w-full md:w-1/2 px-4 py-2 rounded-md bg-[#2b273d] text-white placeholder-gray-400 outline-none"
-//               />
-//             </div>
-
-//             {/* Email */}
-//             <input
-//               type="email"
-//               name="email"
-//               placeholder="Email"
-//               value={formData.email}
-//               onChange={handleChange}
-//               className="w-full px-4 py-2 rounded-md bg-[#2b273d] text-white placeholder-gray-400 outline-none"
-//             />
-
-//             {/* Password */}
-//             <input
-//               type="password"
-//               name="password"
-//               placeholder="Enter your password"
-//               value={formData.password}
-//               onChange={handleChange}
-//               className="w-full px-4 py-2 rounded-md bg-[#2b273d] text-white placeholder-gray-400 outline-none"
-//             />
-
-//             {/* Checkbox */}
-//             <label className="flex items-center text-gray-400 text-sm">
-//               <input
-//                 type="checkbox"
-//                 name="agree"
-//                 checked={formData.agree}
-//                 onChange={handleChange}
-//                 className="mr-2"
-                
-//               />
-//               I agree to the{" "}
-//               <a href="#" className="text-purple-400 hover:underline ml-1">Terms & Conditions</a>
-//             </label>
-
-//             {/* Submit */}
-//             <button
-//             onClick={()=>navigate('/login')}
-            
-//               type="submit"
-//               className="w-full py-2 rounded-md bg-purple-500 hover:bg-purple-600 text-white font-semibold"
-//             >
-//               Create account
-//             </button>
-//           </form>
-                    
-//           <p className="text-gray-400 text-sm flex items-center justify-center mt-5 mb-6">
-//             Already have an account?{" "}
-//             <a href="/login" className="text-purple-400 hover:underline">Log in</a>
-//           </p>
-
-
-//           {/* Divider */}
-//           <div className="flex items-center gap-2 mt-6 mb-4">
-//             <hr className="flex-1 border-gray-600" />
-//             <span className="text-gray-400 text-sm">Or register with</span>
-//             <hr className="flex-1 border-gray-600" />
-//           </div>
-
-//           {/* Social Buttons */}
-//           <div className="flex flex-col md:flex-row gap-6 mb-8">
-//             <button className="flex-1 border border-gray-600 p-2 rounded-md text-white hover:bg-gray-700">
-//               <span className="mr-2">🌐</span> Google
-//             </button>
-//             <button className="flex-1 border border-gray-600 p-2 rounded-md text-white hover:bg-gray-700">
-//               <span className="mr-2"></span> Apple
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Signin;
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-hot-toast';
+// Import icons if you have Lucide or other icon libraries installed
+// If not, you can use emoji icons as placeholders
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -163,6 +11,10 @@ const Signin = () => {
     lastName: "",
     email: "",
     password: "",
+    phone: "",
+    university: "",
+    department: "",
+    semester: "",
     agree: false,
   });
 
@@ -174,109 +26,246 @@ const Signin = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
+    if (!formData.agree) {
+      toast.error('Please agree to the terms and conditions');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+          university: formData.university,
+          department: formData.department,
+          semester: formData.semester
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+
+      // Store token
+      localStorage.setItem('token', data.token);
+      
+      // Show success message
+      toast.success('Registration successful! Welcome to E-Shikshan');
+      
+      // Redirect to profile completion
+      navigate('/profile');
+    } catch (error) {
+      console.error('Registration error:', error);
+      toast.error(error.message || 'Registration failed. Please try again.');
+    }
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center  bg-[#3c3553] p-25">
-      <div className="flex flex-col md:flex-row w-full max-w-5xl mx-4 rounded-xl shadow-lg overflow-hidden bg-[#1d1b29]">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2d2b42] to-[#1d1b29] p-4 md:p-6">
+      <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto rounded-2xl shadow-2xl overflow-hidden bg-[#1d1b29] border border-purple-500/20">
 
-        {/* Left Side */}
-        <div className="w-full md:w-1/2 relative">
+        {/* Left Side - Image Panel */}
+        <div className="w-full md:w-5/12 lg:w-1/2 relative">
           <img
             src="src/assets/login.jpeg"
-            alt="Nature"
-            className="w-full h-56 md:h-full object-cover"
+            alt="E-Shikshan"
+            className="w-full h-64 md:h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-between p-4 md:p-6">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-between p-6 md:p-8">
             <div className="flex justify-between items-center">
-              <h1 className="text-white text-lg md:text-2xl font-bold">E-SHIKSHAN</h1>
+              <h1 className="text-white text-2xl md:text-3xl font-bold tracking-wider">
+                E-SHIKSHAN
+              </h1>
               <button
                 onClick={() => navigate("/")}
-                className="bg-white/20 px-3 py-1 rounded-full text-white text-xs md:text-sm hover:bg-white/30"
+                className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-all duration-300 flex items-center gap-1"
               >
-                Back →
+                <span>Home</span> <span>→</span>
               </button>
             </div>
-            <p className="hidden md:block text-white text-2xl md:text-3xl font-semibold">
-              Empowering Education through Online Learning
-            </p>
+            <div className="mt-auto">
+              <p className="text-white text-2xl md:text-4xl font-bold leading-tight mb-2">
+                Start Your Learning Journey Today
+              </p>
+              <p className="text-gray-300 text-base md:text-lg">
+                Join thousands of students enhancing their skills through our platform
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Right Side */}
-        <div className="w-full md:w-1/2 p-6 md:p-10">
+        {/* Right Side - Form Panel */}
+        <div className="w-full md:w-7/12 lg:w-1/2 p-6 md:p-10 bg-[#1d1b29] relative">
+          {/* Decorative element */}
+          <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-purple-600/20 to-transparent rounded-bl-full -z-10"></div>
+          
+          {/* Form Header */}
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Create an Account</h2>
+            <p className="text-gray-400">Join our community and start your learning journey</p>
+          </div>
+
           {/* Tabs */}
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <Link to="/signup" className="text-lg hover:underline font-bold text-white">
+          <div className="flex items-center justify-center gap-8 mb-8">
+            <Link to="/signup" className="text-lg font-bold text-white border-b-2 border-purple-500 pb-1 px-2">
               Register
             </Link>
-            <Link to="/login" className="text-lg hover:underline font-bold text-gray-400">
+            <Link to="/login" className="text-lg font-bold text-gray-400 hover:text-gray-200 transition-colors pb-1 px-2">
               Login
             </Link>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex flex-col md:flex-row gap-4">
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First name"
-                value={formData.firstName}
-                onChange={handleChange}
-                className="w-full md:w-1/2 px-4 py-2 rounded-md bg-[#2b273d] text-white placeholder-gray-400 outline-none"
-              />
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last name"
-                value={formData.lastName}
-                onChange={handleChange}
-                className="w-full md:w-1/2 px-4 py-2 rounded-md bg-[#2b273d] text-white placeholder-gray-400 outline-none"
-              />
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Personal Information Section */}
+            <div className="mb-4">
+              <h3 className="text-white text-sm font-medium mb-3 uppercase tracking-wider">Personal Information</h3>
+              
+              <div className="flex flex-col md:flex-row gap-4 mb-4">
+                <div className="flex-1 relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">👤</span>
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#2b273d] text-white placeholder-gray-400 outline-none border border-transparent focus:border-purple-500 transition-colors"
+                  />
+                </div>
+                <div className="flex-1 relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">👤</span>
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#2b273d] text-white placeholder-gray-400 outline-none border border-transparent focus:border-purple-500 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div className="relative mb-4">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">✉️</span>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email address"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#2b273d] text-white placeholder-gray-400 outline-none border border-transparent focus:border-purple-500 transition-colors"
+                />
+              </div>
+
+              <div className="relative mb-4">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📞</span>
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone number"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#2b273d] text-white placeholder-gray-400 outline-none border border-transparent focus:border-purple-500 transition-colors"
+                />
+              </div>
+
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🔒</span>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Create password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#2b273d] text-white placeholder-gray-400 outline-none border border-transparent focus:border-purple-500 transition-colors"
+                />
+              </div>
             </div>
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-[#2b273d] text-white placeholder-gray-400 outline-none"
-            />
+            {/* Educational Information Section */}
+            <div className="mb-4">
+              <h3 className="text-white text-sm font-medium mb-3 uppercase tracking-wider">Educational Information</h3>
+              
+              <div className="flex flex-col md:flex-row gap-4 mb-4">
+                <div className="flex-1 relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🏫</span>
+                  <input
+                    type="text"
+                    name="university"
+                    placeholder="University/College"
+                    value={formData.university}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#2b273d] text-white placeholder-gray-400 outline-none border border-transparent focus:border-purple-500 transition-colors"
+                  />
+                </div>
+                <div className="flex-1 relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📚</span>
+                  <input
+                    type="text"
+                    name="department"
+                    placeholder="Department"
+                    value={formData.department}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#2b273d] text-white placeholder-gray-400 outline-none border border-transparent focus:border-purple-500 transition-colors"
+                  />
+                </div>
+              </div>
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-[#2b273d] text-white placeholder-gray-400 outline-none"
-            />
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🎓</span>
+                <input
+                  type="text"
+                  name="semester"
+                  placeholder="Semester (e.g., 1st, 2nd, 3rd)"
+                  value={formData.semester}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#2b273d] text-white placeholder-gray-400 outline-none border border-transparent focus:border-purple-500 transition-colors"
+                />
+              </div>
+            </div>
 
-            <label className="flex items-center text-gray-400 text-sm">
+            <label className="flex items-start md:items-center text-gray-300 text-sm">
               <input
                 type="checkbox"
                 name="agree"
                 checked={formData.agree}
                 onChange={handleChange}
-                className="mr-2"
+                className="mr-3 mt-1 md:mt-0 h-4 w-4 accent-purple-500"
               />
-              I agree to the{" "}
-              <a href="#" className="text-purple-400 hover:underline ml-1">
-                Terms & Conditions
-              </a>
+              <span>
+                I agree to the{" "}
+                <a href="#" className="text-purple-400 hover:text-purple-300 hover:underline transition-colors">
+                  Terms of Service
+                </a>{" "}
+                and{" "}
+                <a href="#" className="text-purple-400 hover:text-purple-300 hover:underline transition-colors">
+                  Privacy Policy
+                </a>
+              </span>
             </label>
 
             <button
               type="submit"
-              onClick={() => navigate("/login")}
-              className="w-full py-2 rounded-md bg-purple-500 hover:bg-purple-600 text-white font-semibold"
+              className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold text-lg mt-6 transform transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-lg"
             >
-              Create account
+              Create Account
             </button>
           </form>
 
@@ -308,5 +297,3 @@ const Signin = () => {
 };
 
 export default Signin;
-
-

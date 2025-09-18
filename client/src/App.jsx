@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 import Navbar from './components/Navbar'
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
 import ResumeBuilding from './pages/ResumeBuilding'
@@ -16,6 +17,7 @@ import Subjects from './pages/Subjects'
 import Folders from './pages/Folders'
 import JobDetail from './pages/JobDetail'
 import HackathonDetails from './components/HackathonDetails'
+import Profile from './pages/Profile'
 const App = () => {
   const location = useLocation();
   const [showNav,setShownNav] = useState(true);
@@ -23,6 +25,26 @@ const App = () => {
   const hideLayout = ["/login","/signup"].includes(location.pathname);
   return (
     <>
+     <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+          success: {
+            style: {
+              background: 'green',
+            },
+          },
+          error: {
+            style: {
+              background: 'red',
+            },
+          },
+        }}
+      />
      {!hideLayout && showNav && <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
       <Routes >
           <Route path='/' element={<Home />} />
@@ -39,7 +61,7 @@ const App = () => {
           <Route path='/jobs/:id' element={<JobDetail />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn}  /> }  />
           <Route path='/signup' element={<Signin/>} />
-          <Route path='/profile' element={isLoggedIn ? <div>Profile Details</div> : <Navigate to='/login' />} />
+          <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate to='/login' />} />
       </Routes>
     {!hideLayout && showNav && <Footer />}
     </>
