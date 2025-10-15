@@ -1,17 +1,788 @@
 [
-    {
-        "id":1,
-        "name":"Frontend",
-        "url":"https://roadmap.sh//frontend"
-    },
-    {
-        "id":2,
-        "name":"Backend",
-        "url":"https://roadmap.sh//backend"
-    },
-    {
-        "id":3,
-        "name":"FullStack",
-        "url":"https://roadmap.sh/full-stack"
-    }
+  {
+    "id": "frontend-developer",
+    "title": "Frontend Developer",
+    "category": "Web Development",
+    "tagline": "Build beautiful and interactive user interfaces for the web.",
+    "image": "/indiegame.png",
+    "duration": "12-16 weeks",
+    "difficulty": "Beginner-Friendly",
+    "popularity": "Very Popular",
+    "description": "Frontend developers create the user-facing side of websites and applications that users interact with directly. This roadmap will guide you through the essential technologies and concepts required to become a modern frontend developer.",
+    "path": [
+      {
+        "title": "HTML & CSS Foundations",
+        "description": "Learn the fundamental building blocks of all websites, focusing on structure and style.",
+        "topics": ["Semantic HTML5", "CSS Box Model", "Flexbox", "Grid", "Responsive Design", "Accessibility Basics", "CSS Variables", "Media Queries"],
+        "resources": [
+          "MDN Web Docs: HTML Basics",
+          "CSS-Tricks: Complete Guide to Flexbox",
+          "web.dev: Learn Responsive Design",
+          "Frontend Masters: HTML & CSS Basics"
+        ],
+        "project": "Build a personal portfolio website from scratch with responsive design."
+      },
+      {
+        "title": "JavaScript Core",
+        "description": "Master the language of the web to create dynamic and interactive user experiences.",
+        "topics": ["Variables & Data Types", "DOM Manipulation", "Events", "ES6+ Features", "Promises & Async/Await", "Fetch API", "Local Storage", "Error Handling"],
+        "resources": [
+          "JavaScript.info: The Modern JavaScript Tutorial",
+          "Eloquent JavaScript Book",
+          "MDN: JavaScript Guide",
+          "freeCodeCamp: JavaScript Algorithms and Data Structures"
+        ],
+        "project": "Create a weather application that fetches data from a public API and saves user preferences."
+      },
+      {
+        "title": "Version Control with Git",
+        "description": "Learn to manage your code, track changes, and collaborate effectively with other developers.",
+        "topics": ["Creating repositories", "Committing changes", "Branching and Merging", "Pull Requests", "Resolving merge conflicts", "GitHub/GitLab workflow"],
+        "resources": [
+          "Git - The Simple Guide",
+          "GitHub Learning Lab",
+          "Atlassian Git Tutorials",
+          "Pro Git Book (free online)"
+        ],
+        "project": "Host your portfolio website on GitHub Pages and implement continuous deployment."
+      },
+      {
+        "title": "React Fundamentals",
+        "description": "Build powerful, component-based single-page applications with the most popular UI library.",
+        "topics": ["Components & Props", "State & Lifecycle", "Hooks (useState, useEffect, useContext)", "Conditional Rendering", "Lists & Keys", "Forms in React", "React Router"],
+        "resources": [
+          "React Official Documentation",
+          "React for Beginners by Wes Bos",
+          "Epic React by Kent C. Dodds",
+          "React Router Documentation"
+        ],
+        "project": "Rebuild your portfolio using React components with proper routing and state management."
+      },
+      {
+        "title": "State Management",
+        "description": "Learn to manage complex application state across components.",
+        "topics": ["Context API", "Redux", "Redux Toolkit", "Zustand", "React Query", "Local State vs. Global State"],
+        "resources": [
+          "Redux Documentation",
+          "Redux Toolkit Tutorial",
+          "Zustand GitHub Repository",
+          "TanStack Query Documentation"
+        ],
+        "project": "Add state management to your React app with Redux Toolkit or Context API."
+      },
+      {
+        "title": "Styling in React",
+        "description": "Explore modern ways to style your applications for a professional look and feel.",
+        "topics": ["CSS Modules", "Styled Components", "Emotion", "Tailwind CSS", "Material UI", "Component Libraries", "Design Systems"],
+        "resources": [
+          "Styled Components Documentation",
+          "Tailwind CSS Documentation",
+          "Material UI Getting Started",
+          "CSS-Tricks: A Complete Guide to CSS-in-JS"
+        ],
+        "project": "Implement a consistent design system for your React application using Tailwind CSS or a component library."
+      },
+      {
+        "title": "Testing",
+        "description": "Ensure your application works as expected with automated tests.",
+        "topics": ["Jest", "React Testing Library", "Cypress", "Unit Testing", "Integration Testing", "E2E Testing", "Test Coverage"],
+        "resources": [
+          "Jest Documentation",
+          "React Testing Library",
+          "Cypress Documentation",
+          "Testing JavaScript by Kent C. Dodds"
+        ],
+        "project": "Write comprehensive tests for your React application components."
+      },
+      {
+        "title": "Performance Optimization",
+        "description": "Make your application fast and efficient for the best user experience.",
+        "topics": ["Code Splitting", "Lazy Loading", "Memoization", "React.memo", "useMemo and useCallback", "Lighthouse Audits", "Web Vitals"],
+        "resources": [
+          "web.dev: Performance Optimization",
+          "React Documentation: Optimizing Performance",
+          "Google Web Vitals",
+          "Lighthouse Performance Audits"
+        ],
+        "project": "Optimize your React application focusing on load time and rendering performance."
+      },
+      {
+        "title": "Build & Deploy",
+        "description": "Learn how to bundle your application for production and deploy it to the web.",
+        "topics": ["Vite", "Webpack", "Environment Variables", "CI/CD Pipelines", "Vercel", "Netlify", "AWS Amplify", "Docker Basics"],
+        "resources": [
+          "Vite Documentation",
+          "Netlify Deployment Guide",
+          "Vercel Documentation",
+          "GitHub Actions for Frontend Deployment"
+        ],
+        "project": "Set up a CI/CD pipeline and deploy your optimized React application to a production environment."
+      }
+    ]
+  },
+  {
+    "id": "backend-developer",
+    "title": "Backend Developer",
+    "category": "Web Development",
+    "tagline": "Power the applications and databases that run behind the scenes.",
+    "image": "/crypto.png",
+    "duration": "14-18 weeks",
+    "difficulty": "Intermediate",
+    "popularity": "In-Demand",
+    "description": "Backend developers create the server-side logic that powers web applications. They work with databases, server configurations, APIs, and application logic that enables the frontend to function.",
+    "path": [
+      {
+        "title": "Programming Foundations",
+        "description": "Master the core programming concepts that apply across languages.",
+        "topics": ["Data Structures", "Algorithms", "OOP Principles", "Functional Programming", "Time & Space Complexity", "Problem Solving"],
+        "resources": [
+          "Algorithms & Data Structures on Coursera",
+          "HackerRank Programming Challenges",
+          "LeetCode Easy Problems",
+          "Clean Code by Robert C. Martin"
+        ],
+        "project": "Implement common data structures and algorithms in your language of choice."
+      },
+      {
+        "title": "Node.js Fundamentals",
+        "description": "Learn to build fast and scalable server-side applications with JavaScript.",
+        "topics": ["Node.js Runtime", "NPM Ecosystem", "Asynchronous Programming", "Event Loop", "File System API", "HTTP Module", "Streams & Buffers"],
+        "resources": [
+          "Node.js Official Documentation",
+          "Node.js Design Patterns",
+          "The Complete Node.js Developer Course",
+          "Understanding the Node.js Event Loop"
+        ],
+        "project": "Build a simple web server that serves static files and handles basic routes."
+      },
+      {
+        "title": "Express.js Framework",
+        "description": "Create robust APIs and web applications with the most popular Node.js framework.",
+        "topics": ["Routing", "Middleware", "Request & Response Objects", "Error Handling", "Template Engines", "Static Files", "RESTful API Design"],
+        "resources": [
+          "Express.js Official Documentation",
+          "RESTful Web API Design",
+          "Express in Action Book",
+          "MDN: Express/Node Introduction"
+        ],
+        "project": "Build a complete REST API with CRUD operations for a resource (e.g., blog posts, products)."
+      },
+      {
+        "title": "Database Fundamentals",
+        "description": "Understand the principles of data storage and retrieval.",
+        "topics": ["Database Types", "SQL vs NoSQL", "Data Modeling", "Normalization", "ACID Properties", "Transactions", "Indexing"],
+        "resources": [
+          "Database Design for Mere Mortals",
+          "Stanford Database Course",
+          "MongoDB University",
+          "PostgreSQL Tutorial"
+        ],
+        "project": "Design a database schema for an e-commerce application with multiple related entities."
+      },
+      {
+        "title": "Working with MongoDB",
+        "description": "Master the most popular NoSQL database for modern web applications.",
+        "topics": ["MongoDB Setup", "CRUD Operations", "Aggregation Pipeline", "Indexes", "MongoDB Atlas", "Data Validation", "Mongoose ODM"],
+        "resources": [
+          "MongoDB Documentation",
+          "Mongoose Documentation",
+          "MongoDB University Courses (free)",
+          "The Complete Developer's Guide to MongoDB"
+        ],
+        "project": "Connect your Express API to MongoDB and implement complete data persistence."
+      },
+      {
+        "title": "SQL Databases with PostgreSQL",
+        "description": "Learn to work with relational databases for structured data.",
+        "topics": ["PostgreSQL Setup", "SQL Queries", "Joins", "Transactions", "Stored Procedures", "Sequelize ORM", "Migrations"],
+        "resources": [
+          "PostgreSQL Documentation",
+          "Sequelize ORM Documentation",
+          "SQL for Web Developers",
+          "Mode Analytics SQL Tutorial"
+        ],
+        "project": "Implement a data layer for your API using PostgreSQL and Sequelize."
+      },
+      {
+        "title": "Authentication & Security",
+        "description": "Learn to secure your application and manage user access.",
+        "topics": ["Password Hashing (bcrypt)", "JSON Web Tokens (JWT)", "OAuth 2.0", "CORS", "CSRF Protection", "Rate Limiting", "Helmet.js", "Data Validation"],
+        "resources": [
+          "OWASP Top 10",
+          "Web Security Academy",
+          "JWT.io",
+          "Node.js Security Checklist"
+        ],
+        "project": "Implement secure user authentication with JWT, role-based access control, and proper validation."
+      },
+      {
+        "title": "API Testing & Documentation",
+        "description": "Ensure your APIs work as expected and are well-documented.",
+        "topics": ["Unit Testing with Jest", "Integration Testing", "Postman", "Mocha & Chai", "Supertest", "Swagger/OpenAPI", "API Documentation"],
+        "resources": [
+          "Jest Documentation",
+          "Mocha & Chai Documentation",
+          "Swagger Documentation",
+          "Testing Node.js Applications"
+        ],
+        "project": "Write comprehensive tests for your API and create detailed API documentation."
+      },
+      {
+        "title": "Deployment & DevOps",
+        "description": "Deploy your backend application to production and manage its lifecycle.",
+        "topics": ["Docker", "Docker Compose", "CI/CD Pipelines", "Cloud Providers (AWS, GCP, Azure)", "Nginx", "PM2", "Monitoring", "Logging"],
+        "resources": [
+          "Docker Documentation",
+          "AWS Free Tier Tutorial",
+          "PM2 Documentation",
+          "GitHub Actions for Node.js"
+        ],
+        "project": "Containerize your application with Docker and deploy it to a cloud provider with CI/CD."
+      },
+      {
+        "title": "Scaling & Architecture",
+        "description": "Learn advanced concepts for building large-scale applications.",
+        "topics": ["Microservices", "Load Balancing", "Caching (Redis)", "Message Queues (RabbitMQ)", "Horizontal Scaling", "Vertical Scaling", "Database Sharding"],
+        "resources": [
+          "System Design Primer",
+          "Designing Data-Intensive Applications",
+          "Redis Documentation",
+          "RabbitMQ Tutorials"
+        ],
+        "project": "Refactor part of your application into microservices and implement caching."
+      }
+    ]
+  },
+  {
+    "id": "data-scientist",
+    "title": "Data Scientist",
+    "category": "AI/ML",
+    "tagline": "Uncover insights and predict future trends from complex data.",
+    "image": "/digital.png",
+    "duration": "16-20 weeks",
+    "difficulty": "Advanced",
+    "popularity": "High Growth",
+    "description": "Data scientists extract knowledge and insights from structured and unstructured data using scientific methods, algorithms, and systems. They combine skills in statistics, programming, and domain expertise to solve complex problems.",
+    "path": [
+      {
+        "title": "Python for Data Science",
+        "description": "Master the essential Python libraries for data manipulation and analysis.",
+        "topics": ["Python Fundamentals", "NumPy Arrays", "Pandas DataFrames", "Data Cleaning", "Jupyter Notebooks", "Data Structures", "Python Functions"],
+        "resources": [
+          "Python Data Science Handbook",
+          "Kaggle Learn Python",
+          "DataCamp: Introduction to Python",
+          "Pandas Documentation"
+        ],
+        "project": "Analyze a public dataset (e.g., Titanic survival data) using Pandas with clear insights."
+      },
+      {
+        "title": "Data Visualization",
+        "description": "Learn to create compelling visualizations to communicate your findings effectively.",
+        "topics": ["Matplotlib", "Seaborn", "Plotly", "Visualization Principles", "Interactive Dashboards", "Storytelling with Data", "Color Theory"],
+        "resources": [
+          "Storytelling with Data by Cole Nussbaumer Knaflic",
+          "Matplotlib Documentation",
+          "Seaborn Tutorial Gallery",
+          "Plotly Express Documentation"
+        ],
+        "project": "Create an interactive dashboard visualizing insights from a complex dataset."
+      },
+      {
+        "title": "Statistics & Mathematics",
+        "description": "Build the foundational knowledge required for understanding machine learning algorithms.",
+        "topics": ["Descriptive Statistics", "Inferential Statistics", "Probability Distributions", "Hypothesis Testing", "Linear Algebra", "Calculus Fundamentals"],
+        "resources": [
+          "Think Stats by Allen Downey",
+          "Khan Academy Statistics",
+          "Seeing Theory: Visual Introduction to Probability",
+          "3Blue1Brown: Essence of Linear Algebra"
+        ],
+        "project": "Conduct a complete statistical analysis of a dataset with hypothesis testing and confidence intervals."
+      },
+      {
+        "title": "Exploratory Data Analysis",
+        "description": "Master the process of investigating datasets to discover patterns and anomalies.",
+        "topics": ["Data Cleaning", "Feature Engineering", "Dimensionality Reduction", "Outlier Detection", "Correlation Analysis", "Data Profiling"],
+        "resources": [
+          "Exploratory Data Analysis with Python",
+          "Feature Engineering for Machine Learning",
+          "Hands-On Exploratory Data Analysis",
+          "Kaggle EDA Notebooks"
+        ],
+        "project": "Perform comprehensive EDA on a messy real-world dataset and prepare it for modeling."
+      },
+      {
+        "title": "Machine Learning Fundamentals",
+        "description": "Understand the core concepts of machine learning and build your first models.",
+        "topics": ["Supervised vs. Unsupervised Learning", "Regression", "Classification", "Clustering", "Model Evaluation", "Scikit-Learn", "Cross-Validation"],
+        "resources": [
+          "Hands-On Machine Learning with Scikit-Learn",
+          "Machine Learning Crash Course by Google",
+          "Introduction to Statistical Learning",
+          "Kaggle Intro to Machine Learning"
+        ],
+        "project": "Build and compare multiple models on a classification problem with proper evaluation metrics."
+      },
+      {
+        "title": "Advanced Machine Learning",
+        "description": "Dive deeper into sophisticated machine learning techniques and algorithms.",
+        "topics": ["Ensemble Methods", "Random Forests", "Gradient Boosting", "Support Vector Machines", "Bayesian Methods", "Model Tuning", "Feature Selection"],
+        "resources": [
+          "Elements of Statistical Learning",
+          "Applied Predictive Modeling",
+          "XGBoost Documentation",
+          "Scikit-Learn Advanced Tutorials"
+        ],
+        "project": "Build a competition-grade model using ensemble techniques with hyperparameter tuning."
+      },
+      {
+        "title": "Deep Learning",
+        "description": "Explore neural networks and their applications in complex data problems.",
+        "topics": ["Neural Networks", "TensorFlow", "PyTorch", "CNNs", "RNNs & LSTMs", "Transfer Learning", "Model Architectures", "GPU Training"],
+        "resources": [
+          "Deep Learning by Goodfellow, Bengio, and Courville",
+          "TensorFlow Documentation",
+          "PyTorch Tutorials",
+          "Fast.ai Practical Deep Learning"
+        ],
+        "project": "Build a convolutional neural network for image classification on a custom dataset."
+      },
+      {
+        "title": "Natural Language Processing",
+        "description": "Work with text data to extract meaning and build language-based applications.",
+        "topics": ["Text Preprocessing", "Word Embeddings", "Sentiment Analysis", "Topic Modeling", "Transformers", "BERT", "Named Entity Recognition"],
+        "resources": [
+          "Natural Language Processing with Python",
+          "Hugging Face Transformers",
+          "NLTK Documentation",
+          "SpaCy Course"
+        ],
+        "project": "Build a sentiment analysis model and deploy it as a simple API."
+      },
+      {
+        "title": "Big Data & Spark",
+        "description": "Learn to process and analyze large-scale datasets that exceed the capacity of single machines.",
+        "topics": ["Distributed Computing", "Apache Spark", "PySpark", "Data Partitioning", "MapReduce", "Hadoop Ecosystem", "Big Data Storage"],
+        "resources": [
+          "Learning Spark",
+          "PySpark Documentation",
+          "Databricks Community Edition Tutorials",
+          "Big Data Processing with Spark"
+        ],
+        "project": "Process a large dataset using PySpark and perform distributed machine learning."
+      },
+      {
+        "title": "Deployment & MLOps",
+        "description": "Move your models from development to production with best practices.",
+        "topics": ["Model Serving", "API Development (Flask/FastAPI)", "Docker", "Model Monitoring", "A/B Testing", "CI/CD for ML", "Model Versioning"],
+        "resources": [
+          "Building Machine Learning Pipelines",
+          "MLOps: Machine Learning Operations",
+          "FastAPI Documentation",
+          "Docker for Data Scientists"
+        ],
+        "project": "Deploy a machine learning model as a RESTful API with monitoring and version control."
+      }
+    ]
+  },
+  {
+    "id": "devops-engineer",
+    "title": "DevOps Engineer",
+    "category": "Cloud & DevOps",
+    "tagline": "Automate and streamline the software development lifecycle.",
+    "image": "/green.png",
+    "duration": "15-20 weeks",
+    "difficulty": "Intermediate-Advanced",
+    "popularity": "Highly Sought-After",
+    "description": "DevOps engineers bridge the gap between software development and operations, enabling organizations to build, test, and release software faster and more reliably. They focus on automation, infrastructure as code, and continuous integration/delivery.",
+    "path": [
+      {
+        "title": "Linux & Command Line Essentials",
+        "description": "Master the operating system that powers most servers and cloud infrastructure.",
+        "topics": ["Bash Scripting", "File System Navigation", "User & Permissions", "Process Management", "Shell Scripting", "Text Processing", "Package Management"],
+        "resources": [
+          "Linux Command Line and Shell Scripting Bible",
+          "The Linux Command Line by William Shotts",
+          "Bash Academy",
+          "Linux Journey"
+        ],
+        "project": "Create a collection of bash scripts to automate common system administration tasks."
+      },
+      {
+        "title": "Networking Fundamentals",
+        "description": "Understand how computers communicate in modern distributed systems.",
+        "topics": ["IP Addressing", "DNS", "HTTP/HTTPS", "Load Balancing", "Firewalls", "SSL/TLS", "VPNs", "Subnets & CIDR"],
+        "resources": [
+          "Computer Networking: A Top-Down Approach",
+          "Practical Networking",
+          "Wireshark 101",
+          "Cloudflare Learning Center"
+        ],
+        "project": "Set up a secure network with multiple subnets and proper security rules."
+      },
+      {
+        "title": "Version Control with Git",
+        "description": "Learn to manage code changes efficiently and collaborate with development teams.",
+        "topics": ["Git Basics", "Branching Strategies", "Pull Requests", "Code Reviews", "Git Hooks", "Git Workflows", "GitHub/GitLab Actions"],
+        "resources": [
+          "Pro Git Book",
+          "Atlassian Git Tutorial",
+          "Git Branching Strategies",
+          "GitHub Learning Lab"
+        ],
+        "project": "Set up a complete Git workflow with branching strategy, CI integration, and code review process."
+      },
+      {
+        "title": "Cloud Computing: AWS",
+        "description": "Master the foundational services of the most popular cloud platform.",
+        "topics": ["IAM", "EC2", "S3", "VPC", "RDS", "Lambda", "CloudWatch", "Route 53", "ELB", "Auto Scaling"],
+        "resources": [
+          "AWS Documentation",
+          "AWS Certified Solutions Architect Study Guide",
+          "A Cloud Guru AWS Courses",
+          "AWS Well-Architected Framework"
+        ],
+        "project": "Design and deploy a highly available web application architecture on AWS."
+      },
+      {
+        "title": "Infrastructure as Code",
+        "description": "Automate the provisioning and management of infrastructure through code.",
+        "topics": ["Terraform", "CloudFormation", "Terraform Modules", "State Management", "IaC Best Practices", "Testing IaC"],
+        "resources": [
+          "Terraform: Up & Running",
+          "HashiCorp Learn - Terraform",
+          "AWS CloudFormation Documentation",
+          "Infrastructure as Code: Managing Servers in the Cloud"
+        ],
+        "project": "Create a complete infrastructure as code solution for a multi-tier application with proper state management."
+      },
+      {
+        "title": "Configuration Management",
+        "description": "Automate the configuration and management of servers and environments.",
+        "topics": ["Ansible", "Puppet", "Chef", "Idempotency", "Roles & Playbooks", "Configuration Testing", "Secret Management"],
+        "resources": [
+          "Ansible for DevOps",
+          "Ansible Documentation",
+          "Learning Puppet",
+          "Practical Ansible 2"
+        ],
+        "project": "Create Ansible playbooks to configure and manage a fleet of servers with different roles."
+      },
+      {
+        "title": "Containerization with Docker",
+        "description": "Package applications and dependencies into standardized units for development and deployment.",
+        "topics": ["Docker Architecture", "Dockerfiles", "Docker Compose", "Container Registries", "Multi-stage Builds", "Docker Networks", "Docker Volumes"],
+        "resources": [
+          "Docker Deep Dive",
+          "Docker Documentation",
+          "Docker for Developers",
+          "Docker in Practice"
+        ],
+        "project": "Containerize a multi-service application with proper networking, volumes, and optimization."
+      },
+      {
+        "title": "Container Orchestration with Kubernetes",
+        "description": "Automate deployment, scaling, and management of containerized applications.",
+        "topics": ["Kubernetes Architecture", "Pods", "Deployments", "Services", "ConfigMaps & Secrets", "Helm Charts", "RBAC", "Persistent Volumes"],
+        "resources": [
+          "Kubernetes: Up and Running",
+          "Kubernetes Documentation",
+          "Kubernetes the Hard Way",
+          "Certified Kubernetes Administrator Course"
+        ],
+        "project": "Deploy a microservices application to Kubernetes with proper scaling, networking, and storage."
+      },
+      {
+        "title": "CI/CD Pipelines",
+        "description": "Build automated pipelines for continuous integration and delivery of software.",
+        "topics": ["Jenkins", "GitHub Actions", "GitLab CI/CD", "Pipeline as Code", "Artifacts", "Testing Integration", "Deployment Strategies"],
+        "resources": [
+          "Continuous Delivery with Jenkins",
+          "GitHub Actions Documentation",
+          "Jenkins: The Definitive Guide",
+          "Implementing DevOps with AWS"
+        ],
+        "project": "Create a complete CI/CD pipeline with automated testing, security scanning, and blue-green deployments."
+      },
+      {
+        "title": "Monitoring & Observability",
+        "description": "Implement systems to track performance, availability, and troubleshoot issues in production.",
+        "topics": ["Prometheus", "Grafana", "ELK Stack", "Metrics", "Logging", "Tracing", "Alerting", "SLIs/SLOs"],
+        "resources": [
+          "Prometheus: Up & Running",
+          "Distributed Systems Observability",
+          "Grafana Documentation",
+          "Site Reliability Engineering Book"
+        ],
+        "project": "Set up a comprehensive monitoring solution for a distributed application with dashboards and alerting."
+      }
+    ]
+  },
+  {
+    "id": "game-developer",
+    "title": "Game Developer",
+    "category": "Game Development",
+    "tagline": "Bring immersive worlds and interactive stories to life.",
+    "image": "/hack1.jpeg",
+    "duration": "16-24 weeks",
+    "difficulty": "Challenging",
+    "popularity": "Creative & Exciting",
+    "description": "Game developers create interactive experiences that entertain, educate, and engage players across multiple platforms. This career combines programming, art, design, and storytelling into cohesive gaming experiences.",
+    "path": [
+      {
+        "title": "Programming Fundamentals",
+        "description": "Build a solid foundation in programming concepts essential for game development.",
+        "topics": ["Object-Oriented Programming", "Data Structures", "Algorithms", "Design Patterns", "C# Basics", "Performance Optimization"],
+        "resources": [
+          "C# Player's Guide",
+          "Game Programming Patterns",
+          "Design Patterns: Elements of Reusable Object-Oriented Software",
+          "Codecademy: Learn C#"
+        ],
+        "project": "Create simple command-line games to practice programming concepts like Tic-Tac-Toe or Hangman."
+      },
+      {
+        "title": "Unity Engine Fundamentals",
+        "description": "Learn one of the most popular and versatile game engines in the industry.",
+        "topics": ["Unity Interface", "GameObjects & Components", "Prefabs", "Scene Management", "Unity Physics", "Materials & Shaders", "Asset Management"],
+        "resources": [
+          "Unity Documentation",
+          "Unity Learn Platform",
+          "Complete C# Unity Game Developer 2D Course",
+          "Unity in Action"
+        ],
+        "project": "Create an interactive 3D scene with basic gameplay elements like collectibles and obstacles."
+      },
+      {
+        "title": "Game Programming with C#",
+        "description": "Master the primary scripting language for Unity to bring your game to life.",
+        "topics": ["C# in Unity", "MonoBehaviour Lifecycle", "Input Systems", "Physics Programming", "Coroutines", "Events & Delegates", "Scriptable Objects"],
+        "resources": [
+          "C# Scripting in Unity",
+          "Learning C# by Developing Games with Unity",
+          "Unity C# Survival Guide",
+          "Brackeys YouTube Channel"
+        ],
+        "project": "Create a character controller with advanced movement, jumping, and interaction capabilities."
+      },
+      {
+        "title": "2D Game Development",
+        "description": "Learn the specific techniques for creating engaging 2D games.",
+        "topics": ["Sprite Rendering", "Tilemaps", "2D Physics", "Sprite Animation", "Camera Controls", "Particle Effects", "UI for 2D Games"],
+        "resources": [
+          "Unity 2D Game Development Cookbook",
+          "2D Game Development with Unity",
+          "Pixel Art Academy",
+          "Unity 2D Documentation"
+        ],
+        "project": "Build a complete 2D platformer game with levels, enemies, and collectibles."
+      },
+      {
+        "title": "3D Game Development",
+        "description": "Master techniques for creating immersive 3D game worlds.",
+        "topics": ["3D Models & Rigging", "Navigation & Pathfinding", "3D Physics", "Level Design", "Terrain Systems", "Lighting", "Post-Processing"],
+        "resources": [
+          "Unity 3D Game Development by Example",
+          "3D Game Design with Unreal Engine",
+          "Level Up Your 3D Modeling",
+          "Unity 3D Documentation"
+        ],
+        "project": "Create a 3D adventure game with exploration, interaction, and basic combat."
+      },
+      {
+        "title": "Game UI & UX Design",
+        "description": "Design intuitive interfaces and smooth user experiences for players.",
+        "topics": ["Unity UI System", "Menus & HUDs", "Health Bars", "Inventory Systems", "UI Animation", "User Experience Principles", "Accessibility"],
+        "resources": [
+          "Unity UI Cookbook",
+          "Game UI Design",
+          "The Art of Game Design",
+          "Unity UI Toolkit Documentation"
+        ],
+        "project": "Design and implement a complete game UI including menus, HUD, and inventory system."
+      },
+      {
+        "title": "Audio for Games",
+        "description": "Add immersive sound to enhance the player experience.",
+        "topics": ["Unity Audio System", "Sound Effects", "Background Music", "Audio Mixing", "Spatial Audio", "Dynamic Audio", "Voice Acting"],
+        "resources": [
+          "Unity Audio Implementation",
+          "Game Audio Theory",
+          "Designing Sound for Games",
+          "FMOD Integration with Unity"
+        ],
+        "project": "Create a dynamic audio system for your game with adaptive music and environmental sounds."
+      },
+      {
+        "title": "Game Design Principles",
+        "description": "Learn the theory and practice of creating engaging gameplay.",
+        "topics": ["Game Mechanics", "Level Design", "Balancing", "Player Psychology", "Game Feel", "Progression Systems", "Storytelling"],
+        "resources": [
+          "The Art of Game Design: A Book of Lenses",
+          "Level Up! The Guide to Great Video Game Design",
+          "Game Design Workshop",
+          "Game Mechanics: Advanced Game Design"
+        ],
+        "project": "Design and document a complete game concept with mechanics, levels, and progression."
+      },
+      {
+        "title": "Optimization & Performance",
+        "description": "Ensure your game runs smoothly across different hardware.",
+        "topics": ["Profiling", "Memory Management", "Draw Calls", "LOD Systems", "Occlusion Culling", "Asset Optimization", "Mobile Optimization"],
+        "resources": [
+          "Unity Optimization Cookbook",
+          "High Performance Mobile with Unity",
+          "Unity Profiler Documentation",
+          "Mobile Game Development with Unity"
+        ],
+        "project": "Optimize a game to run at 60 FPS on target hardware with performance profiling."
+      },
+      {
+        "title": "Publishing & Monetization",
+        "description": "Learn to ship your game to players and potentially generate revenue.",
+        "topics": ["Build Settings", "Platform-Specific Considerations", "App Store Submission", "Marketing Basics", "Analytics", "Monetization Models"],
+        "resources": [
+          "Unity Publishing Documentation",
+          "The Indie Game Marketing Guide",
+          "Freemium Economics",
+          "Game Business & Legal Guide"
+        ],
+        "project": "Prepare a game for release on a platform of your choice with proper settings and assets."
+      }
+    ]
+  },
+  {
+    "id": "cybersecurity-analyst",
+    "title": "Cybersecurity Analyst",
+    "category": "Cybersecurity",
+    "tagline": "Protect digital assets and defend against cyber threats.",
+    "image": "/ai.jpeg",
+    "duration": "14-20 weeks",
+    "difficulty": "Challenging",
+    "popularity": "Critical Need",
+    "description": "Cybersecurity analysts protect organizations from digital threats by monitoring systems, identifying vulnerabilities, responding to incidents, and implementing security measures to safeguard sensitive information and infrastructure.",
+    "path": [
+      {
+        "title": "Computer & OS Fundamentals",
+        "description": "Build a solid understanding of computing systems that need protection.",
+        "topics": ["Windows Administration", "Linux Basics", "Command Line", "System Architecture", "File Systems", "Permissions", "Registry"],
+        "resources": [
+          "CompTIA A+ Certification Guide",
+          "Linux Command Line for Beginners",
+          "Windows Security Fundamentals",
+          "How Computers Work"
+        ],
+        "project": "Set up a secure dual-boot system with hardened configurations for both operating systems."
+      },
+      {
+        "title": "Networking Fundamentals",
+        "description": "Understand the protocols and infrastructure that attackers target.",
+        "topics": ["OSI & TCP/IP Models", "Routing & Switching", "Common Protocols", "Subnets & VLANs", "DNS", "Network Topologies", "Firewalls"],
+        "resources": [
+          "CompTIA Network+ Certification Guide",
+          "Practical Packet Analysis with Wireshark",
+          "Networking All-in-One For Dummies",
+          "Cisco Networking Academy"
+        ],
+        "project": "Set up a small network with proper segmentation and analyze traffic with Wireshark."
+      },
+      {
+        "title": "Cybersecurity Principles",
+        "description": "Learn the core concepts and frameworks of information security.",
+        "topics": ["CIA Triad", "Defense in Depth", "Principle of Least Privilege", "NIST Framework", "ISO 27001", "Security Policies", "Risk Management"],
+        "resources": [
+          "CompTIA Security+ Certification Guide",
+          "CISSP All-in-One Exam Guide",
+          "NIST Cybersecurity Framework",
+          "Introduction to Information Security"
+        ],
+        "project": "Develop a comprehensive security policy for a small organization with risk assessment."
+      },
+      {
+        "title": "Security Tools & Technologies",
+        "description": "Get hands-on with essential tools used by security professionals.",
+        "topics": ["Nmap", "Wireshark", "Metasploit", "Burp Suite", "Kali Linux", "OpenVAS", "Password Crackers", "Encryption Tools"],
+        "resources": [
+          "Kali Linux Revealed",
+          "Nmap Network Scanning",
+          "The Web Application Hacker's Handbook",
+          "TryHackMe Security Labs"
+        ],
+        "project": "Perform a comprehensive security assessment of a vulnerable machine (like DVWA or Metasploitable)."
+      },
+      {
+        "title": "Vulnerability Assessment",
+        "description": "Learn to identify and evaluate security weaknesses systematically.",
+        "topics": ["Vulnerability Scanning", "OWASP Top 10", "Common Vulnerabilities", "Severity Rating", "Vulnerability Management", "Patch Management"],
+        "resources": [
+          "Mastering Kali Linux for Advanced Penetration Testing",
+          "OWASP Testing Guide",
+          "The Art of Software Security Assessment",
+          "HackerOne Resources"
+        ],
+        "project": "Conduct a full vulnerability assessment of a web application and produce a professional report."
+      },
+      {
+        "title": "Threat Intelligence",
+        "description": "Gather and analyze information about current and emerging threat actors and their tactics.",
+        "topics": ["Threat Intelligence Lifecycle", "IOCs (Indicators of Compromise)", "Threat Feeds", "MITRE ATT&CK Framework", "Threat Hunting", "Dark Web Monitoring"],
+        "resources": [
+          "Intelligence-Driven Incident Response",
+          "MITRE ATT&CK Documentation",
+          "Threat Intelligence Handbook",
+          "Mandiant Threat Intelligence Reports"
+        ],
+        "project": "Set up a threat intelligence platform and integrate multiple threat feeds for analysis."
+      },
+      {
+        "title": "Security Operations & Monitoring",
+        "description": "Monitor systems for security incidents and respond effectively.",
+        "topics": ["SIEM Tools (Splunk, ELK)", "Log Analysis", "Security Monitoring", "Alert Triage", "Security Operations Center (SOC)", "Incident Response"],
+        "resources": [
+          "Splunk Fundamentals",
+          "The Practice of Network Security Monitoring",
+          "Blue Team Handbook",
+          "Practical Malware Analysis"
+        ],
+        "project": "Set up a SIEM solution, create detection rules, and respond to simulated security incidents."
+      },
+      {
+        "title": "Cloud Security",
+        "description": "Secure assets and workloads in cloud environments.",
+        "topics": ["AWS/Azure/GCP Security", "Cloud Security Models", "Identity Access Management", "Container Security", "Cloud Compliance", "DevSecOps"],
+        "resources": [
+          "AWS Security Best Practices",
+          "Azure Security Center Documentation",
+          "Cloud Security Alliance Guidance",
+          "Practical Cloud Security"
+        ],
+        "project": "Implement and audit security for a multi-tier application in a public cloud environment."
+      },
+      {
+        "title": "Cryptography & PKI",
+        "description": "Understand the mathematical foundations of secure communications.",
+        "topics": ["Symmetric & Asymmetric Encryption", "Hashing", "Digital Signatures", "Certificates", "TLS/SSL", "PKI Infrastructure", "Key Management"],
+        "resources": [
+          "Cryptography and Network Security",
+          "Practical Cryptography for Developers",
+          "Understanding PKI",
+          "SSL/TLS Deployment Best Practices"
+        ],
+        "project": "Set up a complete PKI infrastructure with a certificate authority and implement secure communications."
+      },
+      {
+        "title": "Incident Response & Forensics",
+        "description": "Learn to respond to security breaches and investigate them thoroughly.",
+        "topics": ["Incident Response Process", "Digital Forensics", "Memory Analysis", "Disk Forensics", "Network Forensics", "Chain of Custody", "Reporting"],
+        "resources": [
+          "Incident Response & Computer Forensics",
+          "SANS Incident Handler's Handbook",
+          "Digital Forensics with Kali Linux",
+          "NIST Computer Security Incident Handling Guide"
+        ],
+        "project": "Perform a complete incident response and forensic analysis for a simulated security breach."
+      }
+    ]
+  }
 ]

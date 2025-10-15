@@ -1,0 +1,512 @@
+{
+  "branches": {
+    "computer-science--engineering": {
+      "name": "Computer Science & Engineering",
+      "shortName": "CSE",
+      "totalSemesters": 8,
+      "color": "blue",
+      "description": "Computer Science and Engineering is a comprehensive program that covers software development, algorithms, computer systems, and emerging technologies.",
+      "semesters": {
+        "1": {
+          "name": "Semester 1",
+          "term": "First Year - First Semester",
+          "subjects": [
+            {
+              "name": "Mathematics I (Calculus & Linear Algebra)",
+              "code": "MA101",
+              "credits": 4,
+              "type": "Core",
+              "description": "Fundamental mathematical concepts including calculus, matrices, and linear algebra essential for computer science applications.",
+              "topics": ["Differential Calculus", "Integral Calculus", "Matrices", "Determinants", "Vector Spaces"],
+              "prerequisites": [],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Physics I (Mechanics & Properties of Matter)",
+              "code": "PH101", 
+              "credits": 4,
+              "type": "Core",
+              "description": "Basic physics concepts covering mechanics, waves, and material properties with applications in technology.",
+              "topics": ["Classical Mechanics", "Oscillations", "Waves", "Properties of Matter", "Fluid Mechanics"],
+              "prerequisites": [],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Programming in C",
+              "code": "CS101",
+              "credits": 4,
+              "type": "Core",
+              "description": "Introduction to programming using C language, covering basic programming concepts and problem-solving techniques.",
+              "topics": ["C Syntax", "Data Types", "Control Structures", "Functions", "Pointers", "File Handling"],
+              "prerequisites": [],
+              "difficulty": "Easy",
+              "hours": 5
+            },
+            {
+              "name": "Engineering Graphics",
+              "code": "EG101",
+              "credits": 2,
+              "type": "Core",
+              "description": "Technical drawing and geometric construction principles for engineering applications.",
+              "topics": ["Orthographic Projections", "Isometric Views", "Sectional Views", "Technical Drawing"],
+              "prerequisites": [],
+              "difficulty": "Easy",
+              "hours": 3
+            },
+            {
+              "name": "English Communication",
+              "code": "EN101",
+              "credits": 3,
+              "type": "Core",
+              "description": "English language skills for technical communication and professional development.",
+              "topics": ["Technical Writing", "Presentation Skills", "Business Communication", "Grammar"],
+              "prerequisites": [],
+              "difficulty": "Easy",
+              "hours": 3
+            }
+          ]
+        },
+        "2": {
+          "name": "Semester 2",
+          "term": "First Year - Second Semester",
+          "subjects": [
+            {
+              "name": "Mathematics II (Differential Equations)",
+              "code": "MA102",
+              "credits": 4,
+              "type": "Core",
+              "description": "Advanced mathematics including differential equations, transforms, and numerical methods.",
+              "topics": ["Differential Equations", "Laplace Transforms", "Fourier Series", "Numerical Methods"],
+              "prerequisites": ["MA101"],
+              "difficulty": "Hard",
+              "hours": 4
+            },
+            {
+              "name": "Physics II (Electricity & Magnetism)",
+              "code": "PH102",
+              "credits": 4,
+              "type": "Core",
+              "description": "Electromagnetic theory, circuits, and electronic devices fundamentals.",
+              "topics": ["Electric Fields", "Magnetic Fields", "AC/DC Circuits", "Semiconductor Physics"],
+              "prerequisites": ["PH101"],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Data Structures",
+              "code": "CS102",
+              "credits": 4,
+              "type": "Core",
+              "description": "Fundamental data structures and their applications in algorithm design.",
+              "topics": ["Arrays", "Linked Lists", "Stacks", "Queues", "Trees", "Graphs"],
+              "prerequisites": ["CS101"],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Digital Logic Design",
+              "code": "CS103",
+              "credits": 3,
+              "type": "Core",
+              "description": "Boolean algebra, combinational and sequential circuits, and digital system design.",
+              "topics": ["Boolean Algebra", "Logic Gates", "Combinational Circuits", "Sequential Circuits", "Flip-Flops"],
+              "prerequisites": [],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Environmental Science",
+              "code": "EV101",
+              "credits": 2,
+              "type": "Core",
+              "description": "Environmental awareness and sustainable development practices.",
+              "topics": ["Ecology", "Environmental Pollution", "Natural Resources", "Sustainability"],
+              "prerequisites": [],
+              "difficulty": "Easy",
+              "hours": 2
+            }
+          ]
+        },
+        "3": {
+          "name": "Semester 3",
+          "term": "Second Year - First Semester",
+          "subjects": [
+            {
+              "name": "Discrete Mathematics",
+              "code": "MA201",
+              "credits": 4,
+              "type": "Core",
+              "description": "Mathematical structures and concepts essential for computer science including logic, sets, and graph theory.",
+              "topics": ["Mathematical Logic", "Set Theory", "Relations", "Graph Theory", "Combinatorics"],
+              "prerequisites": ["MA102"],
+              "difficulty": "Hard",
+              "hours": 4
+            },
+            {
+              "name": "Computer Organization & Architecture",
+              "code": "CS201",
+              "credits": 4,
+              "type": "Core",
+              "description": "Computer hardware architecture, instruction sets, and system organization.",
+              "topics": ["CPU Architecture", "Memory Systems", "I/O Systems", "Assembly Language", "Performance"],
+              "prerequisites": ["CS103"],
+              "difficulty": "Hard",
+              "hours": 4
+            },
+            {
+              "name": "Object Oriented Programming",
+              "code": "CS202",
+              "credits": 4,
+              "type": "Core",
+              "description": "Object-oriented programming concepts using Java or C++.",
+              "topics": ["Classes & Objects", "Inheritance", "Polymorphism", "Encapsulation", "Abstract Classes"],
+              "prerequisites": ["CS102"],
+              "difficulty": "Medium",
+              "hours": 5
+            },
+            {
+              "name": "Database Management Systems",
+              "code": "CS203",
+              "credits": 4,
+              "type": "Core",
+              "description": "Database design, SQL, and database management principles.",
+              "topics": ["ER Modeling", "Normalization", "SQL", "Transaction Management", "Concurrency Control"],
+              "prerequisites": ["CS102"],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Operating Systems",
+              "code": "CS204",
+              "credits": 4,
+              "type": "Core",
+              "description": "Operating system concepts, processes, memory management, and file systems.",
+              "topics": ["Process Management", "Memory Management", "File Systems", "Synchronization", "Deadlocks"],
+              "prerequisites": ["CS201"],
+              "difficulty": "Hard",
+              "hours": 4
+            }
+          ]
+        },
+        "4": {
+          "name": "Semester 4",
+          "term": "Second Year - Second Semester",
+          "subjects": [
+            {
+              "name": "Algorithms & Analysis",
+              "code": "CS301",
+              "credits": 4,
+              "type": "Core",
+              "description": "Algorithm design techniques and complexity analysis.",
+              "topics": ["Sorting & Searching", "Divide & Conquer", "Dynamic Programming", "Greedy Algorithms", "Graph Algorithms"],
+              "prerequisites": ["CS102", "MA201"],
+              "difficulty": "Hard",
+              "hours": 4
+            },
+            {
+              "name": "Computer Networks",
+              "code": "CS302",
+              "credits": 4,
+              "type": "Core",
+              "description": "Network protocols, architecture, and communication systems.",
+              "topics": ["OSI Model", "TCP/IP", "Routing", "Network Security", "Wireless Networks"],
+              "prerequisites": ["CS204"],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Software Engineering",
+              "code": "CS303",
+              "credits": 3,
+              "type": "Core",
+              "description": "Software development methodologies and project management.",
+              "topics": ["SDLC", "Requirements Analysis", "Design Patterns", "Testing", "Project Management"],
+              "prerequisites": ["CS202"],
+              "difficulty": "Medium",
+              "hours": 3
+            },
+            {
+              "name": "Theory of Computation",
+              "code": "CS304",
+              "credits": 3,
+              "type": "Core",
+              "description": "Formal languages, automata theory, and computational complexity.",
+              "topics": ["Finite Automata", "Context-Free Grammars", "Turing Machines", "Complexity Classes"],
+              "prerequisites": ["MA201"],
+              "difficulty": "Hard",
+              "hours": 3
+            },
+            {
+              "name": "Web Technologies",
+              "code": "CS305",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Web development using HTML, CSS, JavaScript, and frameworks.",
+              "topics": ["HTML5", "CSS3", "JavaScript", "React/Angular", "Node.js"],
+              "prerequisites": ["CS202"],
+              "difficulty": "Medium",
+              "hours": 4
+            }
+          ]
+        },
+        "5": {
+          "name": "Semester 5",
+          "term": "Third Year - First Semester",
+          "subjects": [
+            {
+              "name": "Compiler Design",
+              "code": "CS401",
+              "credits": 4,
+              "type": "Core",
+              "description": "Design and implementation of compilers and interpreters.",
+              "topics": ["Lexical Analysis", "Syntax Analysis", "Semantic Analysis", "Code Generation", "Optimization"],
+              "prerequisites": ["CS304"],
+              "difficulty": "Hard",
+              "hours": 4
+            },
+            {
+              "name": "Machine Learning",
+              "code": "CS402",
+              "credits": 4,
+              "type": "Core",
+              "description": "Machine learning algorithms and artificial intelligence concepts.",
+              "topics": ["Supervised Learning", "Unsupervised Learning", "Neural Networks", "Deep Learning", "NLP"],
+              "prerequisites": ["CS301", "MA201"],
+              "difficulty": "Hard",
+              "hours": 4
+            },
+            {
+              "name": "Computer Graphics",
+              "code": "CS403",
+              "credits": 3,
+              "type": "Elective",
+              "description": "2D and 3D graphics programming and rendering techniques.",
+              "topics": ["2D Graphics", "3D Transformations", "Rasterization", "Shading", "OpenGL"],
+              "prerequisites": ["CS202"],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Cybersecurity",
+              "code": "CS404",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Information security, cryptography, and network security.",
+              "topics": ["Cryptography", "Network Security", "Web Security", "Digital Forensics", "Ethical Hacking"],
+              "prerequisites": ["CS302"],
+              "difficulty": "Medium",
+              "hours": 3
+            },
+            {
+              "name": "Mobile App Development",
+              "code": "CS405",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Development of mobile applications for Android and iOS platforms.",
+              "topics": ["Android Development", "iOS Development", "React Native", "Flutter", "Mobile UI/UX"],
+              "prerequisites": ["CS202"],
+              "difficulty": "Medium",
+              "hours": 4
+            }
+          ]
+        },
+        "6": {
+          "name": "Semester 6",
+          "term": "Third Year - Second Semester",
+          "subjects": [
+            {
+              "name": "Distributed Systems",
+              "code": "CS501",
+              "credits": 4,
+              "type": "Core",
+              "description": "Design and implementation of distributed computing systems.",
+              "topics": ["Distributed Algorithms", "Consistency Models", "Fault Tolerance", "MapReduce", "Cloud Computing"],
+              "prerequisites": ["CS302", "CS204"],
+              "difficulty": "Hard",
+              "hours": 4
+            },
+            {
+              "name": "Data Mining & Analytics",
+              "code": "CS502",
+              "credits": 4,
+              "type": "Core",
+              "description": "Data mining techniques and big data analytics.",
+              "topics": ["Association Rules", "Classification", "Clustering", "Big Data", "Data Warehousing"],
+              "prerequisites": ["CS203", "CS402"],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Human Computer Interaction",
+              "code": "CS503",
+              "credits": 3,
+              "type": "Elective",
+              "description": "User interface design and usability principles.",
+              "topics": ["UI/UX Design", "Usability Testing", "Interaction Design", "Accessibility", "User Research"],
+              "prerequisites": ["CS202"],
+              "difficulty": "Easy",
+              "hours": 3
+            },
+            {
+              "name": "Internet of Things",
+              "code": "CS504",
+              "credits": 3,
+              "type": "Elective",
+              "description": "IoT systems, sensors, and connected device programming.",
+              "topics": ["IoT Architecture", "Sensor Networks", "Edge Computing", "IoT Security", "Smart Systems"],
+              "prerequisites": ["CS302"],
+              "difficulty": "Medium",
+              "hours": 4
+            },
+            {
+              "name": "Blockchain Technology",
+              "code": "CS505",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Blockchain fundamentals and cryptocurrency systems.",
+              "topics": ["Blockchain Basics", "Smart Contracts", "Cryptocurrency", "DeFi", "NFTs"],
+              "prerequisites": ["CS302"],
+              "difficulty": "Medium",
+              "hours": 3
+            }
+          ]
+        },
+        "7": {
+          "name": "Semester 7",
+          "term": "Fourth Year - First Semester",
+          "subjects": [
+            {
+              "name": "Project Management",
+              "code": "CS601",
+              "credits": 3,
+              "type": "Core",
+              "description": "Software project management and team leadership skills.",
+              "topics": ["Agile Methodologies", "Scrum", "Risk Management", "Quality Assurance", "Team Management"],
+              "prerequisites": ["CS303"],
+              "difficulty": "Easy",
+              "hours": 3
+            },
+            {
+              "name": "Advanced Algorithms",
+              "code": "CS602",
+              "credits": 4,
+              "type": "Elective",
+              "description": "Advanced algorithmic techniques and optimization.",
+              "topics": ["Advanced Graph Algorithms", "Approximation Algorithms", "Randomized Algorithms", "Parallel Algorithms"],
+              "prerequisites": ["CS301"],
+              "difficulty": "Hard",
+              "hours": 4
+            },
+            {
+              "name": "Cloud Computing",
+              "code": "CS603",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Cloud platforms, services, and deployment strategies.",
+              "topics": ["AWS", "Azure", "Docker", "Kubernetes", "Microservices"],
+              "prerequisites": ["CS501"],
+              "difficulty": "Medium",
+              "hours": 3
+            },
+            {
+              "name": "Artificial Intelligence",
+              "code": "CS604",
+              "credits": 4,
+              "type": "Elective",
+              "description": "AI techniques, expert systems, and knowledge representation.",
+              "topics": ["Search Algorithms", "Knowledge Representation", "Expert Systems", "Computer Vision", "Robotics"],
+              "prerequisites": ["CS402"],
+              "difficulty": "Hard",
+              "hours": 4
+            },
+            {
+              "name": "Major Project I",
+              "code": "CS605",
+              "credits": 4,
+              "type": "Core",
+              "description": "First phase of capstone project development.",
+              "topics": ["Project Planning", "Literature Review", "System Design", "Prototype Development"],
+              "prerequisites": [],
+              "difficulty": "Medium",
+              "hours": 6
+            }
+          ]
+        },
+        "8": {
+          "name": "Semester 8",
+          "term": "Fourth Year - Second Semester",
+          "subjects": [
+            {
+              "name": "Professional Ethics",
+              "code": "CS701",
+              "credits": 2,
+              "type": "Core",
+              "description": "Ethics in technology and professional responsibility.",
+              "topics": ["Professional Ethics", "Privacy", "Intellectual Property", "Social Impact of Technology"],
+              "prerequisites": [],
+              "difficulty": "Easy",
+              "hours": 2
+            },
+            {
+              "name": "Quantum Computing",
+              "code": "CS702",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Quantum computing principles and quantum algorithms.",
+              "topics": ["Quantum Bits", "Quantum Gates", "Quantum Algorithms", "Quantum Cryptography"],
+              "prerequisites": ["CS301"],
+              "difficulty": "Hard",
+              "hours": 3
+            },
+            {
+              "name": "DevOps & Automation",
+              "code": "CS703",
+              "credits": 3,
+              "type": "Elective",
+              "description": "DevOps practices, CI/CD, and automation tools.",
+              "topics": ["CI/CD", "Jenkins", "Docker", "Ansible", "Infrastructure as Code"],
+              "prerequisites": ["CS303"],
+              "difficulty": "Medium",
+              "hours": 3
+            },
+            {
+              "name": "Entrepreneurship",
+              "code": "EN701",
+              "credits": 2,
+              "type": "Elective",
+              "description": "Startup development and business planning for tech ventures.",
+              "topics": ["Business Planning", "Startup Ecosystem", "Funding", "Product Development", "Marketing"],
+              "prerequisites": [],
+              "difficulty": "Easy",
+              "hours": 2
+            },
+            {
+              "name": "Major Project II",
+              "code": "CS704",
+              "credits": 6,
+              "type": "Core",
+              "description": "Final phase of capstone project development and presentation.",
+              "topics": ["Implementation", "Testing", "Documentation", "Presentation", "Deployment"],
+              "prerequisites": ["CS605"],
+              "difficulty": "Medium",
+              "hours": 8
+            },
+            {
+              "name": "Industrial Training",
+              "code": "CS705",
+              "credits": 2,
+              "type": "Core",
+              "description": "Internship or industry exposure program.",
+              "topics": ["Industry Exposure", "Professional Skills", "Real-world Applications"],
+              "prerequisites": [],
+              "difficulty": "Easy",
+              "hours": 2
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,198 @@
+[
+  {
+    "level": "10th",
+    "description": "10th grade education focuses on fundamental concepts across core subjects, preparing students for higher education choices.",
+    "branches": [
+      {
+        "title": "Mathematics",
+        "link": "/folders/mathematics-10"
+      },
+      {
+        "title": "Science",
+        "link": "/folders/science-10"
+      },
+      {
+        "title": "Social Studies",
+        "link": "/folders/social-10"
+      },
+      {
+        "title": "English",
+        "link": "/folders/english-10"
+      },
+      {
+        "title": "Hindi",
+        "link": "/folders/hindi-10"
+      },
+      {
+        "title": "Information Technology",
+        "link": "/folders/it-10"
+      },
+      {
+        "title": "Physical Education",
+        "link": "/folders/pe-10"
+      },
+      {
+        "title": "Board Exam Preparation",
+        "link": "/folders/board-10"
+      }
+    ]
+  },
+  {
+    "level": "Intermediate",
+    "description": "Intermediate education (11th & 12th) allows students to specialize in streams like Science, Commerce, or Arts before entering undergraduate programs.",
+    "branches": [
+      {
+        "title": "Physics",
+        "link": "/folders/physics-inter"
+      },
+      {
+        "title": "Chemistry",
+        "link": "/folders/chemistry-inter"
+      },
+      {
+        "title": "Mathematics",
+        "link": "/folders/mathematics-inter"
+      },
+      {
+        "title": "Biology",
+        "link": "/folders/biology-inter"
+      },
+      {
+        "title": "Commerce",
+        "link": "/folders/commerce-inter"
+      },
+      {
+        "title": "Economics",
+        "link": "/folders/economics-inter"
+      },
+      {
+        "title": "Computer Science",
+        "link": "/folders/cs-inter"
+      },
+      {
+        "title": "JEE Preparation",
+        "link": "/folders/jee-inter"
+      },
+      {
+        "title": "NEET Preparation",
+        "link": "/folders/neet-inter"
+      },
+      {
+        "title": "Arts",
+        "link": "/folders/arts-inter"
+      },
+      {
+        "title": "Humanities",
+        "link": "/folders/humanities-inter"
+      }
+    ]
+  },
+  {
+    "level": "UG",
+    "description": "Undergraduate programs provide specialized knowledge in various engineering and professional fields, typically spanning 3-4 years of study.",
+    "branches": [
+      {
+        "title": "Computer Science & Engineering",
+        "link": "/folders/cse"
+      },
+      {
+        "title": "Electrical Engineering",
+        "link": "/folders/ee"
+      },
+      {
+        "title": "Mechanical Engineering",
+        "link": "/folders/me"
+      },
+      {
+        "title": "Civil Engineering",
+        "link": "/folders/ce"
+      },
+      {
+        "title": "Electronics & Communication",
+        "link": "/folders/ece"
+      },
+      {
+        "title": "Information Technology",
+        "link": "/folders/it"
+      },
+      {
+        "title": "Chemical Engineering",
+        "link": "/folders/che"
+      },
+      {
+        "title": "Biotechnology",
+        "link": "/folders/bt"
+      },
+      {
+        "title": "Medicine & Healthcare",
+        "link": "/folders/med"
+      },
+      {
+        "title": "Commerce & Management",
+        "link": "/folders/com"
+      },
+      {
+        "title": "Arts & Humanities",
+        "link": "/folders/arts"
+      },
+      {
+        "title": "Law",
+        "link": "/folders/law"
+      }
+    ]
+  },
+  {
+    "level": "PG",
+    "description": "Postgraduate studies offer advanced specialization and research opportunities for students who have completed their undergraduate education.",
+    "branches": [
+      {
+        "title": "Computer Science & Engineering",
+        "link": "/folders/pg-cse"
+      },
+      {
+        "title": "Electrical Engineering",
+        "link": "/folders/pg-ee"
+      },
+      {
+        "title": "Mechanical Engineering",
+        "link": "/folders/pg-me"
+      },
+      {
+        "title": "Civil Engineering",
+        "link": "/folders/pg-ce"
+      },
+      {
+        "title": "Electronics & Communication",
+        "link": "/folders/pg-ece"
+      },
+      {
+        "title": "Information Technology",
+        "link": "/folders/pg-it"
+      },
+      {
+        "title": "Data Science",
+        "link": "/folders/pg-ds"
+      },
+      {
+        "title": "Artificial Intelligence",
+        "link": "/folders/pg-ai"
+      },
+      {
+        "title": "MBA",
+        "link": "/folders/pg-mba"
+      },
+      {
+        "title": "Medicine & Specializations",
+        "link": "/folders/pg-med"
+      },
+      {
+        "title": "Law",
+        "link": "/folders/pg-law"
+      },
+      {
+        "title": "Ph.D. Programs",
+        "link": "/folders/pg-phd"
+      }
+    ]
+  }
+]

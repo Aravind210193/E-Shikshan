@@ -13,10 +13,12 @@ module.exports = (req, res, next) => {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Add user from payload
-    req.user = decoded;
+    // Add user from payload with id property
+    req.user = { ...decoded, id: decoded.id };
+    console.log('Authenticated user ID:', req.user.id);
     next();
   } catch (err) {
+    console.error('Token verification error:', err);
     res.status(401).json({ message: 'Token is not valid' });
   }
 };

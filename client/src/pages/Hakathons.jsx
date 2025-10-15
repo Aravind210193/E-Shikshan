@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { SlidersHorizontal, X, Calendar, Trophy, Tag, Flag, Users } from "lucide-react";
+import { SlidersHorizontal, X, Calendar, Trophy, Tag, Flag, Users, Search } from "lucide-react";
 import hackathons from "../data/hackathons.json";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Custom scrollbar styles
 const scrollbarStyles = `
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(31, 41, 55, 0.5);
-    border-radius: 3px;
+    background: rgba(31, 41, 55, 0.3);
+    border-radius: 4px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(236, 72, 153, 0.5);
-    border-radius: 3px;
+    background: linear-gradient(to bottom, #ec4899, #8b5cf6);
+    border-radius: 4px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(236, 72, 153, 0.7);
+    background: linear-gradient(to bottom, #f472b6, #a78bfa);
   }
   .custom-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: rgba(236, 72, 153, 0.5) rgba(31, 41, 55, 0.5);
+    scrollbar-color: #ec4899 #1f2937;
   }
 `;
 
@@ -38,11 +38,11 @@ const addScrollbarStyles = () => {
 // FilterGroup Component
 const FilterGroup = ({ title, options, selected, onChange }) => {
   return (
-    <div className="bg-gray-700/30 rounded-lg p-4 backdrop-blur-sm">
-      <h3 className="text-lg font-semibold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
+    <div className="bg-gray-700/30 rounded-xl p-4 backdrop-blur-sm border border-gray-600/50">
+      <h3 className="text-lg font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">
         {title}
       </h3>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-3">
         {options.map((option) => (
           <label
             key={option}
@@ -52,7 +52,7 @@ const FilterGroup = ({ title, options, selected, onChange }) => {
               type="checkbox"
               checked={selected.includes(option)}
               onChange={() => onChange(option)}
-              className="w-4 h-4 rounded border-gray-600 text-pink-500 focus:ring-purple-600 focus:ring-offset-gray-800"
+              className="w-4 h-4 rounded border-gray-500 text-pink-500 focus:ring-purple-600 focus:ring-offset-gray-800 bg-gray-800"
             />
             <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
               {option}
@@ -67,11 +67,14 @@ const FilterGroup = ({ title, options, selected, onChange }) => {
 // HackathonCard Component
 const HackathonCard = ({ hackathon, isSelected, onClick }) => (
   <motion.div
+    layout
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.2 }}
     onClick={onClick}
-    className={`group relative overflow-hidden rounded-xl shadow-lg cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
-      isSelected ? "ring-2 ring-pink-500" : "hover:ring-2 hover:ring-purple-500"
+    className={`group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
+      isSelected ? "ring-2 ring-pink-500 shadow-pink-500/20" : "hover:ring-2 hover:ring-purple-500"
     }`}
   >
     <div className="relative h-48 overflow-hidden">
@@ -80,19 +83,19 @@ const HackathonCard = ({ hackathon, isSelected, onClick }) => (
         alt={hackathon.title}
         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-80" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-4">
-        <h3 className="text-lg font-bold text-white mb-1">{hackathon.title}</h3>
-        <p className="text-sm text-gray-200">{hackathon.tagline}</p>
+        <h3 className="text-xl font-bold text-white mb-1 truncate">{hackathon.title}</h3>
+        <p className="text-sm text-gray-300 truncate">{hackathon.tagline}</p>
       </div>
     </div>
-    <div className="p-4 bg-gray-800/90 space-y-2">
+    <div className="p-4 bg-gray-800/90 backdrop-blur-sm space-y-3">
       <div className="flex items-center gap-2 text-sm text-gray-300">
-        <Calendar className="w-4 h-4 text-pink-500" />
+        <Calendar className="w-4 h-4 text-pink-400" />
         <span>{hackathon.startDate} - {hackathon.endDate}</span>
       </div>
       <div className="flex items-center gap-2 text-sm text-gray-300">
-        <Trophy className="w-4 h-4 text-purple-500" />
+        <Trophy className="w-4 h-4 text-purple-400" />
         <span>{hackathon.prize}</span>
       </div>
     </div>
@@ -101,6 +104,7 @@ const HackathonCard = ({ hackathon, isSelected, onClick }) => (
 
 export default function Hakathons() {
   const [selectedHackathon, setSelectedHackathon] = useState(hackathons[0]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
     user: [],
     category: [],
@@ -153,25 +157,36 @@ export default function Hakathons() {
     }));
   };
 
-  // Filter hackathons based on selected filters
+  // Filter hackathons based on selected filters and search term
   const filteredHackathons = hackathons.filter((h) => {
     const userMatch = filters.user.length === 0 || filters.user.includes(h.user);
     const categoryMatch = filters.category.length === 0 || filters.category.includes(h.category);
     const paymentMatch = filters.payment.length === 0 || filters.payment.includes(h.payment);
     const eventTypeMatch = filters.eventType.length === 0 || filters.eventType.includes(h.EventType);
-    return userMatch && categoryMatch && paymentMatch && eventTypeMatch;
+    const searchMatch = searchTerm === "" || h.title.toLowerCase().includes(searchTerm.toLowerCase()) || h.tagline.toLowerCase().includes(searchTerm.toLowerCase());
+    return userMatch && categoryMatch && paymentMatch && eventTypeMatch && searchMatch;
   });
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex flex-col">
+    <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white min-h-screen flex flex-col">
       {/* Header and Filter Bar */}
-      <div className="bg-gradient-to-r from-gray-900 to-gray-800 border-b border-pink-500/30 px-4 sm:px-6 py-4 sticky top-0 z-10 backdrop-blur-sm bg-opacity-90 shadow-[0_0_15px_rgba(236,72,153,0.1)]">
-        <div className="max-w-7xl mx-auto">
+      <header className="bg-black/30 backdrop-blur-lg border-b border-pink-500/20 px-4 sm:px-6 py-4 sticky top-0 z-20 shadow-lg">
+        <div className="max-w-8xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
-              Discover Hackathons
+            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
+              Hackathon Hub
             </h1>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 w-full sm:w-auto">
+              <div className="relative flex-grow sm:flex-grow-0">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search hackathons..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full sm:w-64 bg-gray-800/50 border border-gray-700 rounded-lg pl-10 pr-4 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
+                />
+              </div>
               <button
                 onClick={() => setShowFilterModal(true)}
                 className="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 px-4 py-2 rounded-lg hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
@@ -179,124 +194,170 @@ export default function Hakathons() {
                 <SlidersHorizontal className="w-5 h-5" />
                 <span className="hidden sm:inline">Filters</span>
               </button>
-              
-              <div className="flex gap-2 flex-wrap">
-                {Object.entries(filters).map(([key, values]) =>
-                  values.map((value) => (
-                    <motion.span
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      key={`${key}-${value}`}
-                      className="bg-gradient-to-r from-pink-600 to-purple-700 px-3 py-1 rounded-full text-sm cursor-pointer flex items-center gap-2 hover:from-pink-700 hover:to-purple-800 transition-all duration-300 shadow-md"
-                      onClick={() => clearFilter(key, value)}
-                    >
-                      {value} <X size={14} />
-                    </motion.span>
-                  ))
-                )}
-              </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Main Content with Independent Scrolling */}
-      <div className="flex flex-col lg:flex-row flex-1">
-        {/* Left Panel: Hackathon Cards */}
-        <div className="w-full lg:w-1/3 bg-gray-900/80 lg:h-[calc(100vh-64px)] flex flex-col border-b lg:border-b-0 lg:border-r border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.15)]">
-          <div className="p-4 overflow-y-auto custom-scrollbar">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-              {filteredHackathons.length > 0 ? (
-                filteredHackathons.map((hackathon) => (
-                  <HackathonCard
-                    key={hackathon.id}
-                    hackathon={hackathon}
-                    isSelected={selectedHackathon?.id === hackathon.id}
-                    onClick={() => setSelectedHackathon(hackathon)}
-                  />
+          <AnimatePresence>
+            <div className="flex gap-2 flex-wrap mt-4">
+              {Object.entries(filters).map(([key, values]) =>
+                values.map((value) => (
+                  <motion.span
+                    layout
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    key={`${key}-${value}`}
+                    className="bg-gradient-to-r from-pink-600/50 to-purple-700/50 border border-pink-500/30 px-3 py-1 rounded-full text-sm cursor-pointer flex items-center gap-2 hover:from-pink-700/60 hover:to-purple-800/60 transition-all duration-300 shadow-md"
+                    onClick={() => clearFilter(key, value)}
+                  >
+                    {value} <X size={14} />
+                  </motion.span>
                 ))
-              ) : (
-                <div className="col-span-full flex flex-col items-center justify-center p-8 text-gray-400">
-                  <Flag className="w-12 h-12 mb-4" />
-                  <p className="text-lg font-semibold">No hackathons match your filters</p>
-                  <p className="text-sm">Try adjusting your filters to see more results</p>
-                </div>
               )}
             </div>
-          </div>
+          </AnimatePresence>
         </div>
+      </header>
+
+      {/* Main Content with Independent Scrolling */}
+      <main className="flex flex-col lg:flex-row flex-1 overflow-hidden">
+        {/* Left Panel: Hackathon Cards */}
+        <aside className="w-full lg:w-1/3 xl:w-1/4 bg-black/20 lg:h-[calc(100vh-120px)] flex flex-col border-b lg:border-b-0 lg:border-r border-pink-500/20 shadow-lg">
+          <div className="p-4 overflow-y-auto custom-scrollbar">
+            <AnimatePresence>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                {filteredHackathons.length > 0 ? (
+                  filteredHackathons.map((hackathon) => (
+                    <HackathonCard
+                      key={hackathon.id}
+                      hackathon={hackathon}
+                      isSelected={selectedHackathon?.id === hackathon.id}
+                      onClick={() => setSelectedHackathon(hackathon)}
+                    />
+                  ))
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="col-span-full flex flex-col items-center justify-center p-8 text-gray-400 text-center"
+                  >
+                    <Flag className="w-12 h-12 mb-4 text-pink-500" />
+                    <p className="text-lg font-semibold">No hackathons found</p>
+                    <p className="text-sm">Try clearing some filters or adjusting your search.</p>
+                  </motion.div>
+                )}
+              </div>
+            </AnimatePresence>
+          </div>
+        </aside>
 
         {/* Right Panel: Selected Hackathon Details */}
-        <div className="flex-1 bg-gray-900/50 lg:h-[calc(100vh-64px)]">
+        <section className="flex-1 bg-black/10 lg:h-[calc(100vh-120px)]">
           <div className="h-full p-4 lg:p-8 overflow-y-auto custom-scrollbar">
-            {selectedHackathon ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Banner */}
-                <div className="relative h-48 sm:h-64 rounded-xl overflow-hidden mb-6 shadow-2xl">
-                  <img
-                    src={selectedHackathon.bgimage}
-                    alt={selectedHackathon.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent">
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
-                        {selectedHackathon.title}
-                      </h1>
-                      <p className="text-lg text-gray-200">{selectedHackathon.tagline}</p>
+            <AnimatePresence mode="wait">
+              {selectedHackathon ? (
+                <motion.div
+                  key={selectedHackathon.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Banner */}
+                  <div className="relative h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-2xl shadow-black/50">
+                    <img
+                      src={selectedHackathon.bgimage}
+                      alt={selectedHackathon.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <motion.h1
+                          initial={{ y: 10, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.1 }}
+                          className="text-3xl sm:text-5xl font-extrabold text-white mb-2"
+                        >
+                          {selectedHackathon.title}
+                        </motion.h1>
+                        <motion.p
+                          initial={{ y: 10, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.2 }}
+                          className="text-lg text-gray-200"
+                        >
+                          {selectedHackathon.tagline}
+                        </motion.p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Info Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                  {[
-                    { icon: Calendar, label: "Duration", value: `${selectedHackathon.startDate} - ${selectedHackathon.endDate}` },
-                    { icon: Flag, label: "Status", value: selectedHackathon.status },
-                    { icon: Tag, label: "Category", value: selectedHackathon.category },
-                    { icon: Trophy, label: "Prize Pool", value: selectedHackathon.prize }
-                  ].map((item, index) => (
-                    <div key={index} className="bg-gray-800/50 rounded-lg p-4 backdrop-blur-sm">
-                      <item.icon className="w-6 h-6 text-pink-500 mb-2" />
-                      <p className="text-sm text-gray-400">{item.label}</p>
-                      <p className="text-base font-semibold text-white">{item.value}</p>
-                    </div>
-                  ))}
-                </div>
+                  {/* Info Cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    {[
+                      { icon: Calendar, label: "Duration", value: `${selectedHackathon.startDate} - ${selectedHackathon.endDate}` },
+                      { icon: Flag, label: "Status", value: selectedHackathon.status },
+                      { icon: Tag, label: "Category", value: selectedHackathon.category },
+                      { icon: Trophy, label: "Prize Pool", value: selectedHackathon.prize }
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 * index }}
+                        className="bg-gray-800/50 rounded-xl p-4 backdrop-blur-sm border border-gray-700/50"
+                      >
+                        <item.icon className="w-7 h-7 text-pink-400 mb-3" />
+                        <p className="text-sm text-gray-400">{item.label}</p>
+                        <p className="text-base font-semibold text-white">{item.value}</p>
+                      </motion.div>
+                    ))}
+                  </div>
 
-                {/* Overview */}
-                <div className="bg-gray-800/30 rounded-xl p-6 mb-6 backdrop-blur-sm">
-                  <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
-                    Overview
-                  </h2>
-                  <p className="text-gray-300 leading-relaxed">
-                    {selectedHackathon.overview}
-                  </p>
-                </div>
+                  {/* Overview */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="bg-gray-800/30 rounded-2xl p-6 mb-8 backdrop-blur-sm border border-gray-700/50"
+                  >
+                    <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">
+                      Overview
+                    </h2>
+                    <p className="text-gray-300 leading-relaxed whitespace-pre-line">
+                      {selectedHackathon.overview}
+                    </p>
+                  </motion.div>
 
-                {/* View More Button */}
-                <Link
-                  to={`/hackathon/${selectedHackathon.id}`}
-                  className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-3 rounded-lg font-semibold text-white hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  {/* View More Button */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <Link
+                      to={`/hackathon/${selectedHackathon.id}`}
+                      className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 px-10 py-4 rounded-lg font-semibold text-white hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/20"
+                    >
+                      View Full Details & Register
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="no-selection"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="h-full flex flex-col items-center justify-center text-gray-500 p-8 text-center"
                 >
-                  View Full Details
-                </Link>
-              </motion.div>
-            ) : (
-              <div className="h-full flex flex-col items-center justify-center text-gray-400 p-8">
-                <Users className="w-16 h-16 mb-4" />
-                <p className="text-xl font-semibold">Select a hackathon to view details</p>
-                <p className="text-sm">Browse through our exciting hackathon opportunities</p>
-              </div>
-            )}
+                  <Users className="w-20 h-20 mb-6 text-gray-600" />
+                  <p className="text-2xl font-semibold">Select a hackathon</p>
+                  <p className="text-base mt-2">Choose a hackathon from the list to see its details.</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
 
       {/* Filter Modal */}
       <AnimatePresence>
@@ -305,27 +366,29 @@ export default function Hakathons() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-md flex items-center justify-center z-50 p-4"
+            onClick={() => setShowFilterModal(false)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl w-full max-w-md p-6"
+              className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl w-full max-w-lg p-6 border border-gray-700"
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
+                <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">
                   Filter Hackathons
                 </h2>
                 <button
                   onClick={() => setShowFilterModal(false)}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
 
-              <div className="space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar">
+              <div className="space-y-6 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2">
                 <FilterGroup
                   title="User"
                   options={users}
@@ -352,16 +415,19 @@ export default function Hakathons() {
                 />
               </div>
 
-              <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-700">
+              <div className="flex justify-end gap-4 mt-8 pt-6 border-t border-gray-700">
                 <button
-                  onClick={() => setShowFilterModal(false)}
-                  className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-colors duration-300"
+                  onClick={() => {
+                    setFilters({ user: [], category: [], payment: [], eventType: [] });
+                    setShowFilterModal(false);
+                  }}
+                  className="px-5 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-colors duration-300 font-medium"
                 >
-                  Cancel
+                  Clear All
                 </button>
                 <button
                   onClick={() => setShowFilterModal(false)}
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300"
+                  className="px-5 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 transition-all duration-300 font-semibold"
                 >
                   Apply Filters
                 </button>
