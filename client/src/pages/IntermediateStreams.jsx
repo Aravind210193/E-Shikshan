@@ -1,211 +1,159 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, Users, Star, GraduationCap, FlaskConical, Calculator, Briefcase } from 'lucide-react';
+import { ArrowLeft, BookOpen, Users, Star, GraduationCap, FlaskConical, Briefcase, ChevronRight } from 'lucide-react';
 import semesterData from '../data/semesterData.json';
 
 const IntermediateStreams = () => {
   const intermediateData = semesterData.intermediate;
 
-  const streamIcons = {
-    science: FlaskConical,
-    commerce: Briefcase,
-    arts: BookOpen
-  };
-
-  const streamColors = {
+  const streamInfo = {
     science: {
-      gradient: 'from-blue-600 to-indigo-600',
-      bg: 'bg-blue-900',
-      text: 'text-blue-300',
-      border: 'border-blue-500'
+      Icon: FlaskConical,
+      theme: {
+        accent: 'bg-blue-600', text: 'text-blue-400', border: 'border-blue-500', hover: 'hover:bg-blue-700', lightBg: 'bg-blue-900/50',
+      },
+      careers: ['Engineering & Technology', 'Medical & Healthcare', 'Research & Development', 'Pure Sciences', 'Architecture']
     },
     commerce: {
-      gradient: 'from-green-600 to-emerald-600',
-      bg: 'bg-green-900',
-      text: 'text-green-300',
-      border: 'border-green-500'
+      Icon: Briefcase,
+      theme: {
+        accent: 'bg-emerald-600', text: 'text-emerald-400', border: 'border-emerald-500', hover: 'hover:bg-emerald-700', lightBg: 'bg-emerald-900/50',
+      },
+      careers: ['Business Administration', 'Accounting & Finance', 'Economics & Banking', 'Entrepreneurship', 'Chartered Accountancy']
     },
     arts: {
-      gradient: 'from-purple-600 to-violet-600',
-      bg: 'bg-purple-900',
-      text: 'text-purple-300',
-      border: 'border-purple-500'
+      Icon: BookOpen,
+      theme: {
+        accent: 'bg-purple-600', text: 'text-purple-400', border: 'border-purple-500', hover: 'hover:bg-purple-700', lightBg: 'bg-purple-900/50',
+      },
+      careers: ['Liberal Arts & Humanities', 'Social Sciences', 'Psychology & Sociology', 'Literature & Languages', 'Fine Arts & Media']
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-slate-900 text-white font-sans">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-8">
+      <header className="sticky top-0 z-30 bg-slate-900/70 backdrop-blur-lg border-b border-slate-700 p-4">
         <div className="max-w-7xl mx-auto">
-          <Link 
-            to="/content" 
-            className="inline-flex items-center text-white hover:text-blue-200 mb-4 transition-colors duration-200"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Education Levels
-          </Link>
-          <div className="flex items-center mb-4">
-            <GraduationCap className="h-8 w-8 text-white mr-3" />
-            <div>
-              <h1 className="text-4xl font-bold text-white mb-1">
-                {intermediateData.name}
-              </h1>
-              <p className="text-blue-100 text-lg">
-                Choose Your Academic Stream
-              </p>
-            </div>
+          <div className="flex justify-between items-center mb-4">
+            <Link to="/content" className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors">
+              <ArrowLeft size={20} />
+              <span className="hidden sm:inline">Back to Education Levels</span>
+            </Link>
+            <span className="px-3 py-1 text-sm font-semibold rounded-full bg-slate-700 flex items-center gap-2">
+              <GraduationCap size={16} />
+              {intermediateData.name}
+            </span>
           </div>
-          <p className="text-blue-100">
-            {intermediateData.description}
-          </p>
+          <h1 className="text-3xl font-bold text-white">{intermediateData.description}</h1>
         </div>
-      </div>
+      </header>
 
-      {/* Streams Selection */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <h2 className="text-2xl font-bold text-white mb-8 text-center">
-          Select Your Specialization Stream
-        </h2>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto p-4">
+        <div className="text-center my-8">
+          <h2 className="text-2xl font-bold text-white mb-2">Choose Your Academic Path</h2>
+          <p className="text-slate-400">Select a stream to explore subjects and career opportunities.</p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {Object.entries(intermediateData.streams).map(([streamId, streamData]) => {
-            const IconComponent = streamIcons[streamId] || BookOpen;
-            const colors = streamColors[streamId] || streamColors.science;
-            
-            // Get sample semester data for display
+        {/* Streams Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {Object.entries(intermediateData.streams).map(([streamId, streamData], index) => {
+            const { Icon, theme } = streamInfo[streamId];
             const sampleSemester = streamData.semesters['1'];
-            
+            const totalSemesters = Object.keys(streamData.semesters).length;
+            const creditsPerSem = sampleSemester.subjects.reduce((total, subject) => total + subject.credits, 0);
+
             return (
               <motion.div
                 key={streamId}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Object.keys(intermediateData.streams).indexOf(streamId) * 0.1 }}
-                className={`bg-gray-800 rounded-xl p-6 border border-gray-700 hover:${colors.border} transition-all duration-300 shadow-lg`}
+                transition={{ delay: index * 0.1 }}
               >
-                <div className="text-center">
-                  <div className={`bg-gradient-to-r ${colors.gradient} text-white p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center`}>
-                    <IconComponent className="h-8 w-8" />
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-white mb-3">{streamData.name}</h3>
-                  
-                  {/* Stream Statistics */}
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center justify-center text-gray-300">
-                      <Users className="h-4 w-4 mr-2" />
-                      <span>{sampleSemester.subjects.length} Core Subjects</span>
-                    </div>
-                    <div className="flex items-center justify-center text-gray-300">
-                      <BookOpen className="h-4 w-4 mr-2" />
-                      <span>{Object.keys(streamData.semesters).length} Semesters</span>
-                    </div>
-                    <div className="flex items-center justify-center text-gray-300">
-                      <Star className="h-4 w-4 mr-2" />
-                      <span>
-                        {sampleSemester.subjects.reduce((total, subject) => total + subject.credits, 0)} Credits/Semester
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Sample Subjects */}
-                  <div className="mb-4">
-                    <p className="text-gray-400 text-sm mb-2">Key Subjects:</p>
-                    <div className="grid grid-cols-1 gap-1 text-xs">
-                      {sampleSemester.subjects.slice(0, 3).map((subject, idx) => (
-                        <div key={idx} className={`${colors.bg} bg-opacity-30 ${colors.text} px-2 py-1 rounded`}>
-                          {subject.name}
+                <Link to={`/content/intermediate/${streamId}`} className="block h-full">
+                  <div className={`bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:${theme.border} transition-all duration-300 flex flex-col h-full group`}>
+                    <div className="flex-grow">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className={`p-3 rounded-lg ${theme.accent}`}>
+                          <Icon size={24} />
                         </div>
-                      ))}
-                      {sampleSemester.subjects.length > 3 && (
-                        <div className="bg-gray-700 text-gray-300 px-2 py-1 rounded">
-                          +{sampleSemester.subjects.length - 3} more subjects
+                        <div>
+                          <h3 className="text-xl font-bold text-white">{streamData.name}</h3>
+                          <p className={`${theme.text} font-semibold`}>Higher Secondary</p>
                         </div>
-                      )}
-                    </div>
-                  </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                        <div className="flex items-center gap-2 text-slate-300">
+                          <Users size={16} className={theme.text} />
+                          <span>{sampleSemester.subjects.length} Subjects</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-300">
+                          <BookOpen size={16} className={theme.text} />
+                          <span>{totalSemesters} Semesters</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-300">
+                          <Star size={16} className={theme.text} />
+                          <span>{creditsPerSem} Credits/Sem</span>
+                        </div>
+                      </div>
 
-                  {/* Stream Navigation Button */}
-                  <div className="space-y-2">
-                    <Link 
-                      to={`/content/intermediate/${streamId}`}
-                      className={`block bg-gradient-to-r ${colors.gradient} hover:opacity-90 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200`}
-                    >
-                      Enter {streamData.name}
-                    </Link>
-                    
-                    {/* Quick Access to Semesters */}
-                    <div className="text-xs space-y-1">
-                      {Object.entries(streamData.semesters).map(([semId, semData]) => (
-                        <Link 
-                          key={semId}
-                          to={`/intermediate/${streamId}/${semId}`}
-                          className="block text-gray-400 hover:text-white transition-colors"
-                        >
-                          → {semData.name}
-                        </Link>
-                      ))}
+                      <p className="text-sm text-slate-400 mb-2">Key Subjects:</p>
+                      <div className="space-y-2">
+                        {sampleSemester.subjects.slice(0, 3).map((subject) => (
+                          <div key={subject.code} className="flex items-center gap-2 text-sm bg-slate-700/50 p-2 rounded-md">
+                            <div className={`w-1.5 h-1.5 rounded-full ${theme.accent}`}></div>
+                            <span className="text-slate-300">{subject.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-6">
+                      <div className={`w-full ${theme.accent} ${theme.hover} text-white px-6 py-3 rounded-lg font-semibold transition-colors flex justify-between items-center`}>
+                        <span>Explore {streamData.name}</span>
+                        <ChevronRight size={20} className="transform group-hover:translate-x-1 transition-transform" />
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Stream Comparison */}
-        <div className="mt-12 bg-gray-800 rounded-xl p-6 border border-gray-700">
+        {/* Career Paths Section */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mt-12 bg-slate-800/50 rounded-xl p-6 border border-slate-700"
+        >
           <h3 className="text-xl font-bold text-white mb-6 text-center">
-            Stream Comparison & Career Paths
+            Potential Career Paths
           </h3>
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <h4 className="text-blue-400 font-semibold mb-3 flex items-center justify-center">
-                <FlaskConical className="h-5 w-5 mr-2" />
-                Science Stream
-              </h4>
-              <ul className="text-gray-400 text-sm space-y-1">
-                <li>• Engineering & Technology</li>
-                <li>• Medical & Healthcare</li>
-                <li>• Research & Development</li>
-                <li>• Pure Sciences</li>
-                <li>• Architecture & Design</li>
-              </ul>
-            </div>
-            
-            <div className="text-center">
-              <h4 className="text-green-400 font-semibold mb-3 flex items-center justify-center">
-                <Briefcase className="h-5 w-5 mr-2" />
-                Commerce Stream
-              </h4>
-              <ul className="text-gray-400 text-sm space-y-1">
-                <li>• Business Administration</li>
-                <li>• Accounting & Finance</li>
-                <li>• Economics & Banking</li>
-                <li>• Entrepreneurship</li>
-                <li>• Chartered Accountancy</li>
-              </ul>
-            </div>
-            
-            <div className="text-center">
-              <h4 className="text-purple-400 font-semibold mb-3 flex items-center justify-center">
-                <BookOpen className="h-5 w-5 mr-2" />
-                Arts Stream
-              </h4>
-              <ul className="text-gray-400 text-sm space-y-1">
-                <li>• Liberal Arts & Humanities</li>
-                <li>• Social Sciences</li>
-                <li>• Psychology & Sociology</li>
-                <li>• Literature & Languages</li>
-                <li>• Fine Arts & Media</li>
-              </ul>
-            </div>
+            {Object.entries(streamInfo).map(([streamId, info]) => (
+              <div key={streamId} className={`${info.theme.lightBg} p-4 rounded-lg`}>
+                <h4 className={`${info.theme.text} font-semibold mb-3 flex items-center gap-2`}>
+                  <info.Icon size={18} />
+                  {intermediateData.streams[streamId].name}
+                </h4>
+                <ul className="space-y-2">
+                  {info.careers.map(career => (
+                    <li key={career} className="flex items-start gap-2 text-sm text-slate-300">
+                      <ChevronRight size={14} className={`mt-1 flex-shrink-0 ${info.theme.text}`} />
+                      <span>{career}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </main>
     </div>
   );
 };

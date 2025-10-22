@@ -14,36 +14,36 @@ const Content = () => {
   // Define themes for each education level
   const themes = {
     '10th': {
-      heroGradient: 'from-green-500 to-teal-500',
-      selectedButton: 'bg-green-600',
-      accentColor: 'text-green-400',
-      secondaryAccent: 'text-teal-300',
-      tagBg: 'bg-green-900 bg-opacity-50',
-      tagText: 'text-green-200',
+      heroGradient: 'from-sky-500 to-cyan-500',
+      selectedButton: 'bg-sky-600',
+      accentColor: 'text-sky-400',
+      secondaryAccent: 'text-cyan-300',
+      tagBg: 'bg-sky-900 bg-opacity-50',
+      tagText: 'text-sky-200',
     },
     'Intermediate': {
-      heroGradient: 'from-blue-500 to-indigo-500',
-      selectedButton: 'bg-blue-600',
-      accentColor: 'text-blue-400',
-      secondaryAccent: 'text-indigo-300',
-      tagBg: 'bg-blue-900 bg-opacity-50',
-      tagText: 'text-blue-200',
+      heroGradient: 'from-teal-500 to-emerald-500',
+      selectedButton: 'bg-teal-600',
+      accentColor: 'text-teal-400',
+      secondaryAccent: 'text-emerald-300',
+      tagBg: 'bg-teal-900 bg-opacity-50',
+      tagText: 'text-teal-200',
     },
     'UG': {
-      heroGradient: 'from-purple-600 to-violet-600',
-      selectedButton: 'bg-purple-600',
-      accentColor: 'text-purple-400',
-      secondaryAccent: 'text-violet-300',
-      tagBg: 'bg-purple-900 bg-opacity-50',
-      tagText: 'text-purple-200',
+      heroGradient: 'from-violet-500 to-purple-500',
+      selectedButton: 'bg-violet-600',
+      accentColor: 'text-violet-400',
+      secondaryAccent: 'text-purple-300',
+      tagBg: 'bg-violet-900 bg-opacity-50',
+      tagText: 'text-violet-200',
     },
     'PG': {
-      heroGradient: 'from-gray-700 to-gray-800',
-      selectedButton: 'bg-gray-600',
-      accentColor: 'text-gray-400',
-      secondaryAccent: 'text-gray-300',
-      tagBg: 'bg-gray-900 bg-opacity-50',
-      tagText: 'text-gray-200',
+      heroGradient: 'from-indigo-500 to-blue-500',
+      selectedButton: 'bg-indigo-600',
+      accentColor: 'text-indigo-400',
+      secondaryAccent: 'text-blue-300',
+      tagBg: 'bg-indigo-900 bg-opacity-50',
+      tagText: 'text-indigo-200',
     }
   };
 
@@ -121,21 +121,21 @@ const Content = () => {
             <div className='max-w-md mx-auto relative'>
               <div className={`flex items-center backdrop-blur-lg rounded-full p-1 pl-6 shadow-lg ${
                 selectedLevel === '10th' 
-                  ? 'bg-green-400/30 border-2 border-green-300/50' 
+                  ? 'bg-cyan-400/30 border-2 border-cyan-300/50' 
                   : selectedLevel === 'Intermediate'
-                  ? 'bg-blue-500/30 border-2 border-blue-300/50'
+                  ? 'bg-emerald-500/30 border-2 border-emerald-300/50'
                   : selectedLevel === 'UG'
-                  ? 'bg-purple-500/30 border-2 border-purple-300/50'
-                  : 'bg-gray-600/30 border-2 border-gray-400/50'
+                  ? 'bg-amber-500/30 border-2 border-amber-300/50'
+                  : 'bg-rose-600/30 border-2 border-rose-400/50'
               }`}>
                 <Search className={`h-5 w-5 mr-2 ${
                   selectedLevel === '10th' 
-                    ? 'text-green-100' 
+                    ? 'text-cyan-100' 
                     : selectedLevel === 'Intermediate'
-                    ? 'text-blue-100'
+                    ? 'text-emerald-100'
                     : selectedLevel === 'UG'
-                    ? 'text-purple-100'
-                    : 'text-gray-100'
+                    ? 'text-amber-100'
+                    : 'text-rose-100'
                 }`} />
                 <input 
                   type='text' 
@@ -144,12 +144,12 @@ const Content = () => {
                   placeholder={`Search ${selectedLevel} branches...`}
                   className={`bg-transparent border-none outline-none w-full py-2 ${
                     selectedLevel === '10th' 
-                      ? 'text-green-50 placeholder-green-200' 
+                      ? 'text-cyan-50 placeholder-cyan-200' 
                       : selectedLevel === 'Intermediate'
-                      ? 'text-blue-50 placeholder-blue-200'
+                      ? 'text-emerald-50 placeholder-emerald-200'
                       : selectedLevel === 'UG'
-                      ? 'text-purple-50 placeholder-purple-200'
-                      : 'text-gray-50 placeholder-gray-200'
+                      ? 'text-amber-50 placeholder-amber-200'
+                      : 'text-rose-50 placeholder-rose-200'
                   }`}
                 />
                 <motion.button 
@@ -167,9 +167,9 @@ const Content = () => {
         {/* Decorative elements */}
         <div className='hidden md:block absolute bottom-0 left-0 -mb-6 ml-6'>
           <div className='flex space-x-2'>
-            <div className='w-4 h-4 bg-blue-400 rounded-full'></div>
-            <div className='w-4 h-4 bg-purple-400 rounded-full'></div>
-            <div className='w-4 h-4 bg-pink-400 rounded-full'></div>
+            <div className='w-4 h-4 bg-cyan-400 rounded-full'></div>
+            <div className='w-4 h-4 bg-emerald-400 rounded-full'></div>
+            <div className='w-4 h-4 bg-amber-400 rounded-full'></div>
           </div>
         </div>
       </motion.div>
@@ -219,36 +219,36 @@ const Content = () => {
             <BookOpen className={`w-8 h-8 ${theme.accentColor} mr-2`} />
             <h2 className={`text-3xl font-bold ${
               selectedLevel === '10th' 
-                ? 'text-green-100' 
+                ? 'text-cyan-100' 
                 : selectedLevel === 'Intermediate'
-                ? 'text-blue-100'
+                ? 'text-emerald-100'
                 : selectedLevel === 'UG'
-                ? 'text-purple-100'
-                : 'text-gray-100'
+                ? 'text-amber-100'
+                : 'text-rose-100'
             }`}>{selectedLevel} Branches</h2>
           </div>
           
           <div className='flex space-x-4'>
             <button className={`px-4 py-2 rounded-full flex items-center font-medium transition-all duration-300 ${
               selectedLevel === '10th' 
-                ? 'bg-green-600/30 hover:bg-green-600/50 text-green-100 border border-green-500/40' 
+                ? 'bg-cyan-600/30 hover:bg-cyan-600/50 text-cyan-100 border border-cyan-500/40' 
                 : selectedLevel === 'Intermediate'
-                ? 'bg-blue-600/30 hover:bg-blue-600/50 text-blue-100 border border-blue-500/40'
+                ? 'bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-100 border border-emerald-500/40'
                 : selectedLevel === 'UG'
-                ? 'bg-purple-600/30 hover:bg-purple-600/50 text-purple-100 border border-purple-500/40'
-                : 'bg-gray-600/30 hover:bg-gray-600/50 text-gray-100 border border-gray-500/40'
+                ? 'bg-amber-600/30 hover:bg-amber-600/50 text-amber-100 border border-amber-500/40'
+                : 'bg-rose-600/30 hover:bg-rose-600/50 text-rose-100 border border-rose-500/40'
             }`}>
               <TrendingUp className='w-4 h-4 mr-2' />
               Popular
             </button>
             <button className={`px-4 py-2 rounded-full flex items-center font-medium transition-all duration-300 ${
               selectedLevel === '10th' 
-                ? 'bg-green-600/30 hover:bg-green-600/50 text-green-100 border border-green-500/40' 
+                ? 'bg-cyan-600/30 hover:bg-cyan-600/50 text-cyan-100 border border-cyan-500/40' 
                 : selectedLevel === 'Intermediate'
-                ? 'bg-blue-600/30 hover:bg-blue-600/50 text-blue-100 border border-blue-500/40'
+                ? 'bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-100 border border-emerald-500/40'
                 : selectedLevel === 'UG'
-                ? 'bg-purple-600/30 hover:bg-purple-600/50 text-purple-100 border border-purple-500/40'
-                : 'bg-gray-600/30 hover:bg-gray-600/50 text-gray-100 border border-gray-500/40'
+                ? 'bg-amber-600/30 hover:bg-amber-600/50 text-amber-100 border border-amber-500/40'
+                : 'bg-rose-600/30 hover:bg-rose-600/50 text-rose-100 border border-rose-500/40'
             }`}>
               <Star className='w-4 h-4 mr-2' />
               Recommended
@@ -315,44 +315,44 @@ const Content = () => {
                 variants={fadeInUp}
                 className={`col-span-full text-center py-10 rounded-xl ${
                   selectedLevel === '10th' 
-                    ? 'bg-green-900/20 border border-green-600/30' 
+                    ? 'bg-cyan-900/20 border border-cyan-600/30' 
                     : selectedLevel === 'Intermediate'
-                    ? 'bg-blue-900/20 border border-blue-600/30'
+                    ? 'bg-emerald-900/20 border border-emerald-600/30'
                     : selectedLevel === 'UG'
-                    ? 'bg-purple-900/20 border border-purple-600/30'
-                    : 'bg-gray-800/50 border border-gray-600/30'
+                    ? 'bg-amber-900/20 border border-amber-600/30'
+                    : 'bg-rose-800/50 border border-rose-600/30'
                 }`}
               >
                 <div className={`text-6xl mb-4 ${
                   selectedLevel === '10th' 
-                    ? 'text-green-400' 
+                    ? 'text-cyan-400' 
                     : selectedLevel === 'Intermediate'
-                    ? 'text-blue-400'
+                    ? 'text-emerald-400'
                     : selectedLevel === 'UG'
-                    ? 'text-purple-400'
-                    : 'text-gray-400'
+                    ? 'text-amber-400'
+                    : 'text-rose-400'
                 }`}>
                   🔍
                 </div>
                 <p className={`text-xl font-medium mb-2 ${
                   selectedLevel === '10th' 
-                    ? 'text-green-100' 
+                    ? 'text-cyan-100' 
                     : selectedLevel === 'Intermediate'
-                    ? 'text-blue-100'
+                    ? 'text-emerald-100'
                     : selectedLevel === 'UG'
-                    ? 'text-purple-100'
-                    : 'text-gray-100'
+                    ? 'text-amber-100'
+                    : 'text-rose-100'
                 }`}>
                   {query ? `No branches found matching "${query}"` : `No branches available for ${selectedLevel}`}
                 </p>
                 <p className={`${
                   selectedLevel === '10th' 
-                    ? 'text-green-300' 
+                    ? 'text-cyan-300' 
                     : selectedLevel === 'Intermediate'
-                    ? 'text-blue-300'
+                    ? 'text-emerald-300'
                     : selectedLevel === 'UG'
-                    ? 'text-purple-300'
-                    : 'text-gray-300'
+                    ? 'text-amber-300'
+                    : 'text-rose-300'
                 }`}>
                   Try adjusting your search or explore other education levels
                 </p>

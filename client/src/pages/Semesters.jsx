@@ -1,282 +1,239 @@
-import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ArrowLeft, BookOpen, Calendar, Users, Clock, Download, Play, CheckCircle, Award, Target } from 'lucide-react'
-import semesterData from '../data/semesterData.json'
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, BookOpen, Calendar, Users, Clock, Download, Play, CheckCircle, Award, Target, ChevronRight } from 'lucide-react';
+import semesterData from '../data/semesterData.json';
 
 const Semesters = () => {
-  const { branch } = useParams()
-  const navigate = useNavigate()
-  const [selectedSemester, setSelectedSemester] = useState(1)
-  const [branchData, setBranchData] = useState(null)
+  const { branch } = useParams();
+  const navigate = useNavigate();
+  const [selectedSemester, setSelectedSemester] = useState(1);
+  const [branchData, setBranchData] = useState(null);
 
-  // Use imported JSON data
-  const branchSyllabusData = semesterData.branches
+  const branchSyllabusData = semesterData.branches;
 
   useEffect(() => {
-    const data = branchSyllabusData[branch]
+    const data = branchSyllabusData[branch];
     if (data) {
-      setBranchData(data)
+      setBranchData(data);
     }
-  }, [branch])
-
-  const getColorClasses = (color) => {
-    const colors = {
-      blue: {
-        bg: 'from-blue-600 to-indigo-600',
-        accent: 'text-blue-400',
-        button: 'bg-blue-600 hover:bg-blue-700',
-        border: 'border-blue-500/30',
-        card: 'bg-blue-900/20'
-      },
-      purple: {
-        bg: 'from-purple-600 to-violet-600',
-        accent: 'text-purple-400',
-        button: 'bg-purple-600 hover:bg-purple-700',
-        border: 'border-purple-500/30',
-        card: 'bg-purple-900/20'
-      },
-      green: {
-        bg: 'from-green-600 to-teal-600',
-        accent: 'text-green-400',
-        button: 'bg-green-600 hover:bg-green-700',
-        border: 'border-green-500/30',
-        card: 'bg-green-900/20'
-      }
-    }
-    return colors[color] || colors.blue
-  }
+  }, [branch, branchSyllabusData]);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+  };
 
   const staggerContainer = {
-    hidden: { opacity: 0 },
+    hidden: {},
     visible: {
-      opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.08
       }
     }
-  }
+  };
 
   if (!branchData) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center">
-        <div className="text-white">
-          <div className="text-xl mb-4">Branch not found!</div>
-          <div className="text-sm">Looking for: {branch}</div>
-          <div className="text-sm mt-2">Available branches:</div>
-          <ul className="text-xs mt-2">
-            {Object.keys(branchSyllabusData).map(key => (
-              <li key={key} className="text-gray-300">- {key}</li>
-            ))}
-          </ul>
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white p-4">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold mb-4">Branch Not Found</h1>
+          <p className="text-gray-400">Could not find data for "{branch}".</p>
+          <button
+            onClick={() => navigate('/content')}
+            className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
+          >
+            Back to Content
+          </button>
         </div>
       </div>
-    )
+    );
   }
 
-  const colorClasses = getColorClasses(branchData.color)
-  const currentSemester = branchData.semesters[selectedSemester]
+  const currentSemester = branchData.semesters[selectedSemester];
 
   return (
-    <div className='min-h-screen bg-gradient-to-b from-gray-900 to-gray-800'>
+    <div className='min-h-screen bg-gray-900 text-white'>
       {/* Header */}
-      <motion.div 
-        className={`relative py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r ${colorClasses.bg} shadow-2xl`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className='max-w-7xl mx-auto'>
-          <motion.button
-            onClick={() => navigate('/content')}
-            className="flex items-center text-white mb-6 hover:text-gray-200 transition-colors"
-            whileHover={{ x: -5 }}
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Branches
-          </motion.button>
-
-          <motion.div 
-            className='text-center'
-            variants={fadeInUp}
-            initial="hidden"
-            animate="visible"
-          >
-            <h1 className='text-4xl sm:text-5xl font-extrabold text-white mb-4'>
-              {branchData.name}
-            </h1>
-            <p className='max-w-2xl mx-auto text-xl text-gray-200 mb-8'>
-              Select a semester to explore subjects and syllabus
-            </p>
-          </motion.div>
-        </div>
-      </motion.div>
-
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
-        {/* Semester Selection */}
-        <motion.div 
-          className="mb-12"
-          variants={fadeInUp}
-          initial="hidden"
-          animate="visible"
-        >
-          <h2 className={`text-2xl font-bold text-white mb-6 flex items-center ${colorClasses.accent}`}>
-            <Calendar className="h-6 w-6 mr-2" />
-            Choose Semester
-          </h2>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            {Array.from({ length: branchData.totalSemesters }, (_, i) => i + 1).map((sem) => (
+      <header className="sticky top-0 z-30 bg-gray-900/80 backdrop-blur-sm border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-20 flex items-center justify-between">
+            <div className="flex items-center gap-4">
               <motion.button
-                key={sem}
-                onClick={() => setSelectedSemester(sem)}
-                className={`p-4 rounded-xl font-semibold transition-all duration-300 ${
-                  selectedSemester === sem
-                    ? `${colorClasses.button} text-white shadow-lg scale-105`
-                    : `bg-gray-800 text-gray-300 hover:bg-gray-700 border ${colorClasses.border}`
-                }`}
-                whileHover={{ scale: selectedSemester === sem ? 1.05 : 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                variants={fadeInUp}
+                onClick={() => navigate('/content/branches')}
+                className="flex items-center text-gray-300 hover:text-white transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Sem {sem}
+                <ArrowLeft className="h-5 w-5" />
               </motion.button>
-            ))}
+              <div>
+                <h1 className='text-xl font-bold text-white'>{branchData.name}</h1>
+                <p className="text-sm text-gray-400">Semester {selectedSemester}</p>
+              </div>
+            </div>
+            <motion.button
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 text-sm"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Download className="h-4 w-4" />
+              <span>Syllabus</span>
+            </motion.button>
+          </div>
+        </div>
+      </header>
+
+      <main className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+        {/* Semester Selection Tabs */}
+        <motion.div className="mb-8" variants={fadeInUp} initial="hidden" animate="visible">
+          <div className="border-b border-gray-700">
+            <nav className="-mb-px flex space-x-6" aria-label="Tabs">
+              {Array.from({ length: branchData.totalSemesters }, (_, i) => i + 1).map((sem) => (
+                <button
+                  key={sem}
+                  onClick={() => setSelectedSemester(sem)}
+                  className={`relative whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                    selectedSemester === sem
+                      ? 'border-blue-500 text-blue-400'
+                      : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500'
+                  }`}
+                >
+                  Semester {sem}
+                </button>
+              ))}
+            </nav>
           </div>
         </motion.div>
 
-        {/* Selected Semester Details */}
-        {currentSemester && (
+        {/* Semester Details */}
+        <AnimatePresence mode="wait">
           <motion.div
             key={selectedSemester}
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
           >
-            <div className="flex justify-between items-center mb-8">
-              <h3 className="text-3xl font-bold text-white">
-                {currentSemester.name}
-              </h3>
-              <div className="flex space-x-4">
-                <motion.button
-                  className={`${colorClasses.button} text-white px-6 py-2 rounded-lg font-medium flex items-center space-x-2`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Download className="h-4 w-4" />
-                  <span>Download Syllabus</span>
-                </motion.button>
-              </div>
-            </div>
-
-            {/* Subjects Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {currentSemester.subjects.map((subject, index) => (
+            {currentSemester && (
+              <>
+                {/* Summary Cards */}
                 <motion.div
-                  key={subject.code}
-                  className={`${colorClasses.card} backdrop-blur-lg border ${colorClasses.border} rounded-xl p-6 cursor-pointer hover:shadow-xl transition-all duration-300`}
-                  variants={fadeInUp}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  onClick={() => navigate(`/subjects/${branch}/${selectedSemester}/${subject.code}`)}
+                  className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  animate="visible"
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <div className={`p-3 ${colorClasses.button} rounded-lg`}>
-                      <BookOpen className="h-6 w-6 text-white" />
-                    </div>
-                    <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                      subject.type === 'Core' 
-                        ? 'bg-green-600/30 text-green-300 border border-green-500/50' 
-                        : 'bg-yellow-600/30 text-yellow-300 border border-yellow-500/50'
-                    }`}>
-                      {subject.type}
-                    </span>
-                  </div>
-
-                  <h4 className="text-lg font-semibold text-white mb-2">
-                    {subject.name}
-                  </h4>
-                  
-                  <p className="text-gray-400 text-sm mb-4">
-                    Course Code: {subject.code}
-                  </p>
-
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center space-x-4 text-sm text-gray-400">
-                      <div className="flex items-center">
-                        <Users className="h-4 w-4 mr-1" />
-                        <span>{subject.credits} Credits</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="h-4 w-4 mr-1" />
-                        <span>4 hrs/week</span>
-                      </div>
-                    </div>
-                    
-                    <motion.button
-                      className="text-gray-400 hover:text-white transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      <Play className="h-5 w-5" />
-                    </motion.button>
-                  </div>
-
-                  {/* Progress indicator */}
-                  <div className="mt-4 pt-4 border-t border-gray-600/30">
-                    <div className="flex justify-between items-center text-xs text-gray-400 mb-1">
-                      <span>Progress</span>
-                      <span>0%</span>
-                    </div>
-                    <div className="w-full bg-gray-700/50 rounded-full h-1.5">
-                      <div className={`h-1.5 ${colorClasses.button} rounded-full`} style={{ width: '0%' }}></div>
-                    </div>
-                  </div>
+                  <StatCard
+                    icon={<BookOpen />}
+                    label="Total Subjects"
+                    value={currentSemester.subjects.length}
+                    color="blue"
+                  />
+                  <StatCard
+                    icon={<Award />}
+                    label="Total Credits"
+                    value={currentSemester.subjects.reduce((sum, subject) => sum + subject.credits, 0)}
+                    color="green"
+                  />
+                  <StatCard
+                    icon={<Target />}
+                    label="Core Subjects"
+                    value={currentSemester.subjects.filter(s => s.type === 'Core').length}
+                    color="purple"
+                  />
+                  <StatCard
+                    icon={<Users />}
+                    label="Electives"
+                    value={currentSemester.subjects.filter(s => s.type === 'Elective').length}
+                    color="yellow"
+                  />
                 </motion.div>
-              ))}
-            </div>
 
-            {/* Semester Summary */}
-            <motion.div
-              className={`mt-12 ${colorClasses.card} backdrop-blur-lg border ${colorClasses.border} rounded-xl p-6`}
-              variants={fadeInUp}
-            >
-              <h4 className="text-xl font-semibold text-white mb-4">Semester Summary</h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                <div>
-                  <div className={`text-2xl font-bold ${colorClasses.accent}`}>
-                    {currentSemester.subjects.length}
+                {/* Subjects List */}
+                <motion.div
+                  className="bg-gray-800/50 border border-gray-700/50 rounded-xl"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  <div className="p-4 border-b border-gray-700">
+                    <h3 className="text-lg font-semibold text-white">Subjects</h3>
                   </div>
-                  <div className="text-gray-400 text-sm">Total Subjects</div>
-                </div>
-                <div>
-                  <div className={`text-2xl font-bold ${colorClasses.accent}`}>
-                    {currentSemester.subjects.reduce((sum, subject) => sum + subject.credits, 0)}
-                  </div>
-                  <div className="text-gray-400 text-sm">Total Credits</div>
-                </div>
-                <div>
-                  <div className={`text-2xl font-bold ${colorClasses.accent}`}>
-                    {currentSemester.subjects.filter(s => s.type === 'Core').length}
-                  </div>
-                  <div className="text-gray-400 text-sm">Core Subjects</div>
-                </div>
-                <div>
-                  <div className={`text-2xl font-bold ${colorClasses.accent}`}>
-                    {currentSemester.subjects.filter(s => s.type === 'Elective').length}
-                  </div>
-                  <div className="text-gray-400 text-sm">Electives</div>
-                </div>
-              </div>
-            </motion.div>
+                  <ul className="divide-y divide-gray-700/50">
+                    {currentSemester.subjects.map((subject) => (
+                      <SubjectListItem
+                        key={subject.code}
+                        subject={subject}
+                        branch={branch}
+                        semester={selectedSemester}
+                        navigate={navigate}
+                      />
+                    ))}
+                  </ul>
+                </motion.div>
+              </>
+            )}
           </motion.div>
-        )}
+        </AnimatePresence>
+      </main>
+    </div>
+  );
+};
+
+const StatCard = ({ icon, label, value, color }) => {
+  const colors = {
+    blue: 'bg-blue-900/50 text-blue-400',
+    green: 'bg-green-900/50 text-green-400',
+    purple: 'bg-purple-900/50 text-purple-400',
+    yellow: 'bg-yellow-900/50 text-yellow-400',
+  };
+
+  return (
+    <motion.div
+      className={`p-4 rounded-lg ${colors[color]}`}
+      variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
+    >
+      <div className="flex items-center gap-4">
+        <div className="text-2xl">{icon}</div>
+        <div>
+          <div className="text-2xl font-bold text-white">{value}</div>
+          <div className="text-sm text-gray-400">{label}</div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const SubjectListItem = ({ subject, branch, semester, navigate }) => (
+  <motion.li
+    variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
+    whileHover={{ backgroundColor: 'rgba(31, 41, 55, 0.5)' }}
+    className="p-4 cursor-pointer"
+    onClick={() => navigate(`/subjects/${branch}/${semester}/${subject.code}`)}
+  >
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center">
+          <BookOpen className="h-6 w-6 text-gray-400" />
+        </div>
+        <div>
+          <h4 className="font-semibold text-white">{subject.name}</h4>
+          <p className="text-sm text-gray-400">Code: {subject.code} &bull; {subject.credits} Credits</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-4">
+        <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+          subject.type === 'Core'
+            ? 'bg-green-900/70 text-green-300'
+            : 'bg-yellow-900/70 text-yellow-300'
+        }`}>
+          {subject.type}
+        </span>
+        <ChevronRight className="h-5 w-5 text-gray-500" />
       </div>
     </div>
-  )
-}
+  </motion.li>
+);
 
-export default Semesters
+export default Semesters;

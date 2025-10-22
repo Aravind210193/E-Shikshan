@@ -21,6 +21,10 @@ import TenthGradeTerms from "../pages/TenthGradeTerms";
 import TenthGradeSubjects from "../pages/TenthGradeSubjects";
 import IntermediateSubjects from "../pages/IntermediateSubjects";
 import PostGraduateSubjects from "../pages/PostGraduateSubjects";
+import IntermediateStreams from "../pages/IntermediateStreams";
+import IntermediateStreamView from "../pages/IntermediateStreamView";
+import PostGraduatePrograms from "../pages/PostGraduatePrograms";
+import PostGraduateProgramView from "../pages/PostGraduateProgramView";
 
 export default function AppRoutes() {
   return (
@@ -45,14 +49,20 @@ export default function AppRoutes() {
       <Route path="/resume-builder" element={<ResumeBuilding />} />
       
       {/* 10th Grade Routes */}
-      <Route path="/10th-grade" element={<TenthGradeTerms />} />
+      <Route path="/content/10th-grade" element={<TenthGradeTerms />} />
       <Route path="/10th-grade/:semester" element={<TenthGradeSubjects />} />
       
       {/* Intermediate Routes */}
+      <Route path="/content/intermediate" element={<IntermediateStreams />} />
+      <Route path="/content/intermediate/:stream" element={<IntermediateStreamView />} />
       <Route path="/intermediate/:stream/:semester" element={<IntermediateSubjects />} />
       
       {/* Post Graduate Routes */}
+      <Route path="/content/postgraduate" element={<PostGraduatePrograms />} />
+      <Route path="/content/postgraduate/:program" element={<PostGraduateProgramView />} />
+      <Route path="/content/postgraduate/:program/:specialization" element={<PostGraduateProgramView />} />
       <Route path="/postgraduate/:program/:specialization/:semester" element={<PostGraduateSubjects />} />
+      {/* This route is for programs without specializations like MBA */}
       <Route path="/postgraduate/:program//:semester" element={<PostGraduateSubjects />} />
     </Routes>
   );

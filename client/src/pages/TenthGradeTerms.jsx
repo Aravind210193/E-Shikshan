@@ -1,132 +1,151 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, Clock, Users, Star } from 'lucide-react';
+import { ArrowLeft, BookOpen, Clock, Users, Star, ChevronRight } from 'lucide-react';
 import semesterData from '../data/semesterData.json';
 
 const TenthGradeTerms = () => {
   const tenthGradeData = semesterData['10th-grade'];
+  const theme = {
+    accent: 'bg-emerald-600',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500',
+    hover: 'hover:bg-emerald-700',
+    lightBg: 'bg-emerald-900/50',
+  };
+
+  const totalSubjects = Object.values(tenthGradeData.semesters).reduce((total, term) => total + term.subjects.length, 0);
+  const totalUnits = Object.values(tenthGradeData.semesters).reduce((total, term) => 
+    total + term.subjects.reduce((termTotal, subject) => termTotal + subject.units.length, 0), 0
+  );
+  const totalHours = Object.values(tenthGradeData.semesters).reduce((total, term) => 
+    total + term.subjects.reduce((termTotal, subject) => 
+      termTotal + subject.units.reduce((unitTotal, unit) => unitTotal + unit.hours, 0), 0
+    ), 0
+  );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-slate-900 text-white font-sans">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-teal-600 px-6 py-8">
+      <header className="sticky top-0 z-30 bg-slate-900/70 backdrop-blur-lg border-b border-slate-700 p-4">
         <div className="max-w-7xl mx-auto">
-          <Link 
-            to="/content" 
-            className="inline-flex items-center text-white hover:text-green-200 mb-4 transition-colors duration-200"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            Back to Education Levels
-          </Link>
-          <h1 className="text-4xl font-bold text-white mb-2">
-            {tenthGradeData.name}
-          </h1>
-          <p className="text-green-100 text-lg">
-            {tenthGradeData.description}
-          </p>
+          <div className="flex justify-between items-center mb-4">
+            <Link to="/content" className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors">
+              <ArrowLeft size={20} />
+              <span className="hidden sm:inline">Back to Education Levels</span>
+            </Link>
+            <span className={`px-3 py-1 text-sm font-semibold rounded-full ${theme.accent}`}>
+              {tenthGradeData.name}
+            </span>
+          </div>
+          <h1 className="text-3xl font-bold text-white">{tenthGradeData.description}</h1>
         </div>
-      </div>
+      </header>
 
-      {/* Terms Selection */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <h2 className="text-2xl font-bold text-white mb-8 text-center">
-          Select Academic Term
-        </h2>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto p-4">
+        <div className="text-center my-8">
+          <h2 className="text-2xl font-bold text-white mb-2">Select an Academic Term</h2>
+          <p className="text-slate-400">Choose a term to view its subjects and curriculum.</p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {Object.entries(tenthGradeData.semesters).map(([termId, termData]) => (
-            <motion.div
-              key={termId}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: parseInt(termId) * 0.1 }}
-              className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-green-500 transition-all duration-300"
-            >
-              <Link to={`/10th-grade/${termId}`}>
-                <div className="text-center">
-                  <div className="bg-green-600 text-white p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                    <BookOpen className="h-8 w-8" />
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-white mb-3">{termData.name}</h3>
-                  
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center justify-center text-gray-300">
-                      <Users className="h-4 w-4 mr-2" />
-                      <span>{termData.subjects.length} Core Subjects</span>
-                    </div>
-                    <div className="flex items-center justify-center text-gray-300">
-                      <Clock className="h-4 w-4 mr-2" />
-                      <span>
-                        {termData.subjects.reduce((total, subject) => 
-                          total + subject.units.reduce((unitTotal, unit) => unitTotal + unit.hours, 0), 0
-                        )} Study Hours
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-center text-gray-300">
-                      <Star className="h-4 w-4 mr-2" />
-                      <span>
-                        {termData.subjects.reduce((total, subject) => total + subject.credits, 0)} Total Credits
-                      </span>
-                    </div>
-                  </div>
+        {/* Terms Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {Object.entries(tenthGradeData.semesters).map(([termId, termData], index) => {
+            const termHours = termData.subjects.reduce((total, subject) => 
+              total + subject.units.reduce((unitTotal, unit) => unitTotal + unit.hours, 0), 0
+            );
+            const termCredits = termData.subjects.reduce((total, subject) => total + subject.credits, 0);
 
-                  <div className="grid grid-cols-2 gap-2 text-xs mb-4">
-                    {termData.subjects.slice(0, 4).map((subject, idx) => (
-                      <div key={idx} className="bg-green-900 bg-opacity-30 text-green-300 px-2 py-1 rounded">
-                        {subject.name}
+            return (
+              <motion.div
+                key={termId}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Link to={`/10th-grade/${termId}`} className="block h-full">
+                  <div className={`bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:${theme.border} transition-all duration-300 flex flex-col h-full group`}>
+                    <div className="flex-grow">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className={`p-3 rounded-lg ${theme.accent}`}>
+                          <BookOpen size={24} />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-white">{termData.name}</h3>
+                          <p className={`${theme.text} font-semibold`}>Foundation Year</p>
+                        </div>
                       </div>
-                    ))}
-                    {termData.subjects.length > 4 && (
-                      <div className="bg-gray-700 text-gray-300 px-2 py-1 rounded col-span-2">
-                        +{termData.subjects.length - 4} more subjects
+                      
+                      <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                        <div className="flex items-center gap-2 text-slate-300">
+                          <Users size={16} className={theme.text} />
+                          <span>{termData.subjects.length} Subjects</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-300">
+                          <Clock size={16} className={theme.text} />
+                          <span>{termHours} Study Hours</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-300">
+                          <Star size={16} className={theme.text} />
+                          <span>{termCredits} Credits</span>
+                        </div>
                       </div>
-                    )}
-                  </div>
 
-                  <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full font-medium transition-colors w-full">
-                    Start {termData.name}
-                  </button>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+                      <div className="space-y-2">
+                        {termData.subjects.slice(0, 3).map((subject) => (
+                          <div key={subject.code} className="flex items-center gap-2 text-sm bg-slate-700/50 p-2 rounded-md">
+                            <div className={`w-1.5 h-1.5 rounded-full ${theme.accent}`}></div>
+                            <span className="text-slate-300">{subject.name}</span>
+                          </div>
+                        ))}
+                        {termData.subjects.length > 3 && (
+                           <div className="flex items-center gap-2 text-sm p-2">
+                             <span className="text-slate-500">+{termData.subjects.length - 3} more...</span>
+                           </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="mt-6">
+                      <div className={`w-full ${theme.accent} ${theme.hover} text-white px-6 py-3 rounded-lg font-semibold transition-colors flex justify-between items-center`}>
+                        <span>View {termData.name}</span>
+                        <ChevronRight size={20} className="transform group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Overview Stats */}
-        <div className="mt-12 bg-gray-800 rounded-xl p-6 border border-gray-700">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mt-12 bg-slate-800/50 rounded-xl p-6 border border-slate-700"
+        >
           <h3 className="text-xl font-bold text-white mb-4 text-center">
-            Class 10th Overview
+            Full Year Overview
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-            <div>
-              <div className="text-2xl font-bold text-green-400 mb-1">
-                {Object.values(tenthGradeData.semesters).reduce((total, term) => total + term.subjects.length, 0)}
-              </div>
-              <div className="text-gray-400">Total Subjects</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+            <div className={`${theme.lightBg} p-4 rounded-lg`}>
+              <div className={`text-3xl font-bold ${theme.text} mb-1`}>{totalSubjects}</div>
+              <div className="text-slate-400">Total Subjects</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-green-400 mb-1">
-                {Object.values(tenthGradeData.semesters).reduce((total, term) => 
-                  total + term.subjects.reduce((termTotal, subject) => termTotal + subject.units.length, 0), 0
-                )}
-              </div>
-              <div className="text-gray-400">Learning Units</div>
+            <div className={`${theme.lightBg} p-4 rounded-lg`}>
+              <div className={`text-3xl font-bold ${theme.text} mb-1`}>{totalUnits}</div>
+              <div className="text-slate-400">Learning Units</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-green-400 mb-1">
-                {Object.values(tenthGradeData.semesters).reduce((total, term) => 
-                  total + term.subjects.reduce((termTotal, subject) => 
-                    termTotal + subject.units.reduce((unitTotal, unit) => unitTotal + unit.hours, 0), 0
-                  ), 0
-                )}
-              </div>
-              <div className="text-gray-400">Study Hours</div>
+            <div className={`${theme.lightBg} p-4 rounded-lg`}>
+              <div className={`text-3xl font-bold ${theme.text} mb-1`}>{totalHours}</div>
+              <div className="text-slate-400">Total Study Hours</div>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </main>
     </div>
   );
 };
