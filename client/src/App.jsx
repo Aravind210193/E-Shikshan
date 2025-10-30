@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Navbar from './components/Navbar'
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
@@ -21,6 +21,7 @@ import JobDetail from './pages/JobDetail'
 import HackathonDetails from './components/HackathonDetails'
 import Profile from './pages/Profile'
 import RoadmapDetail from './pages/RoadmapDetail'
+import CourseDetail from './pages/CourseDetail'
 import TenthGradeTerms from './pages/TenthGradeTerms'
 import TenthGradeSubjects from './pages/TenthGradeSubjects'
 import IntermediateStreams from './pages/IntermediateStreams'
@@ -29,11 +30,41 @@ import IntermediateSubjects from './pages/IntermediateSubjects'
 import PostGraduatePrograms from './pages/PostGraduatePrograms'
 import PostGraduateProgramView from './pages/PostGraduateProgramView'
 import PostGraduateSubjects from './pages/PostGraduateSubjects'
+import ProtectedRoute from './components/ProtectedRoute'
+import Chatbot from './components/Chatbot'
+
+// Admin imports
+import AdminLogin from './pages/Admin/AdminLogin'
+import AdminLayout from './pages/Admin/AdminLayout'
+import AdminDashboard from './pages/Admin/AdminDashboard'
+import AdminUsers from './pages/Admin/AdminUsersV2'
+import AdminCourses from './pages/Admin/AdminCourses'
+import AdminJobs from './pages/Admin/AdminJobs'
+import AdminSettings from './pages/Admin/AdminSettings'
+import AdminHackathons from './pages/Admin/AdminHackathons'
+import AdminRoadmaps from './pages/Admin/AdminRoadmaps'
+import AdminContent from './pages/Admin/AdminContent'
+import AdminResumes from './pages/Admin/AdminResumes'
+import AdminStudents from './pages/Admin/AdminStudents'
+
 const App = () => {
   const location = useLocation();
   const [showNav,setShownNav] = useState(true);
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
-  const hideLayout = ["/login","/signup"].includes(location.pathname);
+  // Initialize state based on localStorage
+  const [isLoggedIn,setIsLoggedIn] = useState(() => {
+    return !!localStorage.getItem('token');
+  });
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
+    return !!localStorage.getItem('adminToken');
+  });
+  
+  // Sync state with localStorage on mount and location change
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  }, [location.pathname]);
+  
+  const hideLayout = ["/login","/signup"].includes(location.pathname) || location.pathname.startsWith('/admin');
   return (
     <>
      <Toaster
@@ -70,7 +101,8 @@ const App = () => {
           <Route path='/subjects/:branchId' element={<Subjects />} />
           <Route path='/folders/:branchId/:subjectId' element={<Folders />} />
           <Route path='/courses' element={<Courses />}/>
-          <Route path='/hackathons' element={<Hakathons />} />
+          <Route path='/courses/:id' element={<CourseDetail />}/>
+          <Route path='/hackathons' element={<Hakathons />}/>
           <Route path='/hackathon/:id' element={<HackathonDetails />} />
           <Route path='/roadmaps' element={<Roadmap />} />
           <Route path='/roadmaps/:id' element={<RoadmapDetail />} />
@@ -79,8 +111,12 @@ const App = () => {
           <Route path='/jobrole' element={<JobRole />} />
           <Route path='/jobs/:id' element={<JobDetail />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn}  /> }  />
-          <Route path='/signup' element={<Signin/>} />
-          <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate to='/login' />} />
+          <Route path='/signup' element={<Signin setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path='/profile' element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Profile />
+            </ProtectedRoute>
+          } />
           
           {/* 10th Grade Routes */}
           <Route path='/10th-grade' element={<TenthGradeTerms />} />
@@ -94,8 +130,46 @@ const App = () => {
           <Route path='/postgraduate' element={<PostGraduatePrograms />} />
           <Route path='/postgraduate/:program/:specialization/:semester' element={<PostGraduateSubjects />} />
           <Route path='/postgraduate/:program//:semester' element={<PostGraduateSubjects />} />
+          
+          {/* Admin Routes */}
+          <Route path='/admin' element={<AdminLogin setIsAdminLoggedIn={setIsAdminLoggedIn} />} />
+          <Route
+            path='/admin/*'
+            element={
+              isAdminLoggedIn ? (
+                <AdminLayout setIsAdminLoggedIn={setIsAdminLoggedIn}>
+                  <Routes>
+                    {localStorage.getItem('adminRole') === 'course_manager' ? (
+                      <>
+                        <Route path='courses' element={<AdminCourses />} />
+                        <Route path='settings' element={<AdminSettings />} />
+                        <Route path='*' element={<Navigate to='/admin/courses' replace />} />
+                      </>
+                    ) : (
+                      <>
+                        <Route path='dashboard' element={<AdminDashboard />} />
+                        <Route path='users' element={<AdminUsers />} />
+                        <Route path='students' element={<AdminStudents />} />
+                        <Route path='courses' element={<AdminCourses />} />
+                        <Route path='jobs' element={<AdminJobs />} />
+                        <Route path='hackathons' element={<AdminHackathons />} />
+                        <Route path='roadmaps' element={<AdminRoadmaps />} />
+                        <Route path='content' element={<AdminContent />} />
+                        <Route path='resumes' element={<AdminResumes />} />
+                        <Route path='settings' element={<AdminSettings />} />
+                        <Route path='*' element={<Navigate to='/admin/dashboard' replace />} />
+                      </>
+                    )}
+                  </Routes>
+                </AdminLayout>
+              ) : (
+                <Navigate to='/admin' replace />
+              )
+            }
+          />
       </Routes>
     {!hideLayout && showNav && <Footer />}
+    <Chatbot />
     </>
   )
 }

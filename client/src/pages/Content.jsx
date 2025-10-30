@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Contentcard from '../components/Contentcard'
 import educationLevelsData from '../data/educationLevels.json'
 import { motion } from 'framer-motion'
-import { Search, BookOpen, TrendingUp, Star, BookOpen as Book, School, GraduationCap } from 'lucide-react'
+import { Search, BookOpen, TrendingUp, Star, BookOpen as Book, School, GraduationCap, HeartPulse } from 'lucide-react'
 
 const Content = () => {
   const [query, setQuery] = useState('');
@@ -14,7 +14,6 @@ const Content = () => {
   // Define themes for each education level
   const themes = {
     '10th': {
-      heroGradient: 'from-sky-500 to-cyan-500',
       selectedButton: 'bg-sky-600',
       accentColor: 'text-sky-400',
       secondaryAccent: 'text-cyan-300',
@@ -22,7 +21,6 @@ const Content = () => {
       tagText: 'text-sky-200',
     },
     'Intermediate': {
-      heroGradient: 'from-teal-500 to-emerald-500',
       selectedButton: 'bg-teal-600',
       accentColor: 'text-teal-400',
       secondaryAccent: 'text-emerald-300',
@@ -30,15 +28,20 @@ const Content = () => {
       tagText: 'text-teal-200',
     },
     'UG': {
-      heroGradient: 'from-violet-500 to-purple-500',
       selectedButton: 'bg-violet-600',
       accentColor: 'text-violet-400',
       secondaryAccent: 'text-purple-300',
       tagBg: 'bg-violet-900 bg-opacity-50',
       tagText: 'text-violet-200',
     },
+    'Medical': {
+      selectedButton: 'bg-rose-600',
+      accentColor: 'text-rose-400',
+      secondaryAccent: 'text-pink-300',
+      tagBg: 'bg-rose-900 bg-opacity-50',
+      tagText: 'text-rose-200',
+    },
     'PG': {
-      heroGradient: 'from-indigo-500 to-blue-500',
       selectedButton: 'bg-indigo-600',
       accentColor: 'text-indigo-400',
       secondaryAccent: 'text-blue-300',
@@ -86,6 +89,8 @@ const Content = () => {
         return <School className="h-5 w-5" />;
       case 'UG':
         return <GraduationCap className="h-5 w-5" />;
+        case 'Medical':
+          return <HeartPulse className="h-5 w-5" />;
       case 'PG':
         return <GraduationCap className="h-5 w-5" />;
       default:
@@ -94,10 +99,10 @@ const Content = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gradient-to-b from-gray-900 to-gray-800'>
+    <div className='min-h-screen bg-gray-900'>
       {/* Hero Section */}
       <motion.div 
-        className={`relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r ${theme.heroGradient} rounded-b-3xl shadow-2xl`}
+        className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gray-800 rounded-b-3xl shadow-2xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -118,49 +123,60 @@ const Content = () => {
             </p>
             
             {/* Search Bar */}
-            <div className='max-w-md mx-auto relative'>
-              <div className={`flex items-center backdrop-blur-lg rounded-full p-1 pl-6 shadow-lg ${
+            <motion.div 
+              className='max-w-md mx-auto relative'
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <div className={`flex items-center backdrop-blur-lg rounded-2xl p-1 pl-6 shadow-2xl border ${
                 selectedLevel === '10th' 
-                  ? 'bg-cyan-400/30 border-2 border-cyan-300/50' 
+                  ? 'bg-cyan-500/20 border-cyan-400/40' 
                   : selectedLevel === 'Intermediate'
-                  ? 'bg-emerald-500/30 border-2 border-emerald-300/50'
+                  ? 'bg-emerald-500/20 border-emerald-400/40'
                   : selectedLevel === 'UG'
-                  ? 'bg-amber-500/30 border-2 border-amber-300/50'
-                  : 'bg-rose-600/30 border-2 border-rose-400/50'
-              }`}>
-                <Search className={`h-5 w-5 mr-2 ${
+                  ? 'bg-amber-500/20 border-amber-400/40'
+                  : selectedLevel === 'Medical'
+                  ? 'bg-rose-500/20 border-rose-400/40'
+                  : 'bg-blue-600/20 border-blue-400/40'
+              } hover:shadow-3xl transition-all duration-300`}>
+                <Search className={`h-5 w-5 mr-3 ${
                   selectedLevel === '10th' 
-                    ? 'text-cyan-100' 
+                    ? 'text-cyan-300' 
                     : selectedLevel === 'Intermediate'
-                    ? 'text-emerald-100'
+                    ? 'text-emerald-300'
                     : selectedLevel === 'UG'
-                    ? 'text-amber-100'
-                    : 'text-rose-100'
+                    ? 'text-amber-300'
+                    : selectedLevel === 'Medical'
+                    ? 'text-rose-300'
+                    : 'text-blue-300'
                 }`} />
                 <input 
                   type='text' 
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={`Search ${selectedLevel} branches...`}
-                  className={`bg-transparent border-none outline-none w-full py-2 ${
+                  className={`bg-transparent border-none outline-none w-full py-3 font-medium ${
                     selectedLevel === '10th' 
-                      ? 'text-cyan-50 placeholder-cyan-200' 
+                      ? 'text-cyan-50 placeholder-cyan-300/70' 
                       : selectedLevel === 'Intermediate'
-                      ? 'text-emerald-50 placeholder-emerald-200'
+                      ? 'text-emerald-50 placeholder-emerald-300/70'
                       : selectedLevel === 'UG'
-                      ? 'text-amber-50 placeholder-amber-200'
-                      : 'text-rose-50 placeholder-rose-200'
+                      ? 'text-amber-50 placeholder-amber-300/70'
+                      : selectedLevel === 'Medical'
+                      ? 'text-rose-50 placeholder-rose-300/70'
+                      : 'text-blue-50 placeholder-blue-300/70'
                   }`}
                 />
                 <motion.button 
                   whileHover={{ scale: 1.05 }} 
                   whileTap={{ scale: 0.95 }}
-                  className={`${theme.selectedButton} hover:bg-opacity-80 text-white rounded-full px-5 py-2 font-medium shadow-md`}
+                  className={`${theme.selectedButton} text-white rounded-xl px-6 py-2.5 font-semibold shadow-lg hover:shadow-xl transition-all duration-300`}
                 >
                   Search
                 </motion.button>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
         
@@ -175,32 +191,54 @@ const Content = () => {
       </motion.div>
       
       {/* Education Level Selector */}
-      <div className="bg-gray-800 py-6 shadow-inner">
+      <div className="bg-gray-800/50 backdrop-blur-sm py-8 shadow-2xl border-y border-purple-500/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
-            className="flex flex-wrap justify-center gap-4"
+            className="flex flex-wrap justify-center gap-3"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
           >
-            {educationLevelsData.map((eduLevel) => (
+            {educationLevelsData.map((eduLevel, index) => (
               <motion.div
                 key={eduLevel.level}
                 onClick={() => setSelectedLevel(eduLevel.level)}
-                className={`px-8 py-4 rounded-xl cursor-pointer flex items-center gap-2 transition-all duration-300 ${
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 + index * 0.08 }}
+                className={`px-6 py-3.5 rounded-2xl cursor-pointer flex items-center gap-3 transition-all duration-300 border-2 ${
                   selectedLevel === eduLevel.level 
-                    ? `${theme.selectedButton} shadow-lg scale-105` 
-                    : 'bg-gray-700 hover:bg-gray-600'
+                    ? `${theme.selectedButton} shadow-2xl scale-105 border-white/20` 
+                    : 'bg-gray-700/50 hover:bg-gray-600/70 border-gray-600/50 hover:border-gray-500'
                 }`}
-                whileHover={{ scale: selectedLevel === eduLevel.level ? 1.05 : 1.03 }}
+                whileHover={{ scale: selectedLevel === eduLevel.level ? 1.05 : 1.03, y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className={`${selectedLevel === eduLevel.level ? 'text-white' : 'text-gray-300'}`}>
-                  {getLevelIcon(eduLevel.level)}
-                </div>
-                <span className={`text-lg font-medium ${selectedLevel === eduLevel.level ? 'text-white' : 'text-gray-300'}`}>
+                <motion.div 
+                  className={`p-2 rounded-xl ${
+                    selectedLevel === eduLevel.level 
+                      ? 'bg-white/20' 
+                      : 'bg-gray-600/50'
+                  }`}
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className={`${selectedLevel === eduLevel.level ? 'text-white' : 'text-gray-300'}`}>
+                    {getLevelIcon(eduLevel.level)}
+                  </div>
+                </motion.div>
+                <span className={`text-lg font-bold ${selectedLevel === eduLevel.level ? 'text-white' : 'text-gray-300'}`}>
                   {eduLevel.level}
                 </span>
+                {selectedLevel === eduLevel.level && (
+                  <motion.div
+                    layoutId="activeIndicator"
+                    className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-white rounded-full"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
               </motion.div>
             ))}
           </motion.div>
@@ -224,7 +262,9 @@ const Content = () => {
                 ? 'text-emerald-100'
                 : selectedLevel === 'UG'
                 ? 'text-amber-100'
-                : 'text-rose-100'
+                  : selectedLevel === 'Medical'
+                  ? 'text-rose-100'
+                  : 'text-blue-100'
             }`}>{selectedLevel} Branches</h2>
           </div>
           
@@ -236,7 +276,9 @@ const Content = () => {
                 ? 'bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-100 border border-emerald-500/40'
                 : selectedLevel === 'UG'
                 ? 'bg-amber-600/30 hover:bg-amber-600/50 text-amber-100 border border-amber-500/40'
-                : 'bg-rose-600/30 hover:bg-rose-600/50 text-rose-100 border border-rose-500/40'
+                  : selectedLevel === 'Medical'
+                  ? 'bg-rose-600/30 hover:bg-rose-600/50 text-rose-100 border border-rose-500/40'
+                  : 'bg-blue-600/30 hover:bg-blue-600/50 text-blue-100 border border-blue-500/40'
             }`}>
               <TrendingUp className='w-4 h-4 mr-2' />
               Popular
@@ -268,6 +310,7 @@ const Content = () => {
             {selectedLevel === '10th' && "10th grade education focuses on fundamental concepts across core subjects, preparing students for higher education choices."}
             {selectedLevel === 'Intermediate' && "Intermediate education (11th & 12th) allows students to specialize in streams like Science, Commerce, or Arts before entering undergraduate programs."}
             {selectedLevel === 'UG' && "Undergraduate programs provide specialized knowledge in various engineering and professional fields, typically spanning 3-4 years of study."}
+              {selectedLevel === 'Medical' && "Medical education encompasses comprehensive study of human health, diseases, and treatments. From MBBS to specialized medical fields, this pathway prepares healthcare professionals."}
             {selectedLevel === 'PG' && "Postgraduate studies offer advanced specialization and research opportunities for students who have completed their undergraduate education."}
           </p>
           <div className="flex flex-wrap gap-2">
@@ -275,12 +318,14 @@ const Content = () => {
               {selectedLevel === '10th' && "Class X"}
               {selectedLevel === 'Intermediate' && "Class XI & XII"}
               {selectedLevel === 'UG' && "Bachelor's Degree"}
+                {selectedLevel === 'Medical' && "Medical Degree"}
               {selectedLevel === 'PG' && "Master's Degree"}
             </span>
             <span className={`bg-purple-900 bg-opacity-50 text-purple-200 px-3 py-1 rounded-full text-sm`}>
               {selectedLevel === '10th' && "Board Exams"}
               {selectedLevel === 'Intermediate' && "College Preparation"}
               {selectedLevel === 'UG' && "Professional Studies"}
+                {selectedLevel === 'Medical' && "Healthcare Profession"}
               {selectedLevel === 'PG' && "Advanced Specialization"}
             </span>
           </div>
@@ -320,7 +365,9 @@ const Content = () => {
                     ? 'bg-emerald-900/20 border border-emerald-600/30'
                     : selectedLevel === 'UG'
                     ? 'bg-amber-900/20 border border-amber-600/30'
-                    : 'bg-rose-800/50 border border-rose-600/30'
+                      : selectedLevel === 'Medical'
+                      ? 'bg-rose-800/50 border border-rose-600/30'
+                      : 'bg-blue-900/20 border border-blue-600/30'
                 }`}
               >
                 <div className={`text-6xl mb-4 ${
@@ -330,7 +377,9 @@ const Content = () => {
                     ? 'text-emerald-400'
                     : selectedLevel === 'UG'
                     ? 'text-amber-400'
-                    : 'text-rose-400'
+                      : selectedLevel === 'Medical'
+                      ? 'text-rose-400'
+                      : 'text-blue-400'
                 }`}>
                   🔍
                 </div>
@@ -341,7 +390,9 @@ const Content = () => {
                     ? 'text-emerald-100'
                     : selectedLevel === 'UG'
                     ? 'text-amber-100'
-                    : 'text-rose-100'
+                      : selectedLevel === 'Medical'
+                      ? 'text-rose-100'
+                      : 'text-blue-100'
                 }`}>
                   {query ? `No branches found matching "${query}"` : `No branches available for ${selectedLevel}`}
                 </p>
@@ -352,7 +403,9 @@ const Content = () => {
                     ? 'text-emerald-300'
                     : selectedLevel === 'UG'
                     ? 'text-amber-300'
-                    : 'text-rose-300'
+                      : selectedLevel === 'Medical'
+                      ? 'text-rose-300'
+                      : 'text-blue-300'
                 }`}>
                   Try adjusting your search or explore other education levels
                 </p>
@@ -447,6 +500,29 @@ const Content = () => {
                     rating: 4.6
                   }
                 ],
+                'Medical': [
+                  {
+                    title: "Anatomy Essentials",
+                    description: "Systematic study of human anatomy with clinical relevance",
+                    image: "/public/learn.png",
+                    students: "6,420",
+                    rating: 4.8
+                  },
+                  {
+                    title: "Physiology Systems",
+                    description: "Core body systems: cardio, respiratory, renal, endocrine",
+                    image: "/public/images.png",
+                    students: "5,980",
+                    rating: 4.7
+                  },
+                  {
+                    title: "Clinical Skills Basics",
+                    description: "History taking, examination, and basic procedures",
+                    image: "/public/digital.png",
+                    students: "7,350",
+                    rating: 4.9
+                  }
+                ],
                 'PG': [
                   {
                     title: "Advanced Machine Learning",
@@ -472,7 +548,7 @@ const Content = () => {
                 ]
               };
               
-              return coursesByLevel[selectedLevel].map((course, index) => (
+              return (coursesByLevel[selectedLevel] || []).map((course, index) => (
                 <motion.div
                   key={index}
                   className="bg-gray-800 rounded-xl overflow-hidden shadow-lg"
@@ -547,6 +623,11 @@ const Content = () => {
                   "Mobile App Development", "Cyber Security", "Cloud Computing", 
                   "IoT", "Blockchain", "Game Development"
                 ],
+                'Medical': [
+                  "Anatomy", "Physiology", "Biochemistry", "Pathology",
+                  "Pharmacology", "Microbiology", "Community Medicine", "Forensic Medicine",
+                  "Clinical Skills", "Radiology", "Pediatrics", "General Medicine"
+                ],
                 'PG': [
                   "Data Science", "AI Research", "Advanced Algorithms", 
                   "Financial Analysis", "Business Strategy", "Cloud Architecture",
@@ -555,7 +636,7 @@ const Content = () => {
                 ]
               };
               
-              return topicsByLevel[selectedLevel].map((topic, index) => (
+              return (topicsByLevel[selectedLevel] || []).map((topic, index) => (
                 <motion.div
                   key={index}
                   className="bg-gradient-to-r from-gray-800 to-gray-700 px-4 py-2 rounded-full cursor-pointer"
@@ -598,6 +679,12 @@ const Content = () => {
                   { label: "Expert Instructors", value: "200+", color: "text-purple-400" },
                   { label: "Satisfaction Rate", value: "98%", color: "text-yellow-400" }
                 ],
+                'Medical': [
+                  { label: "Medical Learners", value: "12,000+", color: "text-blue-400" },
+                  { label: "Clinical Cases", value: "3,500+", color: "text-green-400" },
+                  { label: "Specialists", value: "250+", color: "text-purple-400" },
+                  { label: "Pass Rate", value: "90%", color: "text-yellow-400" }
+                ],
                 'PG': [
                   { label: "Research Students", value: "8,500+", color: "text-blue-400" },
                   { label: "Published Papers", value: "1,200+", color: "text-green-400" },
@@ -606,7 +693,7 @@ const Content = () => {
                 ]
               };
               
-              return statsByLevel[selectedLevel].map((stat, index) => (
+              return (statsByLevel[selectedLevel] || []).map((stat, index) => (
                 <div key={index} className="p-4">
                   <h3 className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.value}</h3>
                   <p className="text-gray-400 text-lg">{stat.label}</p>

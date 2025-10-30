@@ -166,6 +166,35 @@ export default function HackathonDetails() {
         </motion.div>
       </div>
 
+      {/* Quick Facts */}
+      <div className="max-w-7xl mx-auto mt-8 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="bg-gray-800/40 border border-gray-700/60 rounded-2xl p-6"
+        >
+          <h3 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Quick Facts</h3>
+          <div className="flex flex-wrap gap-3">
+            {[
+              { label: 'Status', value: hackathon.status },
+              { label: 'Category', value: hackathon.category },
+              { label: 'Event Type', value: hackathon.EventType },
+              { label: 'Team Size', value: hackathon.TeamSize },
+              { label: 'Payment', value: hackathon.payment },
+              { label: 'Start Date', value: hackathon.startDate },
+              { label: 'End Date', value: hackathon.endDate },
+            ].map((f, idx) => (
+              <span key={idx} className="px-3 py-1.5 rounded-full text-sm bg-black/30 border border-white/10 text-gray-200">
+                <span className="text-gray-400 mr-1">{f.label}:</span>
+                <span className="font-medium">{f.value || '-'}</span>
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
       {/* Enhanced Overview Section */}
       <div className="max-w-6xl mx-auto mt-16 px-4">
         <motion.div
@@ -260,6 +289,45 @@ export default function HackathonDetails() {
         gradient="from-red-400 to-pink-400"
         icon={<Target className="h-6 w-6" />}
       />
+
+      {/* Timeline block */}
+      <div className="max-w-6xl mx-auto mt-16 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent mb-4">
+            Timeline
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-cyan-500 mx-auto rounded-full"></div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {[
+            { icon: <Calendar className="h-5 w-5" />, label: 'Registration Closes', value: hackathon.registrationCloses },
+            { icon: <Calendar className="h-5 w-5" />, label: 'Starts', value: hackathon.startDate },
+            { icon: <Timer className="h-5 w-5" />, label: 'Submission Deadline', value: hackathon.submissionDeadline },
+            { icon: <Clock className="h-5 w-5" />, label: 'Ends', value: hackathon.endDate },
+          ].map((t, i) => (
+            <div key={i} className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-2xl border border-gray-700/50">
+              <div className="flex items-center gap-2 text-gray-300">
+                {t.icon}
+                <span className="text-sm">{t.label}</span>
+              </div>
+              <div className="mt-2 text-white font-semibold text-lg">{t.value || '-'}</div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
 
       {/* Enhanced Footer Section */}
       <div className="max-w-6xl mx-auto mt-20 px-4 pb-20">

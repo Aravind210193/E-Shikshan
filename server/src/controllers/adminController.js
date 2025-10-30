@@ -1,0 +1,578 @@
+const User = require('../models/User');
+const Admin = require('../models/Admin');
+const Enrollment = require('../models/Enrollment');
+const Course = require('../models/Course');
+const AdminHackathon = require('../models/AdminHackathon');
+const AdminJob = require('../models/AdminJob');
+
+// @desc    Get all users with their enrollments
+// @route   GET /api/admin/users
+// @access  Private/Admin
+const getAllUsers = async (req, res) => {
+  try {
+    const { search, role, page = 1, limit = 10 } = req.query;
+    
+    // Build query
+    const userQuery = {};
+    if (search) {
+      userQuery.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ];
+    }
+    if (role) {
+      userQuery.role = role;
+    }
+
+    // Build admin query (include only when appropriate)
+    const includeAdmins = true; // include Admin collection by default
+    const adminQuery = {};
+    if (search) {
+      adminQuery.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ];
+    }
+    if (role) {
+      // Only include admins if filtering by 'admin'
+      if (role === 'admin') {
+        adminQuery.role = 'admin';
+      } else {
+        // Exclude admin records for non-admin role filters
+        adminQuery.role = '__exclude__';
+      }
+    }
+
+    // Fetch all matching users (we'll paginate after combining with admins)
+    const allUsers = await User.find(userQuery)
+      .select('-password')
+      .sort('-createdAt');
+
+    // Map users with enrollment counts
+    const usersWithEnrollments = await Promise.all(
+      allUsers.map(async (user) => {
+        const enrollmentCount = await Enrollment.countDocuments({ userId: user._id });
+        const enrollments = await Enrollment.find({ userId: user._id })
+          .populate('courseId', 'title price priceAmount thumbnail')
+          .select('courseId paymentStatus status enrolledAt progress');
+        
+        return {
+          ...user.toObject(),
+          accountType: 'user',
+          enrollmentCount,
+          enrollments
+        };
+      })
+    );
+
+    // Fetch admins and normalize shape
+    let adminsNormalized = [];
+    if (includeAdmins) {
+      const adminFindQuery = adminQuery.role === '__exclude__' ? { _id: null } : adminQuery;
+      const admins = await Admin.find(adminFindQuery).sort('-createdAt');
+      adminsNormalized = admins.map((admin) => ({
+        _id: admin._id,
+        name: admin.name,
+        email: admin.email,
+        role: admin.role, // 'admin' | 'course_manager'
+        isAdmin: admin.role === 'admin',
+        accountType: 'admin',
+        joinedDate: admin.createdAt,
+        // keep field parity
+        phone: undefined,
+        university: undefined,
+        department: undefined,
+        semester: undefined,
+        enrollmentCount: 0,
+        enrollments: [],
+        createdAt: admin.createdAt,
+        updatedAt: admin.updatedAt,
+      }));
+    }
+
+    // Combine and paginate
+    const combined = [...usersWithEnrollments, ...adminsNormalized]
+      .sort((a, b) => new Date(b.createdAt || b.joinedDate || 0) - new Date(a.createdAt || a.joinedDate || 0));
+
+    const total = combined.length;
+    const pageNum = parseInt(page);
+    const limitNum = parseInt(limit);
+    const start = (pageNum - 1) * limitNum;
+    const end = start + limitNum;
+    const paged = combined.slice(start, end);
+
+    res.json({
+      users: paged,
+      pagination: {
+        total,
+        page: pageNum,
+        pages: Math.ceil(total / limitNum) || 1,
+        limit: limitNum
+      }
+    });
+  } catch (error) {
+    console.error('Get all users error:', error);
+    res.status(500).json({ 
+      message: 'Failed to fetch users', 
+      error: error.message 
+    });
+  }
+};
+
+// @desc    Get single user with enrollments
+// @route   GET /api/admin/users/:id
+// @access  Private/Admin
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Try standard user first
+    let user = await User.findById(id).select('-password');
+    if (user) {
+      const enrollments = await Enrollment.find({ userId: id })
+        .populate('courseId')
+        .sort('-enrolledAt');
+      return res.json({ user, enrollments });
+    }
+
+    // Try admin account
+    const admin = await Admin.findById(id);
+    if (admin) {
+      const normalized = {
+        _id: admin._id,
+        name: admin.name,
+        email: admin.email,
+        role: admin.role,
+        isAdmin: admin.role === 'admin',
+        joinedDate: admin.createdAt,
+        createdAt: admin.createdAt,
+        updatedAt: admin.updatedAt,
+      };
+      return res.json({ user: normalized, enrollments: [] });
+    }
+
+    return res.status(404).json({ message: 'User not found' });
+  } catch (error) {
+    console.error('Get user error:', error);
+    res.status(500).json({ 
+      message: 'Failed to fetch user', 
+      error: error.message 
+    });
+  }
+};
+
+// @desc    Update user role/admin status
+// @route   PUT /api/admin/users/:id/role
+// @access  Private/Admin
+const updateUserRole = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role, isAdmin } = req.body;
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (role) {
+      user.role = role;
+    }
+    if (typeof isAdmin === 'boolean') {
+      user.isAdmin = isAdmin;
+    }
+
+    await user.save();
+
+    res.json({
+      message: 'User role updated successfully',
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        isAdmin: user.isAdmin
+      }
+    });
+  } catch (error) {
+    console.error('Update user role error:', error);
+    res.status(500).json({ 
+      message: 'Failed to update user role', 
+      error: error.message 
+    });
+  }
+};
+
+// @desc    Grant course access to user
+// @route   POST /api/admin/enrollments/grant
+// @access  Private/Admin
+const grantCourseAccess = async (req, res) => {
+  try {
+    const { userId, courseId, userDetails } = req.body;
+
+    if (!userId || !courseId) {
+      return res.status(400).json({ 
+        message: 'User ID and Course ID are required' 
+      });
+    }
+
+    // Check if user exists
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if course exists
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    // Check if enrollment already exists
+    let enrollment = await Enrollment.findOne({ userId, courseId });
+    
+    if (enrollment) {
+      // Update existing enrollment
+      enrollment.paymentStatus = 'completed';
+      enrollment.status = 'active';
+      enrollment.paymentMethod = 'admin_granted';
+      enrollment.amountPaid = 0;
+      enrollment.paymentDate = new Date();
+      
+      await enrollment.save();
+      
+      return res.json({
+        message: 'Course access updated successfully',
+        enrollment
+      });
+    }
+
+    // Create new enrollment with admin grant
+    enrollment = new Enrollment({
+      userId,
+      courseId,
+      userDetails: userDetails || {
+        fullName: user.name,
+        email: user.email,
+        phone: user.phone || ''
+      },
+      paymentStatus: 'completed',
+      paymentMethod: 'admin_granted',
+      amountPaid: 0,
+      status: 'active',
+      paymentDate: new Date(),
+      enrolledAt: new Date()
+    });
+
+    await enrollment.save();
+
+    // Increment student count
+    course.students += 1;
+    await course.save();
+
+    res.status(201).json({
+      message: 'Course access granted successfully',
+      enrollment
+    });
+  } catch (error) {
+    console.error('Grant access error:', error);
+    res.status(500).json({ 
+      message: 'Failed to grant course access', 
+      error: error.message 
+    });
+  }
+};
+
+// @desc    Revoke course access from user
+// @route   PUT /api/admin/enrollments/:id/revoke
+// @access  Private/Admin
+const revokeCourseAccess = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const enrollment = await Enrollment.findById(id);
+    if (!enrollment) {
+      return res.status(404).json({ message: 'Enrollment not found' });
+    }
+
+    // Update enrollment status to suspended
+    enrollment.status = 'suspended';
+    await enrollment.save();
+
+    res.json({
+      message: 'Course access revoked successfully',
+      enrollment
+    });
+  } catch (error) {
+    console.error('Revoke access error:', error);
+    res.status(500).json({ 
+      message: 'Failed to revoke course access', 
+      error: error.message 
+    });
+  }
+};
+
+// @desc    Restore course access to user
+// @route   PUT /api/admin/enrollments/:id/restore
+// @access  Private/Admin
+const restoreCourseAccess = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const enrollment = await Enrollment.findById(id);
+    if (!enrollment) {
+      return res.status(404).json({ message: 'Enrollment not found' });
+    }
+
+    // Restore enrollment status
+    enrollment.status = 'active';
+    await enrollment.save();
+
+    res.json({
+      message: 'Course access restored successfully',
+      enrollment
+    });
+  } catch (error) {
+    console.error('Restore access error:', error);
+    res.status(500).json({ 
+      message: 'Failed to restore course access', 
+      error: error.message 
+    });
+  }
+};
+
+// @desc    Delete enrollment
+// @route   DELETE /api/admin/enrollments/:id
+// @access  Private/Admin
+const deleteEnrollment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const enrollment = await Enrollment.findById(id);
+    if (!enrollment) {
+      return res.status(404).json({ message: 'Enrollment not found' });
+    }
+
+    // Decrement student count
+    const course = await Course.findById(enrollment.courseId);
+    if (course && course.students > 0) {
+      course.students -= 1;
+      await course.save();
+    }
+
+    await Enrollment.findByIdAndDelete(id);
+
+    res.json({
+      message: 'Enrollment deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete enrollment error:', error);
+    res.status(500).json({ 
+      message: 'Failed to delete enrollment', 
+      error: error.message 
+    });
+  }
+};
+
+// @desc    Get dashboard stats
+// @route   GET /api/admin/stats
+// @access  Private/Admin
+const getDashboardStats = async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments();
+    const totalCourses = await Course.countDocuments();
+    const totalEnrollments = await Enrollment.countDocuments();
+    const activeEnrollments = await Enrollment.countDocuments({ status: 'active' });
+    const suspendedEnrollments = await Enrollment.countDocuments({ status: 'suspended' });
+    const totalHackathons = await AdminHackathon.countDocuments();
+    const activeHackathons = await AdminHackathon.countDocuments({ status: 'active' });
+    const totalJobs = await AdminJob.countDocuments();
+    const activeJobs = await AdminJob.countDocuments({ status: 'Active' });
+    
+    // Course stats
+    const activeCourses = await Course.countDocuments({ status: 'active' });
+    const draftCourses = await Course.countDocuments({ status: 'draft' });
+    const archivedCourses = await Course.countDocuments({ status: 'archived' });
+    
+    // Top courses by enrollment
+    const topCourses = await Course.find({ status: 'active' })
+      .select('title students thumbnail category rating')
+      .sort('-students')
+      .limit(5);
+    
+    // Courses by category
+    const coursesByCategory = await Course.aggregate([
+      { $match: { status: 'active' } },
+      { $group: { _id: '$category', count: { $sum: 1 }, students: { $sum: '$students' } } },
+      { $sort: { count: -1 } },
+      { $limit: 10 }
+    ]);
+    
+    // Recent enrollments
+    const recentEnrollments = await Enrollment.find()
+      .populate('userId', 'name email')
+      .populate('courseId', 'title price')
+      .sort('-enrolledAt')
+      .limit(10);
+
+    // Revenue calculation (only completed payments)
+    const revenueData = await Enrollment.aggregate([
+      { $match: { paymentStatus: 'completed', paymentMethod: { $ne: 'admin_granted' } } },
+      { $group: { _id: null, totalRevenue: { $sum: '$amountPaid' } } }
+    ]);
+    const totalRevenue = revenueData[0]?.totalRevenue || 0;
+
+    res.json({
+      stats: {
+        totalUsers,
+        totalCourses,
+        activeCourses,
+        draftCourses,
+        archivedCourses,
+        totalEnrollments,
+        activeEnrollments,
+        suspendedEnrollments,
+        totalRevenue,
+        totalHackathons,
+        activeHackathons,
+        totalJobs,
+        activeJobs
+      },
+      topCourses,
+      coursesByCategory,
+      recentEnrollments
+    });
+  } catch (error) {
+    console.error('Get stats error:', error);
+    res.status(500).json({ 
+      message: 'Failed to fetch dashboard stats', 
+      error: error.message 
+    });
+  }
+};
+
+module.exports = {
+  getAllUsers,
+  getUserById,
+  updateUserRole,
+  // CRUD for users
+  async createUser(req, res) {
+    try {
+      const {
+        name,
+        email,
+        password,
+        phone,
+        university,
+        department,
+        semester,
+        role = 'student',
+        isAdmin = false,
+      } = req.body;
+
+      if (!name || !email || !password) {
+        return res.status(400).json({ message: 'Name, email and password are required' });
+      }
+
+      const existing = await User.findOne({ email });
+      if (existing) {
+        return res.status(400).json({ message: 'A user with this email already exists' });
+      }
+
+      const user = new User({
+        name,
+        email,
+        password, // will be hashed by pre-save hook
+        phone,
+        university,
+        department,
+        semester,
+        role,
+        isAdmin: !!isAdmin,
+      });
+      await user.save();
+
+      const sanitized = user.toObject();
+      delete sanitized.password;
+      res.status(201).json({ message: 'User created successfully', user: sanitized });
+    } catch (error) {
+      console.error('Create user error:', error);
+      res.status(500).json({ message: 'Failed to create user', error: error.message });
+    }
+  },
+
+  async updateUser(req, res) {
+    try {
+      const { id } = req.params;
+      const updates = req.body || {};
+
+      const user = await User.findById(id);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      // If email changes, ensure uniqueness
+      if (updates.email && updates.email !== user.email) {
+        const emailExists = await User.findOne({ email: updates.email });
+        if (emailExists) {
+          return res.status(400).json({ message: 'Email already in use' });
+        }
+        user.email = updates.email;
+      }
+
+      // Basic fields
+      if (typeof updates.name === 'string') user.name = updates.name;
+      if (typeof updates.phone === 'string') user.phone = updates.phone;
+      if (typeof updates.university === 'string') user.university = updates.university;
+      if (typeof updates.department === 'string') user.department = updates.department;
+      if (typeof updates.semester === 'string') user.semester = updates.semester;
+      if (typeof updates.role === 'string') user.role = updates.role;
+      if (typeof updates.isAdmin === 'boolean') user.isAdmin = updates.isAdmin;
+
+      // Password (will trigger pre-save hashing)
+      if (updates.password) {
+        user.password = updates.password;
+      }
+
+      await user.save();
+
+      const sanitized = user.toObject();
+      delete sanitized.password;
+      res.json({ message: 'User updated successfully', user: sanitized });
+    } catch (error) {
+      console.error('Update user error:', error);
+      res.status(500).json({ message: 'Failed to update user', error: error.message });
+    }
+  },
+
+  async deleteUser(req, res) {
+    try {
+      const { id } = req.params;
+      const user = await User.findById(id);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Clean up enrollments and decrement course student counts
+      const userEnrollments = await Enrollment.find({ userId: id });
+      for (const enr of userEnrollments) {
+        const course = await Course.findById(enr.courseId);
+        if (course && course.students > 0) {
+          course.students -= 1;
+          await course.save();
+        }
+        await Enrollment.findByIdAndDelete(enr._id);
+      }
+
+      await user.deleteOne();
+      res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+      console.error('Delete user error:', error);
+      res.status(500).json({ message: 'Failed to delete user', error: error.message });
+    }
+  },
+  grantCourseAccess,
+  revokeCourseAccess,
+  restoreCourseAccess,
+  deleteEnrollment,
+  getDashboardStats
+};

@@ -1,0 +1,20 @@
+{
+  "admins": [
+    {
+      "id": 1,
+      "email": "admin@eshikshan.com",
+      "password": "admin123",
+      "role": "admin",
+      "name": "System Administrator",
+      "permissions": ["all"]
+    },
+    {
+      "id": 2,
+      "email": "courses@eshikshan.com",
+      "password": "course123",
+      "role": "course_manager",
+      "name": "Course Manager",
+      "permissions": ["courses"]
+    }
+  ]
+}

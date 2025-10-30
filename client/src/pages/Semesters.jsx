@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, BookOpen, Calendar, Users, Clock, Download, Play, CheckCircle, Award, Target, ChevronRight } from 'lucide-react';
 import semesterData from '../data/semesterData.json';
+import semesterDataMedical from '../data/semesterDataMedical.json';
 
 const Semesters = () => {
   const { branch } = useParams();
@@ -10,7 +11,11 @@ const Semesters = () => {
   const [selectedSemester, setSelectedSemester] = useState(1);
   const [branchData, setBranchData] = useState(null);
 
-  const branchSyllabusData = semesterData.branches;
+  // Merge core semester data with medical semester data (medical kept in separate file)
+  const branchSyllabusData = {
+    ...(semesterData.branches || {}),
+    ...(semesterDataMedical.branches || {})
+  };
 
   useEffect(() => {
     const data = branchSyllabusData[branch];
@@ -51,6 +56,8 @@ const Semesters = () => {
   }
 
   const currentSemester = branchData.semesters[selectedSemester];
+  const isMedical = Boolean((semesterDataMedical.branches || {})[branch]);
+  const getSemLabel = (n) => (isMedical ? `Year ${n}` : `Semester ${n}`);
 
   return (
     <div className='min-h-screen bg-gray-900 text-white'>
@@ -60,7 +67,7 @@ const Semesters = () => {
           <div className="h-20 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <motion.button
-                onClick={() => navigate('/content/branches')}
+                onClick={() => navigate('/content')}
                 className="flex items-center text-gray-300 hover:text-white transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -69,7 +76,7 @@ const Semesters = () => {
               </motion.button>
               <div>
                 <h1 className='text-xl font-bold text-white'>{branchData.name}</h1>
-                <p className="text-sm text-gray-400">Semester {selectedSemester}</p>
+                <p className="text-sm text-gray-400">{getSemLabel(selectedSemester)}</p>
               </div>
             </div>
             <motion.button
@@ -99,7 +106,7 @@ const Semesters = () => {
                       : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500'
                   }`}
                 >
-                  Semester {sem}
+                  {getSemLabel(sem)}
                 </button>
               ))}
             </nav>

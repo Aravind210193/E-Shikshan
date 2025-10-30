@@ -4,7 +4,7 @@ const {
   getCourses,
   getCourseById,
 } = require('../controllers/courseController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const { protect } = require('../middlewares/authMiddleware');
 
 // @route   GET api/courses
 // @desc    Get all courses
@@ -14,7 +14,7 @@ router.route('/').get(getCourses);
 // @route   GET api/courses/enrolled
 // @desc    Get enrolled courses for logged in user
 // @access  Private
-router.route('/enrolled').get(authMiddleware, (req, res) => {
+router.route('/enrolled').get(protect, (req, res) => {
   // Placeholder implementation - returns empty array since we don't have full implementation yet
   res.json([]);
 });

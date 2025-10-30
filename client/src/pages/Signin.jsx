@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast';
 // Import icons if you have Lucide or other icon libraries installed
 // If not, you can use emoji icons as placeholders
 
-const Signin = () => {
+const Signin = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -64,6 +64,11 @@ const Signin = () => {
 
       // Store token
       localStorage.setItem('token', data.token);
+      
+      // Update login state
+      if (setIsLoggedIn) {
+        setIsLoggedIn(true);
+      }
       
       // Show success message
       toast.success('Registration successful! Welcome to E-Shikshan');

@@ -12,9 +12,14 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     console.log(`API Request: ${config.method.toUpperCase()} ${config.baseURL}${config.url}`);
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const isAdminEndpoint = typeof config.url === 'string' && config.url.startsWith('/admin');
+    const adminToken = localStorage.getItem('adminToken');
+    const userToken = localStorage.getItem('token');
+
+    if (isAdminEndpoint && adminToken) {
+      config.headers.Authorization = `Bearer ${adminToken}`;
+    } else if (userToken) {
+      config.headers.Authorization = `Bearer ${userToken}`;
     }
     return config;
   },
@@ -34,11 +39,19 @@ api.interceptors.response.use(
     console.error('API Response Error:', error.message);
     if (error.response) {
       console.error(`Status: ${error.response.status}, Data:`, error.response.data);
-      
+      const reqUrl = error.config?.url || '';
       if (error.response.status === 401) {
-        console.log('Unauthorized access, redirecting to login');
-        localStorage.removeItem('token');
-        window.location.href = '/login';
+        const isAdminEndpoint = typeof reqUrl === 'string' && reqUrl.startsWith('/admin');
+        if (isAdminEndpoint) {
+          console.log('Admin unauthorized, redirecting to admin login');
+          localStorage.removeItem('adminToken');
+          localStorage.removeItem('adminRole');
+          window.location.href = '/admin';
+        } else {
+          console.log('User unauthorized, redirecting to login');
+          localStorage.removeItem('token');
+          window.location.href = '/login';
+        }
       }
     } else if (error.request) {
       console.error('No response received:', error.request);
@@ -55,14 +68,82 @@ export const authAPI = {
 };
 
 export const coursesAPI = {
+  getAll: (params) => api.get('/courses', { params }),
   getEnrolled: () => api.get('/courses/enrolled'),
   getCourse: (id) => api.get(`/courses/${id}`),
   enrollCourse: (id) => api.post(`/courses/${id}/enroll`)
 };
 
+export const enrollmentAPI = {
+  enroll: (data) => api.post('/enrollments', data),
+  processPayment: (enrollmentId, paymentData) => api.post(`/enrollments/${enrollmentId}/payment`, paymentData),
+  getMyCourses: () => api.get('/enrollments/my-courses'),
+  getEnrollment: (id) => api.get(`/enrollments/${id}`),
+  checkStatus: (courseId) => api.get(`/enrollments/check/${courseId}`),
+  updateProgress: (enrollmentId, progressData) => api.put(`/enrollments/${enrollmentId}/progress`, progressData),
+  deletePendingEnrollment: (id) => api.delete(`/enrollments/${id}`)
+};
+
 export const achievementsAPI = {
   getAll: () => api.get('/achievements'),
   getCertificates: () => api.get('/achievements/certificates')
+};
+
+export const jobsAPI = {
+  getAll: (params) => api.get('/jobs', { params }),
+  getById: (id) => api.get(`/jobs/${id}`),
+};
+
+export const hackathonsAPI = {
+  getAll: (params) => api.get('/hackathons', { params }),
+  getById: (id) => api.get(`/hackathons/${id}`),
+};
+
+// Content API
+export const contentAPI = {
+  // Branches
+  getAllBranches: () => api.get('/branches'),
+  getBranchById: (id) => api.get(`/branches/${id}`),
+  getBranchByTitle: (title) => api.get(`/branches/title/${title}`),
+  
+  // Education Levels
+  getAllEducationLevels: () => api.get('/education-levels'),
+  getEducationLevelById: (id) => api.get(`/education-levels/${id}`),
+  getEducationLevelByName: (level) => api.get(`/education-levels/level/${level}`),
+  
+  // Subjects
+  getAllSubjects: (params) => api.get('/subjects', { params }),
+  getSubjectsByBranch: (branch) => api.get(`/subjects/branch/${branch}`),
+  getSubjectsByBranchAndSemester: (branch, semester) => api.get(`/subjects/branch/${branch}/semester/${semester}`),
+  
+  // Programs (Semester Data)
+  getAllPrograms: () => api.get('/programs'),
+  getProgramByKey: (programKey) => api.get(`/programs/${programKey}`),
+  getSemesterData: (programKey, semesterNumber) => api.get(`/programs/${programKey}/semester/${semesterNumber}`),
+  
+  // Folders
+  getAllFolders: (params) => api.get('/folders', { params }),
+  getFoldersByBranch: (branch) => api.get(`/folders/branch/${branch}`),
+  getFolderByBranchAndSubject: (branch, subject) => api.get(`/folders/branch/${branch}/subject/${subject}`),
+};
+
+export const adminAPI = {
+  // Dashboard
+  getStats: () => api.get('/admin/stats'),
+  
+  // User Management
+  getAllUsers: (params) => api.get('/admin/users', { params }),
+  getUserById: (id) => api.get(`/admin/users/${id}`),
+  updateUserRole: (id, data) => api.put(`/admin/users/${id}/role`, data),
+  createUser: (data) => api.post('/admin/users', data),
+  updateUser: (id, data) => api.put(`/admin/users/${id}`, data),
+  deleteUser: (id) => api.delete(`/admin/users/${id}`),
+  
+  // Enrollment Management
+  grantCourseAccess: (data) => api.post('/admin/enrollments/grant', data),
+  revokeCourseAccess: (id) => api.put(`/admin/enrollments/${id}/revoke`),
+  restoreCourseAccess: (id) => api.put(`/admin/enrollments/${id}/restore`),
+  deleteEnrollment: (id) => api.delete(`/admin/enrollments/${id}`)
 };
 
 export default api;

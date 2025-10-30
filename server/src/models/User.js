@@ -11,7 +11,26 @@ const userSchema = new mongoose.Schema({
   semester: { type: String },
   joinedDate: { type: Date, default: Date.now },
   role: { type: String, enum: ['student', 'faculty', 'admin'], default: 'student' },
-  isAdmin: { type: Boolean, required: true, default: false }
+  isAdmin: { type: Boolean, required: true, default: false },
+  // Additional profile fields
+  bio: { type: String },
+  address: { type: String },
+  dateOfBirth: { type: Date },
+  gender: { type: String },
+  emergencyContact: { type: String },
+  bloodGroup: { type: String },
+  degree: { type: String },
+  yearOfStudy: { type: String },
+  graduationYear: { type: String },
+  currentPosition: { type: String },
+  company: { type: String },
+  workExperience: { type: String },
+  industry: { type: String },
+  languages: { type: String },
+  website: { type: String },
+  profilePicture: { type: String }
+}, {
+  timestamps: true
 });
 
 userSchema.pre('save', async function (next) {

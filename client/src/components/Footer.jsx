@@ -35,6 +35,18 @@ const Footer = () => {
             <li><Link to='/' className='hover:text-white'>Terms&Conditions</Link></li>
           </ul>
         </div>
+        
+        <div>
+        <h3 className='text-white font-semibold mb-2'> Administration </h3>
+
+          <ul className='space-y-2 text-sm'>
+            <li>
+              <Link to='/admin' className='hover:text-red-400 transition-colors'>
+                Admin Portal
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
                   <div className='border-t border-gray-700 my-6'></div>
             <div className='text-center text-sm text-gray-500'>

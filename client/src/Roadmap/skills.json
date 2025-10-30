@@ -784,5 +784,428 @@
         "project": "Perform a complete incident response and forensic analysis for a simulated security breach."
       }
     ]
+  },
+  {
+    "id": "fullstack-developer",
+    "title": "Full Stack Developer",
+    "category": "Web Development",
+    "tagline": "Master both frontend and backend development to build complete web applications.",
+    "image": "/indiegame.png",
+    "duration": "20-24 weeks",
+    "difficulty": "Intermediate",
+    "popularity": "Very Popular",
+    "rating": 4.8,
+    "enrolled": 145000,
+    "isNew": true,
+    "trending": 85,
+    "description": "Full stack developers work on both client-side and server-side of web applications. This comprehensive roadmap covers everything you need to become a versatile full stack developer.",
+    "path": [
+      {
+        "title": "Frontend Fundamentals",
+        "description": "Master HTML, CSS, JavaScript, and React to build modern user interfaces.",
+        "topics": ["HTML5 & CSS3", "JavaScript ES6+", "React.js", "State Management", "Responsive Design", "Frontend Testing"],
+        "resources": [
+          "MDN Web Docs",
+          "React Official Documentation",
+          "Frontend Masters",
+          "The Odin Project"
+        ],
+        "project": "Build a responsive e-commerce frontend with React."
+      },
+      {
+        "title": "Backend Development",
+        "description": "Learn server-side programming, databases, and API development.",
+        "topics": ["Node.js & Express", "RESTful APIs", "Authentication & Authorization", "Database Design", "MongoDB/PostgreSQL", "API Security"],
+        "resources": [
+          "Node.js Documentation",
+          "Express.js Guide",
+          "MongoDB University",
+          "PostgreSQL Tutorial"
+        ],
+        "project": "Create a complete REST API with authentication and database integration."
+      },
+      {
+        "title": "DevOps & Deployment",
+        "description": "Learn to deploy, monitor, and maintain full stack applications.",
+        "topics": ["Git & GitHub", "Docker Basics", "CI/CD Pipelines", "Cloud Deployment (AWS/Heroku)", "Nginx", "Monitoring & Logging"],
+        "resources": [
+          "Docker Getting Started",
+          "GitHub Actions Documentation",
+          "AWS Free Tier",
+          "DigitalOcean Tutorials"
+        ],
+        "project": "Deploy your full stack application to cloud with automated CI/CD."
+      }
+    ]
+  },
+  {
+    "id": "mobile-app-developer",
+    "title": "Mobile App Developer",
+    "category": "Mobile Development",
+    "tagline": "Build cross-platform mobile applications for iOS and Android.",
+    "image": "/indiegame.png",
+    "duration": "16-20 weeks",
+    "difficulty": "Intermediate",
+    "popularity": "Popular",
+    "rating": 4.7,
+    "enrolled": 98000,
+    "isNew": true,
+    "trending": 72,
+    "description": "Learn to build native and cross-platform mobile applications using React Native and Flutter.",
+    "path": [
+      {
+        "title": "Mobile Development Basics",
+        "description": "Understand mobile app architecture and development principles.",
+        "topics": ["Mobile UI/UX Design", "Native vs Cross-Platform", "App Architecture", "State Management", "Navigation Patterns"],
+        "resources": [
+          "React Native Documentation",
+          "Flutter Documentation",
+          "Mobile Design Patterns",
+          "iOS Human Interface Guidelines"
+        ],
+        "project": "Build a simple todo app with navigation and local storage."
+      },
+      {
+        "title": "React Native Development",
+        "description": "Master React Native for cross-platform mobile development.",
+        "topics": ["React Native CLI", "Components & Styling", "Native Modules", "Expo", "Push Notifications", "App Publishing"],
+        "resources": [
+          "React Native Official Docs",
+          "Expo Documentation",
+          "React Native Express",
+          "The Net Ninja: React Native"
+        ],
+        "project": "Create a social media app with authentication and real-time features."
+      },
+      {
+        "title": "Advanced Mobile Features",
+        "description": "Implement advanced features like maps, camera, and offline support.",
+        "topics": ["Geolocation & Maps", "Camera & Media", "Offline Storage", "Background Tasks", "App Performance", "Testing"],
+        "resources": [
+          "React Native Maps",
+          "AsyncStorage Documentation",
+          "Jest for React Native",
+          "Detox Testing Framework"
+        ],
+        "project": "Build a location-based service app with offline capabilities."
+      }
+    ]
+  },
+  {
+    "id": "ai-ml-engineer",
+    "title": "AI/ML Engineer",
+    "category": "Artificial Intelligence",
+    "tagline": "Build intelligent systems using machine learning and deep learning.",
+    "image": "/ai.jpeg",
+    "duration": "24-30 weeks",
+    "difficulty": "Advanced",
+    "popularity": "Very Popular",
+    "rating": 4.9,
+    "enrolled": 187000,
+    "isUpdated": true,
+    "trending": 95,
+    "description": "Become an AI/ML engineer and build intelligent systems that can learn from data.",
+    "path": [
+      {
+        "title": "Python & Data Science Foundations",
+        "description": "Master Python programming and essential data science libraries.",
+        "topics": ["Python Programming", "NumPy & Pandas", "Data Visualization", "Statistics & Probability", "Linear Algebra"],
+        "resources": [
+          "Python for Data Science Handbook",
+          "Kaggle Learn",
+          "DataCamp",
+          "Coursera: Python for Everybody"
+        ],
+        "project": "Perform exploratory data analysis on real-world datasets."
+      },
+      {
+        "title": "Machine Learning Fundamentals",
+        "description": "Learn core ML algorithms and techniques.",
+        "topics": ["Supervised Learning", "Unsupervised Learning", "Scikit-learn", "Model Evaluation", "Feature Engineering", "Hyperparameter Tuning"],
+        "resources": [
+          "Andrew Ng's ML Course",
+          "Scikit-learn Documentation",
+          "Hands-On Machine Learning Book",
+          "Fast.ai"
+        ],
+        "project": "Build predictive models for classification and regression tasks."
+      },
+      {
+        "title": "Deep Learning & Neural Networks",
+        "description": "Master deep learning frameworks and build neural networks.",
+        "topics": ["Neural Networks", "TensorFlow/PyTorch", "CNNs & RNNs", "Transfer Learning", "NLP", "Computer Vision"],
+        "resources": [
+          "Deep Learning Specialization",
+          "PyTorch Tutorials",
+          "TensorFlow Documentation",
+          "Papers with Code"
+        ],
+        "project": "Create an image classification system using CNNs."
+      }
+    ]
+  },
+  {
+    "id": "cloud-architect",
+    "title": "Cloud Architect",
+    "category": "Cloud Computing",
+    "tagline": "Design and manage scalable cloud infrastructure solutions.",
+    "image": "/green.png",
+    "duration": "18-22 weeks",
+    "difficulty": "Advanced",
+    "popularity": "Popular",
+    "rating": 4.7,
+    "enrolled": 76000,
+    "isUpdated": true,
+    "trending": 68,
+    "description": "Learn to design, build, and manage cloud infrastructure on AWS, Azure, and GCP.",
+    "path": [
+      {
+        "title": "Cloud Computing Fundamentals",
+        "description": "Understand cloud concepts and service models.",
+        "topics": ["IaaS, PaaS, SaaS", "Cloud Providers Overview", "Virtual Machines", "Cloud Storage", "Networking Basics"],
+        "resources": [
+          "AWS Cloud Practitioner",
+          "Microsoft Azure Fundamentals",
+          "Google Cloud Basics",
+          "Cloud Computing Concepts"
+        ],
+        "project": "Deploy a simple web application on AWS EC2."
+      },
+      {
+        "title": "AWS Architecture",
+        "description": "Master AWS services and architecture patterns.",
+        "topics": ["EC2, S3, RDS", "Lambda Functions", "API Gateway", "CloudFormation", "Auto Scaling", "Load Balancing"],
+        "resources": [
+          "AWS Documentation",
+          "A Cloud Guru",
+          "AWS Well-Architected Framework",
+          "AWS Solutions Architect Guide"
+        ],
+        "project": "Build a serverless application using AWS Lambda and API Gateway."
+      },
+      {
+        "title": "Advanced Cloud Solutions",
+        "description": "Implement enterprise-level cloud solutions.",
+        "topics": ["Microservices Architecture", "Kubernetes", "Service Mesh", "Disaster Recovery", "Cost Optimization", "Cloud Security"],
+        "resources": [
+          "Kubernetes Documentation",
+          "AWS Advanced Networking",
+          "Cloud Architecture Patterns",
+          "Terraform Documentation"
+        ],
+        "project": "Design and deploy a multi-region, highly available architecture."
+      }
+    ]
+  },
+  {
+    "id": "blockchain-developer",
+    "title": "Blockchain Developer",
+    "category": "Blockchain",
+    "tagline": "Build decentralized applications and smart contracts on blockchain.",
+    "image": "/crypto.png",
+    "duration": "16-20 weeks",
+    "difficulty": "Advanced",
+    "popularity": "Popular",
+    "rating": 4.6,
+    "enrolled": 54000,
+    "isNew": true,
+    "trending": 78,
+    "description": "Learn to develop smart contracts, DApps, and work with blockchain technologies.",
+    "path": [
+      {
+        "title": "Blockchain Fundamentals",
+        "description": "Understand blockchain technology and cryptocurrency basics.",
+        "topics": ["Blockchain Architecture", "Cryptography", "Consensus Mechanisms", "Bitcoin & Ethereum", "Wallets & Transactions"],
+        "resources": [
+          "Blockchain Basics Course",
+          "Mastering Bitcoin Book",
+          "Ethereum Whitepaper",
+          "CryptoZombies"
+        ],
+        "project": "Create your own cryptocurrency token."
+      },
+      {
+        "title": "Smart Contract Development",
+        "description": "Learn Solidity and build smart contracts on Ethereum.",
+        "topics": ["Solidity Programming", "Smart Contract Design", "Remix IDE", "Testing & Debugging", "Gas Optimization", "Security Best Practices"],
+        "resources": [
+          "Solidity Documentation",
+          "OpenZeppelin Contracts",
+          "Ethereum Development Documentation",
+          "Smart Contract Security"
+        ],
+        "project": "Build an NFT marketplace with smart contracts."
+      },
+      {
+        "title": "DApp Development",
+        "description": "Create full-stack decentralized applications.",
+        "topics": ["Web3.js/Ethers.js", "IPFS", "Frontend Integration", "Wallet Connect", "DApp Architecture", "Layer 2 Solutions"],
+        "resources": [
+          "Web3.js Documentation",
+          "Hardhat Framework",
+          "The Complete Guide to Full Stack Ethereum Development",
+          "DApp University"
+        ],
+        "project": "Build a complete DeFi application with frontend and smart contracts."
+      }
+    ]
+  },
+  {
+    "id": "ux-ui-designer",
+    "title": "UX/UI Designer",
+    "category": "Design",
+    "tagline": "Create beautiful and user-friendly digital experiences.",
+    "image": "/digital.png",
+    "duration": "14-18 weeks",
+    "difficulty": "Beginner-Friendly",
+    "popularity": "Very Popular",
+    "rating": 4.8,
+    "enrolled": 112000,
+    "isUpdated": true,
+    "trending": 71,
+    "description": "Learn user experience and interface design principles to create stunning digital products.",
+    "path": [
+      {
+        "title": "Design Fundamentals",
+        "description": "Master the basics of visual design and composition.",
+        "topics": ["Color Theory", "Typography", "Layout & Grid", "Visual Hierarchy", "Design Principles", "Gestalt Psychology"],
+        "resources": [
+          "Refactoring UI",
+          "Laws of UX",
+          "Design Systems Handbook",
+          "Google Material Design"
+        ],
+        "project": "Create a mood board and design system for a mobile app."
+      },
+      {
+        "title": "UX Research & Strategy",
+        "description": "Learn user research methods and UX strategy.",
+        "topics": ["User Research", "Personas", "User Journey Mapping", "Information Architecture", "Wireframing", "Usability Testing"],
+        "resources": [
+          "Don't Make Me Think",
+          "The Design of Everyday Things",
+          "Nielsen Norman Group Articles",
+          "UX Collective"
+        ],
+        "project": "Conduct user research and create wireframes for an e-commerce site."
+      },
+      {
+        "title": "UI Design & Prototyping",
+        "description": "Create high-fidelity designs and interactive prototypes.",
+        "topics": ["Figma/Sketch", "Prototyping", "Micro-interactions", "Responsive Design", "Design Handoff", "Accessibility"],
+        "resources": [
+          "Figma Official Tutorials",
+          "UI Design Daily",
+          "Dribbble for Inspiration",
+          "Interaction Design Foundation"
+        ],
+        "project": "Design and prototype a complete mobile app in Figma."
+      }
+    ]
+  },
+  {
+    "id": "python-developer",
+    "title": "Python Developer",
+    "category": "Programming Languages",
+    "tagline": "Master Python for web development, automation, and data science.",
+    "image": "/indiegame.png",
+    "duration": "12-16 weeks",
+    "difficulty": "Beginner-Friendly",
+    "popularity": "Very Popular",
+    "rating": 4.7,
+    "enrolled": 165000,
+    "isUpdated": true,
+    "trending": 82,
+    "description": "Become proficient in Python, one of the most versatile and in-demand programming languages.",
+    "path": [
+      {
+        "title": "Python Basics",
+        "description": "Learn Python syntax, data structures, and OOP concepts.",
+        "topics": ["Syntax & Variables", "Data Types", "Control Flow", "Functions", "Classes & Objects", "File I/O"],
+        "resources": [
+          "Python Official Documentation",
+          "Automate the Boring Stuff",
+          "Real Python",
+          "Python Crash Course Book"
+        ],
+        "project": "Build a command-line task management application."
+      },
+      {
+        "title": "Web Development with Python",
+        "description": "Build web applications using Django or Flask.",
+        "topics": ["Django/Flask", "REST APIs", "Database Integration", "Authentication", "Deployment", "Testing"],
+        "resources": [
+          "Django Documentation",
+          "Flask Mega-Tutorial",
+          "Two Scoops of Django",
+          "Full Stack Python"
+        ],
+        "project": "Create a blog platform with user authentication and admin panel."
+      },
+      {
+        "title": "Python for Automation & Scripting",
+        "description": "Automate tasks and build powerful scripts.",
+        "topics": ["Web Scraping", "Task Automation", "Working with APIs", "Data Processing", "System Administration", "Testing Automation"],
+        "resources": [
+          "Beautiful Soup Documentation",
+          "Selenium Python Bindings",
+          "Python Automation Cookbook",
+          "Pytest Documentation"
+        ],
+        "project": "Build a web scraper and automated report generator."
+      }
+    ]
+  },
+  {
+    "id": "qa-engineer",
+    "title": "QA Engineer",
+    "category": "Quality Assurance",
+    "tagline": "Ensure software quality through testing and automation.",
+    "image": "/indiegame.png",
+    "duration": "14-18 weeks",
+    "difficulty": "Intermediate",
+    "popularity": "Popular",
+    "rating": 4.6,
+    "enrolled": 68000,
+    "trending": 55,
+    "description": "Learn manual and automated testing techniques to ensure software quality.",
+    "path": [
+      {
+        "title": "QA Fundamentals",
+        "description": "Understand software testing principles and methodologies.",
+        "topics": ["Testing Types", "Test Cases", "Bug Reporting", "QA Lifecycle", "Testing Documentation", "Agile Testing"],
+        "resources": [
+          "ISTQB Foundation Syllabus",
+          "Software Testing Help",
+          "Testing Fundamentals Course",
+          "QA Manual"
+        ],
+        "project": "Create comprehensive test plans and execute manual testing."
+      },
+      {
+        "title": "Test Automation",
+        "description": "Automate tests using popular testing frameworks.",
+        "topics": ["Selenium WebDriver", "Test Automation Frameworks", "CI/CD Integration", "API Testing", "Performance Testing"],
+        "resources": [
+          "Selenium Documentation",
+          "Postman API Testing",
+          "JMeter Tutorial",
+          "Cypress.io Documentation"
+        ],
+        "project": "Build an automated test suite for a web application."
+      },
+      {
+        "title": "Advanced QA Practices",
+        "description": "Master advanced testing techniques and tools.",
+        "topics": ["BDD/TDD", "Load Testing", "Security Testing", "Mobile App Testing", "Test Management", "Continuous Testing"],
+        "resources": [
+          "Cucumber Documentation",
+          "OWASP Testing Guide",
+          "Appium for Mobile Testing",
+          "Test Automation University"
+        ],
+        "project": "Implement BDD framework with continuous integration."
+      }
+    ]
   }
 ]

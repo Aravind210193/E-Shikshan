@@ -93,9 +93,16 @@ const register = async (req, res) => {
 // @access  Private
 const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
-
+    console.log('=== GET PROFILE CALLED ===');
+    console.log('req.user:', JSON.stringify(req.user, null, 2));
+    console.log('Looking for user with ID:', req.user._id);
+    
+    const user = await User.findById(req.user._id).select('-password');
+    
+    console.log('User found:', user ? 'YES' : 'NO');
+    
     if (user) {
+      console.log('Returning user:', user.email);
       res.json({
         _id: user._id,
         name: user.name,
@@ -106,12 +113,40 @@ const getProfile = async (req, res) => {
         semester: user.semester,
         role: user.role,
         isAdmin: user.isAdmin,
-        joinedDate: user.joinedDate
+        joinedDate: user.joinedDate,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        // Additional profile fields
+        bio: user.bio,
+        address: user.address,
+        dateOfBirth: user.dateOfBirth,
+        gender: user.gender,
+        emergencyContact: user.emergencyContact,
+        bloodGroup: user.bloodGroup,
+        degree: user.degree,
+        yearOfStudy: user.yearOfStudy,
+        graduationYear: user.graduationYear,
+        currentPosition: user.currentPosition,
+        company: user.company,
+        workExperience: user.workExperience,
+        industry: user.industry,
+        languages: user.languages,
+        website: user.website,
+        profilePicture: user.profilePicture
       });
     } else {
-      res.status(404).json({ message: 'User not found' });
+      console.log('❌ User not found for ID:', req.user._id);
+      console.log('Token user object:', req.user);
+      res.status(404).json({ 
+        message: 'User not found',
+        debug: {
+          tokenUserId: req.user._id,
+          tokenData: req.user
+        }
+      });
     }
   } catch (error) {
+    console.error('❌ Error fetching profile:', error);
     res.status(500).json({ message: 'Server error fetching profile' });
   }
 };
@@ -124,8 +159,32 @@ const updateProfile = async (req, res) => {
     const user = await User.findById(req.user._id);
 
     if (user) {
+      // Update basic fields
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
+      user.phone = req.body.phone !== undefined ? req.body.phone : user.phone;
+      user.university = req.body.university !== undefined ? req.body.university : user.university;
+      user.department = req.body.department !== undefined ? req.body.department : user.department;
+      user.semester = req.body.semester !== undefined ? req.body.semester : user.semester;
+      
+      // Update additional profile fields
+      user.bio = req.body.bio !== undefined ? req.body.bio : user.bio;
+      user.address = req.body.address !== undefined ? req.body.address : user.address;
+      user.dateOfBirth = req.body.dateOfBirth !== undefined ? req.body.dateOfBirth : user.dateOfBirth;
+      user.gender = req.body.gender !== undefined ? req.body.gender : user.gender;
+      user.emergencyContact = req.body.emergencyContact !== undefined ? req.body.emergencyContact : user.emergencyContact;
+      user.bloodGroup = req.body.bloodGroup !== undefined ? req.body.bloodGroup : user.bloodGroup;
+      user.degree = req.body.degree !== undefined ? req.body.degree : user.degree;
+      user.yearOfStudy = req.body.yearOfStudy !== undefined ? req.body.yearOfStudy : user.yearOfStudy;
+      user.graduationYear = req.body.graduationYear !== undefined ? req.body.graduationYear : user.graduationYear;
+      user.currentPosition = req.body.currentPosition !== undefined ? req.body.currentPosition : user.currentPosition;
+      user.company = req.body.company !== undefined ? req.body.company : user.company;
+      user.workExperience = req.body.workExperience !== undefined ? req.body.workExperience : user.workExperience;
+      user.industry = req.body.industry !== undefined ? req.body.industry : user.industry;
+      user.languages = req.body.languages !== undefined ? req.body.languages : user.languages;
+      user.website = req.body.website !== undefined ? req.body.website : user.website;
+      user.profilePicture = req.body.profilePicture !== undefined ? req.body.profilePicture : user.profilePicture;
+      
       if (req.body.password) {
         user.password = req.body.password;
       }
@@ -136,13 +195,35 @@ const updateProfile = async (req, res) => {
         _id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
+        phone: updatedUser.phone,
+        university: updatedUser.university,
+        department: updatedUser.department,
+        semester: updatedUser.semester,
+        role: updatedUser.role,
         isAdmin: updatedUser.isAdmin,
+        bio: updatedUser.bio,
+        address: updatedUser.address,
+        dateOfBirth: updatedUser.dateOfBirth,
+        gender: updatedUser.gender,
+        emergencyContact: updatedUser.emergencyContact,
+        bloodGroup: updatedUser.bloodGroup,
+        degree: updatedUser.degree,
+        yearOfStudy: updatedUser.yearOfStudy,
+        graduationYear: updatedUser.graduationYear,
+        currentPosition: updatedUser.currentPosition,
+        company: updatedUser.company,
+        workExperience: updatedUser.workExperience,
+        industry: updatedUser.industry,
+        languages: updatedUser.languages,
+        website: updatedUser.website,
+        profilePicture: updatedUser.profilePicture,
         token: generateToken(updatedUser._id),
       });
     } else {
       res.status(404).json({ message: 'User not found' });
     }
   } catch (error) {
+    console.error('Error updating profile:', error);
     res.status(500).json({ message: 'Server error updating profile' });
   }
 };

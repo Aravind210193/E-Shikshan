@@ -5,7 +5,7 @@ const {
   getQuizById,
   submitQuiz,
 } = require('../controllers/quizController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const { protect } = require('../middlewares/authMiddleware');
 
 // @route   GET api/quizzes
 // @desc    Get all quizzes
@@ -20,6 +20,6 @@ router.route('/:id').get(getQuizById);
 // @route   POST api/quizzes/:id/submit
 // @desc    Submit a quiz
 // @access  Private
-router.route('/:id/submit').post(authMiddleware, submitQuiz);
+router.route('/:id/submit').post(protect, submitQuiz);
 
 module.exports = router;

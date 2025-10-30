@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { MenuIcon, XIcon, User } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const [showMenu,setShowMenu] = useState(false);
+
+  const handleLogout = () => {
+    // Clear token from localStorage
+    localStorage.removeItem('token');
+    // Update login state
+    setIsLoggedIn(false);
+    // Close menu
+    setShowMenu(false);
+    // Show success message
+    toast.success('Logged out successfully!');
+    // Redirect to home
+    navigate('/');
+  };
 
   function getLinkClasses(path) {
     return `block px-2 py-1 rounded-md transition ${
@@ -74,7 +88,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                 
                                 <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Profile</Link>
                                 <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Settings</Link>
-                                <Link  onClick={()=> setIsLoggedIn(false)}  to='/profile' className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700'>Log out</Link>
+                                <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700'>Log out</button>
                             </div>
                                 )}
                             </div>
@@ -127,9 +141,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                                 { showMenu && (
                             <div className='absolute right-0 mt-2 w-48  rounded-md shadow-lg py-2'>
                 
-                                <Link to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Profile</Link>
-                                <Link to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Settings</Link>
-                                <Link onClick={()=> setIsLoggedIn(false)}  to='/profile' className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700'>Log out</Link>
+                                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Profile</Link>
+                                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Settings</Link>
+                                <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700'>Log out</button>
                             </div>
                                 )}
                             </div>

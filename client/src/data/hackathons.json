@@ -9,8 +9,8 @@
     "TeamSize":"2",
     "payment":"paid",
     "tagline":"Artificial inteeligence",
-    "image":"/femtech1.png",
-    "bgimage": "/hack1.jpeg",
+  "image":"https://source.unsplash.com/800x600/?women,health,technology",
+  "bgimage": "https://source.unsplash.com/1600x900/?women,health,innovation",
     "prize": "$5,000 + Incubation Support",
     "startDate":"2025-09-11",
     "endDate":"2025-09-16",
@@ -82,8 +82,8 @@
     "TeamSize": "3",
     "payment": "paid",
     "tagline": "Decentralized Tomorrow",
-    "image": "/crypto.png",
-    "bgimage": "/hack1.jpeg",
+  "image": "https://source.unsplash.com/800x600/?blockchain,crypto",
+  "bgimage": "https://source.unsplash.com/1600x900/?web3,blockchain",
     "prize": "$10,000 + Token Rewards",
     "startDate": "2025-09-20",
     "endDate": "2025-09-25",
@@ -97,17 +97,17 @@
       {
         "title": "What!",
         "description": "A comprehensive Web3 hackathon bringing together developers, designers, and blockchain enthusiasts to create the next generation of decentralized applications and financial solutions.",
-        "icon": "/blockchain.jpeg"
+  "icon": "/crypto.png"
       },
       {
         "title": "Why!",
         "description": "The blockchain ecosystem needs practical, user-friendly applications that can bridge the gap between traditional finance and decentralized systems, making Web3 accessible to mainstream users.",
-        "icon": "/blockchain.jpeg"
+  "icon": "/crypto.png"
       },
       {
         "title": "How!",
         "description": "Through collaborative development, expert mentorship, and access to cutting-edge blockchain tools and infrastructure.",
-        "icon": "/blockchain.jpeg"
+  "icon": "/crypto.png"
       }
     ],
     "whoCanParticipate": [
@@ -155,8 +155,8 @@
     "TeamSize": "4",
     "payment": "free",
     "tagline": "Climate Solutions for Tomorrow",
-    "image": "/green.png",
-    "bgimage": "/hack1.jpeg",
+  "image": "https://source.unsplash.com/800x600/?climate,green,energy",
+  "bgimage": "https://source.unsplash.com/1600x900/?renewable,energy",
     "prize": "$15,000 + Accelerator Program",
     "startDate": "2025-10-01",
     "endDate": "2025-10-06",
@@ -170,34 +170,34 @@
       {
         "title": "What!",
         "description": "A global hackathon dedicated to creating innovative technology solutions that address climate change, promote sustainability, and accelerate the transition to a green economy.",
-        "icon": "/why.jpeg"
+  "icon": "/why.jpeg"
       },
       {
         "title": "Why!",
         "description": "Climate change represents one of humanity's greatest challenges, requiring immediate, innovative technological solutions to reduce emissions and adapt to environmental changes.",
-        "icon": "/climate.jpeg"
+  "icon": "/green.png"
       },
       {
         "title": "How!",
         "description": "By combining cutting-edge technology with environmental science and sustainable business models to create impactful climate solutions.",
-        "icon": "/climate.jpeg"
+  "icon": "/green.png"
       }
     ],
     "whoCanParticipate": [
       {
         "title": "Environmental Scientists",
         "description": "Researchers and professionals in environmental science, climate studies, renewable energy, and sustainability looking to translate knowledge into practical solutions.",
-        "icon": "/climate.jpeg"
+  "icon": "/green.png"
       },
       {
         "title": "Tech Innovators",
         "description": "Software developers, IoT specialists, and data scientists interested in applying technology to solve environmental challenges and create sustainable solutions.",
-        "icon": "/climate.jpeg"
+  "icon": "/green.png"
       },
       {
         "title": "Policy Experts",
         "description": "Environmental policy makers, sustainability consultants, and green business strategists focused on systemic change and scalable climate solutions.",
-        "icon": "/climate.jpeg"
+  "icon": "/green.png"
       }
     ],
     "challenges": [
@@ -228,8 +228,8 @@
     "TeamSize": "3",
     "payment": "free",
     "tagline": "Revolutionizing Education",
-    "image": "/learn.png",
-    "bgimage": "/hack1.jpeg",
+  "image": "https://source.unsplash.com/800x600/?education,technology",
+  "bgimage": "https://source.unsplash.com/1600x900/?edtech,learning",
     "prize": "$8,000 + Mentorship Program",
     "startDate": "2025-09-15",
     "endDate": "2025-09-20",
@@ -243,29 +243,29 @@
       {
         "title": "What!",
         "description": "An educational technology hackathon aimed at developing innovative digital learning solutions that enhance student engagement and improve educational outcomes.",
-        "icon": "/edtech.jpeg"
+  "icon": "/learn.png"
       },
       {
         "title": "Why!",
         "description": "Traditional education systems face challenges in adapting to diverse learning styles and modern technological capabilities, creating opportunities for innovative EdTech solutions.",
-        "icon": "/edtech.jpeg"
+  "icon": "/learn.png"
       },
       {
         "title": "How!",
         "description": "Through user-centered design, educational research integration, and cutting-edge technology to create personalized and engaging learning experiences.",
-        "icon": "/edtech.jpeg"
+  "icon": "/learn.png"
       }
     ],
     "whoCanParticipate": [
       {
         "title": "Students",
         "description": "Students from education, computer science, psychology, and design backgrounds who understand learning challenges and want to create solutions for their peers.",
-        "icon": "/edtech.jpeg"
+  "icon": "/learn.png"
       },
       {
         "title": "Educators",
         "description": "Teachers, professors, instructional designers, and education professionals who can provide insights into real classroom needs and learning challenges.",
-        "icon": "/edtech.jpeg"
+  "icon": "/learn.png"
       },
       {
         "title": "Developers",
@@ -301,8 +301,8 @@
     "TeamSize": "4",
     "payment": "paid",
     "tagline": "Banking Reimagined",
-    "image": "/digital.png",
-    "bgimage": "/hack1.jpeg",
+  "image": "https://source.unsplash.com/800x600/?fintech,banking",
+  "bgimage": "https://source.unsplash.com/1600x900/?finance,technology",
     "prize": "$20,000 + Investor Pitch",
     "startDate": "2025-10-10",
     "endDate": "2025-10-15",
@@ -316,29 +316,29 @@
       {
         "title": "What!",
         "description": "A comprehensive FinTech hackathon focused on developing next-generation financial services and banking solutions that leverage emerging technologies.",
-        "icon": "/fintech.jpeg"
+  "icon": "/digital.png"
       },
       {
         "title": "Why!",
         "description": "The financial services industry is undergoing rapid digital transformation, creating opportunities for innovative solutions that improve accessibility and user experience.",
-        "icon": "/fintech.jpeg"
+  "icon": "/digital.png"
       },
       {
         "title": "How!",
         "description": "Through collaboration with financial institutions, access to banking APIs, and expert guidance on regulatory requirements and market needs.",
-        "icon": "/fintech.jpeg"
+  "icon": "/digital.png"
       }
     ],
     "whoCanParticipate": [
       {
         "title": "Developers",
         "description": "Software engineers, mobile app developers, and backend specialists with experience in secure financial systems and payment processing technologies.",
-        "icon": "/fintech.jpeg"
+  "icon": "/digital.png"
       },
       {
         "title": "Financial Professionals",
         "description": "Banking professionals, financial analysts, and compliance experts who understand industry regulations and real-world financial challenges.",
-        "icon": "/fintech.jpeg"
+  "icon": "/digital.png"
       },
       {
         "title": "UX Designers",
@@ -374,8 +374,8 @@
     "TeamSize": "5",
     "payment": "free",
     "tagline": "Play Create Innovate",
-    "image": "/indiegame.png",
-    "bgimage": "/hack1.jpeg",
+  "image": "https://source.unsplash.com/800x600/?gaming,indie,controller",
+  "bgimage": "https://source.unsplash.com/1600x900/?game,development",
     "prize": "$12,000 + Publishing Deal",
     "startDate": "2025-09-18",
     "endDate": "2025-09-23",
@@ -389,17 +389,17 @@
       {
         "title": "What!",
         "description": "An intensive game development competition where teams create original games from concept to playable prototype, emphasizing creativity and innovation.",
-        "icon": "/gaming.jpeg"
+  "icon": "/indiegame.png"
       },
       {
         "title": "Why!",
         "description": "The indie game industry thrives on fresh ideas and innovative gameplay mechanics that challenge traditional gaming conventions and create unique player experiences.",
-        "icon": "/gaming.jpeg"
+  "icon": "/indiegame.png"
       },
       {
         "title": "How!",
         "description": "Through rapid prototyping, creative collaboration, and access to game development tools and resources from industry partners.",
-        "icon": "/gaming.jpeg"
+  "icon": "/indiegame.png"
       }
     ],
     "whoCanParticipate": [
@@ -447,8 +447,8 @@
     "TeamSize": "4",
     "payment": "paid",
     "tagline": "Connected Urban Future",
-    "image": "/iot.jpeg",
-    "bgimage": "/hack7.jpeg",
+  "image": "https://source.unsplash.com/800x600/?iot,smart,city",
+  "bgimage": "https://source.unsplash.com/1600x900/?smart,city",
     "prize": "$18,000 + Pilot Program",
     "startDate": "2025-10-20",
     "endDate": "2025-10-25",
@@ -462,17 +462,17 @@
       {
         "title": "What!",
         "description": "An IoT-focused hackathon aimed at creating smart city solutions that improve urban infrastructure, sustainability, and quality of life for city residents.",
-        "icon": "/iot.jpeg"
+  "icon": "/images.png"
       },
       {
         "title": "Why!",
         "description": "Rapid urbanization creates challenges in traffic management, energy efficiency, and public services that can be addressed through intelligent IoT solutions.",
-        "icon": "/iot.jpeg"
+  "icon": "/images.png"
       },
       {
         "title": "How!",
         "description": "By leveraging sensor networks, data analytics, and connected devices to create intelligent urban systems that respond to real-time needs.",
-        "icon": "/iot.jpeg"
+  "icon": "/images.png"
       }
     ],
     "whoCanParticipate": [
@@ -520,8 +520,8 @@
     "TeamSize": "3",
     "payment": "free",
     "tagline": "Defending Digital Frontiers",
-    "image": "/security.jpeg",
-    "bgimage": "/hack8.jpeg",
+  "image": "https://source.unsplash.com/800x600/?cybersecurity,lock",
+  "bgimage": "https://source.unsplash.com/1600x900/?hacker,cybersecurity",
     "prize": "$7,500 + Security Certification",
     "startDate": "2025-09-25",
     "endDate": "2025-09-30",
@@ -535,17 +535,17 @@
       {
         "title": "What!",
         "description": "A cybersecurity-focused hackathon where participants develop tools and systems to defend against modern cyber threats and protect digital privacy.",
-        "icon": "/security.jpeg"
+  "icon": "/images.png"
       },
       {
         "title": "Why!",
         "description": "The increasing sophistication of cyber attacks requires innovative security solutions that can adapt to evolving threats and protect critical infrastructure.",
-        "icon": "/security.jpeg"
+  "icon": "/images.png"
       },
       {
         "title": "How!",
         "description": "Through hands-on security challenges, threat modeling exercises, and development of practical cybersecurity tools and systems.",
-        "icon": "/security.jpeg"
+  "icon": "/images.png"
       }
     ],
     "whoCanParticipate": [
@@ -593,8 +593,8 @@
     "TeamSize": "4",
     "payment": "paid",
     "tagline": "Beyond Reality",
-    "image": "/arvr.jpeg",
-    "bgimage": "/hack9.jpeg",
+  "image": "https://source.unsplash.com/800x600/?vr,ar,headset",
+  "bgimage": "https://source.unsplash.com/1600x900/?virtual,reality",
     "prize": "$25,000 + VR Studio Partnership",
     "startDate": "2025-11-01",
     "endDate": "2025-11-06",
@@ -608,17 +608,17 @@
       {
         "title": "What!",
         "description": "An immersive technology hackathon focused on developing practical AR/VR applications that solve real-world problems across healthcare, education, and enterprise.",
-        "icon": "/arvr.jpeg"
+  "icon": "/images.png"
       },
       {
         "title": "Why!",
         "description": "AR/VR technologies are reaching maturity and creating opportunities for transformative applications in training, visualization, and human-computer interaction.",
-        "icon": "/arvr.jpeg"
+  "icon": "/images.png"
       },
       {
         "title": "How!",
         "description": "Through access to cutting-edge hardware, expert mentorship, and partnerships with companies implementing AR/VR solutions in their operations.",
-        "icon": "/arvr.jpeg"
+  "icon": "/images.png"
       }
     ],
     "whoCanParticipate": [
@@ -666,8 +666,8 @@
     "TeamSize": "4",
     "payment": "free",
     "tagline": "Technology for Humanity",
-    "image": "/social.jpeg",
-    "bgimage": "/hack10.jpeg",
+  "image": "https://source.unsplash.com/800x600/?community,ngo,help",
+  "bgimage": "https://source.unsplash.com/1600x900/?social,impact",
     "prize": "$6,000 + NGO Partnership",
     "startDate": "2025-09-28",
     "endDate": "2025-10-03",
@@ -681,17 +681,17 @@
       {
         "title": "What!",
         "description": "A social impact hackathon where participants develop technology solutions that address social challenges and support community organizations in their work.",
-        "icon": "/social.jpeg"
+  "icon": "/why.jpeg"
       },
       {
         "title": "Why!",
         "description": "Many social problems can be alleviated through thoughtful application of technology, but non-profits often lack resources to develop custom solutions.",
-        "icon": "/social.jpeg"
+  "icon": "/why.jpeg"
       },
       {
         "title": "How!",
         "description": "By connecting developers with social organizations and focusing on creating sustainable, impactful technology solutions for community needs.",
-        "icon": "/social.jpeg"
+  "icon": "/why.jpeg"
       }
     ],
     "whoCanParticipate": [

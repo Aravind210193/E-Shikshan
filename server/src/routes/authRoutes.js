@@ -1,17 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const { protect } = require('../middlewares/authMiddleware');
 
 // @route   GET api/auth/profile
 // @desc    Get user profile
 // @access  Private
-router.get('/profile', authMiddleware, authController.getProfile);
+router.get('/profile', protect, authController.getProfile);
+
+// @route   GET api/auth/test
+// @desc    Test auth middleware
+// @access  Private
+router.get('/test', protect, (req, res) => {
+  res.json({
+    message: 'Auth middleware working',
+    user: req.user
+  });
+});
 
 // @route   PUT api/auth/profile
 // @desc    Update user profile
 // @access  Private
-router.put('/profile', authMiddleware, authController.updateProfile);
+router.put('/profile', protect, authController.updateProfile);
 
 // @route   POST api/auth/login
 // @desc    Login user & get token

@@ -1,0 +1,196 @@
+{
+  "branches": {
+    "mbbs-anatomy": {
+      "name": "MBBS - Anatomy",
+      "shortName": "Anatomy",
+      "totalSemesters": 4,
+      "color": "rose",
+      "description": "Anatomy syllabus for MBBS Year 1",
+      "semesters": {
+        "1": {
+          "name": "Year 1 - Semester 1",
+          "subjects": [
+            { "name": "General Anatomy", "code": "ANAT101", "credits": 6, "type": "Core", "difficulty": "Medium", "units": [] },
+            { "name": "Upper Limb Anatomy", "code": "ANAT102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+          ]
+        },
+        "2": {
+          "name": "Year 1 - Semester 2",
+          "subjects": [
+            { "name": "Lower Limb Anatomy", "code": "ANAT201", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] },
+            { "name": "Thorax Anatomy", "code": "ANAT202", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+          ]
+        },
+        "3": {
+          "name": "Year 2 - Semester 1",
+          "subjects": [
+            { "name": "Head & Neck Anatomy", "code": "ANAT301", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
+            { "name": "Abdomen & Pelvis", "code": "ANAT302", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] }
+          ]
+        },
+        "4": {
+          "name": "Year 2 - Semester 2",
+          "subjects": [
+            { "name": "Neuroanatomy", "code": "ANAT401", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        }
+      }
+    },
+    "mbbs-physiology": {
+      "name": "MBBS - Physiology",
+      "shortName": "Physiology",
+      "totalSemesters": 4,
+      "color": "rose",
+      "description": "Physiology syllabus for MBBS",
+      "semesters": {
+        "1": {
+          "name": "Year 1 - Semester 1",
+          "subjects": [
+            { "name": "General Physiology", "code": "PHYS101", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
+            { "name": "Blood & Immunity", "code": "PHYS102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+          ]
+        },
+        "2": {
+          "name": "Year 1 - Semester 2",
+          "subjects": [
+            { "name": "Cardiovascular System", "code": "PHYS201", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
+            { "name": "Respiratory System", "code": "PHYS202", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+          ]
+        },
+        "3": {
+          "name": "Year 2 - Semester 1",
+          "subjects": [
+            { "name": "Renal System", "code": "PHYS301", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] },
+            { "name": "Nervous System", "code": "PHYS302", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        },
+        "4": {
+          "name": "Year 2 - Semester 2",
+          "subjects": [
+            { "name": "Endocrine System", "code": "PHYS401", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        }
+      }
+    },
+    "mbbs-biochemistry": {
+      "name": "MBBS - Biochemistry",
+      "shortName": "Biochemistry",
+      "totalSemesters": 2,
+      "color": "rose",
+      "description": "Biochemistry topics for MBBS",
+      "semesters": {
+        "1": {
+          "name": "Year 1",
+          "subjects": [
+            { "name": "Biomolecules & Enzymes", "code": "BIOCH101", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
+            { "name": "Metabolism Basics", "code": "BIOCH102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+          ]
+        },
+        "2": {
+          "name": "Year 2",
+          "subjects": [
+            { "name": "Clinical Biochemistry", "code": "BIOCH201", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        }
+      }
+    },
+    "general-medicine": {
+      "name": "General Medicine",
+      "shortName": "Med",
+      "totalSemesters": 4,
+      "color": "rose",
+      "description": "Clinical medicine topics",
+      "semesters": {
+        "1": {
+          "name": "Clinical Year 1",
+          "subjects": [
+            { "name": "Cardiology", "code": "MED101", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] },
+            { "name": "Respiratory Medicine", "code": "MED102", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        },
+        "2": {
+          "name": "Clinical Year 2",
+          "subjects": [
+            { "name": "Gastroenterology", "code": "MED201", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] },
+            { "name": "Nephrology", "code": "MED202", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        },
+        "3": {
+          "name": "Clinical Year 3",
+          "subjects": [
+            { "name": "Endocrinology", "code": "MED301", "credits": 4, "type": "Core", "difficulty": "Advanced", "units": [] },
+            { "name": "Infectious Diseases", "code": "MED302", "credits": 4, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        },
+        "4": {
+          "name": "Clinical Year 4",
+          "subjects": [
+            { "name": "Hematology", "code": "MED401", "credits": 4, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        }
+      }
+    },
+    "general-surgery": {
+      "name": "General Surgery",
+      "shortName": "Surgery",
+      "totalSemesters": 4,
+      "color": "rose",
+      "description": "Surgery topics and operative techniques",
+      "semesters": {
+        "1": {
+          "name": "Surgery Year 1",
+          "subjects": [
+            { "name": "Basics of Surgery", "code": "SURG101", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
+            { "name": "Wound Management", "code": "SURG102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+          ]
+        },
+        "2": {
+          "name": "Surgery Year 2",
+          "subjects": [
+            { "name": "General Surgical Procedures", "code": "SURG201", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        },
+        "3": {
+          "name": "Surgery Year 3",
+          "subjects": [
+            { "name": "Orthopedic Surgery Basics", "code": "SURG301", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        },
+        "4": {
+          "name": "Surgery Year 4",
+          "subjects": [
+            { "name": "Advanced Surgical Techniques", "code": "SURG401", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        }
+      }
+    },
+    "pediatrics": {
+      "name": "Pediatrics",
+      "shortName": "Pediatrics",
+      "totalSemesters": 3,
+      "color": "rose",
+      "description": "Pediatric medicine for infants and children",
+      "semesters": {
+        "1": {
+          "name": "Pediatrics Year 1",
+          "subjects": [
+            { "name": "Growth & Development", "code": "PED101", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] },
+            { "name": "Neonatology", "code": "PED102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+          ]
+        },
+        "2": {
+          "name": "Pediatrics Year 2",
+          "subjects": [
+            { "name": "Pediatric Infections", "code": "PED201", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        },
+        "3": {
+          "name": "Pediatrics Year 3",
+          "subjects": [
+            { "name": "Pediatric Cardiology", "code": "PED301", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+          ]
+        }
+      }
+    }
+  }
+}

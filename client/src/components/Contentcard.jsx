@@ -9,6 +9,13 @@ const Contentcard = ({title, link, theme, educationLevel}) => {
 
     // Handle navigation based on education level
     const handleNavigation = () => {
+      // Prefer explicit link when provided (links are like /folders/mbbs-anatomy)
+      if (typeof link === 'string' && link.startsWith('/folders/')) {
+        const slug = link.replace(/^\/folders\//, '');
+        navigate(`/content/${slug}`);
+        return;
+      }
+
       if (educationLevel === '10th') {
         // Navigate to 10th grade term selection
         navigate('/content/10th');
@@ -19,8 +26,9 @@ const Contentcard = ({title, link, theme, educationLevel}) => {
         // Navigate to postgraduate program selection
         navigate('/content/postgraduate');
       } else {
-        // For UG and other levels, use the existing navigation
-        navigate(`/content/${title.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '')}`);
+        // For UG and other levels, fallback to a slug created from title
+        const slug = title.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
+        navigate(`/content/${slug}`);
       }
     };
     

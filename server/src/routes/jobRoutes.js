@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const jobCtrl = require('../controllers/jobController');
 
-// Placeholder route until job controller is implemented
-router.get('/', (req, res) => {
-  res.json({ message: 'Job routes working' });
-});
+// Public job listings (career pathways)
+router.get('/', jobCtrl.getAll);
+router.get('/:id', jobCtrl.getById);
 
 module.exports = router;
