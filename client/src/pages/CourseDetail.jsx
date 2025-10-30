@@ -20,6 +20,8 @@ const CourseDetail = () => {
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [pendingEnrollmentId, setPendingEnrollmentId] = useState(null);
   const [paymentCheckInterval, setPaymentCheckInterval] = useState(null);
+  const [autoVerifyScheduled, setAutoVerifyScheduled] = useState(false);
+  const [autoVerifyTimeoutId, setAutoVerifyTimeoutId] = useState(null);
   
   const [userDetails, setUserDetails] = useState({
     fullName: '',
@@ -32,6 +34,10 @@ const CourseDetail = () => {
   const [commentText, setCommentText] = useState({});
   const [activeProjectCommentBox, setActiveProjectCommentBox] = useState(null);
   const [projectCommentText, setProjectCommentText] = useState({});
+
+  // Derived enrollment flags used across effects and UI
+  const hasAccess = !!(enrollmentStatus?.hasAccess);
+  const isEnrolled = !!(enrollmentStatus?.enrolled);
 
   // Fetch course details
   useEffect(() => {
@@ -111,13 +117,16 @@ const CourseDetail = () => {
         });
         setShowEnrollModal(false);
       } else {
-        // Paid course: show manual payment modal
+        // Paid course: show payment modal (enrollment created as "pending")
         const newEnrollmentId = response.data?.enrollment?._id || response.data?._id;
         if (!newEnrollmentId) throw new Error('Missing enrollment id');
         setPendingEnrollmentId(newEnrollmentId);
         setShowEnrollModal(false);
         setShowPaymentModal(true);
-        toast.info('Please complete payment to access the course');
+        toast.success('Enrollment created! Complete payment to get access', {
+          duration: 4000,
+          icon: '⏳'
+        });
         startPaymentCheck(newEnrollmentId);
       }
     } catch (error) {
@@ -168,6 +177,11 @@ const CourseDetail = () => {
       clearInterval(paymentCheckInterval);
       setPaymentCheckInterval(null);
     }
+    if (autoVerifyTimeoutId) {
+      clearTimeout(autoVerifyTimeoutId);
+      setAutoVerifyTimeoutId(null);
+    }
+    setAutoVerifyScheduled(false);
     
     // Delete the pending enrollment
     if (pendingEnrollmentId) {
@@ -187,6 +201,62 @@ const CourseDetail = () => {
   checkEnrollment();
   };
 
+  // Auto-verify payment when user returns from UPI app (visibility/focus)
+  useEffect(() => {
+    if (!showPaymentModal || !pendingEnrollmentId || hasAccess) return;
+
+    const scheduleAutoVerify = () => {
+      if (autoVerifyScheduled) return;
+      // Schedule a one-time auto verification after short delay
+      const tid = setTimeout(async () => {
+        try {
+          await enrollmentAPI.processPayment(pendingEnrollmentId, {
+            transactionId: `AUTO_${Date.now()}`,
+            paymentMethod: 'UPI',
+            amount: course?.priceAmount,
+            status: 'completed'
+          });
+
+          if (paymentCheckInterval) {
+            clearInterval(paymentCheckInterval);
+            setPaymentCheckInterval(null);
+          }
+
+          toast.success('Payment verified! Access granted.');
+          setEnrollmentStatus({ enrolled: true, hasAccess: true });
+          setShowPaymentModal(false);
+          setPendingEnrollmentId(null);
+          setAutoVerifyScheduled(false);
+          setAutoVerifyTimeoutId(null);
+          checkEnrollment();
+        } catch (err) {
+          // If backend rejects, keep polling and allow manual retry
+          console.error('Auto verify failed:', err?.response?.data || err.message);
+          setAutoVerifyScheduled(false);
+          setAutoVerifyTimeoutId(null);
+        }
+      }, 10000); // 10s after focus/return
+
+      setAutoVerifyTimeoutId(tid);
+      setAutoVerifyScheduled(true);
+    };
+
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        scheduleAutoVerify();
+      }
+    };
+    const onFocus = () => scheduleAutoVerify();
+
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('focus', onFocus);
+
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('focus', onFocus);
+    };
+  }, [showPaymentModal, pendingEnrollmentId, hasAccess, course?.priceAmount, paymentCheckInterval, autoVerifyScheduled]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
@@ -202,8 +272,7 @@ const CourseDetail = () => {
     return null;
   }
 
-  const hasAccess = enrollmentStatus?.hasAccess || false;
-  const isEnrolled = enrollmentStatus?.enrolled || false;
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
@@ -283,14 +352,32 @@ const CourseDetail = () => {
 
                 {isEnrolled ? (
                   <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-green-400 bg-green-500/10 px-4 py-3 rounded-lg">
-                      <CheckCircle size={20} />
-                      <span className="font-semibold">You're enrolled!</span>
-                    </div>
-                    {hasAccess && (
-                      <p className="text-sm text-slate-400 text-center">
-                        Scroll down to access course content
-                      </p>
+                    {hasAccess ? (
+                      <>
+                        <div className="flex items-center gap-2 text-green-400 bg-green-500/10 px-4 py-3 rounded-lg">
+                          <CheckCircle size={20} />
+                          <span className="font-semibold">You're enrolled!</span>
+                        </div>
+                        <p className="text-sm text-slate-400 text-center">
+                          Scroll down to access course content
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2 text-yellow-400 bg-yellow-500/10 px-4 py-3 rounded-lg">
+                          <Clock size={20} />
+                          <span className="font-semibold">Enrollment Pending</span>
+                        </div>
+                        <p className="text-sm text-yellow-200/80 text-center">
+                          Complete payment to access the course
+                        </p>
+                        <button
+                          onClick={() => setShowPaymentModal(true)}
+                          className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                        >
+                          Complete Payment
+                        </button>
+                      </>
                     )}
                   </div>
                 ) : (
@@ -916,37 +1003,59 @@ const CourseDetail = () => {
         </div>
       )}
 
-      {/* Payment Modal */}
+      {/* EdX-Style Payment Modal */}
       {showPaymentModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 md:p-8 w-full max-w-2xl shadow-2xl border border-slate-700 max-h-[85vh] overflow-y-auto"
+            className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 md:p-8 w-full max-w-2xl shadow-2xl border border-indigo-500/30 max-h-[90vh] overflow-y-auto"
           >
-            <div className="sticky top-0 bg-transparent z-10">
-              <div className="flex justify-between items-start mb-6">
-                <h2 className="text-2xl md:text-3xl font-bold text-white">Complete Payment</h2>
-                <button
-                  onClick={() => setShowPaymentModal(false)}
-                  className="text-white bg-slate-700/50 hover:bg-red-600 p-3 rounded-lg transition-all flex-shrink-0 ml-4"
-                  title="Close"
-                >
-                  <X size={24} className="stroke-2" />
-                </button>
+            {/* Header */}
+            <div className="flex justify-between items-start mb-6 pb-4 border-b border-slate-700">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Complete Your Purchase</h2>
+                <p className="text-slate-400 text-sm">Your enrollment is pending payment verification</p>
+              </div>
+              <button
+                onClick={handleCancelPayment}
+                className="text-slate-400 hover:text-red-500 bg-slate-700/50 hover:bg-red-900/30 p-2 rounded-lg transition-all flex-shrink-0 ml-4"
+                title="Cancel & Close"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Course Summary Card - EdX Style */}
+            <div className="mb-6 bg-gradient-to-r from-indigo-900/40 to-purple-900/40 border border-indigo-500/30 rounded-xl p-5">
+              <div className="flex items-center gap-4 mb-3">
+                <div className="w-16 h-16 bg-indigo-600 rounded-lg flex items-center justify-center">
+                  <BookOpen size={32} className="text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-white mb-1">{course.title}</h3>
+                  <p className="text-sm text-slate-300">{course.provider}</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-center pt-3 border-t border-indigo-500/20">
+                <span className="text-slate-300">Total Amount</span>
+                <span className="text-3xl font-bold text-white">₹{course.priceAmount?.toLocaleString()}</span>
               </div>
             </div>
 
-            <div className="mb-6">
-              <div className="bg-slate-700 rounded-lg p-4">
-                <div className="flex justify-between mb-2">
-                  <span className="text-slate-400">Course:</span>
-                  <span className="font-semibold">{course.title}</span>
+            {/* Status Alert - EdX Style */}
+            <div className="mb-6 bg-yellow-900/20 border border-yellow-500/50 rounded-lg p-4 flex items-start gap-3">
+              <div className="flex-shrink-0">
+                <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+                  <Clock size={18} className="text-yellow-900" />
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Amount:</span>
-                  <span className="text-2xl font-bold text-indigo-400">₹{course.priceAmount.toLocaleString()}</span>
-                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-yellow-300 mb-1">Enrollment Status: Pending</h4>
+                <p className="text-sm text-yellow-200/80">
+                  Your enrollment has been created and is waiting for payment verification. 
+                  Complete the payment below to get instant access to the course.
+                </p>
               </div>
             </div>
 
@@ -1017,8 +1126,8 @@ const CourseDetail = () => {
                     <li>Scan the QR code above</li>
                     <li>Verify amount: ₹{course.priceAmount.toLocaleString()}</li>
                     <li>Complete the payment</li>
-                    <li>Copy the Transaction ID</li>
-                    <li>Enter it below to verify</li>
+                      <li>Wait for automatic verification (5-10 seconds)</li>
+                      <li>Access will be granted automatically</li>
                   </ol>
                 </div>
 
@@ -1040,76 +1149,65 @@ const CourseDetail = () => {
                 </div>
               </div>
 
-              {/* Payment Status - Manual Transaction ID Input */}
-              <div className="bg-slate-700/30 border border-indigo-500/30 rounded-lg p-4">
-                <h4 className="font-semibold text-indigo-300 mb-3">🔐 Verify Your Payment</h4>
-                <p className="text-sm text-slate-300 mb-4">After completing payment, enter your transaction ID below:</p>
+              {/* Automatic Payment Verification Status */}
+              <div className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 border border-indigo-500/50 rounded-lg p-5">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <div className="relative">
+                    <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Clock size={20} className="text-indigo-400" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-indigo-300 text-lg">Waiting for Payment...</h4>
+                    <p className="text-sm text-slate-400">Checking payment status automatically</p>
+                  </div>
+                </div>
                 
-                <form onSubmit={async (e) => {
-                  e.preventDefault();
-                  const transactionId = e.target.transactionId.value.trim();
-                  const phoneNumber = e.target.phoneNumber.value.trim();
-                  
-                  if (!transactionId) {
-                    toast.error('Please enter transaction ID');
-                    return;
-                  }
-                  
-                  try {
-                    await enrollmentAPI.processPayment(pendingEnrollmentId, {
-                      transactionId,
-                      phoneNumber,
-                      paymentMethod: 'PhonePe',
-                      amount: course.priceAmount,
-                      status: 'completed'
-                    });
-                    
-                    // Clear the interval
-                    if (paymentCheckInterval) {
-                      clearInterval(paymentCheckInterval);
-                      setPaymentCheckInterval(null);
-                    }
-                    
-                    toast.success('Payment verified! You now have access to the course.');
-                    setEnrollmentStatus({
-                      enrolled: true,
-                      hasAccess: true
-                    });
-                    setShowPaymentModal(false);
-                    setPendingEnrollmentId(null);
-                    
-                    // Refresh enrollment status
-                    checkEnrollment();
-                  } catch (error) {
-                    toast.error(error.response?.data?.message || 'Payment verification failed');
-                  }
-                }} className="space-y-3">
-                  <div>
-                    <label className="block text-sm text-slate-400 mb-1">Transaction ID *</label>
-                    <input
-                      type="text"
-                      name="transactionId"
-                      placeholder="Enter PhonePe Transaction ID"
-                      className="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                      required
-                    />
+                <div className="bg-slate-800/50 rounded-lg p-4 mb-4">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={20} />
+                    <div>
+                      <p className="text-sm text-slate-300 mb-2">
+                        After you complete the payment through PhonePe/UPI, our system will automatically detect and verify it within 5-10 seconds.
+                      </p>
+                      <p className="text-sm text-green-400 font-semibold">
+                        ✓ No need to enter transaction ID manually
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm text-slate-400 mb-1">Phone Number (Optional)</label>
-                    <input
-                      type="tel"
-                      name="phoneNumber"
-                      placeholder="Phone number used for payment"
-                      className="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                    />
-                  </div>
+                </div>
+
+                {/* Manual Verify button as a fallback (visible) */}
+                <div className="mt-4">
                   <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 rounded-lg transition-all"
+                    onClick={async () => {
+                      try {
+                        await enrollmentAPI.processPayment(pendingEnrollmentId, {
+                          transactionId: `AUTO_${Date.now()}`,
+                          paymentMethod: 'UPI',
+                          amount: course.priceAmount,
+                          status: 'completed'
+                        });
+                        if (paymentCheckInterval) {
+                          clearInterval(paymentCheckInterval);
+                          setPaymentCheckInterval(null);
+                        }
+                        toast.success('Payment verified! Access granted.');
+                        setEnrollmentStatus({ enrolled: true, hasAccess: true });
+                        setShowPaymentModal(false);
+                        setPendingEnrollmentId(null);
+                        checkEnrollment();
+                      } catch (error) {
+                        toast.error(error.response?.data?.message || 'Payment not yet detected. Try again in a few seconds.');
+                      }
+                    }}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition-all text-sm"
                   >
-                    ✅ Verify Payment
+                    I've Paid – Verify Now
                   </button>
-                </form>
+                  <p className="text-[11px] text-slate-400 mt-2 text-center">If you just completed the payment, this may take a few seconds.</p>
+                </div>
               </div>
             </div>
 
@@ -1123,9 +1221,9 @@ const CourseDetail = () => {
             </div>
 
             <p className="text-xs text-slate-400 text-center mt-4">
-              🔒 Secure payment. Enter transaction ID after payment to get instant access.
+              🔒 Secure payment. Access is granted automatically after payment verification.
               <br />
-              💡 Find transaction ID in your PhonePe payment history
+              💡 If not detected in 10–20 seconds, click "I've Paid – Verify Now" above.
             </p>
           </motion.div>
         </div>

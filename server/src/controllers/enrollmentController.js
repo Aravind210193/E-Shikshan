@@ -82,7 +82,7 @@ const enrollInCourse = async (req, res) => {
 const processPayment = async (req, res) => {
   try {
     const { enrollmentId } = req.params;
-    const { paymentMethod, transactionId, amount, phoneNumber, status } = req.body;
+  const { paymentMethod, transactionId, amount, phoneNumber, status } = req.body;
     const userId = req.user._id;
 
     const enrollment = await Enrollment.findById(enrollmentId);
@@ -108,7 +108,14 @@ const processPayment = async (req, res) => {
   // Store payment details
   const finalStatus = status || 'completed';
   enrollment.paymentStatus = finalStatus;
-    enrollment.paymentMethod = paymentMethod || 'PhonePe';
+    // Normalize to schema enum: map provider names like "PhonePe" to 'upi'
+    const normalizedMethod = (paymentMethod || '').toLowerCase();
+    enrollment.paymentMethod =
+      normalizedMethod === 'phonepe' || normalizedMethod === 'upi' || !normalizedMethod
+        ? 'upi'
+        : ['card', 'netbanking', 'wallet', 'free', 'admin_granted'].includes(normalizedMethod)
+          ? normalizedMethod
+          : 'upi';
     enrollment.transactionId = transactionId;
     enrollment.paymentDate = new Date();
     enrollment.status = 'active'; // Activate course access

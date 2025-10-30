@@ -138,6 +138,23 @@ const Courses = () => {
     navigate(`/courses/${course._id}`);
   };
 
+  const handleEnrollClick = (e, course) => {
+    e.stopPropagation();
+    
+    // Check if user is logged in
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('Please login to enroll in this course');
+      navigate('/login');
+      return;
+    }
+
+    // Navigate to course detail page for enrollment
+    navigate(`/courses/${course._id}`, { 
+      state: { autoOpenEnrollment: true } 
+    });
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       {/* Hero Section */}
@@ -396,7 +413,7 @@ const Courses = () => {
                     </div>
 
                     {/* Course Stats */}
-                    <div className="flex items-center justify-between text-sm mb-3">
+                    <div className="flex items-center justify-between text-sm mb-4">
                       <div className="flex items-center gap-1 text-yellow-400">
                         <Star size={16} fill="currentColor" />
                         <span className="font-semibold">{course.rating}</span>
@@ -412,7 +429,7 @@ const Courses = () => {
                     </div>
 
                     {/* Level Badge and Price */}
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mb-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                         course.level === 'Beginner' ? 'bg-green-900/50 text-green-400' :
                         course.level === 'Intermediate' ? 'bg-yellow-900/50 text-yellow-400' :
@@ -423,6 +440,39 @@ const Courses = () => {
                       <span className="font-bold text-indigo-400">
                         {course.price === 'Free' ? 'Free' : `₹${course.priceAmount?.toLocaleString()}`}
                       </span>
+                    </div>
+
+                    {/* EdX-Style Enrollment Button */}
+                    <div className="border-t border-slate-700 pt-4">
+                      {enrollmentStatus[course._id]?.enrolled ? (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/courses/${course._id}`);
+                          }}
+                          className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-green-500/20"
+                        >
+                          <BookOpen size={18} />
+                          View Course
+                        </button>
+                      ) : (
+                        <button
+                          onClick={(e) => handleEnrollClick(e, course)}
+                          className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 group"
+                        >
+                          {course.price === 'Free' ? (
+                            <>
+                              <Award size={18} className="group-hover:scale-110 transition-transform" />
+                              Enroll for Free
+                            </>
+                          ) : (
+                            <>
+                              <Zap size={18} className="group-hover:scale-110 transition-transform" />
+                              Enroll Now
+                            </>
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </motion.div>
