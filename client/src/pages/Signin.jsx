@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-hot-toast';
-// Import icons if you have Lucide or other icon libraries installed
-// If not, you can use emoji icons as placeholders
 
 const Signin = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -62,18 +60,11 @@ const Signin = ({ setIsLoggedIn }) => {
         throw new Error(data.message || 'Registration failed');
       }
 
-      // Store token
       localStorage.setItem('token', data.token);
-      
-      // Update login state
       if (setIsLoggedIn) {
         setIsLoggedIn(true);
       }
-      
-      // Show success message
       toast.success('Registration successful! Welcome to E-Shikshan');
-      
-      // Redirect to profile completion
       navigate('/profile');
     } catch (error) {
       console.error('Registration error:', error);

@@ -228,4 +228,55 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { login, register, getProfile, updateProfile };
+// @desc    Save/Update user resume
+// @route   PUT /api/auth/resume
+// @access  Private
+const saveResume = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update resume data
+    user.resume = {
+      ...req.body,
+      lastUpdated: Date.now()
+    };
+
+    const updatedUser = await user.save();
+
+    res.json({
+      success: true,
+      message: 'Resume saved successfully',
+      resume: updatedUser.resume
+    });
+  } catch (error) {
+    console.error('Error saving resume:', error);
+    res.status(500).json({ message: 'Server error saving resume' });
+  }
+};
+
+// @desc    Get user resume
+// @route   GET /api/auth/resume
+// @access  Private
+const getResume = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('resume');
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      success: true,
+      resume: user.resume || null
+    });
+  } catch (error) {
+    console.error('Error fetching resume:', error);
+    res.status(500).json({ message: 'Server error fetching resume' });
+  }
+};
+
+module.exports = { login, register, getProfile, updateProfile, saveResume, getResume };

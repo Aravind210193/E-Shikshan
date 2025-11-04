@@ -36,7 +36,6 @@ const Settings = () => {
     confirm: false
   });
 
-  // Form states
   const [personalInfo, setPersonalInfo] = useState({
     name: '',
     email: '',

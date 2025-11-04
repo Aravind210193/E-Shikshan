@@ -24,7 +24,123 @@
                   "Irrational Numbers",
                   "Decimal Expansions"
                 ],
-                "hours": 15
+                "hours": 15,
+                "videos": [
+                  {
+                    "title": "Introduction to Real Numbers",
+                    "description": "Understanding the concept of real numbers and their properties",
+                    "duration": "25:30",
+                    "url": "https://www.youtube.com/watch?v=L3LCe1h227o"
+                  },
+                  {
+                    "title": "Euclid's Division Algorithm Explained",
+                    "description": "Step-by-step explanation of Euclid's Division Algorithm with examples",
+                    "duration": "18:45",
+                    "url": "https://www.youtube.com/watch?v=H_2_nqKAZ5w"
+                  },
+                  {
+                    "title": "Fundamental Theorem of Arithmetic",
+                    "description": "Understanding prime factorization and unique factorization theorem",
+                    "duration": "22:15",
+                    "url": "https://www.youtube.com/watch?v=5BFgwYqRlXs"
+                  },
+                  {
+                    "title": "Irrational Numbers Deep Dive",
+                    "description": "Exploring irrational numbers with proofs and examples",
+                    "duration": "30:00",
+                    "url": "https://www.youtube.com/watch?v=p73EXRYnCgw"
+                  }
+                ],
+                "pdfs": [
+                  {
+                    "title": "Real Numbers Complete Notes",
+                    "description": "Comprehensive notes covering all topics in Real Numbers unit",
+                    "pages": 25,
+                    "size": "2.5 MB",
+                    "url": "https://ncert.nic.in/textbook/pdf/iemth1.pdf"
+                  },
+                  {
+                    "title": "Practice Problems - Real Numbers",
+                    "description": "100+ practice problems with detailed solutions",
+                    "pages": 40,
+                    "size": "3.8 MB",
+                    "url": "https://www.mathsisfun.com/algebra/real-numbers.html"
+                  },
+                  {
+                    "title": "Quick Revision Guide",
+                    "description": "Important formulas and concepts for quick revision",
+                    "pages": 10,
+                    "size": "1.2 MB",
+                    "url": "https://byjus.com/maths/real-numbers/"
+                  },
+                  {
+                    "title": "NCERT Solutions - Real Numbers",
+                    "description": "Complete solutions to all NCERT textbook exercises",
+                    "pages": 28,
+                    "size": "2.8 MB",
+                    "url": "https://ncert.nic.in/textbook/pdf/iemth1.pdf"
+                  },
+                  {
+                    "title": "Class 10 Math Formula Sheet",
+                    "description": "All important formulas for Class 10 Mathematics",
+                    "pages": 15,
+                    "size": "1.5 MB",
+                    "url": "https://www.toppr.com/guides/maths-formulas/class-10-maths-formulas/"
+                  },
+                  {
+                    "title": "Previous Year Board Questions - Real Numbers",
+                    "description": "Collection of CBSE board exam questions from past 5 years",
+                    "pages": 22,
+                    "size": "2.2 MB",
+                    "url": "https://www.cbse.gov.in/"
+                  }
+                ],
+                "assignments": [
+                  {
+                    "title": "Assignment 1: Euclid's Algorithm",
+                    "description": "Solve 10 problems using Euclid's Division Algorithm",
+                    "dueDate": "2025-11-15",
+                    "maxScore": 20,
+                    "difficulty": "Easy"
+                  },
+                  {
+                    "title": "Assignment 2: Prime Factorization",
+                    "description": "Find prime factorization for given numbers and prove uniqueness",
+                    "dueDate": "2025-11-20",
+                    "maxScore": 30,
+                    "difficulty": "Medium"
+                  },
+                  {
+                    "title": "Assignment 3: Irrational Numbers Proof",
+                    "description": "Prove that √2, √3, and √5 are irrational numbers",
+                    "dueDate": "2025-11-25",
+                    "maxScore": 25,
+                    "difficulty": "Hard"
+                  }
+                ],
+                "quizzes": [
+                  {
+                    "title": "Quick Quiz: Real Numbers Basics",
+                    "description": "Test your understanding of basic concepts",
+                    "questions": 10,
+                    "duration": "15 mins",
+                    "passingScore": 70
+                  },
+                  {
+                    "title": "Mid-Unit Quiz",
+                    "description": "Comprehensive quiz covering Euclid's Algorithm and Prime Factorization",
+                    "questions": 15,
+                    "duration": "25 mins",
+                    "passingScore": 75
+                  },
+                  {
+                    "title": "Final Quiz: Real Numbers",
+                    "description": "Complete unit test covering all topics",
+                    "questions": 20,
+                    "duration": "40 mins",
+                    "passingScore": 80
+                  }
+                ]
               },
               {
                 "title": "Unit 2: Polynomials",
@@ -1225,7 +1341,143 @@
                     "L'Hospital's Rule",
                     "Maxima and Minima"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Introduction to Limits and Continuity",
+                      "description": "Comprehensive introduction to the concept of limits, continuity, and their applications in calculus",
+                      "duration": "32:45",
+                      "url": "https://www.youtube.com/watch?v=riXcZT2ICjA"
+                    },
+                    {
+                      "title": "Derivatives and Differentiation Rules",
+                      "description": "Learn the fundamental rules of differentiation including product, quotient, and chain rules",
+                      "duration": "28:30",
+                      "url": "https://www.youtube.com/watch?v=S0_qX4VJhMQ"
+                    },
+                    {
+                      "title": "L'Hospital's Rule and Applications",
+                      "description": "Understanding L'Hospital's Rule for evaluating limits of indeterminate forms",
+                      "duration": "24:15",
+                      "url": "https://www.youtube.com/watch?v=wXXej6AmVjQ"
+                    },
+                    {
+                      "title": "Maxima and Minima Problems",
+                      "description": "Solving optimization problems using calculus - finding maximum and minimum values",
+                      "duration": "35:20",
+                      "url": "https://www.youtube.com/watch?v=AMKQZYuEMgA"
+                    },
+                    {
+                      "title": "Applications of Differential Calculus",
+                      "description": "Real-world applications including rate of change, velocity, and acceleration",
+                      "duration": "26:50",
+                      "url": "https://www.youtube.com/watch?v=54_XRjHhZzI"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Differential Calculus Complete Notes",
+                      "description": "Comprehensive lecture notes covering all topics with detailed explanations and examples",
+                      "pages": 45,
+                      "size": "4.2 MB",
+                      "url": "https://www.math.ucdavis.edu/~kouba/CalcOneDIRECTORY/lhopitaldirectory/LHopital.pdf"
+                    },
+                    {
+                      "title": "Practice Problems - Differentiation",
+                      "description": "150+ solved problems with step-by-step solutions for practice",
+                      "pages": 60,
+                      "size": "5.8 MB",
+                      "url": "https://tutorial.math.lamar.edu/pdf/calculus_cheat_sheet_derivatives.pdf"
+                    },
+                    {
+                      "title": "Formula Sheet - Differential Calculus",
+                      "description": "Quick reference guide with all important formulas and theorems",
+                      "pages": 8,
+                      "size": "800 KB",
+                      "url": "https://www.whitman.edu/mathematics/calculus_online/calculus.pdf"
+                    },
+                    {
+                      "title": "Previous Year Question Papers",
+                      "description": "Collection of previous exam questions with detailed solutions",
+                      "pages": 35,
+                      "size": "3.5 MB",
+                      "url": "https://www.math.ucdavis.edu/~kouba/CalcTwoDIRECTORY/maxmindirectory/MaxMin.pdf"
+                    },
+                    {
+                      "title": "MIT OpenCourseWare - Single Variable Calculus",
+                      "description": "MIT's comprehensive calculus notes with detailed proofs and examples",
+                      "pages": 120,
+                      "size": "8.5 MB",
+                      "url": "https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/resources/mit18_01scf10_text/"
+                    },
+                    {
+                      "title": "Calculus Made Easy by Silvanus Thompson",
+                      "description": "Classic textbook explaining calculus concepts in simple language",
+                      "pages": 180,
+                      "size": "6.2 MB",
+                      "url": "https://calculusmadeeasy.org/calculus-made-easy.pdf"
+                    },
+                    {
+                      "title": "Stewart Calculus - Chapter 2 & 3",
+                      "description": "Excerpts from Stewart's Calculus covering limits and derivatives",
+                      "pages": 85,
+                      "size": "7.4 MB",
+                      "url": "https://www.stewartcalculus.com/data/CALCULUS%20Concepts%20and%20Contexts/upfiles/3c3-Graphing_Stu.pdf"
+                    },
+                    {
+                      "title": "Khan Academy Calculus Workbook",
+                      "description": "Interactive workbook with practice exercises and video links",
+                      "pages": 42,
+                      "size": "3.8 MB",
+                      "url": "https://www.khanacademy.org/math/differential-calculus"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Limits and Continuity",
+                      "description": "Solve problems on limits, continuity, and differentiability",
+                      "dueDate": "2025-11-18",
+                      "maxScore": 25,
+                      "difficulty": "Easy"
+                    },
+                    {
+                      "title": "Assignment 2: Differentiation Techniques",
+                      "description": "Apply various differentiation rules to solve complex problems",
+                      "dueDate": "2025-11-25",
+                      "maxScore": 35,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 3: Optimization Problems",
+                      "description": "Real-world optimization problems using maxima and minima concepts",
+                      "dueDate": "2025-12-02",
+                      "maxScore": 40,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Quick Quiz: Limits Basics",
+                      "description": "Test your understanding of basic limit concepts",
+                      "questions": 10,
+                      "duration": "15 mins",
+                      "passingScore": 70
+                    },
+                    {
+                      "title": "Mid-Unit Assessment",
+                      "description": "Comprehensive quiz covering limits, continuity, and derivatives",
+                      "questions": 20,
+                      "duration": "30 mins",
+                      "passingScore": 75
+                    },
+                    {
+                      "title": "Final Quiz: Differential Calculus",
+                      "description": "Complete unit assessment covering all topics",
+                      "questions": 25,
+                      "duration": "45 mins",
+                      "passingScore": 80
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 2: Integral Calculus",
@@ -1235,7 +1487,57 @@
                     "Applications of Integration",
                     "Area under curves"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Introduction to Integration",
+                      "description": "Basic concepts of integration and antiderivatives",
+                      "duration": "28:15",
+                      "url": "https://www.youtube.com/watch?v=rfG8ce4nNh0"
+                    },
+                    {
+                      "title": "Integration Techniques",
+                      "description": "Substitution, integration by parts, and partial fractions",
+                      "duration": "35:42",
+                      "url": "https://www.youtube.com/watch?v=H9eCT6f_ZBU"
+                    },
+                    {
+                      "title": "Definite Integrals",
+                      "description": "Understanding and computing definite integrals",
+                      "duration": "24:30",
+                      "url": "https://www.youtube.com/watch?v=Gc3QvUB0PkI"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Integral Calculus Notes",
+                      "description": "Complete notes on integration techniques and applications",
+                      "pages": 52,
+                      "size": "4.8 MB",
+                      "url": "https://tutorial.math.lamar.edu/pdf/calculus_cheat_sheet_integrals.pdf"
+                    },
+                    {
+                      "title": "Integration Practice Problems",
+                      "description": "200+ solved integration problems",
+                      "pages": 68,
+                      "size": "6.2 MB",
+                      "url": "https://www.math.ucdavis.edu/~kouba/CalcTwoDIRECTORY/defintdirectory/DefInt.pdf"
+                    },
+                    {
+                      "title": "Applications of Integration",
+                      "description": "Real-world applications including area, volume, and work",
+                      "pages": 38,
+                      "size": "3.5 MB",
+                      "url": "https://www.whitman.edu/mathematics/calculus_online/chapter08.pdf"
+                    },
+                    {
+                      "title": "Integration Formula Sheet",
+                      "description": "Quick reference for all integration formulas",
+                      "pages": 6,
+                      "size": "650 KB",
+                      "url": "https://www.stewartcalculus.com/data/default/upfiles/integration_formulas.pdf"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 3: Matrices",
@@ -1245,7 +1547,64 @@
                     "Inverse of Matrix",
                     "System of Linear Equations"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Introduction to Matrices",
+                      "description": "Basic matrix operations and properties",
+                      "duration": "22:45",
+                      "url": "https://www.youtube.com/watch?v=xyAuNHPsq-g"
+                    },
+                    {
+                      "title": "Determinants Explained",
+                      "description": "Computing determinants and their properties",
+                      "duration": "26:18",
+                      "url": "https://www.youtube.com/watch?v=Ip3X9LOh2dk"
+                    },
+                    {
+                      "title": "Matrix Inverse and Applications",
+                      "description": "Finding inverse matrices and solving linear systems",
+                      "duration": "31:20",
+                      "url": "https://www.youtube.com/watch?v=uQhTuRlWMxw"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Linear Algebra - Matrices",
+                      "description": "Comprehensive notes on matrix theory and operations",
+                      "pages": 45,
+                      "size": "4.2 MB",
+                      "url": "https://www.math.ucdavis.edu/~linear/linear-guest.pdf"
+                    },
+                    {
+                      "title": "Matrix Algebra Problems",
+                      "description": "Practice problems with detailed solutions",
+                      "pages": 55,
+                      "size": "5.1 MB",
+                      "url": "https://www.mathcentre.ac.uk/resources/uploaded/sigma-matrices1-2009-1.pdf"
+                    },
+                    {
+                      "title": "Determinants and Inverses",
+                      "description": "Complete guide to determinants and matrix inverses",
+                      "pages": 32,
+                      "size": "2.8 MB",
+                      "url": "https://www.whitman.edu/mathematics/calculus_online/chapter14.pdf"
+                    },
+                    {
+                      "title": "Linear Systems Solutions",
+                      "description": "Solving systems of linear equations using matrices",
+                      "pages": 28,
+                      "size": "2.5 MB",
+                      "url": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/resources/mit18_06s10_pset1_soln/"
+                    },
+                    {
+                      "title": "Matrix Operations Cheat Sheet",
+                      "description": "Quick reference for all matrix operations",
+                      "pages": 8,
+                      "size": "750 KB",
+                      "url": "https://www.math.brown.edu/~treil/papers/LADW/LADW_2021-09-04.pdf"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 4: Vector Calculus",
@@ -1254,7 +1613,57 @@
                     "Scalar and Vector Products",
                     "Differentiation of Vectors"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Introduction to Vectors",
+                      "description": "Vector basics, components, and magnitude",
+                      "duration": "25:30",
+                      "url": "https://www.youtube.com/watch?v=ml4NSzCQobk"
+                    },
+                    {
+                      "title": "Dot Product and Cross Product",
+                      "description": "Understanding scalar and vector products",
+                      "duration": "29:45",
+                      "url": "https://www.youtube.com/watch?v=h0NJK4mEIJU"
+                    },
+                    {
+                      "title": "Vector Calculus Applications",
+                      "description": "Differentiation and integration of vector functions",
+                      "duration": "33:15",
+                      "url": "https://www.youtube.com/watch?v=1lGM5DEdMaw"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Vector Calculus Complete Notes",
+                      "description": "Comprehensive guide to vector algebra and calculus",
+                      "pages": 58,
+                      "size": "5.4 MB",
+                      "url": "https://www.math.ust.hk/~machas/vector-calculus.pdf"
+                    },
+                    {
+                      "title": "Vector Operations Practice",
+                      "description": "Problems on dot product, cross product, and applications",
+                      "pages": 42,
+                      "size": "3.9 MB",
+                      "url": "https://www.whitman.edu/mathematics/calculus_online/chapter13.pdf"
+                    },
+                    {
+                      "title": "Vector Differentiation Guide",
+                      "description": "Techniques for differentiating vector functions",
+                      "pages": 35,
+                      "size": "3.2 MB",
+                      "url": "https://www.mathcentre.ac.uk/resources/uploaded/mc-ty-vectordiff-2009-1.pdf"
+                    },
+                    {
+                      "title": "3D Geometry and Vectors",
+                      "description": "Vectors in three dimensions with geometric applications",
+                      "pages": 48,
+                      "size": "4.5 MB",
+                      "url": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/resources/mit18_02sc_notes_1/"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 5: Differential Equations",
@@ -1263,7 +1672,64 @@
                     "Linear Differential Equations",
                     "Applications"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Introduction to Differential Equations",
+                      "description": "Basic concepts and first-order equations",
+                      "duration": "27:40",
+                      "url": "https://www.youtube.com/watch?v=6o7b9yyhH7k"
+                    },
+                    {
+                      "title": "Solving Linear Differential Equations",
+                      "description": "Techniques for solving linear DEs",
+                      "duration": "32:25",
+                      "url": "https://www.youtube.com/watch?v=IUb-vWSqBeQ"
+                    },
+                    {
+                      "title": "Applications of Differential Equations",
+                      "description": "Real-world applications in physics and engineering",
+                      "duration": "29:50",
+                      "url": "https://www.youtube.com/watch?v=Hmx1pFoWN_4"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Differential Equations Fundamentals",
+                      "description": "Complete guide to first and second-order differential equations",
+                      "pages": 62,
+                      "size": "5.8 MB",
+                      "url": "https://www.math.ust.hk/~machas/differential-equations.pdf"
+                    },
+                    {
+                      "title": "DE Solution Methods",
+                      "description": "Comprehensive collection of solution techniques",
+                      "pages": 55,
+                      "size": "5.2 MB",
+                      "url": "https://tutorial.math.lamar.edu/pdf/differential_equations_cheat_sheet.pdf"
+                    },
+                    {
+                      "title": "Applications in Engineering",
+                      "description": "Practical applications of differential equations",
+                      "pages": 45,
+                      "size": "4.1 MB",
+                      "url": "https://www.whitman.edu/mathematics/calculus_online/chapter17.pdf"
+                    },
+                    {
+                      "title": "Practice Problems - DEs",
+                      "description": "100+ problems with step-by-step solutions",
+                      "pages": 72,
+                      "size": "6.5 MB",
+                      "url": "https://www.math.ucdavis.edu/~kouba/CalcTwoDIRECTORY/defdirectory/DE.pdf"
+                    },
+                    {
+                      "title": "MIT OCW - Differential Equations",
+                      "description": "MIT course notes on differential equations",
+                      "pages": 88,
+                      "size": "7.2 MB",
+                      "url": "https://ocw.mit.edu/courses/18-03-differential-equations-spring-2010/resources/mit18_03s10_notes/"
+                    }
+                  ]
                 }
               ]
             },
@@ -1282,7 +1748,44 @@
                     "Momentum",
                     "Rotational Motion"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Newton's Laws of Motion",
+                      "description": "Understanding the three fundamental laws of motion",
+                      "duration": "24:35",
+                      "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
+                    },
+                    {
+                      "title": "Work, Energy, and Power",
+                      "description": "Conservation of energy and work-energy theorem",
+                      "duration": "28:50",
+                      "url": "https://www.youtube.com/watch?v=w4QFJb9a8vo"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Classical Mechanics Notes",
+                      "description": "Complete notes on Newtonian mechanics",
+                      "pages": 58,
+                      "size": "5.3 MB",
+                      "url": "https://www.feynmanlectures.caltech.edu/I_toc.html"
+                    },
+                    {
+                      "title": "Mechanics Problem Set",
+                      "description": "Practice problems on forces, motion, and energy",
+                      "pages": 42,
+                      "size": "3.8 MB",
+                      "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/resources/"
+                    },
+                    {
+                      "title": "Rotational Dynamics Guide",
+                      "description": "Comprehensive guide to rotational motion",
+                      "pages": 35,
+                      "size": "3.2 MB",
+                      "url": "https://www.physics.purdue.edu/academic_programs/courses/phys172/"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 2: Properties of Matter",
@@ -1292,7 +1795,23 @@
                     "Viscosity",
                     "Fluid Mechanics"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "pdfs": [
+                    {
+                      "title": "Properties of Matter",
+                      "description": "Notes on elasticity, viscosity, and surface tension",
+                      "pages": 48,
+                      "size": "4.4 MB",
+                      "url": "https://www.physicsclassroom.com/class/fluids"
+                    },
+                    {
+                      "title": "Fluid Mechanics Basics",
+                      "description": "Introduction to fluid statics and dynamics",
+                      "pages": 52,
+                      "size": "4.8 MB",
+                      "url": "https://web.mit.edu/16.unified/www/FALL/fluids/Lectures/fluids.pdf"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 3: Heat and Thermodynamics",
@@ -1301,7 +1820,23 @@
                     "Laws of Thermodynamics",
                     "Heat Engines"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "pdfs": [
+                    {
+                      "title": "Thermodynamics Fundamentals",
+                      "description": "Complete guide to thermodynamic laws and processes",
+                      "pages": 65,
+                      "size": "6.0 MB",
+                      "url": "https://www.feynmanlectures.caltech.edu/II_toc.html"
+                    },
+                    {
+                      "title": "Heat Transfer and Engines",
+                      "description": "Heat engines, refrigerators, and entropy",
+                      "pages": 45,
+                      "size": "4.2 MB",
+                      "url": "https://ocw.mit.edu/courses/8-044-statistical-physics-i-spring-2013/"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 4: Waves and Oscillations",
@@ -1310,7 +1845,23 @@
                     "Wave Motion",
                     "Sound Waves"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "pdfs": [
+                    {
+                      "title": "Waves and Oscillations",
+                      "description": "Complete notes on SHM, wave motion, and sound",
+                      "pages": 55,
+                      "size": "5.0 MB",
+                      "url": "https://www.feynmanlectures.caltech.edu/I_21.html"
+                    },
+                    {
+                      "title": "Wave Physics Problems",
+                      "description": "Practice problems on waves and oscillations",
+                      "pages": 38,
+                      "size": "3.5 MB",
+                      "url": "https://ocw.mit.edu/courses/8-03sc-physics-iii-vibrations-and-waves-fall-2016/"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 5: Modern Physics",
@@ -1319,7 +1870,23 @@
                     "Atomic Structure",
                     "Nuclear Physics"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "pdfs": [
+                    {
+                      "title": "Introduction to Quantum Mechanics",
+                      "description": "Basic concepts of quantum physics and atomic structure",
+                      "pages": 72,
+                      "size": "6.5 MB",
+                      "url": "https://www.feynmanlectures.caltech.edu/III_toc.html"
+                    },
+                    {
+                      "title": "Nuclear Physics Fundamentals",
+                      "description": "Radioactivity, nuclear reactions, and applications",
+                      "pages": 48,
+                      "size": "4.4 MB",
+                      "url": "https://ocw.mit.edu/courses/22-02-introduction-to-applied-nuclear-physics-spring-2012/"
+                    }
+                  ]
                 }
               ]
             },
@@ -1338,7 +1905,23 @@
                     "Compilation Process",
                     "IDE Setup"
                   ],
-                  "hours": 10
+                  "hours": 10,
+                  "pdfs": [
+                    {
+                      "title": "C Programming Basics",
+                      "description": "Introduction to C language and programming fundamentals",
+                      "pages": 45,
+                      "size": "4.0 MB",
+                      "url": "https://www.learn-c.org/"
+                    },
+                    {
+                      "title": "The C Programming Language (K&R)",
+                      "description": "Classic textbook by Kernighan and Ritchie - Chapter 1",
+                      "pages": 35,
+                      "size": "3.2 MB",
+                      "url": "https://kremlin.cc/k&r.pdf"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 2: Data Types and Operators",
@@ -1349,7 +1932,23 @@
                     "Operators",
                     "Type Conversion"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "pdfs": [
+                    {
+                      "title": "C Data Types Guide",
+                      "description": "Complete guide to data types and operators in C",
+                      "pages": 38,
+                      "size": "3.5 MB",
+                      "url": "https://www.tutorialspoint.com/cprogramming/c_data_types.htm"
+                    },
+                    {
+                      "title": "Operators and Expressions",
+                      "description": "Detailed notes on C operators and type conversions",
+                      "pages": 32,
+                      "size": "2.9 MB",
+                      "url": "https://www.geeksforgeeks.org/operators-in-c/"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 3: Control Structures",
@@ -1359,7 +1958,23 @@
                     "Switch Case",
                     "Break and Continue"
                   ],
-                  "hours": 14
+                  "hours": 14,
+                  "pdfs": [
+                    {
+                      "title": "Control Flow in C",
+                      "description": "Complete guide to if-else, loops, and switch statements",
+                      "pages": 42,
+                      "size": "3.8 MB",
+                      "url": "https://www.programiz.com/c-programming/c-if-else-statement"
+                    },
+                    {
+                      "title": "Loop Programming Examples",
+                      "description": "Practice problems on for, while, and do-while loops",
+                      "pages": 35,
+                      "size": "3.2 MB",
+                      "url": "https://www.w3schools.com/c/c_for_loop.php"
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 4: Functions and Arrays",
@@ -1369,7 +1984,30 @@
                     "Arrays",
                     "String Handling"
                   ],
-                  "hours": 16
+                    "hours": 16,
+                    "pdfs": [
+                      {
+                        "title": "Functions in C Programming",
+                        "description": "Complete guide to function declaration, definition, and recursion",
+                        "pages": 48,
+                        "size": "4.3 MB",
+                        "url": "https://www.programiz.com/c-programming/c-functions"
+                      },
+                      {
+                        "title": "Arrays and Strings",
+                        "description": "Comprehensive notes on arrays and string manipulation",
+                        "pages": 52,
+                        "size": "4.7 MB",
+                        "url": "https://www.geeksforgeeks.org/arrays-in-c-cpp/"
+                      },
+                      {
+                        "title": "C Programming Practice - Functions",
+                        "description": "100+ practice problems on functions and arrays",
+                        "pages": 65,
+                        "size": "5.8 MB",
+                        "url": "https://www.hackerrank.com/domains/c"
+                      }
+                    ]
                 },
                 {
                   "title": "Unit 5: Pointers and Dynamic Memory",
@@ -1379,7 +2017,30 @@
                     "Dynamic Memory Allocation",
                     "File Handling"
                   ],
-                  "hours": 8
+                    "hours": 16,
+                    "pdfs": [
+                      {
+                        "title": "Pointers in C",
+                        "description": "Complete guide to pointers, pointer arithmetic, and applications",
+                        "pages": 58,
+                        "size": "5.2 MB",
+                        "url": "https://www.programiz.com/c-programming/c-pointers"
+                      },
+                      {
+                        "title": "Dynamic Memory Management",
+                        "description": "malloc, calloc, realloc, and memory management techniques",
+                        "pages": 42,
+                        "size": "3.8 MB",
+                        "url": "https://www.geeksforgeeks.org/dynamic-memory-allocation-in-c-using-malloc-calloc-free-and-realloc/"
+                      },
+                      {
+                        "title": "Structures and File I/O",
+                        "description": "Working with structures and file operations in C",
+                        "pages": 48,
+                        "size": "4.4 MB",
+                        "url": "https://www.tutorialspoint.com/cprogramming/c_structures.htm"
+                      }
+                    ]
                 }
               ]
             },
@@ -1397,7 +2058,23 @@
                     "Lines and Lettering",
                     "Geometric Constructions"
                   ],
-                  "hours": 8
+                    "hours": 8,
+                    "pdfs": [
+                      {
+                        "title": "Engineering Drawing Basics",
+                        "description": "Introduction to engineering drawing standards and conventions",
+                        "pages": 35,
+                        "size": "3.2 MB",
+                        "url": "https://www.nptel.ac.in/courses/112/105/112105125/"
+                      },
+                      {
+                        "title": "Geometric Constructions Guide",
+                        "description": "Step-by-step guide to basic geometric constructions",
+                        "pages": 28,
+                        "size": "2.5 MB",
+                        "url": "https://www.engineeringgraphics.in/"
+                      }
+                    ]
                 },
                 {
                   "title": "Unit 2: Orthographic Projections",
@@ -1406,7 +2083,23 @@
                     "Third Angle Projection",
                     "Multi-view Drawings"
                   ],
-                  "hours": 10
+                    "hours": 10,
+                    "pdfs": [
+                      {
+                        "title": "Orthographic Projection Complete Guide",
+                        "description": "Comprehensive notes on first and third angle projections",
+                        "pages": 45,
+                        "size": "4.0 MB",
+                        "url": "https://www.nptel.ac.in/courses/112/107/112107127/"
+                      },
+                      {
+                        "title": "Multi-view Drawing Practice",
+                        "description": "Practice problems on creating multi-view drawings",
+                        "pages": 38,
+                        "size": "3.5 MB",
+                        "url": "https://www.engineeringgraphics.in/orthographic-projection/"
+                      }
+                    ]
                 },
                 {
                   "title": "Unit 3: Isometric Projections",
@@ -1415,7 +2108,16 @@
                     "Isometric Drawing",
                     "Dimensioning"
                   ],
-                  "hours": 8
+                    "hours": 8,
+                    "pdfs": [
+                      {
+                        "title": "Isometric Drawing Techniques",
+                        "description": "Complete guide to isometric projections and views",
+                        "pages": 42,
+                        "size": "3.8 MB",
+                        "url": "https://www.nptel.ac.in/courses/112/107/112107128/"
+                      }
+                    ]
                 },
                 {
                   "title": "Unit 4: Computer Aided Design",
@@ -1424,7 +2126,23 @@
                     "2D Drawing",
                     "Basic 3D Modeling"
                   ],
-                  "hours": 4
+                    "hours": 4,
+                    "pdfs": [
+                      {
+                        "title": "AutoCAD Basics Tutorial",
+                        "description": "Introduction to 2D drawing using AutoCAD",
+                        "pages": 52,
+                        "size": "4.8 MB",
+                        "url": "https://www.autodesk.com/products/autocad/learn-autocad"
+                      },
+                      {
+                        "title": "CAD 3D Modeling Guide",
+                        "description": "Basics of 3D modeling in CAD software",
+                        "pages": 48,
+                        "size": "4.4 MB",
+                        "url": "https://help.autodesk.com/view/ACD/2024/ENU/"
+                      }
+                    ]
                 }
               ]
             },

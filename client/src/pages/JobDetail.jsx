@@ -1,4 +1,4 @@
-// pages/JobDetail.jsx
+// ...existing code...
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { jobsAPI } from "../services/api";
@@ -29,6 +29,7 @@ const InfoCard = ({ icon, label, value }) => (
 export default function JobDetail() {
   const { id } = useParams();
   const [job, setJob] = useState(null);
+  const [similarJobs, setSimilarJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -38,7 +39,21 @@ export default function JobDetail() {
       try {
         setLoading(true);
         const { data } = await jobsAPI.getById(id);
-        if (!ignore) setJob(data?.job || null);
+        if (!ignore) {
+          setJob(data?.job || null);
+          if (data?.job?.category) {
+            try {
+              const allJobsResponse = await jobsAPI.getAll();
+              const similar = (allJobsResponse?.data?.jobs || [])
+                .filter(j => j.category === data.job.category && j._id !== id)
+                .slice(0, 3);
+              setSimilarJobs(similar);
+            } catch (err) {
+              console.error('Failed to fetch similar jobs:', err);
+              setSimilarJobs([]);
+            }
+          }
+        }
       } catch (e) {
         console.error(e);
         if (!ignore) setError(e?.response?.data?.message || 'Failed to load job');
@@ -85,9 +100,6 @@ export default function JobDetail() {
     : domain
     ? `https://logo.clearbit.com/${domain}`
     : job.logo || "/logo.png";
-
-  const similar = jobData.filter(j => j.category === job.category && j.id !== job.id).slice(0, 3);
-
   const defaultHowTo = [
     "Review role requirements and tailor your resume",
     "Prepare a portfolio or GitHub with relevant projects",
@@ -102,11 +114,9 @@ export default function JobDetail() {
     "Paid time off",
     "Performance bonus",
   ];
-
   return (
     <div className="min-h-screen bg-gray-900 text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
         <header className="relative bg-gray-800/30 border border-gray-700/50 backdrop-blur-lg rounded-2xl shadow-2xl shadow-black/30 overflow-hidden mb-8 sm:mb-12 p-6 sm:p-8">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <img 
@@ -161,9 +171,7 @@ export default function JobDetail() {
             </div>
           </div>
         </header>
-
         <main className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column */}
           <div className="lg:col-span-2">
             <div className="bg-gray-800/30 border border-gray-700/50 backdrop-blur-lg rounded-2xl p-6 sm:p-8 shadow-lg">
               <Section title="About this Role" icon={<Briefcase className="text-pink-400" />}>
@@ -218,12 +226,11 @@ export default function JobDetail() {
                 </div>
               </Section>
 
-              {/* Similar Roles */}
-              {similar.length > 0 && (
+              {similarJobs.length > 0 && (
                 <Section title="Similar Roles" icon={<Star className="text-pink-400" />}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {similar.map((s) => (
-                      <Link key={s.id} to={`/jobs/${s.id}`} className="block bg-gray-900/40 border border-gray-700/60 rounded-xl p-4 hover:border-purple-500/40 transition-colors">
+                    {similarJobs.map((s) => (
+                      <Link key={s._id} to={`/jobs/${s._id}`} className="block bg-gray-900/40 border border-gray-700/60 rounded-xl p-4 hover:border-purple-500/40 transition-colors">
                         <div className="text-white font-semibold">{s.title}</div>
                         <div className="text-sm text-gray-400">{s.organization}</div>
                       </Link>
@@ -233,10 +240,7 @@ export default function JobDetail() {
               )}
             </div>
           </div>
-
-          {/* Right Column */}
           <aside className="space-y-8 lg:sticky lg:top-24 self-start">
-            {/* Sticky Apply */}
             <div className="bg-gray-800/40 border border-gray-700/60 rounded-2xl p-5">
               <div className="flex flex-col gap-3">
                 <a 
@@ -255,7 +259,6 @@ export default function JobDetail() {
                 </div>
               </div>
             </div>
-            {/* Quick Info */}
             <div className="bg-gray-800/30 border border-gray-700/50 backdrop-blur-lg rounded-2xl p-6 shadow-lg">
               <h2 className="text-2xl font-bold text-white mb-5">
                 Role Details
@@ -272,8 +275,6 @@ export default function JobDetail() {
                 {job.openings && <InfoCard icon={<Users className="w-7 h-7 text-pink-400" />} label="Openings" value={`${job.openings} positions`} />}
               </div>
             </div>
-
-            {/* Skills */}
             <div className="bg-gray-800/30 border border-gray-700/50 backdrop-blur-lg rounded-2xl p-6 shadow-lg">
               <h2 className="text-2xl font-bold text-white mb-5">
                 Required Skills
@@ -286,8 +287,6 @@ export default function JobDetail() {
                 ))}
               </div>
             </div>
-
-            {/* Company Info */}
             <div className="bg-gray-800/30 border border-gray-700/50 backdrop-blur-lg rounded-2xl p-6 shadow-lg">
               <h2 className="text-2xl font-bold text-white mb-5">
                 Company
@@ -304,7 +303,6 @@ export default function JobDetail() {
                 </div>
               </div>
             </div>
-            
           </aside>
         </main>
       </div>

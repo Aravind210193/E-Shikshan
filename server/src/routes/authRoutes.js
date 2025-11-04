@@ -23,6 +23,16 @@ router.get('/test', protect, (req, res) => {
 // @access  Private
 router.put('/profile', protect, authController.updateProfile);
 
+// @route   PUT api/auth/resume
+// @desc    Save/Update user resume
+// @access  Private
+router.put('/resume', protect, authController.saveResume);
+
+// @route   GET api/auth/resume
+// @desc    Get user resume
+// @access  Private
+router.get('/resume', protect, authController.getResume);
+
 // @route   POST api/auth/login
 // @desc    Login user & get token
 // @access  Public

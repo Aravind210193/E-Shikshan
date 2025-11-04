@@ -28,7 +28,61 @@ const userSchema = new mongoose.Schema({
   industry: { type: String },
   languages: { type: String },
   website: { type: String },
-  profilePicture: { type: String }
+  profilePicture: { type: String },
+  // Resume Data
+  resume: {
+    personalInfo: {
+      fullName: { type: String },
+      email: { type: String },
+      phone: { type: String },
+      location: { type: String },
+      linkedin: { type: String },
+      github: { type: String },
+      portfolio: { type: String },
+      summary: { type: String }
+    },
+    experience: [{
+      company: { type: String },
+      position: { type: String },
+      location: { type: String },
+      startDate: { type: String },
+      endDate: { type: String },
+      current: { type: Boolean },
+      description: { type: String }
+    }],
+    education: [{
+      institution: { type: String },
+      degree: { type: String },
+      field: { type: String },
+      location: { type: String },
+      startDate: { type: String },
+      endDate: { type: String },
+      gpa: { type: String },
+      description: { type: String }
+    }],
+    skills: {
+      technical: [{ type: String }],
+      languages: [{ type: String }],
+      tools: [{ type: String }]
+    },
+    projects: [{
+      name: { type: String },
+      description: { type: String },
+      technologies: { type: String },
+      link: { type: String }
+    }],
+    certifications: [{
+      name: { type: String },
+      issuer: { type: String },
+      date: { type: String },
+      credentialId: { type: String }
+    }],
+    template: {
+      selectedTemplate: { type: String },
+      selectedSubTemplate: { type: String }
+    },
+    lastUpdated: { type: Date, default: Date.now }
+  }
 }, {
   timestamps: true
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
@@ -17,16 +17,102 @@ import {
   Gift,
   Lightbulb,
   Rocket,
-  Shield
+  Shield,
+  HelpCircle
 } from "lucide-react";
-import hackathons from "../data/hackathons.json";
+import { hackathonsAPI, hackathonRegistrationAPI } from "../services/api";
+import HackathonRegistrationModal from "./HackathonRegistrationModal";
+import toast from "react-hot-toast";
 
 export default function HackathonDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const hackathon = hackathons.find((h) => h.id === parseInt(id));
+  const [hackathon, setHackathon] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [checkingRegistration, setCheckingRegistration] = useState(true);
 
-  if (!hackathon) {
+  useEffect(() => {
+    let ignore = false;
+    async function fetchHackathon() {
+      try {
+        setLoading(true);
+        const res = await hackathonsAPI.getById(id);
+        if (!ignore && res.data.success) {
+          setHackathon(res.data.hackathon);
+        }
+      } catch (err) {
+        if (!ignore) {
+          console.error('Error fetching hackathon:', err);
+          setError('Hackathon not found');
+        }
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    }
+    fetchHackathon();
+    return () => { ignore = true; };
+  }, [id]);
+
+  useEffect(() => {
+    let ignore = false;
+    async function checkRegistrationStatus() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setCheckingRegistration(false);
+        return;
+      }
+
+      try {
+        const res = await hackathonRegistrationAPI.checkRegistration(id);
+        if (!ignore) {
+          setIsRegistered(res.data.isRegistered);
+        }
+      } catch (err) {
+        console.error('Error checking registration:', err);
+      } finally {
+        if (!ignore) setCheckingRegistration(false);
+      }
+    }
+    
+    if (id) {
+      checkRegistrationStatus();
+    }
+    return () => { ignore = true; };
+  }, [id]);
+
+  const handleRegisterClick = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('Please login to register for hackathons');
+      navigate('/login');
+      return;
+    }
+    setShowRegistrationModal(true);
+  };
+
+  const handleRegistrationSuccess = () => {
+    setIsRegistered(true);
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-gray-900 min-h-screen flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center"
+        >
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading hackathon details...</p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (error || !hackathon) {
     return (
       <div className="bg-gray-900 min-h-screen flex items-center justify-center">
         <motion.div
@@ -106,18 +192,27 @@ export default function HackathonDetails() {
               </div>
               
               <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <motion.a
-                  href={hackathon.registrationUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Rocket className="h-5 w-5" />
-                  <span>Register Now</span>
-                  <ExternalLink className="h-4 w-4" />
-                </motion.a>
+                {isRegistered ? (
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="bg-green-600/20 border-2 border-green-500 text-green-400 px-8 py-4 rounded-2xl font-semibold text-lg flex items-center space-x-2"
+                  >
+                    <CheckCircle className="h-5 w-5" />
+                    <span>Already Registered</span>
+                  </motion.div>
+                ) : (
+                  <motion.button
+                    onClick={handleRegisterClick}
+                    disabled={checkingRegistration}
+                    className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Rocket className="h-5 w-5" />
+                    <span>Register Now</span>
+                  </motion.button>
+                )}
                 
                 <motion.button
                   onClick={() => navigate("/hackathons")}
@@ -379,6 +474,14 @@ export default function HackathonDetails() {
           </div>
         </motion.div>
       </div>
+
+      {/* Registration Modal */}
+      <HackathonRegistrationModal
+        hackathon={hackathon}
+        isOpen={showRegistrationModal}
+        onClose={() => setShowRegistrationModal(false)}
+        onSuccess={handleRegistrationSuccess}
+      />
     </div>
   );
 }
@@ -441,24 +544,18 @@ function EnhancedSectionGrid({ title, items, gradient, icon }) {
             whileHover={{ y: -10, scale: 1.02 }}
             className="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700/50 shadow-xl hover:shadow-2xl p-8 rounded-3xl flex flex-col items-center text-center transition-all duration-300 group"
           >
-            {item.icon && (
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="mb-6 overflow-hidden rounded-2xl shadow-lg"
-              >
-                <img
-                  src={item.icon}
-                  alt={item.title}
-                  className="w-24 h-24 md:w-32 md:h-32 object-contain bg-white/10 p-4 rounded-2xl"
-                />
-              </motion.div>
-            )}
-            
             <div className={`w-12 h-1 bg-gradient-to-r ${gradient} rounded-full mb-4 group-hover:w-16 transition-all duration-300`}></div>
             
-            <h3 className="font-bold text-xl md:text-2xl mb-4 text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-300">
-              {item.title}
-            </h3>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              {(item.title?.toLowerCase().includes('what') || 
+                item.title?.toLowerCase().includes('why') || 
+                item.title?.toLowerCase().includes('how')) && (
+                <HelpCircle className={`h-6 w-6 text-transparent bg-gradient-to-r ${gradient} bg-clip-text`} style={{ fill: 'currentColor', opacity: 0.8 }} />
+              )}
+              <h3 className="font-bold text-xl md:text-2xl text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-300">
+                {item.title}
+              </h3>
+            </div>
             
             <p className="text-gray-300 text-base md:text-lg leading-relaxed font-light">
               {item.description}

@@ -4,7 +4,6 @@ import { jobsAPI } from "../services/api";
 import JobCard from "../components/JobCard";
 import { SlidersHorizontal, X, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
 const FilterModal = ({
   isOpen,
   onClose,
@@ -27,9 +26,7 @@ const FilterModal = ({
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
-
   if (!isOpen) return null;
-
   return (
     <AnimatePresence>
       <motion.div
@@ -157,7 +154,6 @@ const FilterModal = ({
     </AnimatePresence>
   );
 };
-
 export default function JobRole() {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -167,10 +163,8 @@ export default function JobRole() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const categories = [...new Set(jobs.map((job) => job.category).filter(Boolean))];
   const tags = [...new Set(jobs.map((job) => job.tag).filter(Boolean))];
-
   useEffect(() => {
     let ignore = false;
     async function load() {
@@ -188,7 +182,6 @@ export default function JobRole() {
     load();
     return () => { ignore = true; };
   }, [sortBy]);
-
   const handleCategoryToggle = (category) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
@@ -196,13 +189,11 @@ export default function JobRole() {
         : [...prev, category]
     );
   };
-
   const handleTagToggle = (tag) => {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
   };
-
   const displayedJobs = jobs.filter((job) => {
     const matchesCategory =
       selectedCategories.length === 0 || selectedCategories.includes(job.category);
@@ -238,7 +229,6 @@ export default function JobRole() {
         return new Date(b.startDate) - new Date(a.startDate);
     }
   });
-
   const resetFilters = () => {
     setSelectedCategories([]);
     setSelectedTags([]);
@@ -326,14 +316,11 @@ export default function JobRole() {
           onCategoryToggle={handleCategoryToggle}
           onTagToggle={handleTagToggle}
           onApply={() => setShowFilter(false)}
-          onReset={resetFilters}
-        />
-
+          onReset={resetFilters}/>
         <AnimatePresence>
           <motion.div
             layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-          >
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {loading ? (
               <div className="text-gray-400 col-span-full text-center mt-16">Loading jobs...</div>
             ) : error ? (
@@ -346,7 +333,7 @@ export default function JobRole() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
                   exit={{ opacity: 0, y: -20 }}
-                >
+>
                   <Link to={`/jobs/${job._id}`} className="block h-full">
                     <JobCard job={job} />
                   </Link>

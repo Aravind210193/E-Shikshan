@@ -64,7 +64,9 @@ export const authAPI = {
   login: (credentials) => api.post('/auth/login', credentials),
   register: (userData) => api.post('/auth/register', userData),
   getProfile: () => api.get('/auth/profile'),
-  updateProfile: (data) => api.put('/auth/profile', data)
+  updateProfile: (data) => api.put('/auth/profile', data),
+  saveResume: (resumeData) => api.put('/auth/resume', resumeData),
+  getResume: () => api.get('/auth/resume')
 };
 
 export const coursesAPI = {
@@ -97,6 +99,13 @@ export const jobsAPI = {
 export const hackathonsAPI = {
   getAll: (params) => api.get('/hackathons', { params }),
   getById: (id) => api.get(`/hackathons/${id}`),
+};
+
+export const hackathonRegistrationAPI = {
+  register: (hackathonId, data) => api.post(`/hackathon-registrations/${hackathonId}/register`, data),
+  getMyRegistrations: () => api.get('/hackathon-registrations/my-registrations'),
+  checkRegistration: (hackathonId) => api.get(`/hackathon-registrations/${hackathonId}/check`),
+  cancelRegistration: (hackathonId) => api.delete(`/hackathon-registrations/${hackathonId}/cancel`),
 };
 
 // Content API

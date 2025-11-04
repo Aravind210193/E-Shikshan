@@ -256,12 +256,23 @@ const SubjectUnits = () => {
                   <div className="flex justify-between items-center pt-4 border-t border-gray-600/30">
                     <div className="flex space-x-4">
                       <motion.button
+                        onClick={() => navigate(`/content/${branch}/${semester}/${subjectCode}/unit/${index}`)}
                         className={`${colorClasses.button} text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-2`}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
                         <Play className="h-4 w-4" />
                         <span>Start Learning</span>
+                      </motion.button>
+
+                      <motion.button
+                        onClick={() => navigate(`/content/${branch}/${semester}/${subjectCode}/unit/${index}?tab=quizzes`)}
+                        className={`bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-2`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Play className="h-4 w-4" />
+                        <span>Assessment</span>
                       </motion.button>
                       
                       <motion.button

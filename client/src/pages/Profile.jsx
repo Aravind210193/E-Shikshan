@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { authAPI, enrollmentAPI } from '../services/api';
+import { authAPI, enrollmentAPI, hackathonRegistrationAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import {
   Book,
@@ -39,6 +39,8 @@ const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [hackathonRegistrations, setHackathonRegistrations] = useState([]);
+  const [savedResume, setSavedResume] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -46,8 +48,6 @@ const Profile = () => {
     const fetchProfileData = async () => {
       try {
         setLoading(true);
-        
-        // Check for token
         const token = localStorage.getItem('token');
         if (!token) {
           toast.error('Please login to view your profile');
@@ -55,17 +55,31 @@ const Profile = () => {
           return;
         }
 
-        // Fetch user profile
         const profileResponse = await authAPI.getProfile();
         setUser(profileResponse.data);
 
-        // Fetch enrolled courses
         try {
           const coursesResponse = await enrollmentAPI.getMyCourses();
           setEnrolledCourses(coursesResponse.data || []);
         } catch (err) {
           console.warn('Could not fetch enrolled courses:', err);
           setEnrolledCourses([]);
+        }
+
+        try {
+          const hackathonsResponse = await hackathonRegistrationAPI.getMyRegistrations();
+          setHackathonRegistrations(hackathonsResponse.data.registrations || []);
+        } catch (err) {
+          console.warn('Could not fetch hackathon registrations:', err);
+          setHackathonRegistrations([]);
+        }
+
+        try {
+          const resumeResponse = await authAPI.getResume();
+          setSavedResume(resumeResponse.data.resume || null);
+        } catch (err) {
+          console.warn('Could not fetch resume:', err);
+          setSavedResume(null);
         }
 
         setLoading(false);
@@ -86,7 +100,6 @@ const Profile = () => {
     fetchProfileData();
   }, [navigate]);
 
-  // Calculate stats from enrolled courses
   const totalCourses = enrolledCourses.length;
   const completedCourses = enrolledCourses.filter(course => course.progress?.overallProgress === 100).length;
   const ongoingCourses = totalCourses - completedCourses;
@@ -368,6 +381,8 @@ const Profile = () => {
               <TabButton id="overview" label="Overview" icon={BarChart2} />
               <TabButton id="personal" label="Personal Info" icon={User} />
               <TabButton id="courses" label="Enrolled Courses" icon={Book} />
+              <TabButton id="hackathons" label="Hackathons" icon={Code} />
+              <TabButton id="resume" label="My Resume" icon={FileText} />
               <TabButton id="achievements" label="Achievements" icon={Trophy} />
               <TabButton id="skills" label="Skills & Expertise" icon={Brain} />
               <TabButton id="bookmarks" label="Bookmarks" icon={Bookmark} />
@@ -510,6 +525,324 @@ const Profile = () => {
                         className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-all font-medium shadow-lg shadow-blue-500/20"
                       >
                         Browse Courses <ArrowRight size={18} />
+                      </Link>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {activeTab === 'hackathons' && (
+                <>
+                  <div className="mb-6">
+                    <h2 className="text-2xl font-bold mb-2">My Hackathons</h2>
+                    <p className="text-gray-400">Track your hackathon registrations and submissions</p>
+                  </div>
+
+                  {hackathonRegistrations.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {hackathonRegistrations.map((registration) => (
+                        <motion.div
+                          key={registration._id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="bg-gray-700/50 rounded-xl p-6 border border-gray-600 hover:border-purple-500/50 transition-all group"
+                        >
+                          <div className="flex items-start gap-4 mb-4">
+                            <div className="p-3 bg-purple-500/20 rounded-lg border border-purple-500/30 flex-shrink-0">
+                              <Code className="w-6 h-6 text-purple-400" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="text-lg font-bold text-white mb-1 truncate">
+                                {registration.hackathonId?.title || 'Hackathon'}
+                              </h3>
+                              <p className="text-gray-400 text-sm">
+                                Team: {registration.teamName}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="space-y-2 mb-4">
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-400">Team Size:</span>
+                              <span className="text-white font-medium">{registration.teamSize} members</span>
+                            </div>
+                            {registration.projectTitle && (
+                              <div className="flex items-start justify-between text-sm">
+                                <span className="text-gray-400">Project:</span>
+                                <span className="text-white font-medium text-right">{registration.projectTitle}</span>
+                              </div>
+                            )}
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-400">Status:</span>
+                              <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                registration.status === 'approved' ? 'bg-green-500/20 text-green-400' :
+                                registration.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
+                                registration.status === 'rejected' ? 'bg-red-500/20 text-red-400' :
+                                'bg-blue-500/20 text-blue-400'
+                              }`}>
+                                {registration.status.charAt(0).toUpperCase() + registration.status.slice(1)}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-400">Registered:</span>
+                              <span className="text-white font-medium">
+                                {new Date(registration.submittedAt).toLocaleDateString()}
+                              </span>
+                            </div>
+                          </div>
+
+                          {registration.techStack && registration.techStack.length > 0 && (
+                            <div className="mb-4">
+                              <p className="text-gray-400 text-xs mb-2">Tech Stack:</p>
+                              <div className="flex flex-wrap gap-2">
+                                {registration.techStack.slice(0, 3).map((tech, idx) => (
+                                  <span
+                                    key={idx}
+                                    className="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded-full border border-gray-600"
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                                {registration.techStack.length > 3 && (
+                                  <span className="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded-full border border-gray-600">
+                                    +{registration.techStack.length - 3} more
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="flex gap-2">
+                            <Link
+                              to={`/hackathon/${registration.hackathonId?._id}`}
+                              className="flex-1 text-center bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium"
+                            >
+                              View Details
+                            </Link>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12">
+                      <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-800 rounded-full mb-4">
+                        <Code className="w-8 h-8 text-gray-500" />
+                      </div>
+                      <h3 className="text-xl font-bold mb-2">No Hackathon Registrations</h3>
+                      <p className="text-gray-400 mb-6">You haven't registered for any hackathons yet. Start participating today!</p>
+                      <Link
+                        to="/hackathons"
+                        className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg transition-all font-medium shadow-lg shadow-purple-500/20"
+                      >
+                        <Code size={18} />
+                        Browse Hackathons
+                      </Link>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {activeTab === 'resume' && (
+                <>
+                  {savedResume ? (
+                    <div className="space-y-6">
+                      <div className="flex items-center justify-between mb-6">
+                        <div>
+                          <h2 className="text-2xl font-bold">My Resume</h2>
+                          <p className="text-gray-400 text-sm mt-1">
+                            Last updated: {savedResume.lastUpdated ? new Date(savedResume.lastUpdated).toLocaleDateString() : 'N/A'}
+                          </p>
+                        </div>
+                        <Link
+                          to="/resume-building"
+                          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-all font-medium"
+                        >
+                          <Edit size={18} />
+                          Edit Resume
+                        </Link>
+                      </div>
+
+                      {/* Personal Info */}
+                      {savedResume.personalInfo && (
+                        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                            <User className="text-blue-400" size={20} />
+                            Personal Information
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <p className="text-gray-400 text-sm">Full Name</p>
+                              <p className="text-white font-medium">{savedResume.personalInfo.fullName || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 text-sm">Email</p>
+                              <p className="text-white font-medium">{savedResume.personalInfo.email || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 text-sm">Phone</p>
+                              <p className="text-white font-medium">{savedResume.personalInfo.phone || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 text-sm">Location</p>
+                              <p className="text-white font-medium">{savedResume.personalInfo.location || 'N/A'}</p>
+                            </div>
+                            {savedResume.personalInfo.summary && (
+                              <div className="md:col-span-2">
+                                <p className="text-gray-400 text-sm">Professional Summary</p>
+                                <p className="text-white">{savedResume.personalInfo.summary}</p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Experience */}
+                      {savedResume.experience && savedResume.experience.length > 0 && (
+                        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                            <Briefcase className="text-green-400" size={20} />
+                            Work Experience
+                          </h3>
+                          <div className="space-y-4">
+                            {savedResume.experience.map((exp, idx) => (
+                              <div key={idx} className="border-l-2 border-blue-500 pl-4">
+                                <h4 className="font-bold text-lg">{exp.position}</h4>
+                                <p className="text-gray-400">{exp.company} • {exp.location}</p>
+                                <p className="text-sm text-gray-500">{exp.startDate} - {exp.current ? 'Present' : exp.endDate}</p>
+                                {exp.description && <p className="mt-2 text-gray-300">{exp.description}</p>}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Education */}
+                      {savedResume.education && savedResume.education.length > 0 && (
+                        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                            <GraduationCap className="text-purple-400" size={20} />
+                            Education
+                          </h3>
+                          <div className="space-y-4">
+                            {savedResume.education.map((edu, idx) => (
+                              <div key={idx} className="border-l-2 border-purple-500 pl-4">
+                                <h4 className="font-bold text-lg">{edu.degree} in {edu.field}</h4>
+                                <p className="text-gray-400">{edu.institution} • {edu.location}</p>
+                                <p className="text-sm text-gray-500">{edu.startDate} - {edu.endDate}</p>
+                                {edu.gpa && <p className="text-sm text-gray-400">GPA: {edu.gpa}</p>}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Skills */}
+                      {savedResume.skills && (
+                        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                            <Code className="text-orange-400" size={20} />
+                            Skills
+                          </h3>
+                          <div className="space-y-3">
+                            {savedResume.skills.technical && savedResume.skills.technical.length > 0 && (
+                              <div>
+                                <p className="text-gray-400 text-sm mb-2">Technical Skills</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {savedResume.skills.technical.map((skill, idx) => (
+                                    <span key={idx} className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-lg text-sm border border-blue-500/30">
+                                      {skill}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            {savedResume.skills.tools && savedResume.skills.tools.length > 0 && (
+                              <div>
+                                <p className="text-gray-400 text-sm mb-2">Tools & Technologies</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {savedResume.skills.tools.map((tool, idx) => (
+                                    <span key={idx} className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-lg text-sm border border-purple-500/30">
+                                      {tool}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            {savedResume.skills.languages && savedResume.skills.languages.length > 0 && (
+                              <div>
+                                <p className="text-gray-400 text-sm mb-2">Languages</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {savedResume.skills.languages.map((lang, idx) => (
+                                    <span key={idx} className="bg-green-500/20 text-green-300 px-3 py-1 rounded-lg text-sm border border-green-500/30">
+                                      {lang}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Projects */}
+                      {savedResume.projects && savedResume.projects.length > 0 && (
+                        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                            <GitBranch className="text-pink-400" size={20} />
+                            Projects
+                          </h3>
+                          <div className="space-y-4">
+                            {savedResume.projects.map((proj, idx) => (
+                              <div key={idx} className="border-l-2 border-pink-500 pl-4">
+                                <h4 className="font-bold text-lg">{proj.name}</h4>
+                                <p className="text-gray-300 mt-1">{proj.description}</p>
+                                {proj.technologies && <p className="text-sm text-gray-400 mt-1">Tech: {proj.technologies}</p>}
+                                {proj.link && (
+                                  <a href={proj.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline text-sm mt-1 inline-block">
+                                    View Project →
+                                  </a>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Certifications */}
+                      {savedResume.certifications && savedResume.certifications.length > 0 && (
+                        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                          <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                            <Award className="text-yellow-400" size={20} />
+                            Certifications
+                          </h3>
+                          <div className="space-y-3">
+                            {savedResume.certifications.map((cert, idx) => (
+                              <div key={idx} className="flex items-start gap-3 bg-gray-700/50 p-3 rounded-lg">
+                                <Award className="text-yellow-400 mt-1" size={18} />
+                                <div>
+                                  <h4 className="font-bold">{cert.name}</h4>
+                                  <p className="text-gray-400 text-sm">{cert.issuer} • {cert.date}</p>
+                                  {cert.credentialId && <p className="text-xs text-gray-500">ID: {cert.credentialId}</p>}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12">
+                      <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-800 rounded-full mb-4">
+                        <FileText className="w-8 h-8 text-gray-500" />
+                      </div>
+                      <h3 className="text-xl font-bold mb-2">No Resume Found</h3>
+                      <p className="text-gray-400 mb-6">You haven't created your resume yet. Build your professional resume now!</p>
+                      <Link
+                        to="/resume-building"
+                        className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-all font-medium shadow-lg shadow-blue-500/20"
+                      >
+                        <FileText size={18} />
+                        Build Resume
                       </Link>
                     </div>
                   )}

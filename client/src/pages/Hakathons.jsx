@@ -4,7 +4,7 @@ import { SlidersHorizontal, X, Calendar, Trophy, Tag, Flag, Users, Search } from
 import { hackathonsAPI } from "../services/api";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Custom scrollbar styles
+// ...existing code...
 const scrollbarStyles = `
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
@@ -27,7 +27,7 @@ const scrollbarStyles = `
   }
 `;
 
-// Add styles to head
+// ...existing code...
 const addScrollbarStyles = () => {
   const style = document.createElement('style');
   style.textContent = scrollbarStyles;
@@ -35,7 +35,7 @@ const addScrollbarStyles = () => {
   return () => document.head.removeChild(style);
 };
 
-// FilterGroup Component
+// ...existing code...
 const FilterGroup = ({ title, options, selected, onChange }) => {
   return (
     <motion.div 
@@ -73,7 +73,7 @@ const FilterGroup = ({ title, options, selected, onChange }) => {
   );
 };
 
-// HackathonCard Component
+// ...existing code...
 const HackathonCard = ({ hackathon, isSelected, onClick }) => (
   <motion.div
     layout
@@ -88,7 +88,7 @@ const HackathonCard = ({ hackathon, isSelected, onClick }) => (
   >
     <div className="relative h-48 overflow-hidden">
       <img
-        src={hackathon.image}
+        src={hackathon.imageUrl || hackathon.image}
         alt={hackathon.title}
         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
       />
@@ -109,9 +109,9 @@ const HackathonCard = ({ hackathon, isSelected, onClick }) => (
       </div>
       {/* Event type and payment chips */}
       <div className="absolute top-3 right-3 flex gap-2">
-        {hackathon.EventType && (
+        {(hackathon.mode || hackathon.EventType) && (
           <span className="px-2 py-1 text-[10px] uppercase tracking-wide rounded-full bg-white/20 backdrop-blur-sm text-white border border-white/20">
-            {String(hackathon.EventType).toUpperCase()}
+            {String(hackathon.mode || hackathon.EventType).toUpperCase()}
           </span>
         )}
         {hackathon.payment && (
@@ -130,9 +130,9 @@ const HackathonCard = ({ hackathon, isSelected, onClick }) => (
         <h3 className="text-xl font-bold text-white mb-1 truncate">{hackathon.title}</h3>
         <p className="text-sm text-gray-300 truncate">{hackathon.tagline}</p>
         <div className="mt-2 flex items-center gap-2 flex-wrap">
-          {hackathon.TeamSize && (
+          {(hackathon.teamSize || hackathon.TeamSize) && (
             <span className="text-[11px] text-gray-200/90 bg-black/30 border border-white/10 px-2 py-0.5 rounded-full">
-              Team {hackathon.TeamSize}
+              Team {hackathon.teamSize || hackathon.TeamSize}
             </span>
           )}
           {hackathon.category && (
@@ -172,7 +172,7 @@ export default function Hakathons() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Load from backend and adapt fields to existing UI shape
+  // ...existing code...
   useEffect(() => {
     let ignore = false;
     async function load() {
@@ -203,18 +203,18 @@ export default function Hakathons() {
     return () => { ignore = true; };
   }, [sortBy]);
 
-  // Unique filter options
+  // ...existing code...
   const users = [...new Set(hackathons.map((h) => h.user).filter(Boolean))];
   const categories = [...new Set(hackathons.map((h) => h.category).filter(Boolean))];
   const payments = [...new Set(hackathons.map((h) => h.payment).filter(Boolean))];
   const eventTypes = [...new Set(hackathons.map((h) => h.EventType).filter(Boolean))];
 
-  // Add scrollbar styles on mount
+  // ...existing code...
   useEffect(() => {
     return addScrollbarStyles();
   }, []);
 
-  // Handle modal scroll lock
+  // ...existing code...
   useEffect(() => {
     if (showFilterModal) {
       document.body.style.overflow = 'hidden';
@@ -226,7 +226,7 @@ export default function Hakathons() {
     };
   }, [showFilterModal]);
 
-  // Handle checkbox toggle
+  // ...existing code...
   const toggleFilter = (key, value) => {
     setFilters((prev) => {
       const current = prev[key];
@@ -239,7 +239,7 @@ export default function Hakathons() {
     });
   };
 
-  // Clear individual filter
+  // ...existing code...
   const clearFilter = (key, value) => {
     setFilters((prev) => ({
       ...prev,
@@ -247,7 +247,7 @@ export default function Hakathons() {
     }));
   };
 
-  // Filter hackathons based on selected filters and search term
+  // ...existing code...
   const filteredHackathons = hackathons.filter((h) => {
     const userMatch = filters.user.length === 0 || filters.user.includes(h.user);
     const categoryMatch = filters.category.length === 0 || filters.category.includes(h.category);
@@ -263,7 +263,7 @@ export default function Hakathons() {
     return userMatch && categoryMatch && paymentMatch && eventTypeMatch && searchMatch && statusMatch;
   });
 
-  // Sorting logic
+  // ...existing code...
   const sortedHackathons = [...filteredHackathons].sort((a, b) => {
     const toDate = (d) => (d ? new Date(d) : new Date(0));
     const prizeNum = (p) => {
@@ -292,7 +292,7 @@ export default function Hakathons() {
     }
   });
 
-  // Simple stats for header
+  // ...existing code...
   const totalCount = hackathons.length;
   const liveCount = hackathons.filter((h) => {
     const s = String(h.status || "").toLowerCase();
@@ -402,9 +402,9 @@ export default function Hakathons() {
                 ) : sortedHackathons.length > 0 ? (
                   sortedHackathons.map((hackathon) => (
                     <HackathonCard
-                      key={hackathon.id}
+                      key={hackathon._id}
                       hackathon={hackathon}
-                      isSelected={selectedHackathon?.id === hackathon.id}
+                      isSelected={selectedHackathon?._id === hackathon._id}
                       onClick={() => setSelectedHackathon(hackathon)}
                     />
                   ))
@@ -430,7 +430,7 @@ export default function Hakathons() {
             <AnimatePresence mode="wait">
               {selectedHackathon ? (
                 <motion.div
-                  key={selectedHackathon.id}
+                  key={selectedHackathon._id}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -439,7 +439,7 @@ export default function Hakathons() {
                   {/* Banner */}
                   <div className="relative h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-2xl shadow-black/50">
                     <img
-                      src={selectedHackathon.bgimage}
+                      src={selectedHackathon.bgImage || selectedHackathon.bgimage}
                       alt={selectedHackathon.title}
                       className="w-full h-full object-cover"
                     />
@@ -468,12 +468,12 @@ export default function Hakathons() {
                   {/* Info Cards */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                     {[
-                      { icon: Calendar, label: "Duration", value: `${selectedHackathon.startDate} - ${selectedHackathon.endDate}` },
+                      { icon: Calendar, label: "Duration", value: `${new Date(selectedHackathon.startDate).toLocaleDateString()} - ${new Date(selectedHackathon.endDate).toLocaleDateString()}` },
                       { icon: Flag, label: "Status", value: selectedHackathon.status },
-                      { icon: Tag, label: "Category", value: selectedHackathon.category },
+                      { icon: Tag, label: "Category", value: selectedHackathon.organizer || selectedHackathon.category },
                       { icon: Trophy, label: "Prize Pool", value: selectedHackathon.prize },
-                      { icon: Tag, label: "Event Type", value: selectedHackathon.EventType },
-                      { icon: Users, label: "Team Size", value: selectedHackathon.TeamSize },
+                      { icon: Tag, label: "Event Type", value: selectedHackathon.mode || selectedHackathon.EventType },
+                      { icon: Users, label: "Team Size", value: selectedHackathon.teamSize || selectedHackathon.TeamSize },
                       { icon: Tag, label: "Payment", value: selectedHackathon.payment }
                     ].map((item, index) => (
                       <motion.div
@@ -537,7 +537,7 @@ export default function Hakathons() {
                     transition={{ delay: 0.5 }}
                   >
                     <Link
-                      to={`/hackathon/${selectedHackathon.id}`}
+                      to={`/hackathon/${selectedHackathon._id}`}
                       className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 px-10 py-4 rounded-lg font-semibold text-white hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/20"
                     >
                       View Full Details & Register

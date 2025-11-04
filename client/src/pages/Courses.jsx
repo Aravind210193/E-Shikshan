@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import {AnimatePresence, motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, Filter, Clock, Users, Star, Award, BookOpen, ChevronDown, TrendingUp, Zap, Heart } from 'lucide-react';
+import { Search, Filter, Clock, Users, Star, Award, BookOpen, ChevronDown, TrendingUp, Zap, Heart, Video, FileText } from 'lucide-react';
 import { enrollmentAPI, coursesAPI } from '../services/api';
 import toast from 'react-hot-toast';
 
@@ -14,15 +14,10 @@ const Courses = () => {
   const [selectedDuration, setSelectedDuration] = useState('All');
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState('popular');
-  
-  // Courses state - fetch from API
   const [courses, setCourses] = useState([]);
   const [isLoadingCourses, setIsLoadingCourses] = useState(true);
-  
-  // Enrollment states
   const [enrollmentStatus, setEnrollmentStatus] = useState({});
 
-  // Fetch courses from API - refetch when returning to this page
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -34,16 +29,15 @@ const Courses = () => {
       } catch (error) {
         console.error('Failed to fetch courses:', error);
         toast.error('Failed to load courses. Please try again.');
-        setCourses([]); // Set empty array on error instead of leaving undefined
+        setCourses([]);
       } finally {
         setIsLoadingCourses(false);
       }
     };
 
     fetchCourses();
-  }, [location.pathname]); // Refetch whenever we navigate to this route
+  }, [location.pathname]);
 
-  // Check enrollment status for displayed courses
   useEffect(() => {
     const checkEnrollments = async () => {
       const token = localStorage.getItem('token');
@@ -55,7 +49,7 @@ const Courses = () => {
         myCourses.data.forEach(enrollment => {
           const hasAccess = enrollment.paymentStatus === 'completed' || enrollment.paymentStatus === 'free';
           statusMap[enrollment.courseId._id || enrollment.courseId] = {
-            enrolled: hasAccess, // only treat as enrolled when access is granted
+            enrolled: hasAccess,
             hasAccess,
             enrollment
           };
@@ -74,14 +68,12 @@ const Courses = () => {
   const durations = ['All', '4-6 weeks', '7-10 weeks', '11+ weeks'];
 
   const filteredCourses = useMemo(() => {
-    // Ensure courses is always an array
     if (!Array.isArray(courses)) {
       return [];
     }
 
     let filtered = courses;
 
-    // Search filter
     if (searchQuery) {
       filtered = filtered.filter(course =>
         course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -90,17 +82,14 @@ const Courses = () => {
       );
     }
 
-    // Category filter
     if (selectedCategory !== 'All') {
       filtered = filtered.filter(course => course.category === selectedCategory);
     }
 
-    // Level filter
     if (selectedLevel !== 'All') {
       filtered = filtered.filter(course => course.level === selectedLevel);
     }
 
-    // Duration filter
     if (selectedDuration !== 'All') {
       const weeks = parseInt(course => course.duration);
       if (selectedDuration === '4-6 weeks') {
@@ -121,7 +110,6 @@ const Courses = () => {
       }
     }
 
-    // Sort
     if (sortBy === 'popular') {
       filtered = [...filtered].sort((a, b) => b.students - a.students);
     } else if (sortBy === 'rating') {
@@ -133,15 +121,12 @@ const Courses = () => {
     return filtered;
   }, [searchQuery, selectedCategory, selectedLevel, selectedDuration, sortBy]);
 
-  // Enrollment handlers
   const handleCourseClick = (course) => {
     navigate(`/courses/${course._id}`);
   };
 
   const handleEnrollClick = (e, course) => {
     e.stopPropagation();
-    
-    // Check if user is logged in
     const token = localStorage.getItem('token');
     if (!token) {
       toast.error('Please login to enroll in this course');
@@ -149,7 +134,6 @@ const Courses = () => {
       return;
     }
 
-    // Navigate to course detail page for enrollment
     navigate(`/courses/${course._id}`, { 
       state: { autoOpenEnrollment: true } 
     });
@@ -157,7 +141,6 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      {/* Hero Section */}
       <div className="relative h-80 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&h=400&fit=crop')" }}>
         <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-[1px]"></div>
         <div className="relative max-w-7xl mx-auto h-full flex items-center px-4">
@@ -168,8 +151,6 @@ const Courses = () => {
           >
             <h1 className="text-5xl font-bold mb-4">Explore Top Courses</h1>
             <p className="text-xl text-white/90 mb-8">Learn from the world's best universities and companies</p>
-            
-            {/* Search Bar */}
             <div className="max-w-3xl mx-auto relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
               <input
@@ -184,10 +165,8 @@ const Courses = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filters Sidebar */}
           <aside className="lg:col-span-1">
             <div className="sticky top-4">
               <div className="flex items-center justify-between mb-4 lg:hidden">
@@ -213,7 +192,6 @@ const Courses = () => {
                     exit={{ opacity: 0, y: -10 }}
                     className="space-y-4"
                   >
-                    {/* Category Filter */}
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -248,7 +226,6 @@ const Courses = () => {
                       </div>
                     </motion.div>
 
-                    {/* Level Filter */}
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -283,7 +260,6 @@ const Courses = () => {
                       </div>
                     </motion.div>
 
-                    {/* Duration Filter */}
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -426,6 +402,21 @@ const Courses = () => {
                         <Clock size={16} />
                         <span>{course.duration}</span>
                       </div>
+                    </div>
+                    {/* Video and PDF Links */}
+                    <div className="flex items-center gap-4 text-sm mb-4">
+                      {course.videoLectures && course.videoLectures.length > 0 && (
+                        <div className="flex items-center gap-1 text-indigo-400">
+                          <Video size={16} />
+                          <span>{course.videoLectures.length} videos</span>
+                        </div>
+                      )}
+                      {course.resources && course.resources.length > 0 && (
+                        <div className="flex items-center gap-1 text-green-400">
+                          <FileText size={16} />
+                          <span>{course.resources.length} PDFs</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Level Badge and Price */}

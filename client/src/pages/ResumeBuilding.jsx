@@ -1,22 +1,25 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   User, Mail, Phone, MapPin, Briefcase, GraduationCap, Award, 
   Code, Languages, Plus, Trash2, Download, Eye, EyeOff, FileText,
   Linkedin, Github, Globe, Calendar, Building, X, Check, Upload,
-  ArrowRight, ArrowLeft, CheckCircle, Layout, Palette, Sparkles
+  ArrowRight, ArrowLeft, CheckCircle, Layout, Palette, Sparkles, Save
 } from 'lucide-react';
+import { authAPI } from '../services/api';
+import toast from 'react-hot-toast';
 
 const ResumeBuilding = () => {
-  const [currentStep, setCurrentStep] = useState(1); // 1: Upload/Create, 2: Choose Template, 3: Choose Sub-Template, 4: Fill Details, 5: Preview
+  const [currentStep, setCurrentStep] = useState(1);
   const [activeSection, setActiveSection] = useState('personal');
-  const [uploadMethod, setUploadMethod] = useState(null); // 'upload' or 'create'
+  const [uploadMethod, setUploadMethod] = useState(null);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [selectedSubTemplate, setSelectedSubTemplate] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [resumeLoaded, setResumeLoaded] = useState(false);
   const resumeRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  // Form state
   const [personalInfo, setPersonalInfo] = useState({
     fullName: '',
     email: '',
@@ -87,7 +90,6 @@ const ResumeBuilding = () => {
     }
   ]);
 
-  // AI Suggestions Data
   const aiSuggestions = {
     summary: [
       "Results-driven professional with 5+ years of experience in software development, specializing in full-stack web applications and cloud solutions.",
@@ -114,7 +116,6 @@ const ResumeBuilding = () => {
     ]
   };
 
-  // AI Suggestion Handler
   const getAISuggestion = (type, field = null) => {
     if (type === 'summary') {
       const randomSummary = aiSuggestions.summary[Math.floor(Math.random() * aiSuggestions.summary.length)];
@@ -138,7 +139,6 @@ const ResumeBuilding = () => {
     }
   };
 
-  // Navigation sections
   const sections = [
     { id: 'personal', label: 'Personal Info', icon: User },
     { id: 'experience', label: 'Experience', icon: Briefcase },
@@ -230,7 +230,6 @@ const ResumeBuilding = () => {
     }
   ];
 
-  // Progress steps
   const steps = [
     { number: 1, title: 'Upload/Create', icon: Upload },
     { number: 2, title: 'Choose Category', icon: Palette },
@@ -239,7 +238,6 @@ const ResumeBuilding = () => {
     { number: 5, title: 'Preview & Download', icon: Eye }
   ];
 
-  // Dummy data for template preview
   const dummyData = {
     fullName: 'John Doe',
     email: 'john.doe@email.com',
@@ -275,11 +273,9 @@ const ResumeBuilding = () => {
     }
   };
 
-  // Mini template preview component
   const TemplatePreview = ({ template }) => {
     const getTemplateColors = () => {
       const colorScheme = template.colorScheme || template.color;
-      
       const colorMap = {
         blue: { primary: 'bg-blue-600', text: 'text-blue-600', border: 'border-blue-200' },
         indigo: { primary: 'bg-indigo-600', text: 'text-indigo-600', border: 'border-indigo-200' },
@@ -361,7 +357,6 @@ const ResumeBuilding = () => {
     );
   };
 
-  // Helper functions
   const addExperience = () => {
     setExperience([...experience, {
       id: Date.now(),
@@ -470,6 +465,75 @@ const ResumeBuilding = () => {
   const downloadResume = () => {
     window.print();
   };
+
+  const saveResumeToProfile = async () => {
+    setIsSaving(true);
+    try {
+      const resumeData = {
+        personalInfo,
+        experience: experience.map(({ id, ...rest }) => rest),
+        education: education.map(({ id, ...rest }) => rest),
+        skills,
+        projects: projects.map(({ id, ...rest }) => rest),
+        certifications: certifications.map(({ id, ...rest }) => rest),
+        template: {
+          selectedTemplate,
+          selectedSubTemplate
+        }
+      };
+
+      await authAPI.saveResume(resumeData);
+      toast.success('Resume saved to your profile successfully!');
+    } catch (error) {
+      console.error('Error saving resume:', error);
+      toast.error(error.response?.data?.message || 'Failed to save resume');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const loadSavedResume = async () => {
+    try {
+      const response = await authAPI.getResume();
+      if (response.data.resume) {
+        const savedResume = response.data.resume;
+        
+        if (savedResume.personalInfo) setPersonalInfo(savedResume.personalInfo);
+        
+        if (savedResume.experience && savedResume.experience.length > 0) {
+          setExperience(savedResume.experience.map((exp, idx) => ({ ...exp, id: idx + 1 })));
+        }
+        
+        if (savedResume.education && savedResume.education.length > 0) {
+          setEducation(savedResume.education.map((edu, idx) => ({ ...edu, id: idx + 1 })));
+        }
+        
+        if (savedResume.skills) setSkills(savedResume.skills);
+        
+        if (savedResume.projects && savedResume.projects.length > 0) {
+          setProjects(savedResume.projects.map((proj, idx) => ({ ...proj, id: idx + 1 })));
+        }
+        
+        if (savedResume.certifications && savedResume.certifications.length > 0) {
+          setCertifications(savedResume.certifications.map((cert, idx) => ({ ...cert, id: idx + 1 })));
+        }
+        
+        if (savedResume.template) {
+          setSelectedTemplate(savedResume.template.selectedTemplate);
+          setSelectedSubTemplate(savedResume.template.selectedSubTemplate);
+        }
+        
+        toast.success('Loaded your saved resume!');
+        setResumeLoaded(true);
+      }
+    } catch (error) {
+      console.error('Error loading resume:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadSavedResume();
+  }, []);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -1801,6 +1865,14 @@ const ResumeBuilding = () => {
                       >
                         <Palette size={18} />
                         Change Template
+                      </button>
+                      <button
+                        onClick={saveResumeToProfile}
+                        disabled={isSaving}
+                        className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg flex items-center gap-2 transition-colors font-semibold disabled:opacity-50"
+                      >
+                        <Save size={18} />
+                        {isSaving ? 'Saving...' : 'Save to Profile'}
                       </button>
                       <button
                         onClick={downloadResume}

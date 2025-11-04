@@ -22,13 +22,9 @@ const Login = ({setIsLoggedIn}) => {
     
     try {
       const response = await authAPI.login(formData);
-      // Store token
       localStorage.setItem('token', response.data.token);
-      // Update login state
       setIsLoggedIn(true);
-      // Show success message
       toast.success('Login successful!');
-      // Redirect to profile
       navigate('/profile');
     } catch (error) {
       console.error('Login error:', error);

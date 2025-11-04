@@ -16,6 +16,7 @@ import ResumeStepper from './components/ResumeStepper'
 import Subjects from './pages/Subjects'
 import Semesters from './pages/Semesters'
 import SubjectUnits from './pages/SubjectUnits'
+import UnitContent from './pages/UnitContent'
 import Folders from './pages/Folders'
 import JobDetail from './pages/JobDetail'
 import HackathonDetails from './components/HackathonDetails'
@@ -98,6 +99,7 @@ const App = () => {
           <Route path='/content/postgraduate/:program' element={<PostGraduateProgramView />} />
           <Route path='/content/:branch' element={<Semesters />} />
           <Route path='/subjects/:branch/:semester/:subjectCode' element={<SubjectUnits />} />
+          <Route path='/content/:branch/:semester/:subjectCode/unit/:unitIndex' element={<UnitContent />} />
           <Route path='/subjects/:branchId' element={<Subjects />} />
           <Route path='/folders/:branchId/:subjectId' element={<Folders />} />
           <Route path='/courses' element={<Courses />}/>
@@ -167,6 +169,8 @@ const App = () => {
               )
             }
           />
+      {/* Fallback for unknown routes */}
+      <Route path='*' element={<Navigate to='/' replace />} />
       </Routes>
     {!hideLayout && showNav && <Footer />}
     <Chatbot />

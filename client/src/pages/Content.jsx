@@ -7,11 +7,11 @@ import { Search, BookOpen, TrendingUp, Star, BookOpen as Book, School, Graduatio
 const Content = () => {
   const [query, setQuery] = useState('');
   const [selectedContent, setSelectedContent] = useState(null);
-  const [selectedLevel, setSelectedLevel] = useState('UG'); // Default to UG
+  const [selectedLevel, setSelectedLevel] = useState('UG');
   const [filteredBranches, setFilteredBranches] = useState([]);
   const [theme, setTheme] = useState({});
 
-  // Define themes for each education level
+  // ...existing code...
   const themes = {
     '10th': {
       selectedButton: 'bg-sky-600',
@@ -50,12 +50,12 @@ const Content = () => {
     }
   };
 
-  // Get current education level data
+  // ...existing code...
   const getCurrentLevelData = () => {
     return educationLevelsData.find(level => level.level === selectedLevel) || { branches: [] };
   };
   
-  // Update filtered branches and theme when level changes or when searching
+  // ...existing code...
   useEffect(() => {
     const currentLevelData = getCurrentLevelData();
     const filtered = currentLevelData.branches.filter(branch => 
@@ -80,7 +80,7 @@ const Content = () => {
     }
   };
   
-  // Helper function to get the appropriate icon for each education level
+  // ...existing code...
   const getLevelIcon = (level) => {
     switch(level) {
       case '10th':
@@ -335,7 +335,7 @@ const Content = () => {
         <motion.div 
           className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16'
           variants={staggerContainer}
-          key={selectedLevel} // Force re-render of animation when level changes
+          key={selectedLevel}
           initial="hidden"
           animate="visible"
         >
@@ -429,7 +429,7 @@ const Content = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {(() => {
-              // Dynamic course data based on selected education level
+              // ...existing code...
               const coursesByLevel = {
                 '10th': [
                   {
@@ -605,7 +605,7 @@ const Content = () => {
           
           <div className="flex flex-wrap gap-4 justify-center">
             {(() => {
-              // Dynamic trending topics based on selected education level
+              // ...existing code...
               const topicsByLevel = {
                 '10th': [
                   "Mathematics", "Physics", "Chemistry", "Biology", 
@@ -659,7 +659,7 @@ const Content = () => {
         >
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             {(() => {
-              // Dynamic stats based on selected education level
+              // ...existing code...
               const statsByLevel = {
                 '10th': [
                   { label: "Active Students", value: "25,000+", color: "text-blue-400" },

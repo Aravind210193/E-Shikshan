@@ -2,8 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Renderer, Program, Mesh, Triangle, Vec3 } from "ogl";
 
-// A placeholder for the TextType component since its definition is not provided.
-// In your actual project, you would import your real TextType component.
 const TextType = ({ text, typingSpeed, pauseDuration, showCursor, cursorCharacter }) => {
     const [displayedText, setDisplayedText] = React.useState('');
     const textArray = Array.isArray(text) ? text : [text];
@@ -13,10 +11,8 @@ const TextType = ({ text, typingSpeed, pauseDuration, showCursor, cursorCharacte
         let currentCharIndex = 0;
         let isDeleting = false;
         let timeoutId;
-
         const type = () => {
             const currentString = textArray[currentTextIndex];
-            
             if (isDeleting) {
                 setDisplayedText(currentString.substring(0, currentCharIndex - 1));
                 currentCharIndex--;
@@ -36,18 +32,13 @@ const TextType = ({ text, typingSpeed, pauseDuration, showCursor, cursorCharacte
                 timeoutId = setTimeout(type, isDeleting ? typingSpeed / 2 : typingSpeed);
             }
         };
-
         timeoutId = setTimeout(type, typingSpeed);
-
         return () => clearTimeout(timeoutId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [text, typingSpeed, pauseDuration]);
 
     return <span>{displayedText}{showCursor ? cursorCharacter : ''}</span>;
 };
 
-
-// --- Orb Component Logic ---
 const Orb = ({
   hue = 0,
   hoverIntensity = 0.4,
@@ -55,7 +46,6 @@ const Orb = ({
   forceHoverState = false,
 }) => {
   const ctnDom = useRef(null);
-
   const vert = /* glsl */ `
     precision highp float;
     attribute vec2 position;
@@ -266,8 +256,6 @@ const Orb = ({
     let lastTime = 0;
     let currentRot = 0;
     const rotationSpeed = 0.3;
-
-    // The event listeners are now on the parent of the canvas, which is the whole hero section
     const parentContainer = container.parentElement;
 
     const handleMouseMove = (e) => {
@@ -332,8 +320,6 @@ const Orb = ({
   return <div ref={ctnDom} className="w-full h-full" />;
 }
 
-
-// --- Main Hero Section Component ---
 const HeroWithOrb = () => {
   const scrollToFeatures = () => {
     const section = document.getElementById("features-section");
@@ -343,11 +329,7 @@ const HeroWithOrb = () => {
   };
 
   return (
-    // Parent container establishes the positioning context and size.
-    // The background color has been removed.
     <div style={{ width: '100%', height: '80vh', position: 'relative', overflow: 'hidden' }}>
-      
-      {/* Orb is positioned absolutely to fill the container, acting as a background */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
         <Orb
           hoverIntensity={0.5}
@@ -356,15 +338,7 @@ const HeroWithOrb = () => {
           forceHoverState={false}
         />
       </div>
-
-      {/* Content section is also positioned absolutely with a higher z-index.
-        `pointer-events-none` allows mouse events to pass through to the Orb canvas below.
-      */}
       <section className='absolute top-0 left-0 w-full h-full z-10 text-white flex flex-col justify-center items-center text-center px-6 pointer-events-none'>
-        
-        {/* This wrapper div re-enables pointer events for all the content inside it,
-          so buttons and links are clickable.
-        */}
         <div className="pointer-events-auto flex flex-col items-center">
             <h1 className='text-4xl md:text-6xl font-bold leading-tight'>
               Learn Smarter. Build Your Future

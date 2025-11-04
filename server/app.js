@@ -9,6 +9,7 @@ const jobRoutes = require('./src/routes/jobRoutes');
 const achievementRoutes = require('./src/routes/achievementRoutes');
 const enrollmentRoutes = require('./src/routes/enrollmentRoutes');
 const hackathonRoutes = require('./src/routes/hackathonRoutes');
+const hackathonRegistrationRoutes = require('./src/routes/hackathonRegistrationRoutes');
 
 // Content routes
 const branchRoutes = require('./src/routes/branchRoutes');
@@ -62,6 +63,7 @@ app.use('/api/jobs', jobRoutes);
 app.use('/api/achievements', achievementRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/hackathons', hackathonRoutes);
+app.use('/api/hackathon-registrations', hackathonRegistrationRoutes);
 
 // Content routes  
 app.use('/api/branches', branchRoutes);

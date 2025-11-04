@@ -20,7 +20,6 @@ const RoadmapCard = ({ roadmap, index }) => {
         className="h-full bg-gradient-to-br from-gray-800/80 to-gray-900/80 border-2 border-gray-700/50 rounded-xl overflow-hidden transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:scale-[1.02]"
       >
         <div className="p-6 flex flex-col justify-between h-full relative">
-          {/* Badges */}
           {(isNew || isUpdated || isTrending) && (
             <div className="absolute top-4 right-4 flex gap-2">
               {isNew && (
@@ -114,7 +113,6 @@ export default function Roadmap() {
 
   const categories = useMemo(() => ["All", ...new Set(roadmaps.map((r) => r.category))], []);
 
-  // Derive richer fields for sorting/display without mutating JSON file
   const derivedRoadmaps = useMemo(() => roadmaps.map((r, idx) => {
     const diff = (r.difficulty || '').toLowerCase();
     const pop = (r.popularity || '').toLowerCase();

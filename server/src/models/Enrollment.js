@@ -32,6 +32,13 @@ const EnrollmentSchema = new mongoose.Schema({
   transactionId: { type: String },
   amountPaid: { type: Number, default: 0 },
   paymentDate: { type: Date },
+  paymentDetails: {
+    amount: { type: Number },
+    phoneNumber: { type: String },
+    method: { type: String },
+    transactionId: { type: String },
+    verifiedAt: { type: Date }
+  },
   // Enrollment status
   status: {
     type: String,

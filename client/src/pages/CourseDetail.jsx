@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   ArrowLeft, Star, Users, Clock, Award, BookOpen, CheckCircle, 
@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 const CourseDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,9 +20,8 @@ const CourseDetail = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [pendingEnrollmentId, setPendingEnrollmentId] = useState(null);
-  const [paymentCheckInterval, setPaymentCheckInterval] = useState(null);
-  const [autoVerifyScheduled, setAutoVerifyScheduled] = useState(false);
-  const [autoVerifyTimeoutId, setAutoVerifyTimeoutId] = useState(null);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [autoOpenHandled, setAutoOpenHandled] = useState(false);
   
   const [userDetails, setUserDetails] = useState({
     fullName: '',
@@ -35,11 +35,9 @@ const CourseDetail = () => {
   const [activeProjectCommentBox, setActiveProjectCommentBox] = useState(null);
   const [projectCommentText, setProjectCommentText] = useState({});
 
-  // Derived enrollment flags used across effects and UI
   const hasAccess = !!(enrollmentStatus?.hasAccess);
   const isEnrolled = !!(enrollmentStatus?.enrolled);
 
-  // Fetch course details
   useEffect(() => {
     const fetchCourse = async () => {
       try {
@@ -60,7 +58,6 @@ const CourseDetail = () => {
     }
   }, [id, navigate]);
 
-  // Check enrollment status (hoisted to component scope for reuse)
   const checkEnrollment = async () => {
     const token = localStorage.getItem('token');
     if (!token || !id) return;
@@ -75,6 +72,11 @@ const CourseDetail = () => {
         });
       } else {
         setEnrollmentStatus({ enrolled: false, hasAccess: false });
+        if (response.data.pendingEnrollmentId) {
+          setPendingEnrollmentId(response.data.pendingEnrollmentId);
+        } else {
+          setPendingEnrollmentId(null);
+        }
       }
     } catch (error) {
       console.error('Failed to check enrollment:', error);
@@ -84,6 +86,29 @@ const CourseDetail = () => {
   useEffect(() => {
     checkEnrollment();
   }, [id]);
+
+  // Auto-open enrollment/payment modal when navigated from Courses with intent
+  useEffect(() => {
+    // Only handle once per mount
+    if (autoOpenHandled) return;
+    const shouldAutoOpen = location.state && location.state.autoOpenEnrollment;
+    if (!shouldAutoOpen) return;
+
+    // Clear the state so back/forward doesn't retrigger
+    navigate(location.pathname, { replace: true, state: {} });
+
+    // If there's a pending enrollment, open payment modal
+    if (pendingEnrollmentId || (enrollmentStatus?.enrolled && !enrollmentStatus?.hasAccess)) {
+      setShowPaymentModal(true);
+      setAutoOpenHandled(true);
+      return;
+    }
+
+    if (!enrollmentStatus?.enrolled) {
+      handleEnrollClick();
+      setAutoOpenHandled(true);
+    }
+  }, [location.state, enrollmentStatus, pendingEnrollmentId, autoOpenHandled, navigate, location.pathname]);
 
   const handleEnrollClick = () => {
     const token = localStorage.getItem('token');
@@ -117,7 +142,6 @@ const CourseDetail = () => {
         });
         setShowEnrollModal(false);
       } else {
-        // Paid course: show payment modal (enrollment created as "pending")
         const newEnrollmentId = response.data?.enrollment?._id || response.data?._id;
         if (!newEnrollmentId) throw new Error('Missing enrollment id');
         setPendingEnrollmentId(newEnrollmentId);
@@ -127,7 +151,6 @@ const CourseDetail = () => {
           duration: 4000,
           icon: '⏳'
         });
-        startPaymentCheck(newEnrollmentId);
       }
     } catch (error) {
       console.error('Enrollment error:', error);
@@ -137,53 +160,7 @@ const CourseDetail = () => {
     }
   };
 
-  // Check payment status periodically
-  const startPaymentCheck = (enrollmentId) => {
-    const interval = setInterval(async () => {
-      try {
-        const response = await enrollmentAPI.getEnrollment(enrollmentId);
-        
-        if (response.data.paymentStatus === 'completed') {
-          clearInterval(interval);
-          setPaymentCheckInterval(null);
-          toast.success('Payment confirmed! You now have access to the course.');
-          setEnrollmentStatus({
-            enrolled: true,
-            hasAccess: true,
-            enrollment: response.data
-          });
-          setShowPaymentModal(false);
-          setPendingEnrollmentId(null);
-        }
-      } catch (error) {
-        console.error('Payment check error:', error);
-      }
-    }, 5000); // Check every 5 seconds
-
-    setPaymentCheckInterval(interval);
-  };
-
-  // Cleanup interval on unmount
-  useEffect(() => {
-    return () => {
-      if (paymentCheckInterval) {
-        clearInterval(paymentCheckInterval);
-      }
-    };
-  }, [paymentCheckInterval]);
-
   const handleCancelPayment = async () => {
-    if (paymentCheckInterval) {
-      clearInterval(paymentCheckInterval);
-      setPaymentCheckInterval(null);
-    }
-    if (autoVerifyTimeoutId) {
-      clearTimeout(autoVerifyTimeoutId);
-      setAutoVerifyTimeoutId(null);
-    }
-    setAutoVerifyScheduled(false);
-    
-    // Delete the pending enrollment
     if (pendingEnrollmentId) {
       try {
         await enrollmentAPI.deletePendingEnrollment(pendingEnrollmentId);
@@ -196,66 +173,42 @@ const CourseDetail = () => {
     
     setPendingEnrollmentId(null);
     setShowPaymentModal(false);
-    
-  // Refresh enrollment status
-  checkEnrollment();
+    checkEnrollment();
   };
 
-  // Auto-verify payment when user returns from UPI app (visibility/focus)
-  useEffect(() => {
-    if (!showPaymentModal || !pendingEnrollmentId || hasAccess) return;
+  const handlePaymentComplete = async () => {
+    if (!pendingEnrollmentId) return;
+    
+    setIsProcessingPayment(true);
+    try {
+      console.log('🔄 Confirming payment completion...');
+      
+  const response = await enrollmentAPI.processPayment(pendingEnrollmentId, {
+    paymentMethod: 'upi',
+        amount: course.priceAmount,
+        phoneNumber: userDetails.phone || ''
+      });
 
-    const scheduleAutoVerify = () => {
-      if (autoVerifyScheduled) return;
-      // Schedule a one-time auto verification after short delay
-      const tid = setTimeout(async () => {
-        try {
-          await enrollmentAPI.processPayment(pendingEnrollmentId, {
-            transactionId: `AUTO_${Date.now()}`,
-            paymentMethod: 'UPI',
-            amount: course?.priceAmount,
-            status: 'completed'
-          });
-
-          if (paymentCheckInterval) {
-            clearInterval(paymentCheckInterval);
-            setPaymentCheckInterval(null);
-          }
-
-          toast.success('Payment verified! Access granted.');
-          setEnrollmentStatus({ enrolled: true, hasAccess: true });
-          setShowPaymentModal(false);
-          setPendingEnrollmentId(null);
-          setAutoVerifyScheduled(false);
-          setAutoVerifyTimeoutId(null);
-          checkEnrollment();
-        } catch (err) {
-          // If backend rejects, keep polling and allow manual retry
-          console.error('Auto verify failed:', err?.response?.data || err.message);
-          setAutoVerifyScheduled(false);
-          setAutoVerifyTimeoutId(null);
-        }
-      }, 10000); // 10s after focus/return
-
-      setAutoVerifyTimeoutId(tid);
-      setAutoVerifyScheduled(true);
-    };
-
-    const onVisibility = () => {
-      if (document.visibilityState === 'visible') {
-        scheduleAutoVerify();
-      }
-    };
-    const onFocus = () => scheduleAutoVerify();
-
-    document.addEventListener('visibilitychange', onVisibility);
-    window.addEventListener('focus', onFocus);
-
-    return () => {
-      document.removeEventListener('visibilitychange', onVisibility);
-      window.removeEventListener('focus', onFocus);
-    };
-  }, [showPaymentModal, pendingEnrollmentId, hasAccess, course?.priceAmount, paymentCheckInterval, autoVerifyScheduled]);
+      console.log('✅ Payment verified!');
+      console.log('💳 Transaction ID:', response.data.transactionId);
+      
+      toast.success('Payment verified! You now have access to the course.');
+      setEnrollmentStatus({
+        enrolled: true,
+        hasAccess: true,
+        enrollment: response.data.enrollment
+      });
+      setShowPaymentModal(false);
+      setPendingEnrollmentId(null);
+      checkEnrollment();
+    } catch (error) {
+      console.error('❌ Payment processing error:', error);
+      const errorMessage = error.response?.data?.message || 'Payment verification failed. Please try again.';
+      toast.error(errorMessage);
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -276,7 +229,6 @@ const CourseDetail = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-      {/* Back Button */}
       <div className="container mx-auto px-4 py-6">
         <button
           onClick={() => navigate('/courses')}
@@ -287,11 +239,9 @@ const CourseDetail = () => {
         </button>
       </div>
 
-      {/* Course Header */}
-      <div className="bg-slate-800/50 border-b border-slate-700">
+  <div className="bg-slate-800/50 border-b border-slate-700">
         <div className="container mx-auto px-4 py-12">
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Left: Course Info */}
             <div className="lg:col-span-2">
               <div className="mb-4">
                 <span className="px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full text-sm font-semibold">
@@ -301,7 +251,7 @@ const CourseDetail = () => {
               <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
               <p className="text-xl text-slate-300 mb-6">{course.description}</p>
               
-              {/* Stats Row */}
+              
               <div className="flex flex-wrap gap-6 text-sm">
                 <div className="flex items-center gap-2">
                   <Star className="text-yellow-400" size={20} fill="currentColor" />
@@ -318,7 +268,7 @@ const CourseDetail = () => {
                 </div>
               </div>
 
-              {/* Instructor */}
+              
               <div className="mt-6 flex items-center gap-4">
                 <div className="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center font-bold">
                   {course.instructor.charAt(0)}
@@ -330,7 +280,7 @@ const CourseDetail = () => {
               </div>
             </div>
 
-            {/* Right: Enrollment Card */}
+            
             <div className="lg:col-span-1">
               <div className="bg-slate-800 rounded-xl p-6 border-2 border-indigo-500/30 sticky top-6">
                 <img 
@@ -1072,7 +1022,6 @@ const CourseDetail = () => {
                     {/* QR code for exact amount (UPI string encoded) */}
                     {(() => {
                       const upiAmount = Number(course.priceAmount || 0).toFixed(2);
-                      // Build UPI uri and URL-encode it for the qr API
                       const upiNote = encodeURIComponent(`Course: ${course.title}`);
                       const upiUri = `upi://pay?pa=9391774388@ybl&pn=E-Shikshan&am=${upiAmount}&cu=INR&tn=${upiNote}`;
                       const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(upiUri)}`;
@@ -1122,12 +1071,13 @@ const CourseDetail = () => {
                 <div className="bg-slate-700/50 rounded-lg p-4 mb-4">
                   <h4 className="font-semibold text-sm text-purple-300 mb-2">📱 How to Pay:</h4>
                   <ol className="text-sm text-slate-300 space-y-1 list-decimal list-inside">
-                    <li>Open PhonePe app on your phone</li>
-                    <li>Scan the QR code above</li>
+                    <li>Open PhonePe/Google Pay/Paytm on your phone</li>
+                    <li>Scan the QR code above or use UPI ID below</li>
                     <li>Verify amount: ₹{course.priceAmount.toLocaleString()}</li>
                     <li>Complete the payment</li>
-                      <li>Wait for automatic verification (5-10 seconds)</li>
-                      <li>Access will be granted automatically</li>
+                    <li>Click "I've Completed Payment - Verify Now" button</li>
+                    <li>Transaction ID will be shown in console</li>
+                    <li>Access will be granted instantly</li>
                   </ol>
                 </div>
 
@@ -1149,7 +1099,7 @@ const CourseDetail = () => {
                 </div>
               </div>
 
-              {/* Automatic Payment Verification Status */}
+              {/* Payment Verification Status */}
               <div className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 border border-indigo-500/50 rounded-lg p-5">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <div className="relative">
@@ -1159,8 +1109,8 @@ const CourseDetail = () => {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-indigo-300 text-lg">Waiting for Payment...</h4>
-                    <p className="text-sm text-slate-400">Checking payment status automatically</p>
+                    <h4 className="font-semibold text-indigo-300 text-lg">Complete Your Payment</h4>
+                    <p className="text-sm text-slate-400">Click verify after payment</p>
                   </div>
                 </div>
                 
@@ -1169,44 +1119,41 @@ const CourseDetail = () => {
                     <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={20} />
                     <div>
                       <p className="text-sm text-slate-300 mb-2">
-                        After you complete the payment through PhonePe/UPI, our system will automatically detect and verify it within 5-10 seconds.
+                        After completing the payment through PhonePe/Google Pay/Paytm, click the button below to verify and get instant access.
                       </p>
                       <p className="text-sm text-green-400 font-semibold">
-                        ✓ No need to enter transaction ID manually
+                        ✓ Transaction ID will be generated automatically
+                      </p>
+                      <p className="text-xs text-slate-400 mt-1">
+                        Check browser console (F12) to see the transaction ID
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Manual Verify button as a fallback (visible) */}
+                {/* Payment Complete Button */}
                 <div className="mt-4">
                   <button
-                    onClick={async () => {
-                      try {
-                        await enrollmentAPI.processPayment(pendingEnrollmentId, {
-                          transactionId: `AUTO_${Date.now()}`,
-                          paymentMethod: 'UPI',
-                          amount: course.priceAmount,
-                          status: 'completed'
-                        });
-                        if (paymentCheckInterval) {
-                          clearInterval(paymentCheckInterval);
-                          setPaymentCheckInterval(null);
-                        }
-                        toast.success('Payment verified! Access granted.');
-                        setEnrollmentStatus({ enrolled: true, hasAccess: true });
-                        setShowPaymentModal(false);
-                        setPendingEnrollmentId(null);
-                        checkEnrollment();
-                      } catch (error) {
-                        toast.error(error.response?.data?.message || 'Payment not yet detected. Try again in a few seconds.');
-                      }
-                    }}
-                    className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition-all text-sm"
+                    onClick={handlePaymentComplete}
+                    disabled={isProcessingPayment}
+                    className={`w-full font-semibold py-3 rounded-lg transition-all text-sm ${
+                      isProcessingPayment
+                        ? 'bg-gray-600 cursor-not-allowed text-gray-400'
+                        : 'bg-green-600 hover:bg-green-700 text-white'
+                    }`}
                   >
-                    I've Paid – Verify Now
+                    {isProcessingPayment ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Verifying Payment...
+                      </span>
+                    ) : (
+                      "✓ I've Completed Payment - Verify Now"
+                    )}
                   </button>
-                  <p className="text-[11px] text-slate-400 mt-2 text-center">If you just completed the payment, this may take a few seconds.</p>
+                  <p className="text-[11px] text-slate-400 mt-2 text-center">
+                    Click after successfully completing the UPI payment
+                  </p>
                 </div>
               </div>
             </div>
@@ -1221,9 +1168,9 @@ const CourseDetail = () => {
             </div>
 
             <p className="text-xs text-slate-400 text-center mt-4">
-              🔒 Secure payment. Access is granted automatically after payment verification.
+              🔒 Secure payment. Transaction ID generated automatically by payment gateway.
               <br />
-              💡 If not detected in 10–20 seconds, click "I've Paid – Verify Now" above.
+              💡 Open browser console (F12) to see the transaction ID after verification.
             </p>
           </motion.div>
         </div>

@@ -19,6 +19,7 @@ import Settings from "../pages/Settings";
 import ResumeBuilding from "../pages/ResumeBuilding";
 import HackathonDetails from "../components/HackathonDetails";
 import SubjectUnits from "../pages/SubjectUnits";
+import UnitContent from "../pages/UnitContent";
 import TenthGradeTerms from "../pages/TenthGradeTerms";
 import TenthGradeSubjects from "../pages/TenthGradeSubjects";
 import IntermediateSubjects from "../pages/IntermediateSubjects";
@@ -54,6 +55,7 @@ export default function AppRoutes({ isAdminLoggedIn, setIsAdminLoggedIn }) {
       <Route path="/content/:branch" element={<Semesters />} />
       <Route path="/subjects/:branch" element={<Subjects />} />
       <Route path="/subjects/:branch/:semester/:subjectCode" element={<SubjectUnits />} />
+      <Route path="/content/:branch/:semester/:subjectCode/unit/:unitIndex" element={<UnitContent />} />
       <Route path="/folders/:branch/:subject" element={<Folders />} />
       <Route path="/courses" element={<Courses />} />
       <Route path="/courses/:id" element={<CourseDetail />} />
