@@ -1,19 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { MenuIcon, XIcon, User } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { authAPI } from '../services/api';
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const [showMenu,setShowMenu] = useState(false);
+  const [user, setUser] = useState(null);
+  const desktopMenuRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+
+  // Fetch user data when logged in (from API so images persist reliably)
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!isLoggedIn) {
+        setUser(null);
+        return;
+      }
+      try {
+        const response = await authAPI.getProfile();
+        setUser(response.data);
+        // Keep a lightweight copy in localStorage for rare fallbacks (avoid quota issues)
+        try {
+          const { token, ...rest } = response.data || {};
+          localStorage.setItem('user', JSON.stringify(rest));
+        } catch (e) {
+          // Ignore storage quota errors
+        }
+      } catch (error) {
+        console.error('Failed to fetch user for navbar:', error?.response?.data || error.message);
+        // Fallback to stored user if present
+        try {
+          const cached = localStorage.getItem('user');
+          setUser(cached ? JSON.parse(cached) : null);
+        } catch {
+          setUser(null);
+        }
+      }
+    };
+    fetchUserData();
+  }, [isLoggedIn, location.pathname]);
+
+  // Close profile dropdown on outside click or ESC
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!showMenu) return;
+      const inDesktop = desktopMenuRef.current && desktopMenuRef.current.contains(e.target);
+      const inMobile = mobileMenuRef.current && mobileMenuRef.current.contains(e.target);
+      if (!inDesktop && !inMobile) {
+        setShowMenu(false);
+      }
+    };
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') setShowMenu(false);
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    document.addEventListener('keydown', handleEsc);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+      document.removeEventListener('keydown', handleEsc);
+    };
+  }, [showMenu]);
 
   const handleLogout = () => {
-    // Clear token from localStorage
+    // Clear token and user data from localStorage
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     // Update login state
     setIsLoggedIn(false);
+    // Clear user state
+    setUser(null);
     // Close menu
     setShowMenu(false);
     // Show success message
@@ -66,7 +127,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                     </Link>
             
                     </div>
-                <div className='relative'>
+                <div className='relative' ref={desktopMenuRef}>
                             {!isLoggedIn ? (
                             <div className='hidden md:flex space-x-3'>
                 
@@ -81,14 +142,24 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                             </div>
                             ):(
                             <div className='relative'>
-                                {/* <FauserCircle onClick={()=>setShowMenu(!showMenu)} className='text-3xl text-gray-300 hover:text-white curser-pointer' /> */}
-                                <User size={36} onClick={()=>setShowMenu(!showMenu)} className=' hidden md:flex text-3xl rounded-full bg-gray-700 text-gray-300 hover:text-white curser-pointer' />
+                                {/* Profile Picture or User Icon */}
+                                {user?.profilePicture ? (
+                                  <img 
+                                    src={user.profilePicture} 
+                                    alt={user?.name || 'User'}
+                                    onClick={()=>setShowMenu(!showMenu)}
+                                    className='hidden md:flex w-9 h-9 rounded-full object-cover border-2 border-gray-600 hover:border-gray-400 cursor-pointer transition-all'
+                                  />
+                                ) : (
+                                  <User size={36} onClick={()=>setShowMenu(!showMenu)} className=' hidden md:flex text-3xl rounded-full bg-gray-700 text-gray-300 hover:text-white cursor-pointer' />
+                                )}
                                 { showMenu && (
-                            <div className='absolute right-0 mt-2 w-48 z-10  rounded-md  py-2'>
+              <div className='absolute right-0 mt-2 w-56 z-50 rounded-lg bg-gray-800 border border-gray-700 shadow-2xl py-2'>
                 
-                                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Profile</Link>
-                                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Settings</Link>
-                                <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700'>Log out</button>
+                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Profile</Link>
+                <Link onClick={() => setShowMenu(false)} to='/profile?edit=true' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Edit Details</Link>
+                <Link onClick={() => setShowMenu(false)} to='/settings' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Settings</Link>
+                <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700 transition-colors'>Log out</button>
                             </div>
                                 )}
                             </div>
@@ -134,16 +205,26 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                         </button>
                     </div>
                 ):(
-                    <div>
-                        <div className='relative'>
-                                {/* <FauserCircle onClick={()=>setShowMenu(!showMenu)} className='text-3xl text-gray-300 hover:text-white curser-pointer' /> */}
-                                <User size={36} onClick={()=>setShowMenu(!showMenu)} className='text-3xl rounded-full bg-gray-700 text-gray-300 hover:text-white curser-pointer' />
+          <div>
+            <div className='relative' ref={mobileMenuRef}>
+                                {/* Profile Picture or User Icon */}
+                                {user?.profilePicture ? (
+                                  <img 
+                                    src={user.profilePicture} 
+                                    alt={user?.name || 'User'}
+                                    onClick={()=>setShowMenu(!showMenu)}
+                                    className='w-9 h-9 rounded-full object-cover border-2 border-gray-600 hover:border-gray-400 cursor-pointer transition-all'
+                                  />
+                                ) : (
+                                  <User size={36} onClick={()=>setShowMenu(!showMenu)} className='text-3xl rounded-full bg-gray-700 text-gray-300 hover:text-white cursor-pointer' />
+                                )}
                                 { showMenu && (
-                            <div className='absolute right-0 mt-2 w-48  rounded-md shadow-lg py-2'>
+              <div className='absolute right-0 mt-2 w-56 rounded-lg bg-gray-800 border border-gray-700 shadow-2xl py-2 z-50'>
                 
-                                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Profile</Link>
-                                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700'>Settings</Link>
-                                <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700'>Log out</button>
+                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Profile</Link>
+                <Link onClick={() => setShowMenu(false)} to='/profile?edit=true' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Edit Details</Link>
+                <Link onClick={() => setShowMenu(false)} to='/settings' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Settings</Link>
+                <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700 transition-colors'>Log out</button>
                             </div>
                                 )}
                             </div>

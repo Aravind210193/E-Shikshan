@@ -111,16 +111,44 @@ const TopicDetail = ({ topic, onClose }) => {
                 Learning Resources
               </h3>
               <div className="space-y-2">
-                {topic.resources.map((resource, i) => (
-                  <a 
-                    key={i} 
-                    href="#" 
-                    className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition-colors group"
-                  >
-                    <ExternalLink size={16} className="text-blue-400 flex-shrink-0" />
-                    <span className="text-blue-300 group-hover:underline">{resource}</span>
-                  </a>
-                ))}
+                {topic.resources.map((resource, i) => {
+                  // Generate dummy URLs based on resource name
+                  const getDummyUrl = (resourceName) => {
+                    const name = resourceName.toLowerCase();
+                    if (name.includes('mdn')) return 'https://developer.mozilla.org';
+                    if (name.includes('css-tricks')) return 'https://css-tricks.com';
+                    if (name.includes('web.dev')) return 'https://web.dev';
+                    if (name.includes('frontend masters')) return 'https://frontendmasters.com';
+                    if (name.includes('javascript.info')) return 'https://javascript.info';
+                    if (name.includes('freecodecamp')) return 'https://freecodecamp.org';
+                    if (name.includes('github')) return 'https://github.com';
+                    if (name.includes('youtube')) return 'https://youtube.com';
+                    if (name.includes('udemy')) return 'https://udemy.com';
+                    if (name.includes('coursera')) return 'https://coursera.org';
+                    if (name.includes('atlassian')) return 'https://atlassian.com';
+                    if (name.includes('git')) return 'https://git-scm.com';
+                    if (name.includes('react')) return 'https://react.dev';
+                    if (name.includes('typescript')) return 'https://typescriptlang.org';
+                    if (name.includes('nodejs')) return 'https://nodejs.org';
+                    return 'https://google.com/search?q=' + encodeURIComponent(resourceName);
+                  };
+
+                  const url = typeof resource === 'object' ? resource.url : getDummyUrl(resource);
+                  const title = typeof resource === 'object' ? resource.title : resource;
+
+                  return (
+                    <a 
+                      key={i} 
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition-colors group"
+                    >
+                      <ExternalLink size={16} className="text-blue-400 flex-shrink-0" />
+                      <span className="text-blue-300 group-hover:underline">{title}</span>
+                    </a>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -131,11 +159,39 @@ const TopicDetail = ({ topic, onClose }) => {
                 <Code size={18} />
                 Practice Project
               </h3>
-              <div className="p-4 bg-pink-900/20 rounded-lg border border-pink-500/30">
-                <p className="text-gray-300 mb-3">{topic.project}</p>
-                <button className="flex items-center gap-2 px-4 py-2 bg-pink-600 rounded-md text-white font-medium hover:bg-pink-700 transition-colors text-sm">
-                  Start Project <ArrowRight size={16} />
-                </button>
+              <div className="p-5 bg-gradient-to-br from-pink-900/30 to-purple-900/30 rounded-lg border border-pink-500/40 shadow-lg">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-pink-600 flex items-center justify-center flex-shrink-0">
+                    <Code size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">Build a Real Project</h4>
+                    <p className="text-gray-300 text-sm leading-relaxed">{topic.project}</p>
+                  </div>
+                </div>
+                
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="px-3 py-1 bg-pink-600/30 text-pink-300 rounded-full text-xs font-medium border border-pink-500/30">
+                    Hands-on Practice
+                  </span>
+                  <span className="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-xs font-medium border border-purple-500/30">
+                    Portfolio Worthy
+                  </span>
+                  <span className="px-3 py-1 bg-blue-600/30 text-blue-300 rounded-full text-xs font-medium border border-blue-500/30">
+                    Real-world Application
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  <button className="flex items-center gap-2 px-4 py-2.5 bg-pink-600 rounded-lg text-white font-medium hover:bg-pink-700 transition-all hover:shadow-lg hover:shadow-pink-500/30">
+                    <Code size={16} />
+                    Start Project
+                  </button>
+                  <button className="flex items-center gap-2 px-4 py-2.5 bg-gray-700 rounded-lg text-gray-200 font-medium hover:bg-gray-600 transition-colors">
+                    <ExternalLink size={16} />
+                    View Examples
+                  </button>
+                </div>
               </div>
             </div>
           )}

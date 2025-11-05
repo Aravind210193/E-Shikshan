@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const Enrollment = require('../models/Enrollment');
 const Course = require('../models/Course');
+const User = require('../models/User');
 
 // @desc    Handle payment gateway webhook
 // @route   POST /api/webhooks/payment
@@ -168,6 +169,28 @@ const handlePaymentWebhook = async (req, res) => {
       console.log('✓ Stored UPI Transaction ID:', enrollment.paymentDetails.upiTransactionId);
       console.log('═══════════════════════════════\n');
 
+      // Add course to user's enrolledCourses array
+      const user = await User.findById(enrollment.userId);
+      if (user) {
+        // Check if course already in enrolledCourses
+        const alreadyInArray = user.enrolledCourses.some(
+          ec => ec.courseId.toString() === enrollment.courseId.toString()
+        );
+        
+        if (!alreadyInArray) {
+          user.enrolledCourses.push({
+            courseId: enrollment.courseId,
+            enrollmentId: enrollment._id,
+            enrolledAt: new Date(),
+            status: 'active'
+          });
+          await user.save();
+          console.log('✓ Course added to user\'s enrolledCourses array');
+        } else {
+          console.log('✓ Course already in user\'s enrolledCourses array');
+        }
+      }
+
       // Increment course student count
       course.students = (course.students || 0) + 1;
       await course.save();
@@ -176,7 +199,9 @@ const handlePaymentWebhook = async (req, res) => {
       console.log('\n🎉 ═══ WEBHOOK PROCESSING COMPLETE ═══');
       console.log('✓ Payment verified successfully');
       console.log('✓ Enrollment activated');
+      console.log('✓ Course added to user profile');
       console.log('✓ User can now access course content');
+
       console.log('═══════════════════════════════════════\n');
       
       return res.status(200).json({ 

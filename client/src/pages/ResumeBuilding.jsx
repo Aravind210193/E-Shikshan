@@ -151,6 +151,82 @@ const ResumeBuilding = () => {
   // Templates with sub-templates
   const templates = [
     { 
+      id: 'faang', 
+      name: 'FAANG Optimized', 
+      color: 'rose',
+      description: '⭐ ATS-friendly templates accepted by Google, Microsoft, Amazon, Meta & top tech companies',
+      preview: '⭐',
+      recommended: true,
+      subTemplates: [
+        { 
+          id: 'faang-1', 
+          name: 'Google Standard', 
+          description: 'ATS-optimized, clean layout preferred by Google recruiters. Single-column, quantified achievements.', 
+          colorScheme: 'rose',
+          features: ['ATS-Friendly', 'Quantifiable Metrics', 'Achievement-Focused', 'Simple Format']
+        },
+        { 
+          id: 'faang-2', 
+          name: 'Microsoft Professional', 
+          description: 'Classic format with emphasis on technical skills and impact metrics.', 
+          colorScheme: 'blue',
+          features: ['Clean Design', 'Skills Matrix', 'Impact-Driven', 'Tech-Focused']
+        },
+        { 
+          id: 'faang-3', 
+          name: 'Meta Modern', 
+          description: 'Contemporary layout highlighting innovation and product impact.', 
+          colorScheme: 'indigo',
+          features: ['Modern Layout', 'Product-Focused', 'Innovation Highlights', 'Results-Oriented']
+        },
+        { 
+          id: 'faang-4', 
+          name: 'Amazon Leadership', 
+          description: 'Leadership principles focused with STAR method accomplishments.', 
+          colorScheme: 'amber',
+          features: ['Leadership Principles', 'STAR Format', 'Metrics-Heavy', 'Action-Focused']
+        }
+      ]
+    },
+    { 
+      id: 'student', 
+      name: 'Student Classic', 
+      color: 'sky',
+      description: '🎓 Perfect for students, freshers, and entry-level positions. Clean, professional, and easy to fill.',
+      preview: '🎓',
+      recommended: true,
+      subTemplates: [
+        { 
+          id: 'student-1', 
+          name: 'College Classic', 
+          description: 'Clean and simple layout perfect for students and recent graduates. Emphasizes education and projects.', 
+          colorScheme: 'sky',
+          features: ['Education-Focused', 'Projects Highlighted', 'Clean Layout', 'Easy to Read']
+        },
+        { 
+          id: 'student-2', 
+          name: 'Internship Ready', 
+          description: 'Professional format ideal for internship applications. Highlights coursework and skills.', 
+          colorScheme: 'blue',
+          features: ['Internship-Friendly', 'Skills Showcase', 'Coursework Section', 'Modern Design']
+        },
+        { 
+          id: 'student-3', 
+          name: 'Fresher Professional', 
+          description: 'Entry-level friendly template with emphasis on academic achievements and certifications.', 
+          colorScheme: 'indigo',
+          features: ['Beginner-Friendly', 'Academic Focus', 'Certifications', 'Professional Look']
+        },
+        { 
+          id: 'student-4', 
+          name: 'Campus Placement', 
+          description: 'Optimized for campus recruitment drives. Clear sections for education, skills, and extracurriculars.', 
+          colorScheme: 'teal',
+          features: ['Campus-Optimized', 'Extracurriculars', 'Clear Sections', 'Professional Format']
+        }
+      ]
+    },
+    { 
       id: 'modern', 
       name: 'Modern Professional', 
       color: 'blue',
@@ -277,6 +353,8 @@ const ResumeBuilding = () => {
     const getTemplateColors = () => {
       const colorScheme = template.colorScheme || template.color;
       const colorMap = {
+        rose: { primary: 'bg-rose-600', text: 'text-rose-600', border: 'border-rose-200' },
+        amber: { primary: 'bg-amber-600', text: 'text-amber-600', border: 'border-amber-200' },
         blue: { primary: 'bg-blue-600', text: 'text-blue-600', border: 'border-blue-200' },
         indigo: { primary: 'bg-indigo-600', text: 'text-indigo-600', border: 'border-indigo-200' },
         sky: { primary: 'bg-sky-600', text: 'text-sky-600', border: 'border-sky-200' },
@@ -560,6 +638,8 @@ const ResumeBuilding = () => {
       
       // Color map for all possible color schemes
       const colorMap = {
+        rose: { primary: 'bg-rose-600', secondary: 'bg-rose-50', text: 'text-rose-600', border: 'border-rose-200' },
+        amber: { primary: 'bg-amber-600', secondary: 'bg-amber-50', text: 'text-amber-600', border: 'border-amber-200' },
         blue: { primary: 'bg-blue-600', secondary: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200' },
         indigo: { primary: 'bg-indigo-600', secondary: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-200' },
         sky: { primary: 'bg-sky-600', secondary: 'bg-sky-50', text: 'text-sky-600', border: 'border-sky-200' },
@@ -1647,13 +1727,19 @@ const ResumeBuilding = () => {
                       key={template.id}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`bg-slate-700 rounded-lg p-6 cursor-pointer border-2 transition-all ${
+                      className={`bg-slate-700 rounded-lg p-6 cursor-pointer border-2 transition-all relative ${
                         selectedTemplate === template.id ? 'border-blue-500 ring-4 ring-blue-500/30' : 'border-transparent hover:border-slate-600'
-                      }`}
+                      } ${template.recommended ? 'ring-2 ring-rose-500/50' : ''}`}
                       onClick={() => {
                         setSelectedTemplate(template.id);
                       }}
                     >
+                      {template.recommended && (
+                        <div className="absolute -top-2 -right-2 bg-gradient-to-r from-rose-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                          <Sparkles size={12} />
+                          RECOMMENDED
+                        </div>
+                      )}
                       <div className="flex flex-col items-center text-center">
                         <div className="text-6xl mb-4">{template.preview}</div>
                         <h3 className="text-xl font-bold mb-2">{template.name}</h3>
@@ -1728,6 +1814,26 @@ const ResumeBuilding = () => {
                             <p className="text-slate-400 text-xs mb-3">
                               {subTemplate.description}
                             </p>
+                            
+                            {/* Features badges (if FAANG template) */}
+                            {subTemplate.features && subTemplate.features.length > 0 && (
+                              <div className="flex flex-wrap gap-1 justify-center mb-3">
+                                {subTemplate.features.slice(0, 3).map((feature, idx) => (
+                                  <span 
+                                    key={idx}
+                                    className="text-[10px] px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30"
+                                  >
+                                    {feature}
+                                  </span>
+                                ))}
+                                {subTemplate.features.length > 3 && (
+                                  <span className="text-[10px] px-2 py-0.5 bg-slate-600 text-slate-300 rounded-full">
+                                    +{subTemplate.features.length - 3} more
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                            
                             <div className="text-xs text-blue-400">
                               Click to select
                             </div>

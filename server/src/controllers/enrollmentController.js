@@ -1,5 +1,6 @@
 const Enrollment = require('../models/Enrollment');
 const Course = require('../models/Course');
+const User = require('../models/User');
 
 // @desc    Enroll in a course
 // @route   POST /api/enrollments
@@ -49,10 +50,28 @@ const enrollInCourse = async (req, res) => {
     await enrollment.save();
 
     // Increment student count only for free courses immediately.
-    // For paid courses, increment will happen after successful payment in processPayment.
+    // For paid courses, increment will happen after successful payment in webhook.
     if (isFree) {
       course.students += 1;
       await course.save();
+      
+      // Add course to user's enrolledCourses array
+      const user = await User.findById(userId);
+      if (user) {
+        const alreadyInArray = user.enrolledCourses.some(
+          ec => ec.courseId.toString() === courseId.toString()
+        );
+        
+        if (!alreadyInArray) {
+          user.enrolledCourses.push({
+            courseId: courseId,
+            enrollmentId: enrollment._id,
+            enrolledAt: new Date(),
+            status: 'active'
+          });
+          await user.save();
+        }
+      }
     }
 
     res.status(201).json({

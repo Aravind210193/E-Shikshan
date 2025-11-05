@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { authAPI, enrollmentAPI, hackathonRegistrationAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import {
@@ -37,6 +37,7 @@ import {
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [user, setUser] = useState(null);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [hackathonRegistrations, setHackathonRegistrations] = useState([]);
@@ -46,6 +47,10 @@ const Profile = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editFormData, setEditFormData] = useState({});
   const [isSaving, setIsSaving] = useState(false);
+  const [bannerImage, setBannerImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const bannerInputRef = React.useRef(null);
+  const profileInputRef = React.useRef(null);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -60,6 +65,9 @@ const Profile = () => {
 
         const profileResponse = await authAPI.getProfile();
         setUser(profileResponse.data);
+        
+          // Also update localStorage with fresh user data
+          localStorage.setItem('user', JSON.stringify(profileResponse.data));
 
         try {
           const coursesResponse = await enrollmentAPI.getMyCourses();
@@ -103,6 +111,13 @@ const Profile = () => {
     fetchProfileData();
   }, [navigate]);
 
+  // Auto-open edit modal if edit=true in URL
+  useEffect(() => {
+    if (searchParams.get('edit') === 'true' && user) {
+      openEditModal();
+    }
+  }, [searchParams, user]);
+
   const totalCourses = enrolledCourses.length;
   const completedCourses = enrolledCourses.filter(course => course.progress?.overallProgress === 100).length;
   const ongoingCourses = totalCourses - completedCourses;
@@ -141,15 +156,54 @@ const Profile = () => {
   const handleSaveProfile = async () => {
     try {
       setIsSaving(true);
-      const response = await authAPI.updateProfile(editFormData);
+      
+      // Include banner and profile images if they were changed
+      const updatedData = {
+        ...editFormData,
+        ...(bannerImage && { bannerImage }),
+        ...(profileImage && { profilePicture: profileImage })
+      };
+      
+      const response = await authAPI.updateProfile(updatedData);
+      
+      // Update both user state and localStorage
       setUser(response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
+      
       toast.success('Profile updated successfully!');
       setIsEditModalOpen(false);
+      
+      // Don't clear the temporary image states - they'll show until page refresh
+      // At which point the saved images from user.profilePicture and user.bannerImage will display
     } catch (err) {
       console.error('Error updating profile:', err);
       toast.error(err.response?.data?.message || 'Failed to update profile');
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleBannerChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBannerImage(reader.result);
+        toast.success('Banner image selected! Click Save to update.');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleProfileImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result);
+        toast.success('Profile picture selected! Click Save to update.');
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -267,9 +321,24 @@ const Profile = () => {
         {/* Header Section with Profile Banner */}
         <div className="relative bg-gray-800 rounded-2xl overflow-hidden mb-8 border border-gray-700 shadow-xl">
           {/* Profile Banner */}
-          <div className="h-48 bg-blue-600 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjA1Ij48cGF0aCBkPSJNMzYgMzRoLTJWMGgydjM0em0tNCAwVjBoLTJ2MzRoMnptLTYtMmgtMlYwaDF2MzJoMXpNMjIgMzBoLTJWMGgydjMwem0tNCAwVjBoLTJ2MzBoMnptLTYgMGgtMlYwaDF2MzBoMXptLTYtMmgtMlYwaDF2MjhoMXptLTYtMmgtMlYwaDJ2MjZ6TTAgMjRoMnYySDAnIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
-            <div className="absolute bottom-0 right-0 p-4">
+          <div 
+            className="h-48 relative overflow-hidden"
+            style={{
+              background: bannerImage || user.bannerImage 
+                ? `url(${bannerImage || user.bannerImage}) center/cover` 
+                : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            }}
+          >
+            {!bannerImage && !user.bannerImage && (
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjA1Ij48cGF0aCBkPSJNMzYgMzRoLTJWMGgydjM0em0tNCAwVjBoLTJ2MzRoMnptLTYtMmgtMlYwaDF2MzJoMXpNMjIgMzBoLTJWMGgydjMwem0tNCAwVjBoLTJ2MzBoMnptLTYgMGgtMlYwaDF2MzBoMXptLTYtMmgtMlYwaDF2MjhoMXptLTYtMmgtMlYwaDJ2MjZ6TTAgMjRoMnYySDAnIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+            )}
+            <div className="absolute bottom-0 right-0 p-4 flex gap-2">
+              <button 
+                onClick={() => bannerInputRef.current?.click()}
+                className="bg-gray-900/70 hover:bg-gray-900 text-white text-xs py-2 px-4 rounded-lg flex items-center gap-2 backdrop-blur-sm border border-gray-700 transition-all font-medium">
+                <Edit className="w-3 h-3" />
+                Edit Banner
+              </button>
               <button 
                 onClick={openEditModal}
                 className="bg-gray-900/70 hover:bg-gray-900 text-white text-xs py-2 px-4 rounded-lg flex items-center gap-2 backdrop-blur-sm border border-gray-700 transition-all font-medium">
@@ -277,20 +346,42 @@ const Profile = () => {
                 Edit Profile
               </button>
             </div>
+            <input
+              ref={bannerInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleBannerChange}
+              className="hidden"
+            />
           </div>
           
           {/* Profile Info */}
           <div className="p-6 pt-0 relative">
             {/* Avatar with edit button overlay */}
             <div className="relative -mt-16 mb-4 inline-block">
-              <div className="w-32 h-32 rounded-full bg-blue-600 flex items-center justify-center text-4xl font-bold border-4 border-gray-900 shadow-2xl">
-                {user.name.split(' ').map(n => n[0]).join('')}
-              </div>
+              {profileImage || user.profilePicture ? (
+                <img 
+                  src={profileImage || user.profilePicture} 
+                  alt={user.name}
+                  className="w-32 h-32 rounded-full object-cover border-4 border-gray-900 shadow-2xl"
+                />
+              ) : (
+                <div className="w-32 h-32 rounded-full bg-blue-600 flex items-center justify-center text-4xl font-bold border-4 border-gray-900 shadow-2xl">
+                  {user.name.split(' ').map(n => n[0]).join('')}
+                </div>
+              )}
               <button 
-                onClick={openEditModal}
+                onClick={() => profileInputRef.current?.click()}
                 className="absolute bottom-1 right-1 bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-full border-2 border-gray-900 transition-colors shadow-lg">
                 <Edit className="w-4 h-4" />
               </button>
+              <input
+                ref={profileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleProfileImageChange}
+                className="hidden"
+              />
             </div>
             
             {/* Profile completion indicator */}

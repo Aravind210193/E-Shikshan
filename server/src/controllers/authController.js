@@ -27,6 +27,8 @@ const login = async (req, res) => {
         semester: user.semester,
         role: user.role,
         isAdmin: user.isAdmin,
+        profilePicture: user.profilePicture,
+        bannerImage: user.bannerImage,
         token: generateToken(user._id),
       });
     } else {
@@ -132,7 +134,8 @@ const getProfile = async (req, res) => {
         industry: user.industry,
         languages: user.languages,
         website: user.website,
-        profilePicture: user.profilePicture
+        profilePicture: user.profilePicture,
+        bannerImage: user.bannerImage
       });
     } else {
       console.log('❌ User not found for ID:', req.user._id);
@@ -184,6 +187,7 @@ const updateProfile = async (req, res) => {
       user.languages = req.body.languages !== undefined ? req.body.languages : user.languages;
       user.website = req.body.website !== undefined ? req.body.website : user.website;
       user.profilePicture = req.body.profilePicture !== undefined ? req.body.profilePicture : user.profilePicture;
+      user.bannerImage = req.body.bannerImage !== undefined ? req.body.bannerImage : user.bannerImage;
       
       if (req.body.password) {
         user.password = req.body.password;
@@ -217,6 +221,7 @@ const updateProfile = async (req, res) => {
         languages: updatedUser.languages,
         website: updatedUser.website,
         profilePicture: updatedUser.profilePicture,
+        bannerImage: updatedUser.bannerImage,
         token: generateToken(updatedUser._id),
       });
     } else {

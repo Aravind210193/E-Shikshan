@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/admin';
+const BASE_API_URL = import.meta.env.VITE_API_URL || 'https://e-shikshan.onrender.com/api';
+const API_URL = `${BASE_API_URL}/admin`;
 
 // Create axios instance with default config
 const adminAPI = axios.create({

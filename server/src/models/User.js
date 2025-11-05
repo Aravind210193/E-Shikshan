@@ -12,6 +12,28 @@ const userSchema = new mongoose.Schema({
   joinedDate: { type: Date, default: Date.now },
   role: { type: String, enum: ['student', 'faculty', 'admin'], default: 'student' },
   isAdmin: { type: Boolean, required: true, default: false },
+  
+  // Enrolled Courses Array (for quick access check)
+  enrolledCourses: [{
+    courseId: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Course' 
+    },
+    enrollmentId: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Enrollment' 
+    },
+    enrolledAt: { 
+      type: Date, 
+      default: Date.now 
+    },
+    status: { 
+      type: String, 
+      enum: ['active', 'completed', 'suspended'],
+      default: 'active'
+    }
+  }],
+  
   // Additional profile fields
   bio: { type: String },
   address: { type: String },
@@ -29,6 +51,7 @@ const userSchema = new mongoose.Schema({
   languages: { type: String },
   website: { type: String },
   profilePicture: { type: String },
+  bannerImage: { type: String },
   // Resume Data
   resume: {
     personalInfo: {

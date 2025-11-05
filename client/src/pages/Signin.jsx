@@ -38,7 +38,8 @@ const Signin = ({ setIsLoggedIn }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const API_URL = import.meta.env.VITE_API_URL || 'https://e-shikshan.onrender.com/api';
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,6 +62,7 @@ const Signin = ({ setIsLoggedIn }) => {
       }
 
       localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data));
       if (setIsLoggedIn) {
         setIsLoggedIn(true);
       }

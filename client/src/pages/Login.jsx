@@ -23,6 +23,7 @@ const Login = ({setIsLoggedIn}) => {
     try {
       const response = await authAPI.login(formData);
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data));
       setIsLoggedIn(true);
       toast.success('Login successful!');
       navigate('/profile');
