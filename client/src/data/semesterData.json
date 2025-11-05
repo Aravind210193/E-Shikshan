@@ -179,7 +179,68 @@
                   "Laws of Refraction",
                   "Lenses"
                 ],
-                "hours": 18
+                "hours": 18,
+                "videos": [
+                  {
+                    "title": "Reflection of Light - Complete Chapter",
+                    "description": "Laws of reflection, plane mirrors, and spherical mirrors",
+                    "duration": "35:20",
+                    "url": "https://www.youtube.com/watch?v=p3-lj3XSEok"
+                  },
+                  {
+                    "title": "Refraction and Snell's Law",
+                    "description": "Understanding refraction, refractive index, and Snell's law",
+                    "duration": "28:45",
+                    "url": "https://www.youtube.com/watch?v=u8BXPmG56yw"
+                  },
+                  {
+                    "title": "Lenses: Convex and Concave",
+                    "description": "Image formation by lenses and lens formula",
+                    "duration": "32:15",
+                    "url": "https://www.youtube.com/watch?v=fzHOWKMF7ME"
+                  }
+                ],
+                "pdfs": [
+                  {
+                    "title": "Light - NCERT Class 10",
+                    "description": "Complete chapter from NCERT textbook",
+                    "pages": 35,
+                    "size": "3.2 MB",
+                    "url": "https://ncert.nic.in/textbook/pdf/jesc110.pdf"
+                  },
+                  {
+                    "title": "Ray Optics Practice Problems",
+                    "description": "100+ solved problems on reflection and refraction",
+                    "pages": 42,
+                    "size": "3.8 MB",
+                    "url": "https://www.cbse.nic.in/"
+                  }
+                ],
+                "assignments": [
+                  {
+                    "title": "Assignment 1: Mirror Problems",
+                    "description": "Solve problems on spherical mirrors using mirror formula",
+                    "dueDate": "2025-11-25",
+                    "maxScore": 25,
+                    "difficulty": "Medium"
+                  },
+                  {
+                    "title": "Assignment 2: Lens Calculations",
+                    "description": "Apply lens formula and magnification for different lenses",
+                    "dueDate": "2025-12-02",
+                    "maxScore": 30,
+                    "difficulty": "Medium"
+                  }
+                ],
+                "quizzes": [
+                  {
+                    "title": "Light Quiz",
+                    "description": "Test on reflection, refraction, and lenses",
+                    "questions": 20,
+                    "duration": "30 mins",
+                    "passingScore": 70
+                  }
+                ]
               },
               {
                 "title": "Unit 2: Life Processes",
@@ -513,7 +574,74 @@
                       "Quantum Numbers",
                       "Electronic Configuration"
                     ],
-                    "hours": 20
+                    "hours": 20,
+                    "videos": [
+                      {
+                        "title": "Atomic Structure and Subatomic Particles",
+                        "description": "Complete guide to electrons, protons, neutrons, and atomic structure",
+                        "duration": "32:45",
+                        "url": "https://www.youtube.com/watch?v=1xSQlwWGT8M"
+                      },
+                      {
+                        "title": "Bohr's Model of Atom",
+                        "description": "Understanding Bohr's atomic model and energy levels",
+                        "duration": "28:30",
+                        "url": "https://www.youtube.com/watch?v=Gh4Gf5rNUng"
+                      },
+                      {
+                        "title": "Quantum Numbers Explained",
+                        "description": "Understanding n, l, m, s quantum numbers with examples",
+                        "duration": "26:15",
+                        "url": "https://www.youtube.com/watch?v=Aoi4j8es4gQ"
+                      },
+                      {
+                        "title": "Electronic Configuration",
+                        "description": "Writing electronic configurations using Aufbau principle",
+                        "duration": "30:20",
+                        "url": "https://www.youtube.com/watch?v=wU9-uH_9EVE"
+                      }
+                    ],
+                    "pdfs": [
+                      {
+                        "title": "Atomic Structure Complete Notes",
+                        "description": "NCERT-based comprehensive notes on atomic structure",
+                        "pages": 48,
+                        "size": "4.5 MB",
+                        "url": "https://ncert.nic.in/textbook/pdf/kech101.pdf"
+                      },
+                      {
+                        "title": "Quantum Mechanics Basics",
+                        "description": "Introduction to quantum theory for chemistry",
+                        "pages": 35,
+                        "size": "3.2 MB",
+                        "url": "https://www.khanacademy.org/science/chemistry"
+                      }
+                    ],
+                    "assignments": [
+                      {
+                        "title": "Assignment 1: Atomic Models",
+                        "description": "Compare different atomic models and their limitations",
+                        "dueDate": "2025-11-22",
+                        "maxScore": 25,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 2: Electronic Configuration Practice",
+                        "description": "Write electronic configurations for 50 elements",
+                        "dueDate": "2025-11-30",
+                        "maxScore": 30,
+                        "difficulty": "Easy"
+                      }
+                    ],
+                    "quizzes": [
+                      {
+                        "title": "Atomic Structure Quiz",
+                        "description": "Test on atomic models and quantum numbers",
+                        "questions": 20,
+                        "duration": "30 mins",
+                        "passingScore": 75
+                      }
+                    ]
                   },
                   {
                     "title": "Unit 2: Chemical Bonding",
@@ -523,7 +651,74 @@
                       "VSEPR Theory",
                       "Hybridization"
                     ],
-                    "hours": 18
+                    "hours": 18,
+                    "videos": [
+                      {
+                        "title": "Ionic Bonding Explained",
+                        "description": "Formation of ionic bonds and properties of ionic compounds",
+                        "duration": "24:40",
+                        "url": "https://www.youtube.com/watch?v=CGA8sRwqIFg"
+                      },
+                      {
+                        "title": "Covalent Bonding - Lewis Structures",
+                        "description": "Drawing Lewis dot structures and understanding covalent bonds",
+                        "duration": "28:15",
+                        "url": "https://www.youtube.com/watch?v=YOe-BVWA_bg"
+                      },
+                      {
+                        "title": "VSEPR Theory and Molecular Geometry",
+                        "description": "Predicting molecular shapes using VSEPR theory",
+                        "duration": "30:30",
+                        "url": "https://www.youtube.com/watch?v=Moj85zwdULg"
+                      },
+                      {
+                        "title": "Hybridization: sp, sp2, sp3",
+                        "description": "Understanding orbital hybridization with examples",
+                        "duration": "32:20",
+                        "url": "https://www.youtube.com/watch?v=vHXViZa52F4"
+                      }
+                    ],
+                    "pdfs": [
+                      {
+                        "title": "Chemical Bonding Notes",
+                        "description": "Complete guide to ionic, covalent, and metallic bonding",
+                        "pages": 52,
+                        "size": "4.8 MB",
+                        "url": "https://ncert.nic.in/textbook/pdf/kech104.pdf"
+                      },
+                      {
+                        "title": "VSEPR and Hybridization Workbook",
+                        "description": "Practice problems on molecular geometry",
+                        "pages": 38,
+                        "size": "3.5 MB",
+                        "url": "https://www.chemguide.co.uk/atoms/bonding/vsepr.html"
+                      }
+                    ],
+                    "assignments": [
+                      {
+                        "title": "Assignment 1: Lewis Structures",
+                        "description": "Draw Lewis structures for 30 molecules and ions",
+                        "dueDate": "2025-12-08",
+                        "maxScore": 30,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 2: Molecular Geometry Prediction",
+                        "description": "Predict shapes and hybridization for given molecules",
+                        "dueDate": "2025-12-15",
+                        "maxScore": 35,
+                        "difficulty": "Hard"
+                      }
+                    ],
+                    "quizzes": [
+                      {
+                        "title": "Chemical Bonding Quiz",
+                        "description": "Test on ionic, covalent bonds, VSEPR, and hybridization",
+                        "questions": 22,
+                        "duration": "35 mins",
+                        "passingScore": 80
+                      }
+                    ]
                   },
                   {
                     "title": "Unit 3: States of Matter",
@@ -1761,6 +1956,18 @@
                       "description": "Conservation of energy and work-energy theorem",
                       "duration": "28:50",
                       "url": "https://www.youtube.com/watch?v=w4QFJb9a8vo"
+                    },
+                    {
+                      "title": "Momentum and Collisions",
+                      "description": "Conservation of momentum and types of collisions",
+                      "duration": "26:15",
+                      "url": "https://www.youtube.com/watch?v=jEYXLlPRdYI"
+                    },
+                    {
+                      "title": "Rotational Motion and Torque",
+                      "description": "Angular velocity, acceleration, and moment of inertia",
+                      "duration": "32:40",
+                      "url": "https://www.youtube.com/watch?v=iNCDaLPJwyI"
                     }
                   ],
                   "pdfs": [
@@ -1785,6 +1992,45 @@
                       "size": "3.2 MB",
                       "url": "https://www.physics.purdue.edu/academic_programs/courses/phys172/"
                     }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Newton's Laws Problems",
+                      "description": "Solve problems on force, acceleration, and motion",
+                      "dueDate": "2025-11-25",
+                      "maxScore": 25,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Energy Conservation",
+                      "description": "Work-energy problems and conservation principles",
+                      "dueDate": "2025-12-02",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 3: Rotational Motion Lab",
+                      "description": "Calculate moment of inertia for various objects",
+                      "dueDate": "2025-12-08",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Mechanics Quick Quiz",
+                      "description": "Test on Newton's laws and basic mechanics",
+                      "questions": 15,
+                      "duration": "20 mins",
+                      "passingScore": 70
+                    },
+                    {
+                      "title": "Mechanics Final Assessment",
+                      "description": "Comprehensive test covering all mechanics topics",
+                      "questions": 25,
+                      "duration": "40 mins",
+                      "passingScore": 80
+                    }
                   ]
                 },
                 {
@@ -1796,6 +2042,32 @@
                     "Fluid Mechanics"
                   ],
                   "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Elasticity and Young's Modulus",
+                      "description": "Understanding stress, strain, and elastic moduli",
+                      "duration": "24:30",
+                      "url": "https://www.youtube.com/watch?v=SZS-aToVT1k"
+                    },
+                    {
+                      "title": "Surface Tension Explained",
+                      "description": "Molecular theory of surface tension and applications",
+                      "duration": "22:15",
+                      "url": "https://www.youtube.com/watch?v=9AqHZBRIfYY"
+                    },
+                    {
+                      "title": "Viscosity and Fluid Flow",
+                      "description": "Understanding viscosity, coefficient, and Stokes' law",
+                      "duration": "26:40",
+                      "url": "https://www.youtube.com/watch?v=TbPiRH4BCKA"
+                    },
+                    {
+                      "title": "Fluid Mechanics: Bernoulli's Principle",
+                      "description": "Fluid dynamics and Bernoulli's equation applications",
+                      "duration": "28:20",
+                      "url": "https://www.youtube.com/watch?v=p_di4Zn4wz4"
+                    }
+                  ],
                   "pdfs": [
                     {
                       "title": "Properties of Matter",
@@ -1811,6 +2083,38 @@
                       "size": "4.8 MB",
                       "url": "https://web.mit.edu/16.unified/www/FALL/fluids/Lectures/fluids.pdf"
                     }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Elasticity Problems",
+                      "description": "Calculate stress, strain, and Young's modulus for various materials",
+                      "dueDate": "2025-12-12",
+                      "maxScore": 25,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Surface Tension Lab Report",
+                      "description": "Experimental determination of surface tension",
+                      "dueDate": "2025-12-18",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 3: Fluid Mechanics Applications",
+                      "description": "Solve problems on Bernoulli's principle and continuity equation",
+                      "dueDate": "2025-12-22",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Properties of Matter Quiz",
+                      "description": "Test on elasticity, surface tension, and viscosity",
+                      "questions": 18,
+                      "duration": "25 mins",
+                      "passingScore": 75
+                    }
                   ]
                 },
                 {
@@ -1821,6 +2125,32 @@
                     "Heat Engines"
                   ],
                   "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Kinetic Theory of Gases",
+                      "description": "Molecular interpretation of temperature and pressure",
+                      "duration": "26:45",
+                      "url": "https://www.youtube.com/watch?v=wQh7ARO6r-s"
+                    },
+                    {
+                      "title": "First Law of Thermodynamics",
+                      "description": "Energy conservation in thermodynamic processes",
+                      "duration": "28:30",
+                      "url": "https://www.youtube.com/watch?v=NyOYW07-L5g"
+                    },
+                    {
+                      "title": "Second Law and Entropy",
+                      "description": "Understanding entropy and irreversibility",
+                      "duration": "32:15",
+                      "url": "https://www.youtube.com/watch?v=vbJ_SLZvJWo"
+                    },
+                    {
+                      "title": "Heat Engines and Refrigerators",
+                      "description": "Carnot cycle, efficiency, and COP",
+                      "duration": "30:20",
+                      "url": "https://www.youtube.com/watch?v=l4Jy1NEf72M"
+                    }
+                  ],
                   "pdfs": [
                     {
                       "title": "Thermodynamics Fundamentals",
@@ -1906,6 +2236,32 @@
                     "IDE Setup"
                   ],
                   "hours": 10,
+                  "videos": [
+                    {
+                      "title": "Introduction to C Programming",
+                      "description": "Complete introduction to C programming language and its history",
+                      "duration": "18:25",
+                      "url": "https://www.youtube.com/watch?v=KJgsSFOSQv0"
+                    },
+                    {
+                      "title": "C Program Structure Explained",
+                      "description": "Understanding the structure of a C program with examples",
+                      "duration": "22:15",
+                      "url": "https://www.youtube.com/watch?v=irqbmMNs2Bo"
+                    },
+                    {
+                      "title": "Setting Up Your C Development Environment",
+                      "description": "Installing and configuring IDE for C programming (VS Code, Code::Blocks)",
+                      "duration": "15:40",
+                      "url": "https://www.youtube.com/watch?v=1uR4tL-OSNI"
+                    },
+                    {
+                      "title": "Compilation Process in C",
+                      "description": "How C programs are compiled: preprocessing, compilation, assembly, linking",
+                      "duration": "20:30",
+                      "url": "https://www.youtube.com/watch?v=VDslRumKvRA"
+                    }
+                  ],
                   "pdfs": [
                     {
                       "title": "C Programming Basics",
@@ -1921,6 +2277,31 @@
                       "size": "3.2 MB",
                       "url": "https://kremlin.cc/k&r.pdf"
                     }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: First C Program",
+                      "description": "Write and compile your first Hello World program. Document the compilation process.",
+                      "dueDate": "2025-11-15",
+                      "maxScore": 10,
+                      "difficulty": "Easy"
+                    },
+                    {
+                      "title": "Assignment 2: IDE Setup Report",
+                      "description": "Install and configure a C IDE. Create a report with screenshots of your setup.",
+                      "dueDate": "2025-11-18",
+                      "maxScore": 15,
+                      "difficulty": "Easy"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "C Programming Basics Quiz",
+                      "description": "Test your knowledge of C history, structure, and compilation",
+                      "questions": 15,
+                      "duration": "20 mins",
+                      "passingScore": 70
+                    }
                   ]
                 },
                 {
@@ -1933,6 +2314,32 @@
                     "Type Conversion"
                   ],
                   "hours": 12,
+                  "videos": [
+                    {
+                      "title": "C Data Types Complete Tutorial",
+                      "description": "Learn about int, float, double, char and their variations",
+                      "duration": "26:45",
+                      "url": "https://www.youtube.com/watch?v=wXd2KdOwY5A"
+                    },
+                    {
+                      "title": "Variables and Constants in C",
+                      "description": "Understanding variable declaration, initialization, and constants",
+                      "duration": "18:20",
+                      "url": "https://www.youtube.com/watch?v=vs0_BfN0AJA"
+                    },
+                    {
+                      "title": "C Operators: Arithmetic, Relational, Logical",
+                      "description": "Complete guide to all operators in C with examples",
+                      "duration": "32:15",
+                      "url": "https://www.youtube.com/watch?v=SV0b1_kV_jQ"
+                    },
+                    {
+                      "title": "Type Conversion and Type Casting",
+                      "description": "Implicit and explicit type conversion with practical examples",
+                      "duration": "22:30",
+                      "url": "https://www.youtube.com/watch?v=uI10H1jzw00"
+                    }
+                  ],
                   "pdfs": [
                     {
                       "title": "C Data Types Guide",
@@ -1948,6 +2355,45 @@
                       "size": "2.9 MB",
                       "url": "https://www.geeksforgeeks.org/operators-in-c/"
                     }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Variable Declaration Practice",
+                      "description": "Write programs demonstrating all data types and their ranges",
+                      "dueDate": "2025-11-22",
+                      "maxScore": 20,
+                      "difficulty": "Easy"
+                    },
+                    {
+                      "title": "Assignment 2: Operator Programs",
+                      "description": "Create programs using arithmetic, relational, and logical operators",
+                      "dueDate": "2025-11-28",
+                      "maxScore": 25,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 3: Type Conversion Lab",
+                      "description": "Implement programs demonstrating implicit and explicit type conversion",
+                      "dueDate": "2025-12-02",
+                      "maxScore": 20,
+                      "difficulty": "Medium"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Data Types Quiz",
+                      "description": "Test on int, float, char, and their modifiers",
+                      "questions": 12,
+                      "duration": "15 mins",
+                      "passingScore": 75
+                    },
+                    {
+                      "title": "Operators Assessment",
+                      "description": "Comprehensive quiz on all C operators",
+                      "questions": 20,
+                      "duration": "25 mins",
+                      "passingScore": 80
+                    }
                   ]
                 },
                 {
@@ -1959,6 +2405,44 @@
                     "Break and Continue"
                   ],
                   "hours": 14,
+                  "videos": [
+                    {
+                      "title": "If-Else Statements in C",
+                      "description": "Complete tutorial on conditional statements and nested if-else",
+                      "duration": "24:35",
+                      "url": "https://www.youtube.com/watch?v=sQDMDmF0xF8"
+                    },
+                    {
+                      "title": "For Loop Tutorial",
+                      "description": "Understanding for loops with practical examples and patterns",
+                      "duration": "28:20",
+                      "url": "https://www.youtube.com/watch?v=qxCLRu7qvvU"
+                    },
+                    {
+                      "title": "While and Do-While Loops",
+                      "description": "Difference between while and do-while loops with use cases",
+                      "duration": "22:45",
+                      "url": "https://www.youtube.com/watch?v=0eDhgskNE6Y"
+                    },
+                    {
+                      "title": "Switch Case Statement",
+                      "description": "Using switch-case for multi-way decision making",
+                      "duration": "18:30",
+                      "url": "https://www.youtube.com/watch?v=1e5FPVrz1pE"
+                    },
+                    {
+                      "title": "Break, Continue, and Goto",
+                      "description": "Jump statements in C programming with examples",
+                      "duration": "16:40",
+                      "url": "https://www.youtube.com/watch?v=eooHYNi_1NY"
+                    },
+                    {
+                      "title": "Nested Loops and Pattern Programs",
+                      "description": "Creating patterns using nested loops - stars, pyramids, numbers",
+                      "duration": "35:15",
+                      "url": "https://www.youtube.com/watch?v=DbvFg_5tIc8"
+                    }
+                  ],
                   "pdfs": [
                     {
                       "title": "Control Flow in C",
@@ -1974,6 +2458,59 @@
                       "size": "3.2 MB",
                       "url": "https://www.w3schools.com/c/c_for_loop.php"
                     }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Decision Making Programs",
+                      "description": "Write programs using if-else: calculator, grade system, leap year",
+                      "dueDate": "2025-12-05",
+                      "maxScore": 25,
+                      "difficulty": "Easy"
+                    },
+                    {
+                      "title": "Assignment 2: Loop Practice",
+                      "description": "Implement factorial, fibonacci, prime numbers using loops",
+                      "dueDate": "2025-12-10",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 3: Pattern Programs",
+                      "description": "Create 10 different pattern programs using nested loops",
+                      "dueDate": "2025-12-15",
+                      "maxScore": 35,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 4: Menu-Driven Program",
+                      "description": "Create a calculator using switch-case statement",
+                      "dueDate": "2025-12-18",
+                      "maxScore": 25,
+                      "difficulty": "Easy"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Control Flow Quick Quiz",
+                      "description": "Test on if-else and switch statements",
+                      "questions": 15,
+                      "duration": "20 mins",
+                      "passingScore": 70
+                    },
+                    {
+                      "title": "Loops Mastery Test",
+                      "description": "Advanced questions on for, while, do-while loops",
+                      "questions": 18,
+                      "duration": "25 mins",
+                      "passingScore": 75
+                    },
+                    {
+                      "title": "Control Structures Final Exam",
+                      "description": "Comprehensive assessment covering all control structures",
+                      "questions": 25,
+                      "duration": "40 mins",
+                      "passingScore": 80
+                    }
                   ]
                 },
                 {
@@ -1985,6 +2522,44 @@
                     "String Handling"
                   ],
                     "hours": 16,
+                    "videos": [
+                      {
+                        "title": "Functions in C Programming",
+                        "description": "Complete guide to function declaration, definition, and calling",
+                        "duration": "32:40",
+                        "url": "https://www.youtube.com/watch?v=VJwjXA1NsaA"
+                      },
+                      {
+                        "title": "Recursion in C - Complete Tutorial",
+                        "description": "Understanding recursion with factorial, fibonacci, and tower of hanoi",
+                        "duration": "28:25",
+                        "url": "https://www.youtube.com/watch?v=kepBmgvWNDw"
+                      },
+                      {
+                        "title": "Arrays in C - One Dimensional",
+                        "description": "Learn array declaration, initialization, and manipulation",
+                        "duration": "25:30",
+                        "url": "https://www.youtube.com/watch?v=RQ0JHMGiobo"
+                      },
+                      {
+                        "title": "Multidimensional Arrays",
+                        "description": "2D and 3D arrays with matrix operations",
+                        "duration": "30:15",
+                        "url": "https://www.youtube.com/watch?v=_lKKOGTVles"
+                      },
+                      {
+                        "title": "Strings in C Programming",
+                        "description": "String declaration, input, output, and string functions",
+                        "duration": "35:20",
+                        "url": "https://www.youtube.com/watch?v=Gh4T1wX4VfA"
+                      },
+                      {
+                        "title": "String Functions: strlen, strcpy, strcmp",
+                        "description": "Complete guide to C string library functions",
+                        "duration": "24:45",
+                        "url": "https://www.youtube.com/watch?v=DXd-dPJN1Tk"
+                      }
+                    ],
                     "pdfs": [
                       {
                         "title": "Functions in C Programming",
@@ -2007,6 +2582,66 @@
                         "size": "5.8 MB",
                         "url": "https://www.hackerrank.com/domains/c"
                       }
+                    ],
+                    "assignments": [
+                      {
+                        "title": "Assignment 1: Function Programs",
+                        "description": "Create programs with user-defined functions: prime check, palindrome, perfect number",
+                        "dueDate": "2025-12-22",
+                        "maxScore": 30,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 2: Recursive Functions",
+                        "description": "Implement factorial, fibonacci, GCD using recursion",
+                        "dueDate": "2025-12-28",
+                        "maxScore": 35,
+                        "difficulty": "Hard"
+                      },
+                      {
+                        "title": "Assignment 3: Array Operations",
+                        "description": "Programs on array sorting, searching, and manipulation",
+                        "dueDate": "2026-01-05",
+                        "maxScore": 30,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 4: String Programs",
+                        "description": "String reverse, palindrome check, string concatenation without library",
+                        "dueDate": "2026-01-10",
+                        "maxScore": 35,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 5: Matrix Operations",
+                        "description": "2D array programs: matrix addition, multiplication, transpose",
+                        "dueDate": "2026-01-15",
+                        "maxScore": 40,
+                        "difficulty": "Hard"
+                      }
+                    ],
+                    "quizzes": [
+                      {
+                        "title": "Functions Basics Quiz",
+                        "description": "Test on function syntax, parameters, and return values",
+                        "questions": 15,
+                        "duration": "20 mins",
+                        "passingScore": 75
+                      },
+                      {
+                        "title": "Arrays and Strings Assessment",
+                        "description": "Comprehensive quiz on arrays and string handling",
+                        "questions": 20,
+                        "duration": "30 mins",
+                        "passingScore": 80
+                      },
+                      {
+                        "title": "Recursion Challenge",
+                        "description": "Advanced quiz on recursive thinking and implementation",
+                        "questions": 12,
+                        "duration": "25 mins",
+                        "passingScore": 85
+                      }
                     ]
                 },
                 {
@@ -2018,6 +2653,44 @@
                     "File Handling"
                   ],
                     "hours": 16,
+                    "videos": [
+                      {
+                        "title": "Pointers in C - Complete Tutorial",
+                        "description": "Introduction to pointers, address operators, and dereferencing",
+                        "duration": "38:45",
+                        "url": "https://www.youtube.com/watch?v=zuegQmMdy8M"
+                      },
+                      {
+                        "title": "Pointer Arithmetic Explained",
+                        "description": "Incrementing, decrementing, and arithmetic operations on pointers",
+                        "duration": "22:30",
+                        "url": "https://www.youtube.com/watch?v=0hYzJRS4vPc"
+                      },
+                      {
+                        "title": "Pointers and Arrays Relationship",
+                        "description": "How arrays and pointers are related in C",
+                        "duration": "26:15",
+                        "url": "https://www.youtube.com/watch?v=q24-QTbKQS8"
+                      },
+                      {
+                        "title": "Dynamic Memory Allocation: malloc, calloc, realloc",
+                        "description": "Complete guide to dynamic memory management in C",
+                        "duration": "32:40",
+                        "url": "https://www.youtube.com/watch?v=lQP4X3odvHE"
+                      },
+                      {
+                        "title": "Structures in C Programming",
+                        "description": "Creating and using structures, nested structures, and typedef",
+                        "duration": "28:20",
+                        "url": "https://www.youtube.com/watch?v=E4OQO75CgPk"
+                      },
+                      {
+                        "title": "File Handling in C",
+                        "description": "Reading and writing files using fopen, fclose, fprintf, fscanf",
+                        "duration": "35:50",
+                        "url": "https://www.youtube.com/watch?v=SXw2hZhxPzs"
+                      }
+                    ],
                     "pdfs": [
                       {
                         "title": "Pointers in C",
@@ -2039,6 +2712,73 @@
                         "pages": 48,
                         "size": "4.4 MB",
                         "url": "https://www.tutorialspoint.com/cprogramming/c_structures.htm"
+                      }
+                    ],
+                    "assignments": [
+                      {
+                        "title": "Assignment 1: Pointer Basics",
+                        "description": "Write programs demonstrating pointer declaration, initialization, and dereferencing",
+                        "dueDate": "2026-01-20",
+                        "maxScore": 25,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 2: Dynamic Memory Programs",
+                        "description": "Implement programs using malloc, calloc, and free for dynamic arrays",
+                        "dueDate": "2026-01-28",
+                        "maxScore": 35,
+                        "difficulty": "Hard"
+                      },
+                      {
+                        "title": "Assignment 3: Structure Programs",
+                        "description": "Create student/employee management system using structures",
+                        "dueDate": "2026-02-05",
+                        "maxScore": 40,
+                        "difficulty": "Hard"
+                      },
+                      {
+                        "title": "Assignment 4: File Operations",
+                        "description": "File reading, writing, and manipulation programs",
+                        "dueDate": "2026-02-12",
+                        "maxScore": 35,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 5: Final Project",
+                        "description": "Build a complete file-based record management system using all concepts",
+                        "dueDate": "2026-02-20",
+                        "maxScore": 50,
+                        "difficulty": "Hard"
+                      }
+                    ],
+                    "quizzes": [
+                      {
+                        "title": "Pointers Fundamentals Quiz",
+                        "description": "Test your understanding of pointer basics and arithmetic",
+                        "questions": 18,
+                        "duration": "25 mins",
+                        "passingScore": 75
+                      },
+                      {
+                        "title": "Dynamic Memory Test",
+                        "description": "Assessment on malloc, calloc, realloc, and free",
+                        "questions": 15,
+                        "duration": "20 mins",
+                        "passingScore": 80
+                      },
+                      {
+                        "title": "Structures and Files Quiz",
+                        "description": "Comprehensive quiz on structures and file handling",
+                        "questions": 20,
+                        "duration": "30 mins",
+                        "passingScore": 80
+                      },
+                      {
+                        "title": "C Programming Final Exam",
+                        "description": "Complete course assessment covering all units",
+                        "questions": 40,
+                        "duration": "60 mins",
+                        "passingScore": 85
                       }
                     ]
                 }
@@ -4205,7 +4945,67 @@
                     "Inductors",
                     "Sources"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Resistors and Resistance",
+                      "description": "Understanding resistors, color codes, and resistance calculations",
+                      "duration": "24:30",
+                      "url": "https://www.youtube.com/watch?v=7w5I-Sh2T2o"
+                    },
+                    {
+                      "title": "Capacitors Explained",
+                      "description": "Capacitor basics, types, and applications in circuits",
+                      "duration": "28:15",
+                      "url": "https://www.youtube.com/watch?v=X4EUwTwZ110"
+                    },
+                    {
+                      "title": "Inductors and Inductance",
+                      "description": "Understanding inductors, self-inductance, and mutual inductance",
+                      "duration": "26:40",
+                      "url": "https://www.youtube.com/watch?v=KSylo01n5FY"
+                    },
+                    {
+                      "title": "Voltage and Current Sources",
+                      "description": "Ideal and practical voltage and current sources",
+                      "duration": "22:20",
+                      "url": "https://www.youtube.com/watch?v=v-dXTZxV_6Q"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Circuit Elements Complete Notes",
+                      "description": "Comprehensive notes on passive circuit elements",
+                      "pages": 45,
+                      "size": "4.2 MB",
+                      "url": "https://www.allaboutcircuits.com/textbook/"
+                    },
+                    {
+                      "title": "Resistor Color Code Guide",
+                      "description": "Quick reference for resistor color coding",
+                      "pages": 8,
+                      "size": "750 KB",
+                      "url": "https://www.electronics-tutorials.ws/resistor/res_2.html"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Circuit Elements Calculations",
+                      "description": "Calculate resistance, capacitance, and inductance values from specifications",
+                      "dueDate": "2025-11-20",
+                      "maxScore": 25,
+                      "difficulty": "Easy"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Circuit Elements Quiz",
+                      "description": "Test on R, L, C elements and sources",
+                      "questions": 15,
+                      "duration": "20 mins",
+                      "passingScore": 70
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 2: Circuit Laws",
@@ -4215,7 +5015,80 @@
                     "KVL",
                     "Network Theorems"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Ohm's Law Explained",
+                      "description": "Understanding voltage, current, and resistance relationship",
+                      "duration": "18:45",
+                      "url": "https://www.youtube.com/watch?v=Ri3UtBxTYqE"
+                    },
+                    {
+                      "title": "Kirchhoff's Current Law (KCL)",
+                      "description": "Node analysis using KCL with solved examples",
+                      "duration": "24:30",
+                      "url": "https://www.youtube.com/watch?v=33-488FBkjg"
+                    },
+                    {
+                      "title": "Kirchhoff's Voltage Law (KVL)",
+                      "description": "Mesh analysis using KVL for circuit solving",
+                      "duration": "26:15",
+                      "url": "https://www.youtube.com/watch?v=n6AzHvfDpZg"
+                    },
+                    {
+                      "title": "Network Theorems: Thevenin and Norton",
+                      "description": "Circuit simplification using Thevenin's and Norton's theorems",
+                      "duration": "32:40",
+                      "url": "https://www.youtube.com/watch?v=5cUJUH_Pcqs"
+                    },
+                    {
+                      "title": "Superposition Theorem",
+                      "description": "Analyzing circuits with multiple sources using superposition",
+                      "duration": "28:20",
+                      "url": "https://www.youtube.com/watch?v=7Gq0SJ9Vbpw"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Circuit Analysis Fundamentals",
+                      "description": "Complete guide to circuit laws and theorems",
+                      "pages": 55,
+                      "size": "5.1 MB",
+                      "url": "https://www.allaboutcircuits.com/textbook/direct-current/"
+                    },
+                    {
+                      "title": "Network Theorems Workbook",
+                      "description": "Practice problems on all network theorems",
+                      "pages": 42,
+                      "size": "3.9 MB",
+                      "url": "https://www.electronics-tutorials.ws/dccircuits/dcp_1.html"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Circuit Analysis Using KCL/KVL",
+                      "description": "Solve circuits using node and mesh analysis",
+                      "dueDate": "2025-11-28",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Network Theorems",
+                      "description": "Apply Thevenin, Norton, and Superposition theorems",
+                      "dueDate": "2025-12-05",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Circuit Laws Assessment",
+                      "description": "Test on Ohm's law, KCL, and KVL",
+                      "questions": 20,
+                      "duration": "30 mins",
+                      "passingScore": 75
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 3: AC Circuits",
@@ -4224,7 +5097,74 @@
                     "Impedance",
                     "Power"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Introduction to AC Circuits",
+                      "description": "Understanding alternating current, frequency, and period",
+                      "duration": "26:30",
+                      "url": "https://www.youtube.com/watch?v=3PjU8Sd0bRA"
+                    },
+                    {
+                      "title": "Phasors and Complex Numbers",
+                      "description": "Phasor representation of AC quantities",
+                      "duration": "30:15",
+                      "url": "https://www.youtube.com/watch?v=6OvJQjYmFJ8"
+                    },
+                    {
+                      "title": "Impedance in AC Circuits",
+                      "description": "Calculating impedance for R, L, C in AC circuits",
+                      "duration": "28:40",
+                      "url": "https://www.youtube.com/watch?v=rPnS_R4rz-c"
+                    },
+                    {
+                      "title": "AC Power: Real, Reactive, and Apparent",
+                      "description": "Understanding power triangle and power factor",
+                      "duration": "32:20",
+                      "url": "https://www.youtube.com/watch?v=E8jo-A94YHc"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "AC Circuit Analysis",
+                      "description": "Complete guide to analyzing AC circuits",
+                      "pages": 48,
+                      "size": "4.5 MB",
+                      "url": "https://www.allaboutcircuits.com/textbook/alternating-current/"
+                    },
+                    {
+                      "title": "Phasor Diagrams and Calculations",
+                      "description": "Step-by-step phasor analysis methods",
+                      "pages": 35,
+                      "size": "3.2 MB",
+                      "url": "https://www.electronics-tutorials.ws/accircuits/ac-2.html"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Phasor Analysis",
+                      "description": "Convert AC quantities to phasor form and solve circuits",
+                      "dueDate": "2025-12-12",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: AC Power Calculations",
+                      "description": "Calculate real, reactive, and apparent power in AC circuits",
+                      "dueDate": "2025-12-18",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "AC Circuits Quiz",
+                      "description": "Test on phasors, impedance, and AC power",
+                      "questions": 18,
+                      "duration": "25 mins",
+                      "passingScore": 75
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 4: Semiconductor Devices",
@@ -4234,7 +5174,74 @@
                     "FET",
                     "Characteristics"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "PN Junction Diode Fundamentals",
+                      "description": "Understanding diode operation, characteristics, and applications",
+                      "duration": "30:45",
+                      "url": "https://www.youtube.com/watch?v=Fwj_d3uO5g8"
+                    },
+                    {
+                      "title": "Bipolar Junction Transistor (BJT)",
+                      "description": "BJT construction, working principle, and configurations",
+                      "duration": "35:20",
+                      "url": "https://www.youtube.com/watch?v=7ukDKVHnac4"
+                    },
+                    {
+                      "title": "Field Effect Transistor (FET & MOSFET)",
+                      "description": "JFET and MOSFET basics, characteristics, and applications",
+                      "duration": "32:15",
+                      "url": "https://www.youtube.com/watch?v=o4_NeqlJgOs"
+                    },
+                    {
+                      "title": "Transistor Characteristics and Biasing",
+                      "description": "V-I characteristics and biasing techniques for transistors",
+                      "duration": "28:30",
+                      "url": "https://www.youtube.com/watch?v=WRm2oUw4owE"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Semiconductor Devices Complete Notes",
+                      "description": "Comprehensive guide to diodes, BJT, and FET",
+                      "pages": 65,
+                      "size": "6.0 MB",
+                      "url": "https://www.allaboutcircuits.com/textbook/semiconductors/"
+                    },
+                    {
+                      "title": "Transistor Characteristics Manual",
+                      "description": "Detailed characteristics curves and analysis",
+                      "pages": 42,
+                      "size": "3.8 MB",
+                      "url": "https://www.electronics-tutorials.ws/transistor/tran_1.html"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Diode Applications",
+                      "description": "Design rectifier circuits and analyze diode characteristics",
+                      "dueDate": "2025-12-28",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Transistor Biasing",
+                      "description": "Design and analyze transistor biasing circuits",
+                      "dueDate": "2026-01-08",
+                      "maxScore": 40,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Semiconductor Devices Quiz",
+                      "description": "Test on diodes, BJT, and FET",
+                      "questions": 22,
+                      "duration": "35 mins",
+                      "passingScore": 80
+                    }
+                  ]
                 },
                 {
                   "title": "Unit 5: Electronic Circuits",
@@ -4243,7 +5250,88 @@
                     "Rectifiers",
                     "Filters"
                   ],
-                  "hours": 12
+                  "hours": 12,
+                  "videos": [
+                    {
+                      "title": "Transistor Amplifiers - Common Emitter",
+                      "description": "Design and analysis of CE amplifier with gain calculations",
+                      "duration": "34:20",
+                      "url": "https://www.youtube.com/watch?v=ZBu2GhSOagQ"
+                    },
+                    {
+                      "title": "Rectifier Circuits: Half and Full Wave",
+                      "description": "AC to DC conversion using diode rectifiers",
+                      "duration": "28:45",
+                      "url": "https://www.youtube.com/watch?v=Ou9DPK1HhJg"
+                    },
+                    {
+                      "title": "Passive Filters: Low Pass, High Pass",
+                      "description": "Filter design and frequency response analysis",
+                      "duration": "30:15",
+                      "url": "https://www.youtube.com/watch?v=kCPeYRJTuNY"
+                    },
+                    {
+                      "title": "Operational Amplifier Basics",
+                      "description": "Op-amp fundamentals and basic configurations",
+                      "duration": "32:40",
+                      "url": "https://www.youtube.com/watch?v=7FYHt5XviKc"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Electronic Circuits Design Guide",
+                      "description": "Complete notes on amplifiers, rectifiers, and filters",
+                      "pages": 72,
+                      "size": "6.5 MB",
+                      "url": "https://www.allaboutcircuits.com/textbook/"
+                    },
+                    {
+                      "title": "Amplifier Design Handbook",
+                      "description": "Practical amplifier design with examples",
+                      "pages": 58,
+                      "size": "5.2 MB",
+                      "url": "https://www.electronics-tutorials.ws/amplifier/amp_1.html"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Amplifier Design",
+                      "description": "Design a CE amplifier with specified gain and impedance",
+                      "dueDate": "2026-01-18",
+                      "maxScore": 40,
+                      "difficulty": "Hard"
+                    },
+                    {
+                      "title": "Assignment 2: Power Supply Design",
+                      "description": "Design a complete rectifier with filter circuit",
+                      "dueDate": "2026-01-28",
+                      "maxScore": 35,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 3: Final Project",
+                      "description": "Build and simulate a complete electronic circuit project",
+                      "dueDate": "2026-02-10",
+                      "maxScore": 50,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Electronic Circuits Quiz",
+                      "description": "Test on amplifiers, rectifiers, and filters",
+                      "questions": 20,
+                      "duration": "30 mins",
+                      "passingScore": 80
+                    },
+                    {
+                      "title": "Basic Electronics Final Exam",
+                      "description": "Comprehensive assessment covering all units",
+                      "questions": 40,
+                      "duration": "60 mins",
+                      "passingScore": 85
+                    }
+                  ]
                 }
               ]
             },
@@ -5985,44 +7073,326 @@
               "difficulty": "Medium",
               "units": [
                 {
-                  "title": "Unit 1: Basic Electrical Engineering - Part 1",
+                  "title": "Unit 1: DC Circuits",
                   "topics": [
-                    "Basic Electrical Engineering Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "Ohm's Law",
+                    "Kirchhoff's Laws",
+                    "Network Theorems",
+                    "Mesh and Nodal Analysis"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "DC Circuit Analysis Fundamentals",
+                      "description": "Complete guide to analyzing DC circuits using Ohm's law",
+                      "duration": "28:45",
+                      "url": "https://www.youtube.com/watch?v=m4jzgqZu-4s"
+                    },
+                    {
+                      "title": "Kirchhoff's Laws (KCL & KVL)",
+                      "description": "Understanding current and voltage laws with practical examples",
+                      "duration": "32:20",
+                      "url": "https://www.youtube.com/watch?v=33-488FBkjg"
+                    },
+                    {
+                      "title": "Network Theorems: Thevenin and Norton",
+                      "description": "Circuit simplification using fundamental theorems",
+                      "duration": "35:15",
+                      "url": "https://www.youtube.com/watch?v=5cUJUH_Pcqs"
+                    },
+                    {
+                      "title": "Mesh and Nodal Analysis",
+                      "description": "Systematic methods for analyzing complex circuits",
+                      "duration": "30:40",
+                      "url": "https://www.youtube.com/watch?v=FYSuiCfmJ6Q"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "DC Circuits Complete Notes",
+                      "description": "Comprehensive notes on DC circuit analysis",
+                      "pages": 55,
+                      "size": "5.1 MB",
+                      "url": "https://www.allaboutcircuits.com/textbook/direct-current/"
+                    },
+                    {
+                      "title": "Network Theorems Handbook",
+                      "description": "Detailed guide to all network theorems with solved examples",
+                      "pages": 42,
+                      "size": "3.9 MB",
+                      "url": "https://www.electrical4u.com/network-theorems/"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Circuit Analysis Using KCL/KVL",
+                      "description": "Solve 20 DC circuits using Kirchhoff's laws",
+                      "dueDate": "2025-11-25",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Network Theorems Application",
+                      "description": "Apply Thevenin, Norton, and Superposition theorems",
+                      "dueDate": "2025-12-05",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "DC Circuits Quiz",
+                      "description": "Test on circuit laws and analysis methods",
+                      "questions": 20,
+                      "duration": "30 mins",
+                      "passingScore": 75
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 2: Basic Electrical Engineering - Part 2",
+                  "title": "Unit 2: AC Circuits",
                   "topics": [
-                    "Basic Electrical Engineering Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "AC Fundamentals",
+                    "Phasor Analysis",
+                    "Impedance and Admittance",
+                    "Power in AC Circuits"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "AC Circuit Fundamentals",
+                      "description": "Understanding alternating current, frequency, and RMS values",
+                      "duration": "26:30",
+                      "url": "https://www.youtube.com/watch?v=3PjU8Sd0bRA"
+                    },
+                    {
+                      "title": "Phasor Representation of AC Quantities",
+                      "description": "Converting sinusoidal quantities to phasor form",
+                      "duration": "30:15",
+                      "url": "https://www.youtube.com/watch?v=6OvJQjYmFJ8"
+                    },
+                    {
+                      "title": "Impedance and Reactance in AC Circuits",
+                      "description": "Understanding impedance for R, L, C elements",
+                      "duration": "28:40",
+                      "url": "https://www.youtube.com/watch?v=rPnS_R4rz-c"
+                    },
+                    {
+                      "title": "AC Power: Real, Reactive, and Apparent",
+                      "description": "Power triangle, power factor, and power calculations",
+                      "duration": "32:20",
+                      "url": "https://www.youtube.com/watch?v=E8jo-A94YHc"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "AC Circuit Analysis Guide",
+                      "description": "Complete notes on AC circuit theory and analysis",
+                      "pages": 58,
+                      "size": "5.4 MB",
+                      "url": "https://www.allaboutcircuits.com/textbook/alternating-current/"
+                    },
+                    {
+                      "title": "Phasor Diagrams and Calculations",
+                      "description": "Step-by-step guide to phasor analysis",
+                      "pages": 38,
+                      "size": "3.5 MB",
+                      "url": "https://www.electrical4u.com/phasor-diagram/"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Phasor Analysis",
+                      "description": "Solve AC circuits using phasor method",
+                      "dueDate": "2025-12-12",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Power Calculations",
+                      "description": "Calculate real, reactive, and apparent power in AC circuits",
+                      "dueDate": "2025-12-18",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "AC Circuits Assessment",
+                      "description": "Test on AC fundamentals and phasor analysis",
+                      "questions": 18,
+                      "duration": "25 mins",
+                      "passingScore": 75
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 3: Basic Electrical Engineering - Part 3",
+                  "title": "Unit 3: Magnetic Circuits",
                   "topics": [
-                    "Basic Electrical Engineering Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "Magnetic Materials",
+                    "Magnetic Circuits",
+                    "Electromagnetic Induction",
+                    "Transformers"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "Magnetism and Magnetic Materials",
+                      "description": "Understanding magnetic fields, flux, and magnetic materials",
+                      "duration": "26:45",
+                      "url": "https://www.youtube.com/watch?v=hFAOXdXZ5TM"
+                    },
+                    {
+                      "title": "Magnetic Circuit Analysis",
+                      "description": "Solving magnetic circuits using Ohm's law analogy",
+                      "duration": "28:30",
+                      "url": "https://www.youtube.com/watch?v=KSm44h3TnHc"
+                    },
+                    {
+                      "title": "Electromagnetic Induction - Faraday's Law",
+                      "description": "Understanding EMF generation and Lenz's law",
+                      "duration": "30:15",
+                      "url": "https://www.youtube.com/watch?v=N7jz2eY7PWg"
+                    },
+                    {
+                      "title": "Transformer Working Principle",
+                      "description": "Construction, working, and types of transformers",
+                      "duration": "32:40",
+                      "url": "https://www.youtube.com/watch?v=UchitHGF4n8"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Magnetic Circuits Complete Notes",
+                      "description": "Comprehensive guide to magnetic circuit theory",
+                      "pages": 48,
+                      "size": "4.5 MB",
+                      "url": "https://www.electrical4u.com/magnetic-circuit/"
+                    },
+                    {
+                      "title": "Transformer Design and Analysis",
+                      "description": "Detailed notes on transformer operation and design",
+                      "pages": 52,
+                      "size": "4.8 MB",
+                      "url": "https://www.electrical4u.com/transformer-theory/"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Magnetic Circuit Problems",
+                      "description": "Solve magnetic circuit problems with series and parallel paths",
+                      "dueDate": "2025-12-28",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Transformer Calculations",
+                      "description": "Calculate transformer parameters and efficiency",
+                      "dueDate": "2026-01-08",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Magnetic Circuits Quiz",
+                      "description": "Test on magnetism and transformers",
+                      "questions": 20,
+                      "duration": "30 mins",
+                      "passingScore": 80
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 4: Basic Electrical Engineering - Part 4",
+                  "title": "Unit 4: Electrical Machines",
                   "topics": [
-                    "Basic Electrical Engineering Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "DC Generators",
+                    "DC Motors",
+                    "AC Generators",
+                    "AC Motors"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "DC Generator Working Principle",
+                      "description": "Construction, working, and types of DC generators",
+                      "duration": "30:20",
+                      "url": "https://www.youtube.com/watch?v=cDoUbhtMoIg"
+                    },
+                    {
+                      "title": "DC Motor Fundamentals",
+                      "description": "DC motor operation, types, and characteristics",
+                      "duration": "32:15",
+                      "url": "https://www.youtube.com/watch?v=CWulQ1ZSE3c"
+                    },
+                    {
+                      "title": "Three Phase Induction Motor",
+                      "description": "Construction, working principle, and rotating magnetic field",
+                      "duration": "35:40",
+                      "url": "https://www.youtube.com/watch?v=LtJoJBUSe28"
+                    },
+                    {
+                      "title": "Synchronous Machines",
+                      "description": "Synchronous generator and motor operation",
+                      "duration": "34:25",
+                      "url": "https://www.youtube.com/watch?v=h2pYs16wnx4"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Electrical Machines Complete Guide",
+                      "description": "Comprehensive notes on DC and AC machines",
+                      "pages": 72,
+                      "size": "6.5 MB",
+                      "url": "https://www.electrical4u.com/electrical-machine/"
+                    },
+                    {
+                      "title": "Motor Characteristics and Control",
+                      "description": "Performance characteristics of various motors",
+                      "pages": 58,
+                      "size": "5.2 MB",
+                      "url": "https://www.electrical4u.com/dc-motor/"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: DC Machine Analysis",
+                      "description": "Calculate EMF, torque, and efficiency for DC machines",
+                      "dueDate": "2026-01-18",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    },
+                    {
+                      "title": "Assignment 2: Induction Motor Problems",
+                      "description": "Solve problems on three-phase induction motors",
+                      "dueDate": "2026-01-28",
+                      "maxScore": 40,
+                      "difficulty": "Hard"
+                    },
+                    {
+                      "title": "Assignment 3: Final Project",
+                      "description": "Design and simulate an electrical machine application",
+                      "dueDate": "2026-02-10",
+                      "maxScore": 50,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Electrical Machines Quiz",
+                      "description": "Test on generators and motors",
+                      "questions": 22,
+                      "duration": "35 mins",
+                      "passingScore": 80
+                    },
+                    {
+                      "title": "Basic Electrical Engineering Final Exam",
+                      "description": "Comprehensive assessment covering all units",
+                      "questions": 40,
+                      "duration": "60 mins",
+                      "passingScore": 85
+                    }
+                  ]
                 }
               ]
             },
@@ -7735,44 +9105,313 @@
               "difficulty": "Hard",
               "units": [
                 {
-                  "title": "Unit 1: Engineering Mechanics - Part 1",
+                  "title": "Unit 1: Statics - Force Systems",
                   "topics": [
-                    "Engineering Mechanics Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "Force Vectors",
+                    "Equilibrium of Particles",
+                    "Equilibrium of Rigid Bodies",
+                    "Free Body Diagrams"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "Introduction to Engineering Mechanics",
+                      "description": "Fundamentals of statics and force systems",
+                      "duration": "28:45",
+                      "url": "https://www.youtube.com/watch?v=FKyTR2x8vug"
+                    },
+                    {
+                      "title": "Force Vectors and Resultants",
+                      "description": "Vector addition and resolution of forces",
+                      "duration": "32:20",
+                      "url": "https://www.youtube.com/watch?v=2SmZ8GHCeTA"
+                    },
+                    {
+                      "title": "Equilibrium of Particles and Bodies",
+                      "description": "Conditions for equilibrium and problem-solving",
+                      "duration": "35:15",
+                      "url": "https://www.youtube.com/watch?v=gk9FtcojRAo"
+                    },
+                    {
+                      "title": "Free Body Diagrams",
+                      "description": "Drawing and using FBDs for problem solving",
+                      "duration": "26:30",
+                      "url": "https://www.youtube.com/watch?v=UZBvegQ8xq0"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Engineering Mechanics: Statics",
+                      "description": "Complete notes on statics by R.C. Hibbeler",
+                      "pages": 65,
+                      "size": "6.0 MB",
+                      "url": "https://www.pearson.com/us/higher-education/program/Hibbeler-Engineering-Mechanics-Statics-14th-Edition/PGM263809.html"
+                    },
+                    {
+                      "title": "Statics Problem Solutions",
+                      "description": "200+ solved problems on force systems",
+                      "pages": 85,
+                      "size": "7.5 MB",
+                      "url": "https://www.engineeringtoolbox.com/statics-d_1645.html"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Force Vector Problems",
+                      "description": "Solve problems on resultant and equilibrant forces",
+                      "dueDate": "2025-11-25",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Equilibrium Analysis",
+                      "description": "Analyze structures using equilibrium equations",
+                      "dueDate": "2025-12-05",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Statics Quiz",
+                      "description": "Test on force systems and equilibrium",
+                      "questions": 20,
+                      "duration": "30 mins",
+                      "passingScore": 75
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 2: Engineering Mechanics - Part 2",
+                  "title": "Unit 2: Friction and Centroids",
                   "topics": [
-                    "Engineering Mechanics Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "Laws of Friction",
+                    "Applications of Friction",
+                    "Center of Gravity",
+                    "Centroid of Areas"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "Friction in Engineering",
+                      "description": "Understanding dry friction, angle of repose, and applications",
+                      "duration": "28:40",
+                      "url": "https://www.youtube.com/watch?v=fo_pmp5rtzo"
+                    },
+                    {
+                      "title": "Wedge and Screw Friction",
+                      "description": "Analysis of friction in wedges and screws",
+                      "duration": "26:15",
+                      "url": "https://www.youtube.com/watch?v=9EaURY_tH4s"
+                    },
+                    {
+                      "title": "Center of Gravity and Centroid",
+                      "description": "Calculating CG and centroid for various shapes",
+                      "duration": "32:30",
+                      "url": "https://www.youtube.com/watch?v=fEW8FGl2V7U"
+                    },
+                    {
+                      "title": "Composite Areas and Centroids",
+                      "description": "Finding centroids of composite shapes",
+                      "duration": "30:20",
+                      "url": "https://www.youtube.com/watch?v=gkg3J68wW3g"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Friction Analysis Guide",
+                      "description": "Complete notes on friction in mechanical systems",
+                      "pages": 42,
+                      "size": "3.9 MB",
+                      "url": "https://www.mechanicalengineeringblog.com/friction-analysis/"
+                    },
+                    {
+                      "title": "Centroid Calculation Manual",
+                      "description": "Step-by-step guide for centroid problems",
+                      "pages": 38,
+                      "size": "3.5 MB",
+                      "url": "https://www.engineeringtoolbox.com/centroid-d_1720.html"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Friction Problems",
+                      "description": "Solve problems on wedges, screws, and belt friction",
+                      "dueDate": "2025-12-12",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Centroid Calculations",
+                      "description": "Find centroids of composite areas and volumes",
+                      "dueDate": "2025-12-18",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Friction and Centroids Quiz",
+                      "description": "Test on friction applications and centroid calculations",
+                      "questions": 18,
+                      "duration": "25 mins",
+                      "passingScore": 75
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 3: Engineering Mechanics - Part 3",
+                  "title": "Unit 3: Moment of Inertia",
                   "topics": [
-                    "Engineering Mechanics Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "Second Moment of Area",
+                    "Parallel Axis Theorem",
+                    "Product of Inertia",
+                    "Principal Axes"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "Moment of Inertia Fundamentals",
+                      "description": "Understanding second moment of area and its applications",
+                      "duration": "30:45",
+                      "url": "https://www.youtube.com/watch?v=3K9UOTuPTJc"
+                    },
+                    {
+                      "title": "Parallel Axis Theorem",
+                      "description": "Using parallel axis theorem for complex shapes",
+                      "duration": "28:20",
+                      "url": "https://www.youtube.com/watch?v=XYWYxnX_UpY"
+                    },
+                    {
+                      "title": "Moment of Inertia for Composite Sections",
+                      "description": "Calculating MOI for composite cross-sections",
+                      "duration": "32:15",
+                      "url": "https://www.youtube.com/watch?v=EGu9y95KPr8"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Moment of Inertia Complete Guide",
+                      "description": "Comprehensive notes on MOI and its applications",
+                      "pages": 52,
+                      "size": "4.8 MB",
+                      "url": "https://www.engineeringtoolbox.com/moment-inertia-d_1328.html"
+                    },
+                    {
+                      "title": "MOI Problem Solutions",
+                      "description": "100+ solved problems on moment of inertia",
+                      "pages": 68,
+                      "size": "6.2 MB",
+                      "url": "https://www.mechanicalengineeringblog.com/moment-of-inertia/"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: MOI Calculations",
+                      "description": "Calculate moment of inertia for various cross-sections",
+                      "dueDate": "2025-12-28",
+                      "maxScore": 35,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Moment of Inertia Quiz",
+                      "description": "Test on MOI calculations and theorems",
+                      "questions": 15,
+                      "duration": "25 mins",
+                      "passingScore": 80
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 4: Engineering Mechanics - Part 4",
+                  "title": "Unit 4: Dynamics - Kinematics",
                   "topics": [
-                    "Engineering Mechanics Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "Rectilinear Motion",
+                    "Curvilinear Motion",
+                    "Relative Motion",
+                    "Projectile Motion"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "Kinematics of Particles",
+                      "description": "Motion analysis using displacement, velocity, and acceleration",
+                      "duration": "32:40",
+                      "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
+                    },
+                    {
+                      "title": "Curvilinear Motion - Normal and Tangential Components",
+                      "description": "Analyzing motion along curved paths",
+                      "duration": "30:15",
+                      "url": "https://www.youtube.com/watch?v=N10T_vBJJBQ"
+                    },
+                    {
+                      "title": "Relative Motion Analysis",
+                      "description": "Understanding relative velocity and acceleration",
+                      "duration": "28:30",
+                      "url": "https://www.youtube.com/watch?v=9h27v5yFMZQ"
+                    },
+                    {
+                      "title": "Projectile Motion Problems",
+                      "description": "Solving projectile motion in engineering applications",
+                      "duration": "26:45",
+                      "url": "https://www.youtube.com/watch?v=JCxaHVZL6TM"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Engineering Dynamics: Kinematics",
+                      "description": "Complete notes on particle kinematics",
+                      "pages": 58,
+                      "size": "5.4 MB",
+                      "url": "https://www.engineeringtoolbox.com/kinematics-d_1646.html"
+                    },
+                    {
+                      "title": "Dynamics Problem Set",
+                      "description": "150+ solved kinematics problems",
+                      "pages": 72,
+                      "size": "6.5 MB",
+                      "url": "https://www.mechanicalengineeringblog.com/kinematics/"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Rectilinear Motion",
+                      "description": "Solve problems on particles in rectilinear motion",
+                      "dueDate": "2026-01-08",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Curvilinear Motion",
+                      "description": "Analyze motion along curved paths and projectiles",
+                      "dueDate": "2026-01-18",
+                      "maxScore": 40,
+                      "difficulty": "Hard"
+                    },
+                    {
+                      "title": "Assignment 3: Final Project",
+                      "description": "Complete mechanics project with static and dynamic analysis",
+                      "dueDate": "2026-02-10",
+                      "maxScore": 50,
+                      "difficulty": "Hard"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Kinematics Quiz",
+                      "description": "Test on particle motion and dynamics",
+                      "questions": 20,
+                      "duration": "30 mins",
+                      "passingScore": 80
+                    },
+                    {
+                      "title": "Engineering Mechanics Final Exam",
+                      "description": "Comprehensive assessment covering statics and dynamics",
+                      "questions": 40,
+                      "duration": "60 mins",
+                      "passingScore": 85
+                    }
+                  ]
                 }
               ]
             },
@@ -9531,31 +11170,222 @@
               "difficulty": "Easy",
               "units": [
                 {
-                  "title": "Unit 1: Building Materials - Part 1",
+                  "title": "Unit 1: Stones, Bricks and Tiles",
                   "topics": [
-                    "Building Materials Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications"
+                    "Natural Stones",
+                    "Clay Bricks",
+                    "Tiles and Flooring",
+                    "Testing Methods"
                   ],
-                  "hours": 20
+                  "hours": 20,
+                  "videos": [
+                    {
+                      "title": "Building Stones - Types and Properties",
+                      "description": "Classification, properties, and uses of natural stones in construction",
+                      "duration": "26:30",
+                      "url": "https://www.youtube.com/watch?v=YJxiH8hd2TI"
+                    },
+                    {
+                      "title": "Bricks Manufacturing and Testing",
+                      "description": "Brick making process, types, and quality tests",
+                      "duration": "28:45",
+                      "url": "https://www.youtube.com/watch?v=4mXkn5Qr4XE"
+                    },
+                    {
+                      "title": "Tiles and Flooring Materials",
+                      "description": "Types of tiles, ceramic, vitrified, and their applications",
+                      "duration": "24:20",
+                      "url": "https://www.youtube.com/watch?v=8zRV5NhzZx0"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Building Materials - Stones and Bricks",
+                      "description": "Complete notes on natural stones and clay products",
+                      "pages": 45,
+                      "size": "4.2 MB",
+                      "url": "https://www.iricen.gov.in/iricen/Building_Materials.pdf"
+                    },
+                    {
+                      "title": "Construction Materials Testing Manual",
+                      "description": "Standard tests for building materials",
+                      "pages": 38,
+                      "size": "3.5 MB",
+                      "url": "https://www.ce.berkeley.edu/materials"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Material Properties",
+                      "description": "Compare properties of different stones and bricks",
+                      "dueDate": "2025-11-25",
+                      "maxScore": 25,
+                      "difficulty": "Easy"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Stones and Bricks Quiz",
+                      "description": "Test on properties and applications",
+                      "questions": 15,
+                      "duration": "20 mins",
+                      "passingScore": 70
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 2: Building Materials - Part 2",
+                  "title": "Unit 2: Cement and Concrete",
                   "topics": [
-                    "Building Materials Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications"
+                    "Cement Manufacturing",
+                    "Cement Types",
+                    "Concrete Mix Design",
+                    "Concrete Testing"
                   ],
-                  "hours": 20
+                  "hours": 20,
+                  "videos": [
+                    {
+                      "title": "Cement Manufacturing Process",
+                      "description": "Dry and wet process of cement production",
+                      "duration": "30:15",
+                      "url": "https://www.youtube.com/watch?v=7ZFHGNjEONY"
+                    },
+                    {
+                      "title": "Types of Cement and Their Uses",
+                      "description": "OPC, PPC, PSC and special cements",
+                      "duration": "26:40",
+                      "url": "https://www.youtube.com/watch?v=k8u2sFdmVNQ"
+                    },
+                    {
+                      "title": "Concrete Mix Design",
+                      "description": "Proportioning of concrete ingredients for desired strength",
+                      "duration": "32:30",
+                      "url": "https://www.youtube.com/watch?v=VXc3QE8U7bw"
+                    },
+                    {
+                      "title": "Concrete Testing: Slump, Compressive Strength",
+                      "description": "Standard tests for concrete quality control",
+                      "duration": "28:45",
+                      "url": "https://www.youtube.com/watch?v=FHm0Ggp_qbs"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Cement and Concrete Technology",
+                      "description": "Comprehensive guide to cement and concrete",
+                      "pages": 62,
+                      "size": "5.8 MB",
+                      "url": "https://www.iricen.gov.in/Cement_Concrete.pdf"
+                    },
+                    {
+                      "title": "IS Codes for Concrete Mix Design",
+                      "description": "Indian Standard specifications for concrete",
+                      "pages": 45,
+                      "size": "4.2 MB",
+                      "url": "https://archive.org/details/gov.in.is.456.2000"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Concrete Mix Design",
+                      "description": "Design concrete mix for M25 grade",
+                      "dueDate": "2025-12-05",
+                      "maxScore": 35,
+                      "difficulty": "Medium"
+                    },
+                    {
+                      "title": "Assignment 2: Laboratory Report",
+                      "description": "Conduct and report cement and concrete tests",
+                      "dueDate": "2025-12-15",
+                      "maxScore": 40,
+                      "difficulty": "Medium"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Cement and Concrete Quiz",
+                      "description": "Test on cement types and concrete technology",
+                      "questions": 20,
+                      "duration": "30 mins",
+                      "passingScore": 75
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 3: Building Materials - Part 3",
+                  "title": "Unit 3: Steel and Timber",
                   "topics": [
-                    "Building Materials Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications"
+                    "Structural Steel",
+                    "Steel Properties",
+                    "Timber Properties",
+                    "Timber Preservation"
                   ],
-                  "hours": 20
+                  "hours": 20,
+                  "videos": [
+                    {
+                      "title": "Structural Steel in Construction",
+                      "description": "Types of steel, properties, and structural applications",
+                      "duration": "28:20",
+                      "url": "https://www.youtube.com/watch?v=SqFW9jGNdWU"
+                    },
+                    {
+                      "title": "Steel Production and Testing",
+                      "description": "Manufacturing process and quality tests for steel",
+                      "duration": "26:35",
+                      "url": "https://www.youtube.com/watch?v=kHNUVqmIFDs"
+                    },
+                    {
+                      "title": "Timber as Construction Material",
+                      "description": "Properties, types, and uses of timber in building",
+                      "duration": "24:45",
+                      "url": "https://www.youtube.com/watch?v=3QvTMZzRfkE"
+                    },
+                    {
+                      "title": "Timber Preservation Methods",
+                      "description": "Techniques to protect timber from decay and insects",
+                      "duration": "22:30",
+                      "url": "https://www.youtube.com/watch?v=wHnXS07cEsA"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Steel and Timber in Construction",
+                      "description": "Complete notes on metallic and organic materials",
+                      "pages": 48,
+                      "size": "4.5 MB",
+                      "url": "https://www.iricen.gov.in/Steel_Timber.pdf"
+                    },
+                    {
+                      "title": "IS Codes for Steel Structures",
+                      "description": "Indian standards for structural steel",
+                      "pages": 52,
+                      "size": "4.8 MB",
+                      "url": "https://archive.org/details/gov.in.is.800.2007"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Material Selection",
+                      "description": "Select appropriate materials for a building project",
+                      "dueDate": "2025-12-28",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Steel and Timber Quiz",
+                      "description": "Test on metallic and organic building materials",
+                      "questions": 18,
+                      "duration": "25 mins",
+                      "passingScore": 75
+                    },
+                    {
+                      "title": "Building Materials Final Exam",
+                      "description": "Comprehensive assessment on all building materials",
+                      "questions": 35,
+                      "duration": "50 mins",
+                      "passingScore": 80
+                    }
+                  ]
                 }
               ]
             },
@@ -11235,44 +13065,169 @@
               "difficulty": "Easy",
               "units": [
                 {
-                  "title": "Unit 1: Programming Fundamentals - Part 1",
+                  "title": "Unit 1: Introduction to Programming",
                   "topics": [
-                    "Programming Fundamentals Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "What is Programming?",
+                    "Algorithms and Flowcharts",
+                    "Intro to Variables and Data Types",
+                    "Input/Output"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "What is Programming?",
+                      "description": "Programming basics and how computers execute code",
+                      "duration": "18:30",
+                      "url": "https://www.youtube.com/watch?v=zOjov-2OZ0E"
+                    },
+                    {
+                      "title": "Algorithms and Flowcharts",
+                      "description": "Designing solutions before coding",
+                      "duration": "22:10",
+                      "url": "https://www.youtube.com/watch?v=SjSHVDfXHQ4"
+                    },
+                    {
+                      "title": "Variables and Data Types",
+                      "description": "Primitive types and variable usage",
+                      "duration": "24:45",
+                      "url": "https://www.youtube.com/watch?v=8PopR3x-VMY"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Intro to Programming Notes",
+                      "description": "Comprehensive notes for programming beginners",
+                      "pages": 40,
+                      "size": "3.6 MB",
+                      "url": "https://www.cs.cmu.edu/~15110-s13/Wing06-ComputationalThinking.pdf"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Algorithm Design",
+                      "description": "Write algorithms and flowcharts for 5 simple problems",
+                      "dueDate": "2025-11-25",
+                      "maxScore": 20,
+                      "difficulty": "Easy"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Basics Quiz",
+                      "description": "Test on algorithms, variables, and I/O",
+                      "questions": 12,
+                      "duration": "20 mins",
+                      "passingScore": 70
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 2: Programming Fundamentals - Part 2",
+                  "title": "Unit 2: Control Structures",
                   "topics": [
-                    "Programming Fundamentals Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "Selection (if/else/switch)",
+                    "Iteration (for/while/do-while)",
+                    "Nested Control",
+                    "Debugging Basics"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "Conditionals in Programming",
+                      "description": "If-else and switch statements",
+                      "duration": "25:15",
+                      "url": "https://www.youtube.com/watch?v=sQDMDmF0xF8"
+                    },
+                    {
+                      "title": "Loops Explained",
+                      "description": "for, while, do-while with examples",
+                      "duration": "26:40",
+                      "url": "https://www.youtube.com/watch?v=0eDhgskNE6Y"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 2: Control Flow Exercises",
+                      "description": "Write 10 programs using conditionals and loops",
+                      "dueDate": "2025-12-02",
+                      "maxScore": 25,
+                      "difficulty": "Medium"
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 3: Programming Fundamentals - Part 3",
+                  "title": "Unit 3: Functions and Arrays",
                   "topics": [
-                    "Programming Fundamentals Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "Functions and Parameters",
+                    "Array Basics",
+                    "2D Arrays",
+                    "Common Algorithms"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "Functions Explained",
+                      "description": "How and why to use functions",
+                      "duration": "24:30",
+                      "url": "https://www.youtube.com/watch?v=VJwjXA1NsaA"
+                    },
+                    {
+                      "title": "Arrays and 2D Arrays",
+                      "description": "Data storage patterns and traversal",
+                      "duration": "27:20",
+                      "url": "https://www.youtube.com/watch?v=RQ0JHMGiobo"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 3: Arrays Practice",
+                      "description": "Solve 15 array problems (searching, sorting, matrices)",
+                      "dueDate": "2025-12-12",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 4: Programming Fundamentals - Part 4",
+                  "title": "Unit 4: Strings and File I/O",
                   "topics": [
-                    "Programming Fundamentals Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications",
-                    "Advanced Topics"
+                    "String Operations",
+                    "File Reading/Writing",
+                    "Basic Projects",
+                    "Error Handling"
                   ],
-                  "hours": 15
+                  "hours": 15,
+                  "videos": [
+                    {
+                      "title": "Strings and Text Processing",
+                      "description": "Working with strings and text manipulation",
+                      "duration": "25:10",
+                      "url": "https://www.youtube.com/watch?v=Gh4T1wX4VfA"
+                    },
+                    {
+                      "title": "File Handling Basics",
+                      "description": "Reading and writing files in programs",
+                      "duration": "26:20",
+                      "url": "https://www.youtube.com/watch?v=SXw2hZhxPzs"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 4: Mini Project",
+                      "description": "Build a file-based student record manager",
+                      "dueDate": "2025-12-22",
+                      "maxScore": 40,
+                      "difficulty": "Medium"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Programming Fundamentals Final",
+                      "description": "Comprehensive assessment covering all units",
+                      "questions": 30,
+                      "duration": "45 mins",
+                      "passingScore": 80
+                    }
+                  ]
                 }
               ]
             },
@@ -11284,31 +13239,137 @@
               "difficulty": "Medium",
               "units": [
                 {
-                  "title": "Unit 1: Digital Logic - Part 1",
+                  "title": "Unit 1: Number Systems and Logic Gates",
                   "topics": [
-                    "Digital Logic Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications"
+                    "Number Systems (Binary, Octal, Decimal, Hex)",
+                    "Conversions and Binary Arithmetic",
+                    "Basic Logic Gates (AND, OR, NOT, NAND, NOR, XOR, XNOR)",
+                    "Intro to Boolean Algebra"
                   ],
-                  "hours": 20
+                  "hours": 20,
+                  "videos": [
+                    {
+                      "title": "Binary Numbers and Base Systems",
+                      "description": "Understanding binary and other bases",
+                      "duration": "10:02",
+                      "url": "https://www.youtube.com/watch?v=LpuPe81bc2w"
+                    },
+                    {
+                      "title": "Binary Addition Explained",
+                      "description": "How computers add numbers in binary",
+                      "duration": "9:12",
+                      "url": "https://www.youtube.com/watch?v=wvJc9CZcvBc"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "Binary and Hex Guide (Stanford CS101)",
+                      "description": "Beginner-friendly guide to binary and hexadecimal",
+                      "pages": 12,
+                      "size": "0.6 MB",
+                      "url": "https://web.stanford.edu/class/cs101/binary-hex.html"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 1: Conversions & Gates",
+                      "description": "Convert 20 numbers across bases; draw truth tables for 6 gates",
+                      "dueDate": "2025-11-28",
+                      "maxScore": 20,
+                      "difficulty": "Easy"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Quiz 1: Number Systems",
+                      "description": "Conversions, place values, and binary arithmetic",
+                      "questions": 12,
+                      "duration": "20 mins",
+                      "passingScore": 70
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 2: Digital Logic - Part 2",
+                  "title": "Unit 2: Boolean Algebra and Combinational Circuits",
                   "topics": [
-                    "Digital Logic Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications"
+                    "Boolean Identities and Simplification",
+                    "Karnaugh Maps (2-4 variables)",
+                    "Adders, Subtractors",
+                    "Multiplexers, Demultiplexers, Encoders, Decoders"
                   ],
-                  "hours": 20
+                  "hours": 20,
+                  "videos": [
+                    {
+                      "title": "Binary Adders Overview",
+                      "description": "Ripple-carry adders and full adders",
+                      "duration": "8:54",
+                      "url": "https://www.youtube.com/watch?v=wvJc9CZcvBc"
+                    }
+                  ],
+                  "pdfs": [
+                    {
+                      "title": "K-Map Simplification Guide",
+                      "description": "Step-by-step Karnaugh map minimization",
+                      "pages": 10,
+                      "size": "0.5 MB",
+                      "url": "https://people.cs.pitt.edu/~mehmud/cs447/Kmap.pdf"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 2: K-Maps & Circuits",
+                      "description": "Minimize 8 expressions using K-Maps; design a 2:4 decoder",
+                      "dueDate": "2025-12-05",
+                      "maxScore": 25,
+                      "difficulty": "Medium"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Quiz 2: Combinational Logic",
+                      "description": "Boolean algebra, K-Maps, and common blocks",
+                      "questions": 15,
+                      "duration": "25 mins",
+                      "passingScore": 70
+                    }
+                  ]
                 },
                 {
-                  "title": "Unit 3: Digital Logic - Part 3",
+                  "title": "Unit 3: Sequential Circuits and FSMs",
                   "topics": [
-                    "Digital Logic Fundamentals",
-                    "Core Concepts",
-                    "Practical Applications"
+                    "Latches and Flip-Flops (SR, D, JK, T)",
+                    "Registers and Counters",
+                    "Timing, Setup/Hold Concepts",
+                    "Finite State Machines (Moore/Mealy)"
                   ],
-                  "hours": 20
+                  "hours": 20,
+                  "pdfs": [
+                    {
+                      "title": "Flip-Flops and Registers Notes",
+                      "description": "Introductory notes on sequential logic",
+                      "pages": 18,
+                      "size": "1.1 MB",
+                      "url": "https://www.cs.umd.edu/class/fall2011/cmsc311/Notes/Seq/seq.html"
+                    }
+                  ],
+                  "assignments": [
+                    {
+                      "title": "Assignment 3: FSM Design",
+                      "description": "Design a vending machine controller (Mealy) and simulate transitions",
+                      "dueDate": "2025-12-15",
+                      "maxScore": 30,
+                      "difficulty": "Medium"
+                    }
+                  ],
+                  "quizzes": [
+                    {
+                      "title": "Quiz 3: Sequential Logic",
+                      "description": "Flip-flops, counters, and FSM fundamentals",
+                      "questions": 15,
+                      "duration": "25 mins",
+                      "passingScore": 75
+                    }
+                  ]
                 }
               ]
             },

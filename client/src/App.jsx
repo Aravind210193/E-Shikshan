@@ -21,6 +21,7 @@ import Folders from './pages/Folders'
 import JobDetail from './pages/JobDetail'
 import HackathonDetails from './components/HackathonDetails'
 import Profile from './pages/Profile'
+import Settings from './pages/Settings'
 import RoadmapDetail from './pages/RoadmapDetail'
 import CourseDetail from './pages/CourseDetail'
 import TenthGradeTerms from './pages/TenthGradeTerms'
@@ -117,6 +118,11 @@ const App = () => {
           <Route path='/profile' element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Profile />
+            </ProtectedRoute>
+          } />
+          <Route path='/settings' element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Settings />
             </ProtectedRoute>
           } />
           

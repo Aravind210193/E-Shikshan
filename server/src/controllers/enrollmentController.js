@@ -42,7 +42,7 @@ const enrollInCourse = async (req, res) => {
       paymentStatus: isFree ? 'free' : 'pending',
       paymentMethod: isFree ? 'free' : undefined,
       amountPaid: isFree ? 0 : course.priceAmount,
-      status: isFree ? 'active' : 'active', // Activate immediately for free courses
+      status: isFree ? 'active' : 'pending', // Only activate for free courses, paid courses need payment verification
       enrolledAt: new Date()
     });
 
@@ -250,8 +250,9 @@ const checkEnrollmentStatus = async (req, res) => {
       });
     }
 
-  // Access only after completed payment or free course
-  const hasAccess = enrollment.paymentStatus === 'completed' || enrollment.paymentStatus === 'free';
+  // Access only after completed payment or free course AND status is active
+  const hasAccess = (enrollment.paymentStatus === 'completed' || enrollment.paymentStatus === 'free') 
+                    && enrollment.status === 'active';
   // Enrolled is aligned with access; pending does not count as enrolled
   const isEnrolled = hasAccess;
 
@@ -396,6 +397,199 @@ const deletePendingEnrollment = async (req, res) => {
   }
 };
 
+// @desc    Verify transaction ID and grant course access
+// @route   POST /api/enrollments/:enrollmentId/verify-transaction
+// @access  Private
+const verifyTransactionAndGrantAccess = async (req, res) => {
+  try {
+    const { enrollmentId } = req.params;
+    const { transactionId, upiTransactionId } = req.body;
+    const userId = req.user._id;
+
+    console.log('🔍 Transaction Verification Request');
+    console.log('📋 Enrollment ID:', enrollmentId);
+    console.log('💳 User-provided Transaction ID:', transactionId);
+    console.log('🔢 User-provided UPI Transaction ID:', upiTransactionId);
+
+    // Validate required fields
+    if (!transactionId) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Transaction ID is required for verification' 
+      });
+    }
+
+    // Find enrollment
+    const enrollment = await Enrollment.findById(enrollmentId).populate('courseId');
+    if (!enrollment) {
+      console.log('❌ Enrollment not found');
+      return res.status(404).json({ 
+        success: false,
+        message: 'Enrollment not found' 
+      });
+    }
+
+    // Verify enrollment belongs to user
+    if (enrollment.userId.toString() !== userId.toString()) {
+      console.log('❌ Unauthorized access attempt by user:', userId);
+      return res.status(403).json({ 
+        success: false,
+        message: 'Unauthorized access to this enrollment' 
+      });
+    }
+
+    // Check if payment is already completed
+    if (enrollment.paymentStatus === 'completed') {
+      console.log('✅ Payment already completed - Access already granted');
+      return res.json({
+        success: true,
+        message: 'Payment already verified. You have access to the course.',
+        enrollment,
+        accessGranted: true,
+        alreadyVerified: true
+      });
+    }
+
+    // Check if payment is free
+    if (enrollment.paymentStatus === 'free') {
+      console.log('✅ Free course - Access already granted');
+      return res.json({
+        success: true,
+        message: 'This is a free course. You already have access.',
+        enrollment,
+        accessGranted: true,
+        isFree: true
+      });
+    }
+
+    // Get stored transaction IDs from database
+    const storedTransactionId = enrollment.transactionId;
+    const storedUpiTransactionId = enrollment.paymentDetails?.upiTransactionId;
+    const storedOrderId = enrollment.paymentDetails?.orderId;
+
+    console.log('💾 Database Transaction ID:', storedTransactionId);
+    console.log('💾 Database UPI Transaction ID:', storedUpiTransactionId);
+    console.log('💾 Database Order ID:', storedOrderId);
+
+    // CHECK IF WEBHOOK RECEIVED THE PAYMENT
+    // If no transaction ID in database, payment was NOT received via webhook
+    if (!storedTransactionId && !storedUpiTransactionId) {
+      console.log('❌ PAYMENT NOT VERIFIED - No transaction record in database');
+      console.log('⚠️  This means either:');
+      console.log('    1. Payment was not made');
+      console.log('    2. Webhook not received yet (wait a few seconds)');
+      console.log('    3. Payment gateway issue');
+      console.log('');
+      console.log('🔍 User attempted to verify with ID:', transactionId);
+      console.log('❌ VERIFICATION REJECTED - Cannot verify without payment confirmation');
+      
+      return res.status(400).json({
+        success: false,
+        message: 'Payment not found in our system. Please ensure you have completed the payment.',
+        accessGranted: false,
+        reason: 'No payment record found',
+        hint: 'If you just paid, please wait 30-60 seconds for the payment to be processed. If you have not paid yet, please scan the QR code and complete the payment first.',
+        enrollmentId: enrollmentId,
+        paymentStatus: enrollment.paymentStatus,
+        debug: {
+          providedTransactionId: transactionId,
+          storedTransactionId: storedTransactionId || 'Not found',
+          webhookReceived: false
+        }
+      });
+    }
+
+    // VERIFY TRANSACTION ID MATCH
+    // Transaction ID exists in database (webhook received), now verify user's input matches
+    let transactionMatches = false;
+    let matchedField = '';
+
+    // Check if main transaction ID matches
+    if (storedTransactionId && transactionId === storedTransactionId) {
+      transactionMatches = true;
+      matchedField = 'transactionId';
+      console.log('✅ Main Transaction ID matches!');
+    }
+    // Check if UPI transaction ID matches
+    else if (storedUpiTransactionId && transactionId === storedUpiTransactionId) {
+      transactionMatches = true;
+      matchedField = 'upiTransactionId';
+      console.log('✅ UPI Transaction ID matches!');
+    }
+    // Check if provided UPI transaction ID matches stored one
+    else if (upiTransactionId && storedUpiTransactionId && upiTransactionId === storedUpiTransactionId) {
+      transactionMatches = true;
+      matchedField = 'upiTransactionId (secondary)';
+      console.log('✅ UPI Transaction ID (secondary) matches!');
+    }
+    // Check if provided UPI transaction ID matches main stored ID
+    else if (upiTransactionId && storedTransactionId && upiTransactionId === storedTransactionId) {
+      transactionMatches = true;
+      matchedField = 'transactionId (via UPI)';
+      console.log('✅ Transaction ID matches UPI ID!');
+    }
+
+    // TRANSACTION ID DOES NOT MATCH
+    if (!transactionMatches) {
+      console.log('❌ Transaction ID MISMATCH!');
+      console.log('❌ User provided:', transactionId);
+      console.log('❌ Database has:', storedTransactionId || 'No transaction ID stored');
+      
+      return res.status(403).json({
+        success: false,
+        message: 'Transaction ID verification failed. The provided transaction ID does not match our records.',
+        accessGranted: false,
+        reason: 'Transaction ID mismatch',
+        providedTransactionId: transactionId,
+        hint: 'Please ensure you entered the correct transaction ID from your payment app.'
+      });
+    }
+
+    // TRANSACTION ID MATCHES - GRANT ACCESS
+    console.log(`✅ Transaction ID verified via ${matchedField}`);
+    console.log('🎉 Granting course access...');
+
+    // Update enrollment status to active
+    enrollment.status = 'active';
+    enrollment.paymentStatus = 'completed';
+    
+    // Update verification timestamp
+    if (!enrollment.paymentDetails) {
+      enrollment.paymentDetails = {};
+    }
+    enrollment.paymentDetails.verifiedByUser = true;
+    enrollment.paymentDetails.userVerificationAt = new Date();
+    enrollment.paymentDetails.verifiedTransactionId = transactionId;
+    enrollment.paymentDetails.matchedField = matchedField;
+
+    await enrollment.save();
+
+    console.log('💾 Enrollment updated - Access granted');
+    console.log('✅ User can now access course content');
+
+    res.json({
+      success: true,
+      message: 'Transaction verified successfully! You now have access to the course.',
+      enrollment,
+      accessGranted: true,
+      transactionVerified: true,
+      matchedField: matchedField,
+      course: {
+        id: enrollment.courseId._id,
+        title: enrollment.courseId.title
+      }
+    });
+
+  } catch (error) {
+    console.error('❌ Transaction verification error:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Failed to verify transaction', 
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   enrollInCourse,
   processPayment,
@@ -403,5 +597,6 @@ module.exports = {
   getEnrollmentById,
   checkEnrollmentStatus,
   updateProgress,
-  deletePendingEnrollment
+  deletePendingEnrollment,
+  verifyTransactionAndGrantAccess
 };

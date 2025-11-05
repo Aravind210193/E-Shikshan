@@ -7,7 +7,8 @@ const {
   getEnrollmentById,
   checkEnrollmentStatus,
   updateProgress,
-  deletePendingEnrollment
+  deletePendingEnrollment,
+  verifyTransactionAndGrantAccess
 } = require('../controllers/enrollmentController');
 const { protect } = require('../middlewares/authMiddleware');
 
@@ -17,6 +18,7 @@ router.get('/my-courses', protect, getMyEnrollments);
 router.get('/check/:courseId', protect, checkEnrollmentStatus);
 router.get('/:id', protect, getEnrollmentById);
 router.post('/:enrollmentId/payment', protect, processPayment);
+router.post('/:enrollmentId/verify-transaction', protect, verifyTransactionAndGrantAccess);
 router.put('/:id/progress', protect, updateProgress);
 router.delete('/:id', protect, deletePendingEnrollment);
 

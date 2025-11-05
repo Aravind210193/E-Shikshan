@@ -10,6 +10,7 @@ const achievementRoutes = require('./src/routes/achievementRoutes');
 const enrollmentRoutes = require('./src/routes/enrollmentRoutes');
 const hackathonRoutes = require('./src/routes/hackathonRoutes');
 const hackathonRegistrationRoutes = require('./src/routes/hackathonRegistrationRoutes');
+const webhookRoutes = require('./src/routes/webhookRoutes');
 
 // Content routes
 const branchRoutes = require('./src/routes/branchRoutes');
@@ -64,6 +65,7 @@ app.use('/api/achievements', achievementRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/hackathons', hackathonRoutes);
 app.use('/api/hackathon-registrations', hackathonRegistrationRoutes);
+app.use('/api/webhooks', webhookRoutes);
 
 // Content routes  
 app.use('/api/branches', branchRoutes);

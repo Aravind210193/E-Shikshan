@@ -47,7 +47,9 @@ const Courses = () => {
         const myCourses = await enrollmentAPI.getMyCourses();
         const statusMap = {};
         myCourses.data.forEach(enrollment => {
-          const hasAccess = enrollment.paymentStatus === 'completed' || enrollment.paymentStatus === 'free';
+          // Only grant access if both paymentStatus is completed/free AND status is active
+          const hasAccess = (enrollment.paymentStatus === 'completed' || enrollment.paymentStatus === 'free')
+                            && enrollment.status === 'active';
           statusMap[enrollment.courseId._id || enrollment.courseId] = {
             enrolled: hasAccess,
             hasAccess,

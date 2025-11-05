@@ -43,6 +43,9 @@ const Profile = () => {
   const [savedResume, setSavedResume] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editFormData, setEditFormData] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -106,6 +109,49 @@ const Profile = () => {
   const certificates = enrolledCourses.filter(course => course.progress?.overallProgress === 100).length;
 
   const [activeTab, setActiveTab] = useState('overview');
+
+  const openEditModal = () => {
+    setEditFormData({
+      name: user.name || '',
+      email: user.email || '',
+      phone: user.phone || '',
+      university: user.university || '',
+      department: user.department || '',
+      semester: user.semester || '',
+      bio: user.bio || '',
+      address: user.address || '',
+      dateOfBirth: user.dateOfBirth || '',
+      gender: user.gender || '',
+      website: user.website || '',
+      degree: user.degree || '',
+      yearOfStudy: user.yearOfStudy || '',
+      graduationYear: user.graduationYear || ''
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSaveProfile = async () => {
+    try {
+      setIsSaving(true);
+      const response = await authAPI.updateProfile(editFormData);
+      setUser(response.data);
+      toast.success('Profile updated successfully!');
+      setIsEditModalOpen(false);
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      toast.error(err.response?.data?.message || 'Failed to update profile');
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const ProgressBar = ({ value }) => (
     <div className="w-full bg-gray-700 rounded-full h-2.5">
@@ -224,9 +270,11 @@ const Profile = () => {
           <div className="h-48 bg-blue-600 relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjA1Ij48cGF0aCBkPSJNMzYgMzRoLTJWMGgydjM0em0tNCAwVjBoLTJ2MzRoMnptLTYtMmgtMlYwaDF2MzJoMXpNMjIgMzBoLTJWMGgydjMwem0tNCAwVjBoLTJ2MzBoMnptLTYgMGgtMlYwaDF2MzBoMXptLTYtMmgtMlYwaDF2MjhoMXptLTYtMmgtMlYwaDJ2MjZ6TTAgMjRoMnYySDAnIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
             <div className="absolute bottom-0 right-0 p-4">
-              <button className="bg-gray-900/70 hover:bg-gray-900 text-white text-xs py-2 px-4 rounded-lg flex items-center gap-2 backdrop-blur-sm border border-gray-700 transition-all font-medium">
+              <button 
+                onClick={openEditModal}
+                className="bg-gray-900/70 hover:bg-gray-900 text-white text-xs py-2 px-4 rounded-lg flex items-center gap-2 backdrop-blur-sm border border-gray-700 transition-all font-medium">
                 <Edit className="w-3 h-3" />
-                Edit Banner
+                Edit Profile
               </button>
             </div>
           </div>
@@ -238,7 +286,9 @@ const Profile = () => {
               <div className="w-32 h-32 rounded-full bg-blue-600 flex items-center justify-center text-4xl font-bold border-4 border-gray-900 shadow-2xl">
                 {user.name.split(' ').map(n => n[0]).join('')}
               </div>
-              <button className="absolute bottom-1 right-1 bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-full border-2 border-gray-900 transition-colors shadow-lg">
+              <button 
+                onClick={openEditModal}
+                className="absolute bottom-1 right-1 bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-full border-2 border-gray-900 transition-colors shadow-lg">
                 <Edit className="w-4 h-4" />
               </button>
             </div>
@@ -1245,6 +1295,267 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {/* Edit Profile Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-gray-800 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden border border-gray-700 shadow-2xl"
+          >
+            {/* Modal Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
+                  <Edit className="w-6 h-6" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Edit Profile</h2>
+                  <p className="text-blue-100 text-sm">Update your personal information</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsEditModalOpen(false)}
+                className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Basic Information */}
+                <div className="md:col-span-2">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400">
+                    <User className="w-5 h-5" />
+                    Basic Information
+                  </h3>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Full Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={editFormData.name}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Email *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={editFormData.email}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={editFormData.phone}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="+91 1234567890"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Gender</label>
+                  <select
+                    name="gender"
+                    value={editFormData.gender}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="prefer-not-to-say">Prefer not to say</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Date of Birth</label>
+                  <input
+                    type="date"
+                    name="dateOfBirth"
+                    value={editFormData.dateOfBirth}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Website</label>
+                  <input
+                    type="url"
+                    name="website"
+                    value={editFormData.website}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://yourwebsite.com"
+                  />
+                </div>
+
+                {/* Education Information */}
+                <div className="md:col-span-2 mt-4">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-purple-400">
+                    <GraduationCap className="w-5 h-5" />
+                    Education Details
+                  </h3>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">University/College</label>
+                  <input
+                    type="text"
+                    name="university"
+                    value={editFormData.university}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Your institution name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Department/Branch</label>
+                  <input
+                    type="text"
+                    name="department"
+                    value={editFormData.department}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., Computer Science"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Degree</label>
+                  <input
+                    type="text"
+                    name="degree"
+                    value={editFormData.degree}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., B.Tech, M.Sc"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Current Semester</label>
+                  <input
+                    type="text"
+                    name="semester"
+                    value={editFormData.semester}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 5th, 7th"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Year of Study</label>
+                  <select
+                    name="yearOfStudy"
+                    value={editFormData.yearOfStudy}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select Year</option>
+                    <option value="1st">1st Year</option>
+                    <option value="2nd">2nd Year</option>
+                    <option value="3rd">3rd Year</option>
+                    <option value="4th">4th Year</option>
+                    <option value="5th">5th Year</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Expected Graduation Year</label>
+                  <input
+                    type="number"
+                    name="graduationYear"
+                    value={editFormData.graduationYear}
+                    onChange={handleEditChange}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="e.g., 2025"
+                    min="2020"
+                    max="2035"
+                  />
+                </div>
+
+                {/* Bio */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Bio</label>
+                  <textarea
+                    name="bio"
+                    value={editFormData.bio}
+                    onChange={handleEditChange}
+                    rows="4"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    placeholder="Tell us about yourself, your interests, and goals..."
+                  />
+                </div>
+
+                {/* Address */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Address</label>
+                  <textarea
+                    name="address"
+                    value={editFormData.address}
+                    onChange={handleEditChange}
+                    rows="2"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    placeholder="Your current address"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="bg-gray-900/50 p-6 flex justify-end gap-3 border-t border-gray-700">
+              <button
+                onClick={() => setIsEditModalOpen(false)}
+                disabled={isSaving}
+                className="px-6 py-2.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveProfile}
+                disabled={isSaving}
+                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-blue-500/20"
+              >
+                {isSaving ? (
+                  <>
+                    <Loader className="w-4 h-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Check className="w-4 h-4" />
+                    Save Changes
+                  </>
+                )}
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };

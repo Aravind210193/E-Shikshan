@@ -67,7 +67,7 @@ const CourseDetail = () => {
       if (response.data.enrolled) {
         setEnrollmentStatus({
           enrolled: true,
-          hasAccess: response.data.paymentStatus === 'completed' || response.data.paymentStatus === 'free',
+          hasAccess: response.data.hasAccess, // Use backend's hasAccess check
           enrollment: response.data
         });
       } else {

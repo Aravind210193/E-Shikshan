@@ -79,11 +79,14 @@ export const coursesAPI = {
 export const enrollmentAPI = {
   enroll: (data) => api.post('/enrollments', data),
   processPayment: (enrollmentId, paymentData) => api.post(`/enrollments/${enrollmentId}/payment`, paymentData),
+  verifyTransaction: (enrollmentId, transactionData) => api.post(`/enrollments/${enrollmentId}/verify-transaction`, transactionData),
   getMyCourses: () => api.get('/enrollments/my-courses'),
   getEnrollment: (id) => api.get(`/enrollments/${id}`),
   checkStatus: (courseId) => api.get(`/enrollments/check/${courseId}`),
   updateProgress: (enrollmentId, progressData) => api.put(`/enrollments/${enrollmentId}/progress`, progressData),
-  deletePendingEnrollment: (id) => api.delete(`/enrollments/${id}`)
+  deletePendingEnrollment: (id) => api.delete(`/enrollments/${id}`),
+  // Payment webhook status
+  getPaymentStatus: (orderId) => api.get(`/webhooks/payment-status/${orderId}`)
 };
 
 export const achievementsAPI = {
