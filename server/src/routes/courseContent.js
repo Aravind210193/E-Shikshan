@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const CourseContent = require('../models/CourseModule');
 const UserProgress = require('../models/UserProgress');
-const { protect } = require('../middlewares/auth');
+const { protect } = require('../middlewares/authMiddleware');
 
 // @route   GET /api/course-content/:courseId
 // @desc    Get course content (modules, videos, assignments, quizzes)

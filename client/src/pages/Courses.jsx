@@ -170,18 +170,18 @@ const Courses = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <aside className="lg:col-span-1">
             <div className="sticky top-4">
-              <div className="flex items-center justify-between mb-4 lg:hidden">
-                <h3 className="text-lg font-semibold flex items-center gap-2">
-                  <Filter size={20} className="text-purple-400" />
+              <div className="flex items-center justify-between mb-4 lg:hidden px-2">
+                <h3 className="text-base font-semibold flex items-center gap-2 flex-shrink-0">
+                  <Filter size={18} className="text-purple-400" />
                   Filters
                 </h3>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowFilters(!showFilters)}
-                  className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 transition-all duration-300 border border-slate-700"
+                  className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 transition-all duration-300 border border-slate-700 flex-shrink-0"
                 >
-                  {showFilters ? <X size={20} /> : <Filter size={20} />}
+                  {showFilters ? <X size={18} /> : <Filter size={18} />}
                 </motion.button>
               </div>
 

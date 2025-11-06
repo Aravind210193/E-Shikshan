@@ -302,31 +302,31 @@ export default function Hakathons() {
   const pastCount = hackathons.filter((h) => (h.endDate ? new Date(h.endDate) < new Date() : false)).length;
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white min-h-screen flex flex-col">
+    <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white min-h-screen flex flex-col overflow-x-hidden">
       {/* Header and Filter Bar */}
       <header className="bg-black/30 backdrop-blur-lg border-b border-pink-500/20 px-4 sm:px-6 py-4 sticky top-0 z-20 shadow-lg">
-        <div className="max-w-8xl mx-auto">
+        <div className="max-w-8xl mx-auto w-full">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
+            <h1 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
               Hackathon Hub
             </h1>
             <div className="flex items-center gap-4 w-full sm:w-auto">
-              <div className="relative flex-grow sm:flex-grow-0">
+              <div className="relative flex-grow sm:flex-grow-0 sm:min-w-[250px]">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search hackathons..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full sm:w-64 bg-gray-800/50 border border-gray-700 rounded-lg pl-10 pr-4 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
+                  className="w-full bg-gray-800/50 border border-gray-700 rounded-lg pl-10 pr-4 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all text-sm"
                 />
               </div>
               {/* Sort selector */}
-              <div>
+              <div className="flex-shrink-0">
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                  className="bg-gray-800/50 border border-gray-700 rounded-lg px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-200 focus:ring-2 focus:ring-purple-500 focus:outline-none"
                 >
                   <option value="newest">Newest</option>
                   <option value="ending-soon">Ending Soon</option>
@@ -336,11 +336,11 @@ export default function Hakathons() {
                 </select>
               </div>
               {/* Status selector */}
-              <div>
+              <div className="flex-shrink-0">
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-200 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                  className="bg-gray-800/50 border border-gray-700 rounded-lg px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-200 focus:ring-2 focus:ring-purple-500 focus:outline-none"
                 >
                   <option value="all">All</option>
                   <option value="live">Live</option>
@@ -350,19 +350,19 @@ export default function Hakathons() {
               </div>
               <button
                 onClick={() => setShowFilterModal(true)}
-                className="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 px-4 py-2 rounded-lg hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 px-3 sm:px-4 py-2 rounded-lg hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg flex-shrink-0"
               >
-                <SlidersHorizontal className="w-5 h-5" />
-                <span className="hidden sm:inline">Filters</span>
+                <SlidersHorizontal className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="hidden sm:inline text-sm">Filters</span>
               </button>
             </div>
           </div>
           {/* Quick stats */}
-          <div className="grid grid-cols-4 gap-3 mt-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mt-4">
             {[{label: 'Total', value: totalCount}, {label: 'Live', value: liveCount}, {label: 'Upcoming', value: upcomingCount}, {label: 'Past', value: pastCount}].map((s, i) => (
-              <div key={i} className="text-center bg-gray-800/40 border border-gray-700/60 rounded-lg py-2">
+              <div key={i} className="text-center bg-gray-800/40 border border-gray-700/60 rounded-lg py-2 px-1">
                 <div className="text-xs text-gray-400">{s.label}</div>
-                <div className="text-lg font-semibold text-white">{s.value}</div>
+                <div className="text-base sm:text-lg font-semibold text-white">{s.value}</div>
               </div>
             ))}
           </div>
@@ -389,12 +389,12 @@ export default function Hakathons() {
       </header>
 
       {/* Main Content with Independent Scrolling */}
-  <main className="flex flex-col lg:flex-row flex-1 overflow-visible lg:overflow-hidden">
+  <main className="flex flex-col lg:flex-row flex-1 overflow-x-hidden lg:overflow-hidden w-full">
         {/* Left Panel: Hackathon Cards */}
   <aside className="w-full lg:w-1/3 xl:w-1/4 bg-black/20 lg:h-[calc(100vh-112px)] flex flex-col border-b lg:border-b-0 lg:border-r border-pink-500/20 shadow-lg">
-          <div className="p-4 overflow-y-auto custom-scrollbar">
+          <div className="p-2 sm:p-4 overflow-y-auto custom-scrollbar">
             <AnimatePresence>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
                 {loading ? (
                   <div className="col-span-full text-center text-gray-400 py-10">Loading hackathons...</div>
                 ) : error ? (
@@ -425,8 +425,8 @@ export default function Hakathons() {
         </aside>
 
         {/* Right Panel: Selected Hackathon Details */}
-  <section className="flex-1 bg-black/10 lg:h-[calc(100vh-112px)]">
-          <div className="h-full p-4 lg:p-8 overflow-y-auto custom-scrollbar">
+  <section className="flex-1 bg-black/10 lg:h-[calc(100vh-112px)] overflow-x-hidden">
+          <div className="h-full p-3 sm:p-4 lg:p-8 overflow-y-auto custom-scrollbar w-full">
             <AnimatePresence mode="wait">
               {selectedHackathon ? (
                 <motion.div
@@ -568,7 +568,7 @@ export default function Hakathons() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4 overflow-y-auto"
             onClick={() => setShowFilterModal(false)}
           >
             <motion.div
@@ -576,13 +576,13 @@ export default function Hakathons() {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="bg-gray-800/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-lg p-8 border border-purple-500/20"
+              className="bg-gray-800/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-lg p-4 sm:p-8 border border-purple-500/20 my-8"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header with decorative elements */}
-              <div className="flex justify-between items-center mb-8 pb-6 border-b border-gray-700/50">
+              <div className="flex justify-between items-center mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-gray-700/50">
                 <div>
-                  <h2 className="text-3xl font-bold text-white mb-1 flex items-center gap-3">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1 flex items-center gap-2 sm:gap-3">
                     <span className="p-2 bg-purple-500/20 rounded-lg">
                       <SlidersHorizontal className="w-6 h-6 text-purple-400" />
                     </span>

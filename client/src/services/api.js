@@ -139,15 +139,6 @@ export const contentAPI = {
   getFolderByBranchAndSubject: (branch, subject) => api.get(`/folders/branch/${branch}/subject/${subject}`),
 };
 
-// Course Content API - Videos, PDFs, Assignments, Quizzes
-export const courseContentAPI = {
-  getContent: (courseId) => api.get(`/course-content/${courseId}`),
-  getProgress: (courseId) => api.get(`/course-content/${courseId}/progress`),
-  markVideoComplete: (courseId, data) => api.post(`/course-content/${courseId}/video-complete`, data),
-  submitQuiz: (courseId, data) => api.post(`/course-content/${courseId}/quiz-submit`, data),
-  submitAssignment: (courseId, data) => api.post(`/course-content/${courseId}/assignment-submit`, data),
-};
-
 export const adminAPI = {
   // Dashboard
   getStats: () => api.get('/admin/stats'),

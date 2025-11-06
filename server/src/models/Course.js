@@ -27,6 +27,12 @@ const ProjectSchema = new mongoose.Schema({
   askAdminUrl: { type: String }
 }, { _id: true });
 
+const ResourceSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  url: { type: String, required: true },
+  type: { type: String, enum: ['pdf', 'doc', 'link', 'other'], default: 'pdf' }
+}, { _id: true });
+
 const SyllabusSchema = new mongoose.Schema({
   week: { type: Number },
   title: { type: String },
@@ -59,6 +65,7 @@ const CourseSchema = new mongoose.Schema({
   projects: { type: Number, default: 0 },
   videoLectures: [VideoLectureSchema],
   assignments: [AssignmentSchema],
+  resources: [ResourceSchema],
   projectsDetails: [ProjectSchema],
   status: { type: String, enum: ['active', 'draft', 'archived'], default: 'active' },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin' }

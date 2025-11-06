@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import { coursesAPI, enrollmentAPI } from '../services/api';
 import toast from 'react-hot-toast';
-import CourseContent from '../components/CourseContent';
 
 const CourseDetail = () => {
   const { id } = useParams();
@@ -385,21 +384,6 @@ const CourseDetail = () => {
                 ))}
               </div>
             </section>
-
-            {/* NEW: Course Content with Modules (Videos, PDFs, Assignments, Quizzes) */}
-            {hasAccess && (
-              <section>
-                <div className="mb-4">
-                  <h2 className="text-3xl font-bold mb-2">Course Content</h2>
-                  <p className="text-slate-400">Complete modules with videos, assignments, and quizzes</p>
-                </div>
-                <CourseContent 
-                  courseId={id} 
-                  hasAccess={hasAccess} 
-                  isEnrolled={isEnrolled} 
-                />
-              </section>
-            )}
 
             {/* Video Lectures */}
             {course.videoLectures && course.videoLectures.length > 0 && (

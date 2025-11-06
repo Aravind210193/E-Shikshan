@@ -161,8 +161,8 @@ export default function Roadmap() {
   }, [query, selectedCategory, sortBy, derivedRoadmaps]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-black text-white py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-black text-white py-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto w-full">
         
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -171,10 +171,10 @@ export default function Roadmap() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent px-4">
               Developer Roadmaps
             </h1>
-            <p className="max-w-3xl mx-auto text-gray-300 text-lg sm:text-xl leading-relaxed">
+            <p className="max-w-3xl mx-auto text-gray-300 text-base sm:text-lg md:text-xl leading-relaxed px-4">
               Step-by-step guides and paths to learn different tools or technologies. 
               <br className="hidden sm:block" />
               Choose your path and start your learning journey today.

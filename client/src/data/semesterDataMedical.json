@@ -10,28 +10,142 @@
         "1": {
           "name": "Year 1 - Semester 1",
           "subjects": [
-            { "name": "General Anatomy", "code": "ANAT101", "credits": 6, "type": "Core", "difficulty": "Medium", "units": [] },
-            { "name": "Upper Limb Anatomy", "code": "ANAT102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+            { 
+              "name": "General Anatomy", 
+              "code": "ANAT101", 
+              "credits": 6, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Introduction to Anatomy", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "25:30" },
+                { "title": "Anatomical Terminology", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "18:45" },
+                { "title": "Body Planes and Sections", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "15:20" }
+              ],
+              "pdfs": [
+                { "title": "General Anatomy Notes", "url": "/pdfs/medical/anatomy/general-anatomy.pdf" },
+                { "title": "Anatomical Terms Reference", "url": "/pdfs/medical/anatomy/anatomical-terms.pdf" }
+              ]
+            },
+            { 
+              "name": "Upper Limb Anatomy", 
+              "code": "ANAT102", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Upper Limb Overview", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "30:15" },
+                { "title": "Shoulder and Arm Anatomy", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "22:40" },
+                { "title": "Forearm and Hand", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "28:30" }
+              ],
+              "pdfs": [
+                { "title": "Upper Limb Atlas", "url": "/pdfs/medical/anatomy/upper-limb.pdf" },
+                { "title": "Muscle Origins & Insertions", "url": "/pdfs/medical/anatomy/muscles-upper.pdf" }
+              ]
+            }
           ]
         },
         "2": {
           "name": "Year 1 - Semester 2",
           "subjects": [
-            { "name": "Lower Limb Anatomy", "code": "ANAT201", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] },
-            { "name": "Thorax Anatomy", "code": "ANAT202", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+            { 
+              "name": "Lower Limb Anatomy", 
+              "code": "ANAT201", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Hip and Thigh Anatomy", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "26:15" },
+                { "title": "Leg and Foot Anatomy", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "24:50" },
+                { "title": "Lower Limb Joints", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "20:30" }
+              ],
+              "pdfs": [
+                { "title": "Lower Limb Complete Guide", "url": "/pdfs/medical/anatomy/lower-limb.pdf" },
+                { "title": "Lower Limb Muscles Chart", "url": "/pdfs/medical/anatomy/muscles-lower.pdf" }
+              ]
+            },
+            { 
+              "name": "Thorax Anatomy", 
+              "code": "ANAT202", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Thoracic Wall", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "22:40" },
+                { "title": "Heart Anatomy", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "28:15" },
+                { "title": "Lungs and Mediastinum", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "25:30" }
+              ],
+              "pdfs": [
+                { "title": "Thorax Anatomy Atlas", "url": "/pdfs/medical/anatomy/thorax.pdf" },
+                { "title": "Cardiac Anatomy Detailed", "url": "/pdfs/medical/anatomy/heart.pdf" }
+              ]
+            }
           ]
         },
         "3": {
           "name": "Year 2 - Semester 1",
           "subjects": [
-            { "name": "Head & Neck Anatomy", "code": "ANAT301", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
-            { "name": "Abdomen & Pelvis", "code": "ANAT302", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] }
+            { 
+              "name": "Head & Neck Anatomy", 
+              "code": "ANAT301", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Skull Anatomy", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "32:20" },
+                { "title": "Facial Muscles & Nerves", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "28:45" },
+                { "title": "Neck Triangles", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "24:15" }
+              ],
+              "pdfs": [
+                { "title": "Head & Neck Atlas", "url": "/pdfs/medical/anatomy/head-neck.pdf" },
+                { "title": "Cranial Nerves Guide", "url": "/pdfs/medical/anatomy/cranial-nerves.pdf" }
+              ]
+            },
+            { 
+              "name": "Abdomen & Pelvis", 
+              "code": "ANAT302", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Abdominal Wall", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "20:30" },
+                { "title": "GI Tract Anatomy", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "35:45" },
+                { "title": "Pelvic Anatomy", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "30:20" }
+              ],
+              "pdfs": [
+                { "title": "Abdomen Complete Guide", "url": "/pdfs/medical/anatomy/abdomen.pdf" },
+                { "title": "Pelvic Anatomy Notes", "url": "/pdfs/medical/anatomy/pelvis.pdf" }
+              ]
+            }
           ]
         },
         "4": {
           "name": "Year 2 - Semester 2",
           "subjects": [
-            { "name": "Neuroanatomy", "code": "ANAT401", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Neuroanatomy", 
+              "code": "ANAT401", 
+              "credits": 6, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Brain Anatomy Overview", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "40:15" },
+                { "title": "Spinal Cord Anatomy", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "28:30" },
+                { "title": "Brain Stem & Cranial Nerves", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "35:20" },
+                { "title": "Cerebral Cortex Functions", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "32:45" }
+              ],
+              "pdfs": [
+                { "title": "Neuroanatomy Atlas", "url": "/pdfs/medical/anatomy/neuroanatomy.pdf" },
+                { "title": "Brain Pathways Guide", "url": "/pdfs/medical/anatomy/brain-pathways.pdf" },
+                { "title": "Spinal Tracts Chart", "url": "/pdfs/medical/anatomy/spinal-tracts.pdf" }
+              ]
+            }
           ]
         }
       }
@@ -46,28 +160,142 @@
         "1": {
           "name": "Year 1 - Semester 1",
           "subjects": [
-            { "name": "General Physiology", "code": "PHYS101", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
-            { "name": "Blood & Immunity", "code": "PHYS102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+            { 
+              "name": "General Physiology", 
+              "code": "PHYS101", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Introduction to Physiology", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "22:15" },
+                { "title": "Cell Physiology", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "28:40" },
+                { "title": "Homeostasis Mechanisms", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "18:30" }
+              ],
+              "pdfs": [
+                { "title": "General Physiology Notes", "url": "/pdfs/medical/physiology/general-physiology.pdf" },
+                { "title": "Cell Function Guide", "url": "/pdfs/medical/physiology/cell-physiology.pdf" }
+              ]
+            },
+            { 
+              "name": "Blood & Immunity", 
+              "code": "PHYS102", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Blood Components", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "25:20" },
+                { "title": "Immune System Overview", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "30:45" },
+                { "title": "Innate vs Adaptive Immunity", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "22:15" }
+              ],
+              "pdfs": [
+                { "title": "Hematology Basics", "url": "/pdfs/medical/physiology/blood.pdf" },
+                { "title": "Immunity Complete Guide", "url": "/pdfs/medical/physiology/immunity.pdf" }
+              ]
+            }
           ]
         },
         "2": {
           "name": "Year 1 - Semester 2",
           "subjects": [
-            { "name": "Cardiovascular System", "code": "PHYS201", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
-            { "name": "Respiratory System", "code": "PHYS202", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+            { 
+              "name": "Cardiovascular System", 
+              "code": "PHYS201", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Cardiac Cycle", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "28:30" },
+                { "title": "ECG Basics", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "35:20" },
+                { "title": "Blood Pressure Regulation", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "24:15" }
+              ],
+              "pdfs": [
+                { "title": "Cardiovascular Physiology", "url": "/pdfs/medical/physiology/cardiovascular.pdf" },
+                { "title": "ECG Interpretation Guide", "url": "/pdfs/medical/physiology/ecg-guide.pdf" }
+              ]
+            },
+            { 
+              "name": "Respiratory System", 
+              "code": "PHYS202", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Mechanics of Breathing", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "26:40" },
+                { "title": "Gas Exchange", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "22:30" },
+                { "title": "Respiratory Control", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "20:15" }
+              ],
+              "pdfs": [
+                { "title": "Respiratory Physiology Notes", "url": "/pdfs/medical/physiology/respiratory.pdf" },
+                { "title": "Lung Function Tests", "url": "/pdfs/medical/physiology/lung-tests.pdf" }
+              ]
+            }
           ]
         },
         "3": {
           "name": "Year 2 - Semester 1",
           "subjects": [
-            { "name": "Renal System", "code": "PHYS301", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] },
-            { "name": "Nervous System", "code": "PHYS302", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Renal System", 
+              "code": "PHYS301", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Kidney Structure & Function", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "30:25" },
+                { "title": "Glomerular Filtration", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "24:40" },
+                { "title": "Acid-Base Balance", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "28:15" }
+              ],
+              "pdfs": [
+                { "title": "Renal Physiology Guide", "url": "/pdfs/medical/physiology/renal.pdf" },
+                { "title": "Fluid & Electrolyte Balance", "url": "/pdfs/medical/physiology/fluid-balance.pdf" }
+              ]
+            },
+            { 
+              "name": "Nervous System", 
+              "code": "PHYS302", 
+              "credits": 6, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Neuron Physiology", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "32:30" },
+                { "title": "Synaptic Transmission", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "26:45" },
+                { "title": "CNS Functions", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "35:20" },
+                { "title": "Autonomic Nervous System", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "28:15" }
+              ],
+              "pdfs": [
+                { "title": "Neurophysiology Complete", "url": "/pdfs/medical/physiology/neurophysiology.pdf" },
+                { "title": "Reflex Mechanisms", "url": "/pdfs/medical/physiology/reflexes.pdf" }
+              ]
+            }
           ]
         },
         "4": {
           "name": "Year 2 - Semester 2",
           "subjects": [
-            { "name": "Endocrine System", "code": "PHYS401", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Endocrine System", 
+              "code": "PHYS401", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Hormone Classification", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "22:40" },
+                { "title": "Hypothalamic-Pituitary Axis", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "30:25" },
+                { "title": "Thyroid & Adrenal Glands", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "28:15" },
+                { "title": "Glucose Metabolism", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "25:30" }
+              ],
+              "pdfs": [
+                { "title": "Endocrine System Atlas", "url": "/pdfs/medical/physiology/endocrine.pdf" },
+                { "title": "Hormone Functions Chart", "url": "/pdfs/medical/physiology/hormones.pdf" }
+              ]
+            }
           ]
         }
       }
@@ -82,14 +310,63 @@
         "1": {
           "name": "Year 1",
           "subjects": [
-            { "name": "Biomolecules & Enzymes", "code": "BIOCH101", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
-            { "name": "Metabolism Basics", "code": "BIOCH102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+            { 
+              "name": "Biomolecules & Enzymes", 
+              "code": "BIOCH101", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Proteins & Amino Acids", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "28:45" },
+                { "title": "Carbohydrates & Lipids", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "26:30" },
+                { "title": "Enzyme Kinetics", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "32:20" }
+              ],
+              "pdfs": [
+                { "title": "Biomolecules Guide", "url": "/pdfs/medical/biochemistry/biomolecules.pdf" },
+                { "title": "Enzyme Mechanisms", "url": "/pdfs/medical/biochemistry/enzymes.pdf" }
+              ]
+            },
+            { 
+              "name": "Metabolism Basics", 
+              "code": "BIOCH102", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Glycolysis & Gluconeogenesis", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "30:15" },
+                { "title": "TCA Cycle", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "24:40" },
+                { "title": "Lipid Metabolism", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "28:30" }
+              ],
+              "pdfs": [
+                { "title": "Metabolism Pathways", "url": "/pdfs/medical/biochemistry/metabolism.pdf" },
+                { "title": "Metabolic Maps", "url": "/pdfs/medical/biochemistry/metabolic-maps.pdf" }
+              ]
+            }
           ]
         },
         "2": {
           "name": "Year 2",
           "subjects": [
-            { "name": "Clinical Biochemistry", "code": "BIOCH201", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Clinical Biochemistry", 
+              "code": "BIOCH201", 
+              "credits": 6, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Lab Tests & Interpretation", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "35:20" },
+                { "title": "Liver Function Tests", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "26:45" },
+                { "title": "Kidney Function Tests", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "24:30" },
+                { "title": "Clinical Enzymology", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "28:15" }
+              ],
+              "pdfs": [
+                { "title": "Clinical Biochemistry Notes", "url": "/pdfs/medical/biochemistry/clinical-biochem.pdf" },
+                { "title": "Lab Values Reference", "url": "/pdfs/medical/biochemistry/lab-values.pdf" }
+              ]
+            }
           ]
         }
       }
@@ -104,28 +381,140 @@
         "1": {
           "name": "Clinical Year 1",
           "subjects": [
-            { "name": "Cardiology", "code": "MED101", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] },
-            { "name": "Respiratory Medicine", "code": "MED102", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Cardiology", 
+              "code": "MED101", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Heart Failure Management", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "32:40" },
+                { "title": "Arrhythmias Overview", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "28:30" },
+                { "title": "Coronary Artery Disease", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "35:20" }
+              ],
+              "pdfs": [
+                { "title": "Cardiology Clinical Guide", "url": "/pdfs/medical/medicine/cardiology.pdf" },
+                { "title": "ECG in Cardiac Diseases", "url": "/pdfs/medical/medicine/cardiac-ecg.pdf" }
+              ]
+            },
+            { 
+              "name": "Respiratory Medicine", 
+              "code": "MED102", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Asthma & COPD", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "30:15" },
+                { "title": "Pneumonia Management", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "26:45" },
+                { "title": "Tuberculosis Diagnosis", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "28:30" }
+              ],
+              "pdfs": [
+                { "title": "Respiratory Medicine Notes", "url": "/pdfs/medical/medicine/respiratory.pdf" },
+                { "title": "Chest X-ray Interpretation", "url": "/pdfs/medical/medicine/chest-xray.pdf" }
+              ]
+            }
           ]
         },
         "2": {
           "name": "Clinical Year 2",
           "subjects": [
-            { "name": "Gastroenterology", "code": "MED201", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] },
-            { "name": "Nephrology", "code": "MED202", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Gastroenterology", 
+              "code": "MED201", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Liver Diseases", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "32:25" },
+                { "title": "Peptic Ulcer Disease", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "24:40" },
+                { "title": "Inflammatory Bowel Disease", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "28:15" }
+              ],
+              "pdfs": [
+                { "title": "GI Medicine Guide", "url": "/pdfs/medical/medicine/gastro.pdf" },
+                { "title": "Endoscopy Atlas", "url": "/pdfs/medical/medicine/endoscopy.pdf" }
+              ]
+            },
+            { 
+              "name": "Nephrology", 
+              "code": "MED202", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Acute Kidney Injury", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "30:30" },
+                { "title": "Chronic Kidney Disease", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "28:20" },
+                { "title": "Glomerular Diseases", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "26:45" }
+              ],
+              "pdfs": [
+                { "title": "Nephrology Clinical Manual", "url": "/pdfs/medical/medicine/nephrology.pdf" },
+                { "title": "Dialysis Guidelines", "url": "/pdfs/medical/medicine/dialysis.pdf" }
+              ]
+            }
           ]
         },
         "3": {
           "name": "Clinical Year 3",
           "subjects": [
-            { "name": "Endocrinology", "code": "MED301", "credits": 4, "type": "Core", "difficulty": "Advanced", "units": [] },
-            { "name": "Infectious Diseases", "code": "MED302", "credits": 4, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Endocrinology", 
+              "code": "MED301", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Diabetes Management", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "35:20" },
+                { "title": "Thyroid Disorders", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "28:40" },
+                { "title": "Adrenal Diseases", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "24:15" }
+              ],
+              "pdfs": [
+                { "title": "Endocrine Disorders Guide", "url": "/pdfs/medical/medicine/endocrine.pdf" },
+                { "title": "Diabetes Treatment Protocols", "url": "/pdfs/medical/medicine/diabetes.pdf" }
+              ]
+            },
+            { 
+              "name": "Infectious Diseases", 
+              "code": "MED302", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Bacterial Infections", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "32:30" },
+                { "title": "Viral Diseases", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "28:45" },
+                { "title": "Antibiotic Stewardship", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "26:20" }
+              ],
+              "pdfs": [
+                { "title": "Infectious Diseases Manual", "url": "/pdfs/medical/medicine/infectious.pdf" },
+                { "title": "Antimicrobial Guidelines", "url": "/pdfs/medical/medicine/antibiotics.pdf" }
+              ]
+            }
           ]
         },
         "4": {
           "name": "Clinical Year 4",
           "subjects": [
-            { "name": "Hematology", "code": "MED401", "credits": 4, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Hematology", 
+              "code": "MED401", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Anemia Classification", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "30:25" },
+                { "title": "Leukemia & Lymphoma", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "35:40" },
+                { "title": "Coagulation Disorders", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "28:15" }
+              ],
+              "pdfs": [
+                { "title": "Hematology Atlas", "url": "/pdfs/medical/medicine/hematology.pdf" },
+                { "title": "Blood Film Interpretation", "url": "/pdfs/medical/medicine/blood-film.pdf" }
+              ]
+            }
           ]
         }
       }
@@ -140,26 +529,107 @@
         "1": {
           "name": "Surgery Year 1",
           "subjects": [
-            { "name": "Basics of Surgery", "code": "SURG101", "credits": 5, "type": "Core", "difficulty": "Medium", "units": [] },
-            { "name": "Wound Management", "code": "SURG102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+            { 
+              "name": "Basics of Surgery", 
+              "code": "SURG101", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Surgical Instruments", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "25:30" },
+                { "title": "Sterile Techniques", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "22:40" },
+                { "title": "Basic Suturing", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "28:15" }
+              ],
+              "pdfs": [
+                { "title": "Surgical Basics Manual", "url": "/pdfs/medical/surgery/basics.pdf" },
+                { "title": "Instruments Guide", "url": "/pdfs/medical/surgery/instruments.pdf" }
+              ]
+            },
+            { 
+              "name": "Wound Management", 
+              "code": "SURG102", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Wound Healing Process", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "24:20" },
+                { "title": "Wound Dressing Techniques", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "20:45" },
+                { "title": "Wound Infections", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "22:30" }
+              ],
+              "pdfs": [
+                { "title": "Wound Care Guide", "url": "/pdfs/medical/surgery/wound-care.pdf" },
+                { "title": "Dressing Protocols", "url": "/pdfs/medical/surgery/dressings.pdf" }
+              ]
+            }
           ]
         },
         "2": {
           "name": "Surgery Year 2",
           "subjects": [
-            { "name": "General Surgical Procedures", "code": "SURG201", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "General Surgical Procedures", 
+              "code": "SURG201", 
+              "credits": 6, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Appendectomy", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "35:25" },
+                { "title": "Hernia Repair", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "32:40" },
+                { "title": "Laparoscopic Surgery Basics", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "40:15" },
+                { "title": "Thyroidectomy", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "38:30" }
+              ],
+              "pdfs": [
+                { "title": "Surgical Procedures Atlas", "url": "/pdfs/medical/surgery/procedures.pdf" },
+                { "title": "Laparoscopy Guide", "url": "/pdfs/medical/surgery/laparoscopy.pdf" }
+              ]
+            }
           ]
         },
         "3": {
           "name": "Surgery Year 3",
           "subjects": [
-            { "name": "Orthopedic Surgery Basics", "code": "SURG301", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Orthopedic Surgery Basics", 
+              "code": "SURG301", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Fracture Management", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "32:20" },
+                { "title": "Joint Examination", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "28:45" },
+                { "title": "Casting Techniques", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "24:30" }
+              ],
+              "pdfs": [
+                { "title": "Orthopedics Fundamentals", "url": "/pdfs/medical/surgery/orthopedics.pdf" },
+                { "title": "Fracture Classification", "url": "/pdfs/medical/surgery/fractures.pdf" }
+              ]
+            }
           ]
         },
         "4": {
           "name": "Surgery Year 4",
           "subjects": [
-            { "name": "Advanced Surgical Techniques", "code": "SURG401", "credits": 6, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Advanced Surgical Techniques", 
+              "code": "SURG401", 
+              "credits": 6, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Colorectal Surgery", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "42:15" },
+                { "title": "Vascular Surgery Basics", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "38:30" },
+                { "title": "Emergency Surgery", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "35:40" }
+              ],
+              "pdfs": [
+                { "title": "Advanced Surgery Manual", "url": "/pdfs/medical/surgery/advanced.pdf" },
+                { "title": "Emergency Protocols", "url": "/pdfs/medical/surgery/emergency.pdf" }
+              ]
+            }
           ]
         }
       }
@@ -174,20 +644,85 @@
         "1": {
           "name": "Pediatrics Year 1",
           "subjects": [
-            { "name": "Growth & Development", "code": "PED101", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] },
-            { "name": "Neonatology", "code": "PED102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [] }
+            { 
+              "name": "Growth & Development", 
+              "code": "PED101", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Pediatric Growth Assessment", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "26:30" },
+                { "title": "Developmental Milestones", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "24:45" },
+                { "title": "Nutrition in Children", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "22:20" }
+              ],
+              "pdfs": [
+                { "title": "Growth Charts & Assessment", "url": "/pdfs/medical/pediatrics/growth.pdf" },
+                { "title": "Development Guidelines", "url": "/pdfs/medical/pediatrics/development.pdf" }
+              ]
+            },
+            { 
+              "name": "Neonatology", 
+              "code": "PED102", 
+              "credits": 4, 
+              "type": "Core", 
+              "difficulty": "Medium", 
+              "units": [],
+              "videos": [
+                { "title": "Newborn Assessment", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "28:40" },
+                { "title": "Neonatal Resuscitation", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "32:15" },
+                { "title": "Neonatal Jaundice", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "24:30" }
+              ],
+              "pdfs": [
+                { "title": "Neonatology Essentials", "url": "/pdfs/medical/pediatrics/neonatology.pdf" },
+                { "title": "NRP Guidelines", "url": "/pdfs/medical/pediatrics/nrp.pdf" }
+              ]
+            }
           ]
         },
         "2": {
           "name": "Pediatrics Year 2",
           "subjects": [
-            { "name": "Pediatric Infections", "code": "PED201", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Pediatric Infections", 
+              "code": "PED201", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Common Childhood Infections", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "30:25" },
+                { "title": "Vaccination Schedule", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "26:40" },
+                { "title": "Pediatric Fever Management", "url": "https://www.youtube.com/watch?v=8kcf0DPoZ5k", "duration": "22:15" },
+                { "title": "Pneumonia in Children", "url": "https://www.youtube.com/watch?v=bRyDeNyKDcs", "duration": "28:30" }
+              ],
+              "pdfs": [
+                { "title": "Pediatric Infections Guide", "url": "/pdfs/medical/pediatrics/infections.pdf" },
+                { "title": "Immunization Schedule", "url": "/pdfs/medical/pediatrics/vaccines.pdf" }
+              ]
+            }
           ]
         },
         "3": {
           "name": "Pediatrics Year 3",
           "subjects": [
-            { "name": "Pediatric Cardiology", "code": "PED301", "credits": 5, "type": "Core", "difficulty": "Advanced", "units": [] }
+            { 
+              "name": "Pediatric Cardiology", 
+              "code": "PED301", 
+              "credits": 5, 
+              "type": "Core", 
+              "difficulty": "Advanced", 
+              "units": [],
+              "videos": [
+                { "title": "Congenital Heart Diseases", "url": "https://www.youtube.com/watch?v=Jmw8V6c_E-E", "duration": "35:40" },
+                { "title": "Pediatric Echocardiography", "url": "https://www.youtube.com/watch?v=YoYrEwA9gYU", "duration": "32:20" },
+                { "title": "Heart Failure in Children", "url": "https://www.youtube.com/watch?v=M6R7zqTNo0I", "duration": "28:15" }
+              ],
+              "pdfs": [
+                { "title": "Pediatric Cardiology Manual", "url": "/pdfs/medical/pediatrics/cardiology.pdf" },
+                { "title": "CHD Classification", "url": "/pdfs/medical/pediatrics/chd.pdf" }
+              ]
+            }
           ]
         }
       }

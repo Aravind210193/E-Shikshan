@@ -198,49 +198,56 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
 
       {/* Top Bar (mobile hamburger) */}
       <div className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-40 md:hidden flex items-center justify-between px-4 py-3">
-        <button onClick={() => setMenuOpen(true)}>
+        <button onClick={() => setMenuOpen(true)} className="flex-shrink-0">
           <MenuIcon className="w-6 h-6 text-white" />
         </button>
-            <div className=''>
-                {!isLoggedIn ? (
-                    <div className='flex  md:flex space-x-3'>
-                        <button onClick={()=>navigate('/login')} className='px-4 py-2 
-                        rounded-full bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'>
-                        Login
-                        </button>  
+        
+        {/* Logo in center for mobile */}
+        <div className="flex-1 flex justify-center">
+          <Link to='/' onClick={() => setMenuOpen(false)}>
+            <img src='/logo1.png' alt='logo' className='h-10 w-auto' />
+          </Link>
+        </div>
+        
+        {/* Login/Profile section */}
+        <div className='flex-shrink-0'>
+          {!isLoggedIn ? (
+            <div className='flex space-x-2'>
+              <button onClick={()=>navigate('/login')} className='px-3 py-1.5 text-sm
+              rounded-full bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'>
+                Login
+              </button>  
 
-                        <button onClick={()=>navigate('/signup')} className='cursor-pointer px-4 py-2 rounded-full bg-green-500 text-white hover:bg-green-600'>
-                            Sign up
-                        </button>
-                    </div>
-                ):(
-          <div>
-            <div className='relative' ref={mobileMenuRef}>
-                                {/* Profile Picture or User Icon */}
-                                {user?.profilePicture ? (
-                                  <img 
-                                    src={user.profilePicture} 
-                                    alt={user?.name || 'User'}
-                                    onClick={()=>setShowMenu(!showMenu)}
-                                    className='w-9 h-9 rounded-full object-cover border-2 border-gray-600 hover:border-gray-400 cursor-pointer transition-all'
-                                  />
-                                ) : (
-                                  <User size={36} onClick={()=>setShowMenu(!showMenu)} className='text-3xl rounded-full bg-gray-700 text-gray-300 hover:text-white cursor-pointer' />
-                                )}
-                                { showMenu && (
-              <div className='absolute right-0 mt-2 w-56 rounded-lg bg-gray-800 border border-gray-700 shadow-2xl py-2 z-50'>
-                
-                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Profile</Link>
-                <Link onClick={() => setShowMenu(false)} to='/profile?edit=true' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Edit Details</Link>
-                <Link onClick={() => setShowMenu(false)} to='/settings' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Settings</Link>
-                <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700 transition-colors'>Log out</button>
-                            </div>
-                                )}
-                            </div>
-                    </div>
-                )}
-              
+              <button onClick={()=>navigate('/signup')} className='cursor-pointer px-3 py-1.5 text-sm rounded-full bg-green-500 text-white hover:bg-green-600'>
+                Sign up
+              </button>
             </div>
+          ):(
+            <div className='relative' ref={mobileMenuRef}>
+              {/* Profile Picture or User Icon */}
+              {user?.profilePicture ? (
+                <img 
+                  src={user.profilePicture} 
+                  alt={user?.name || 'User'}
+                  onClick={()=>setShowMenu(!showMenu)}
+                  className='w-9 h-9 rounded-full object-cover border-2 border-gray-600 hover:border-gray-400 cursor-pointer transition-all'
+                />
+              ) : (
+                <User size={36} onClick={()=>setShowMenu(!showMenu)} className='text-3xl rounded-full bg-gray-700 text-gray-300 hover:text-white cursor-pointer' />
+              )}
+              
+              {/* Profile Dropdown - Mobile */}
+              {showMenu && (
+                <div className='absolute right-0 mt-2 w-48 rounded-lg bg-gray-800 border border-gray-700 shadow-2xl py-2 z-[60]'>
+                  <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Profile</Link>
+                  <Link onClick={() => setShowMenu(false)} to='/profile?edit=true' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Edit Details</Link>
+                  <Link onClick={() => setShowMenu(false)} to='/settings' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Settings</Link>
+                  <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700 transition-colors'>Log out</button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Main content */}
