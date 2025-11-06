@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SlidersHorizontal, X, Calendar, Trophy, Tag, Flag, Users, Search } from "lucide-react";
 import { hackathonsAPI } from "../services/api";
 import { motion, AnimatePresence } from "framer-motion";
@@ -171,6 +171,19 @@ export default function Hakathons() {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
+
+  // Track viewport size to switch mobile vs desktop behavior
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1023px)');
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener ? mq.addEventListener('change', update) : mq.addListener(update);
+    return () => {
+      mq.removeEventListener ? mq.removeEventListener('change', update) : mq.removeListener(update);
+    };
+  }, []);
 
   // ...existing code...
   useEffect(() => {
@@ -405,7 +418,13 @@ export default function Hakathons() {
                       key={hackathon._id}
                       hackathon={hackathon}
                       isSelected={selectedHackathon?._id === hackathon._id}
-                      onClick={() => setSelectedHackathon(hackathon)}
+                      onClick={() => {
+                        if (isMobile) {
+                          navigate(`/hackathon/${hackathon._id}`);
+                        } else {
+                          setSelectedHackathon(hackathon);
+                        }
+                      }}
                     />
                   ))
                 ) : (
@@ -424,8 +443,8 @@ export default function Hakathons() {
           </div>
         </aside>
 
-        {/* Right Panel: Selected Hackathon Details */}
-  <section className="flex-1 bg-black/10 lg:h-[calc(100vh-112px)] overflow-x-hidden">
+    {/* Right Panel: Selected Hackathon Details (desktop only) */}
+  <section className="hidden lg:block flex-1 bg-black/10 lg:h-[calc(100vh-112px)] overflow-x-hidden">
           <div className="h-full p-3 sm:p-4 lg:p-8 overflow-y-auto custom-scrollbar w-full">
             <AnimatePresence mode="wait">
               {selectedHackathon ? (
