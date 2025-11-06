@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import {AnimatePresence, motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, Filter, Clock, Users, Star, Award, BookOpen, ChevronDown, TrendingUp, Zap, Heart, Video, FileText } from 'lucide-react';
+import { Search, Filter, Clock, Users, Star, Award, BookOpen, ChevronDown, TrendingUp, Zap, Heart, Video, FileText, X } from 'lucide-react';
 import { enrollmentAPI, coursesAPI } from '../services/api';
 import toast from 'react-hot-toast';
 
@@ -93,7 +93,6 @@ const Courses = () => {
     }
 
     if (selectedDuration !== 'All') {
-      const weeks = parseInt(course => course.duration);
       if (selectedDuration === '4-6 weeks') {
         filtered = filtered.filter(course => {
           const w = parseInt(course.duration);

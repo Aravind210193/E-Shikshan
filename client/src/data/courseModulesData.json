@@ -1,0 +1,627 @@
+{
+  "undergraduate": {
+    "cse": {
+      "branch": "Computer Science & Engineering",
+      "courses": [
+        {
+          "courseCode": "CSE101",
+          "title": "Programming in C",
+          "modules": [
+            {
+              "order": 1,
+              "title": "Introduction to Programming",
+              "description": "Learn the basics of programming and C language",
+              "videos": [
+                {
+                  "title": "What is Programming?",
+                  "description": "Understanding programming fundamentals",
+                  "duration": "12:30",
+                  "url": "https://www.youtube.com/watch?v=zOjov-2OZ0E",
+                  "free": true,
+                  "order": 1
+                },
+                {
+                  "title": "Introduction to C Language",
+                  "description": "History and features of C programming",
+                  "duration": "18:45",
+                  "url": "https://www.youtube.com/watch?v=KJgsSFOSQv0",
+                  "free": false,
+                  "order": 2
+                },
+                {
+                  "title": "Setting Up C Development Environment",
+                  "description": "Install and configure IDE for C programming",
+                  "duration": "15:20",
+                  "url": "https://www.youtube.com/watch?v=1uR4tL-OSNI",
+                  "free": false,
+                  "order": 3
+                }
+              ],
+              "resources": [
+                {
+                  "title": "C Programming Notes - Module 1",
+                  "description": "Comprehensive notes on C basics",
+                  "type": "PDF",
+                  "url": "/pdfs/cs/c-programming-module1.pdf",
+                  "size": "3.2 MB",
+                  "order": 1
+                },
+                {
+                  "title": "C Programming Cheat Sheet",
+                  "description": "Quick reference guide for C syntax",
+                  "type": "PDF",
+                  "url": "/pdfs/cs/c-cheat-sheet.pdf",
+                  "size": "1.5 MB",
+                  "order": 2
+                }
+              ],
+              "assignments": [
+                {
+                  "title": "Write Your First C Program",
+                  "description": "Create a simple 'Hello World' program and basic arithmetic operations",
+                  "instructions": "1. Install C compiler\n2. Write a program that prints 'Hello World'\n3. Modify it to perform addition of two numbers\n4. Submit screenshots of output",
+                  "difficulty": "Easy",
+                  "points": 10,
+                  "deadline": "2025-12-31T23:59:59",
+                  "submissionUrl": "https://forms.gle/example1",
+                  "askAdminUrl": "https://wa.me/1234567890?text=Question about C Programming Assignment 1",
+                  "order": 1
+                }
+              ],
+              "quizzes": [
+                {
+                  "title": "C Basics Quiz",
+                  "description": "Test your knowledge of C programming basics",
+                  "duration": 15,
+                  "passingScore": 70,
+                  "attempts": 3,
+                  "questions": [
+                    {
+                      "question": "Who developed the C programming language?",
+                      "options": ["Dennis Ritchie", "Bjarne Stroustrup", "James Gosling", "Guido van Rossum"],
+                      "correctAnswer": 0,
+                      "explanation": "Dennis Ritchie developed C at Bell Labs in 1972",
+                      "points": 1
+                    },
+                    {
+                      "question": "Which of the following is the correct syntax for main function in C?",
+                      "options": ["int main()", "void main()", "main()", "function main()"],
+                      "correctAnswer": 0,
+                      "explanation": "int main() is the standard entry point for C programs",
+                      "points": 1
+                    },
+                    {
+                      "question": "What is the correct format specifier for integer in C?",
+                      "options": ["%d", "%f", "%c", "%s"],
+                      "correctAnswer": 0,
+                      "explanation": "%d is used for integer values in printf and scanf",
+                      "points": 1
+                    }
+                  ],
+                  "order": 1
+                }
+              ],
+              "isLocked": false
+            },
+            {
+              "order": 2,
+              "title": "Data Types and Variables",
+              "description": "Understanding data types, variables, and operators in C",
+              "videos": [
+                {
+                  "title": "Data Types in C",
+                  "description": "Learn about int, float, char, double",
+                  "duration": "20:15",
+                  "url": "https://www.youtube.com/watch?v=vs0bfSNd8wM",
+                  "free": false,
+                  "order": 1
+                },
+                {
+                  "title": "Variables and Constants",
+                  "description": "Declaration, initialization, and scope",
+                  "duration": "16:40",
+                  "url": "https://www.youtube.com/watch?v=vs0bfSNd8wM",
+                  "free": false,
+                  "order": 2
+                }
+              ],
+              "resources": [
+                {
+                  "title": "Data Types Reference Guide",
+                  "description": "Complete guide to C data types with examples",
+                  "type": "PDF",
+                  "url": "/pdfs/cs/c-datatypes.pdf",
+                  "size": "2.8 MB",
+                  "order": 1
+                }
+              ],
+              "assignments": [
+                {
+                  "title": "Variable Operations Program",
+                  "description": "Create a program demonstrating different data types and operations",
+                  "instructions": "Write a program that uses int, float, and char variables, performs arithmetic operations, and displays results with proper formatting",
+                  "difficulty": "Medium",
+                  "points": 15,
+                  "deadline": "2025-12-31T23:59:59",
+                  "submissionUrl": "https://forms.gle/example2",
+                  "askAdminUrl": "https://wa.me/1234567890?text=Question about Data Types Assignment",
+                  "order": 1
+                }
+              ],
+              "quizzes": [
+                {
+                  "title": "Data Types Quiz",
+                  "description": "Test your understanding of C data types",
+                  "duration": 20,
+                  "passingScore": 70,
+                  "attempts": 3,
+                  "questions": [
+                    {
+                      "question": "What is the size of int data type in C (on 32-bit system)?",
+                      "options": ["2 bytes", "4 bytes", "8 bytes", "1 byte"],
+                      "correctAnswer": 1,
+                      "explanation": "On most 32-bit systems, int is 4 bytes",
+                      "points": 1
+                    },
+                    {
+                      "question": "Which data type is used to store decimal numbers?",
+                      "options": ["int", "float", "char", "void"],
+                      "correctAnswer": 1,
+                      "explanation": "float is used for decimal/floating-point numbers",
+                      "points": 1
+                    }
+                  ],
+                  "order": 1
+                }
+              ],
+              "isLocked": false
+            }
+          ]
+        },
+        {
+          "courseCode": "CSE102",
+          "title": "Data Structures",
+          "modules": [
+            {
+              "order": 1,
+              "title": "Introduction to Data Structures",
+              "description": "Understanding basic data structures concepts",
+              "videos": [
+                {
+                  "title": "What are Data Structures?",
+                  "description": "Introduction and importance",
+                  "duration": "14:25",
+                  "url": "https://www.youtube.com/watch?v=bum_19loj9A",
+                  "free": true,
+                  "order": 1
+                },
+                {
+                  "title": "Arrays in C",
+                  "description": "Understanding arrays and their operations",
+                  "duration": "22:30",
+                  "url": "https://www.youtube.com/watch?v=AT14lCXuMKI",
+                  "free": false,
+                  "order": 2
+                }
+              ],
+              "resources": [
+                {
+                  "title": "Data Structures Notes",
+                  "description": "Complete notes on basic data structures",
+                  "type": "PDF",
+                  "url": "/pdfs/cs/data-structures-intro.pdf",
+                  "size": "4.1 MB",
+                  "order": 1
+                }
+              ],
+              "assignments": [
+                {
+                  "title": "Array Implementation",
+                  "description": "Implement array operations - insertion, deletion, search",
+                  "instructions": "Create a C program that implements basic array operations with menu-driven interface",
+                  "difficulty": "Medium",
+                  "points": 20,
+                  "deadline": "2025-12-31T23:59:59",
+                  "submissionUrl": "https://forms.gle/example3",
+                  "askAdminUrl": "https://wa.me/1234567890?text=Question about Arrays Assignment",
+                  "order": 1
+                }
+              ],
+              "quizzes": [
+                {
+                  "title": "Arrays Quiz",
+                  "description": "Test your knowledge of arrays",
+                  "duration": 20,
+                  "passingScore": 70,
+                  "attempts": 3,
+                  "questions": [
+                    {
+                      "question": "What is the index of the first element in an array?",
+                      "options": ["0", "1", "-1", "Depends on declaration"],
+                      "correctAnswer": 0,
+                      "explanation": "Arrays in C are zero-indexed",
+                      "points": 1
+                    },
+                    {
+                      "question": "What is the time complexity of accessing an element in an array?",
+                      "options": ["O(1)", "O(n)", "O(log n)", "O(n²)"],
+                      "correctAnswer": 0,
+                      "explanation": "Array access is constant time O(1)",
+                      "points": 1
+                    }
+                  ],
+                  "order": 1
+                }
+              ],
+              "isLocked": false
+            }
+          ]
+        }
+      ]
+    },
+    "ece": {
+      "branch": "Electronics & Communication Engineering",
+      "courses": [
+        {
+          "courseCode": "ECE101",
+          "title": "Basic Electronics",
+          "modules": [
+            {
+              "order": 1,
+              "title": "Introduction to Electronics",
+              "description": "Fundamentals of electronic components and circuits",
+              "videos": [
+                {
+                  "title": "Introduction to Electronics",
+                  "description": "Basic concepts and components",
+                  "duration": "15:30",
+                  "url": "https://www.youtube.com/watch?v=Fwj_d3uO5g8",
+                  "free": true,
+                  "order": 1
+                },
+                {
+                  "title": "Resistors and Capacitors",
+                  "description": "Understanding passive components",
+                  "duration": "18:20",
+                  "url": "https://www.youtube.com/watch?v=6Maq5IyHSuc",
+                  "free": false,
+                  "order": 2
+                }
+              ],
+              "resources": [
+                {
+                  "title": "Electronics Basics Notes",
+                  "description": "Comprehensive notes on basic electronics",
+                  "type": "PDF",
+                  "url": "/pdfs/ece/electronics-basics.pdf",
+                  "size": "3.5 MB",
+                  "order": 1
+                }
+              ],
+              "assignments": [
+                {
+                  "title": "Circuit Design Assignment",
+                  "description": "Design a simple resistor-capacitor circuit",
+                  "instructions": "Use circuit simulation software to design and test an RC circuit. Submit circuit diagram and analysis.",
+                  "difficulty": "Medium",
+                  "points": 20,
+                  "deadline": "2025-12-31T23:59:59",
+                  "submissionUrl": "https://forms.gle/ece-example1",
+                  "askAdminUrl": "https://wa.me/1234567890?text=ECE Circuit Question",
+                  "order": 1
+                }
+              ],
+              "quizzes": [
+                {
+                  "title": "Electronics Basics Quiz",
+                  "description": "Test your electronics knowledge",
+                  "duration": 15,
+                  "passingScore": 70,
+                  "attempts": 3,
+                  "questions": [
+                    {
+                      "question": "What is the unit of resistance?",
+                      "options": ["Ohm", "Ampere", "Volt", "Watt"],
+                      "correctAnswer": 0,
+                      "explanation": "Resistance is measured in Ohms (Ω)",
+                      "points": 1
+                    },
+                    {
+                      "question": "Which component stores electrical charge?",
+                      "options": ["Resistor", "Capacitor", "Inductor", "Diode"],
+                      "correctAnswer": 1,
+                      "explanation": "Capacitors store electrical charge",
+                      "points": 1
+                    }
+                  ],
+                  "order": 1
+                }
+              ],
+              "isLocked": false
+            }
+          ]
+        }
+      ]
+    },
+    "civil": {
+      "branch": "Civil Engineering",
+      "courses": [
+        {
+          "courseCode": "CE101",
+          "title": "Engineering Mechanics",
+          "modules": [
+            {
+              "order": 1,
+              "title": "Fundamentals of Mechanics",
+              "description": "Basic concepts of statics and dynamics",
+              "videos": [
+                {
+                  "title": "Introduction to Engineering Mechanics",
+                  "description": "Overview of mechanics principles",
+                  "duration": "16:45",
+                  "url": "https://www.youtube.com/watch?v=example-civil1",
+                  "free": true,
+                  "order": 1
+                }
+              ],
+              "resources": [
+                {
+                  "title": "Mechanics Notes",
+                  "description": "Engineering mechanics fundamentals",
+                  "type": "PDF",
+                  "url": "/pdfs/civil/mechanics-basics.pdf",
+                  "size": "4.2 MB",
+                  "order": 1
+                }
+              ],
+              "assignments": [
+                {
+                  "title": "Forces Analysis",
+                  "description": "Analyze force systems and calculate resultants",
+                  "instructions": "Solve 5 problems on force systems and submit calculations with diagrams",
+                  "difficulty": "Medium",
+                  "points": 20,
+                  "deadline": "2025-12-31T23:59:59",
+                  "submissionUrl": "https://forms.gle/civil-example1",
+                  "askAdminUrl": "https://wa.me/1234567890?text=Civil Mechanics Question",
+                  "order": 1
+                }
+              ],
+              "quizzes": [
+                {
+                  "title": "Mechanics Basics Quiz",
+                  "description": "Test your mechanics knowledge",
+                  "duration": 20,
+                  "passingScore": 70,
+                  "attempts": 3,
+                  "questions": [
+                    {
+                      "question": "What is the SI unit of force?",
+                      "options": ["Newton", "Joule", "Watt", "Pascal"],
+                      "correctAnswer": 0,
+                      "explanation": "Force is measured in Newtons (N)",
+                      "points": 1
+                    }
+                  ],
+                  "order": 1
+                }
+              ],
+              "isLocked": false
+            }
+          ]
+        }
+      ]
+    },
+    "mech": {
+      "branch": "Mechanical Engineering",
+      "courses": [
+        {
+          "courseCode": "ME101",
+          "title": "Engineering Thermodynamics",
+          "modules": [
+            {
+              "order": 1,
+              "title": "Introduction to Thermodynamics",
+              "description": "Basic thermodynamic concepts and laws",
+              "videos": [
+                {
+                  "title": "What is Thermodynamics?",
+                  "description": "Introduction to thermodynamic principles",
+                  "duration": "14:30",
+                  "url": "https://www.youtube.com/watch?v=example-mech1",
+                  "free": true,
+                  "order": 1
+                }
+              ],
+              "resources": [
+                {
+                  "title": "Thermodynamics Notes",
+                  "description": "Complete thermodynamics notes",
+                  "type": "PDF",
+                  "url": "/pdfs/mech/thermodynamics-intro.pdf",
+                  "size": "3.8 MB",
+                  "order": 1
+                }
+              ],
+              "assignments": [
+                {
+                  "title": "Laws of Thermodynamics",
+                  "description": "Solve problems on first and second law",
+                  "instructions": "Complete 10 numerical problems and submit solutions",
+                  "difficulty": "Hard",
+                  "points": 25,
+                  "deadline": "2025-12-31T23:59:59",
+                  "submissionUrl": "https://forms.gle/mech-example1",
+                  "askAdminUrl": "https://wa.me/1234567890?text=Thermodynamics Question",
+                  "order": 1
+                }
+              ],
+              "quizzes": [
+                {
+                  "title": "Thermodynamics Quiz",
+                  "description": "Test your thermodynamics knowledge",
+                  "duration": 20,
+                  "passingScore": 70,
+                  "attempts": 3,
+                  "questions": [
+                    {
+                      "question": "What is the zeroth law of thermodynamics about?",
+                      "options": ["Energy conservation", "Thermal equilibrium", "Entropy", "Work"],
+                      "correctAnswer": 1,
+                      "explanation": "Zeroth law deals with thermal equilibrium",
+                      "points": 1
+                    }
+                  ],
+                  "order": 1
+                }
+              ],
+              "isLocked": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "medical": {
+    "mbbs": {
+      "branch": "MBBS - Medicine",
+      "courses": [
+        {
+          "courseCode": "MBBS-ANAT101",
+          "title": "Human Anatomy",
+          "modules": [
+            {
+              "order": 1,
+              "title": "General Anatomy",
+              "description": "Introduction to human anatomy",
+              "videos": [
+                {
+                  "title": "Introduction to Anatomy",
+                  "description": "Overview of human body systems",
+                  "duration": "20:00",
+                  "url": "https://www.youtube.com/watch?v=example-medical1",
+                  "free": true,
+                  "order": 1
+                }
+              ],
+              "resources": [
+                {
+                  "title": "Anatomy Atlas PDF",
+                  "description": "Complete human anatomy reference",
+                  "type": "PDF",
+                  "url": "/pdfs/medical/anatomy-atlas.pdf",
+                  "size": "8.5 MB",
+                  "order": 1
+                }
+              ],
+              "assignments": [
+                {
+                  "title": "Body Systems Diagram",
+                  "description": "Label and describe major body systems",
+                  "instructions": "Create detailed diagrams of skeletal, muscular, and circulatory systems",
+                  "difficulty": "Hard",
+                  "points": 30,
+                  "deadline": "2025-12-31T23:59:59",
+                  "submissionUrl": "https://forms.gle/medical-example1",
+                  "askAdminUrl": "https://wa.me/1234567890?text=Anatomy Question",
+                  "order": 1
+                }
+              ],
+              "quizzes": [
+                {
+                  "title": "General Anatomy Quiz",
+                  "description": "Test your anatomy knowledge",
+                  "duration": 25,
+                  "passingScore": 75,
+                  "attempts": 2,
+                  "questions": [
+                    {
+                      "question": "How many bones are in the adult human body?",
+                      "options": ["206", "208", "210", "212"],
+                      "correctAnswer": 0,
+                      "explanation": "Adult humans have 206 bones",
+                      "points": 1
+                    }
+                  ],
+                  "order": 1
+                }
+              ],
+              "isLocked": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "postgraduate": {
+    "mtech": {
+      "branch": "M.Tech - Computer Science",
+      "courses": [
+        {
+          "courseCode": "MTECH-AI501",
+          "title": "Artificial Intelligence",
+          "modules": [
+            {
+              "order": 1,
+              "title": "Introduction to AI",
+              "description": "AI fundamentals and applications",
+              "videos": [
+                {
+                  "title": "What is Artificial Intelligence?",
+                  "description": "Overview of AI field",
+                  "duration": "18:30",
+                  "url": "https://www.youtube.com/watch?v=example-ai1",
+                  "free": true,
+                  "order": 1
+                }
+              ],
+              "resources": [
+                {
+                  "title": "AI Research Papers",
+                  "description": "Latest AI research compilation",
+                  "type": "PDF",
+                  "url": "/pdfs/pg/ai-research.pdf",
+                  "size": "6.2 MB",
+                  "order": 1
+                }
+              ],
+              "assignments": [
+                {
+                  "title": "AI Algorithm Implementation",
+                  "description": "Implement a search algorithm",
+                  "instructions": "Code and test A* or BFS algorithm in Python",
+                  "difficulty": "Hard",
+                  "points": 30,
+                  "deadline": "2025-12-31T23:59:59",
+                  "submissionUrl": "https://forms.gle/pg-example1",
+                  "askAdminUrl": "https://wa.me/1234567890?text=AI Question",
+                  "order": 1
+                }
+              ],
+              "quizzes": [
+                {
+                  "title": "AI Fundamentals Quiz",
+                  "description": "Test your AI knowledge",
+                  "duration": 30,
+                  "passingScore": 75,
+                  "attempts": 2,
+                  "questions": [
+                    {
+                      "question": "Who is considered the father of AI?",
+                      "options": ["Alan Turing", "John McCarthy", "Marvin Minsky", "Herbert Simon"],
+                      "correctAnswer": 1,
+                      "explanation": "John McCarthy coined the term 'Artificial Intelligence'",
+                      "points": 1
+                    }
+                  ],
+                  "order": 1
+                }
+              ],
+              "isLocked": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

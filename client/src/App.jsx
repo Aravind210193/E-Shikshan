@@ -65,6 +65,11 @@ const App = () => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, [location.pathname]);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   
   const hideLayout = ["/login","/signup"].includes(location.pathname) || location.pathname.startsWith('/admin');
   return (

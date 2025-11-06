@@ -330,7 +330,7 @@ const HeroWithOrb = () => {
 
   return (
     <div style={{ width: '100%', height: '80vh', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}>
         <Orb
           hoverIntensity={0.5}
           rotateOnHover={true}
@@ -338,13 +338,13 @@ const HeroWithOrb = () => {
           forceHoverState={false}
         />
       </div>
-      <section className='absolute top-0 left-0 w-full h-full z-10 text-white flex flex-col justify-center items-center text-center px-6 pointer-events-none'>
-        <div className="pointer-events-auto flex flex-col items-center">
-            <h1 className='text-4xl md:text-6xl font-bold leading-tight'>
+      <section className='absolute top-0 left-0 w-full h-full z-10 text-white flex flex-col justify-center items-center text-center px-4 md:px-6'>
+        <div className="flex flex-col items-center max-w-4xl mx-auto">
+            <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight'>
               Learn Smarter. Build Your Future
             </h1>
 
-            <p className='mt-4 text-lg md:text-xl text-gray-200 max-w-2xl'>
+            <p className='mt-4 text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl'>
               <TextType 
                 text={["Welcome To E-Shikshan", "Explore AI,ML,Data Analytics,Competative Exams,Hackathos,Labs & more!"]}
                 typingSpeed={60}
@@ -354,17 +354,23 @@ const HeroWithOrb = () => {
               />
             </p>
 
-            <div className='mt-6 flex flex-col md:flex-row gap-4'>
-              <Link to='/courses' className='px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md'>
+            <div className='mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0'>
+              <Link 
+                to='/courses' 
+                className='px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md transition-colors text-center touch-manipulation cursor-pointer'
+              >
                 Explore Courses
               </Link>
-              <button onClick={scrollToFeatures} className='px-6 py-3 border border-gray-300 hover:bg-white hover:text-black font-semibold rounded-md'>
+              <button 
+                onClick={scrollToFeatures} 
+                className='px-6 py-3 border-2 border-gray-300 hover:bg-white hover:text-black font-semibold rounded-md transition-colors touch-manipulation cursor-pointer'
+              >
                 Get Started
               </button>
             </div>
         </div>
 
-        <div className='absolute bottom-6 text-gray-300 animate-bounce pointer-events-auto'>
+        <div className='absolute bottom-6 text-gray-300 animate-bounce text-sm md:text-base'>
           Scroll To Explore
         </div>
       </section>

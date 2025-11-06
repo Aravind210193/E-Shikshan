@@ -180,12 +180,21 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
         </div>
         <nav className="flex flex-col p-4 space-y-3">
           <Link to="/" onClick={() => setMenuOpen(false)} className={getLinkClasses('/')}>Home</Link>
+          <Link to="/content" onClick={() => setMenuOpen(false)} className={getLinkClasses('/content')}>Content</Link>
           <Link to="/courses" onClick={() => setMenuOpen(false)} className={getLinkClasses('/courses')}>Courses</Link>
+          <Link to="/hackathons" onClick={() => setMenuOpen(false)} className={getLinkClasses('/hackathons')}>Hackathons</Link>
           <Link to="/roadmaps" onClick={() => setMenuOpen(false)} className={getLinkClasses('/roadmaps')}>Roadmaps</Link>
           <Link to="/jobrole" onClick={() => setMenuOpen(false)} className={getLinkClasses('/jobrole')}>Job Details</Link>
         </nav>
-        </div>
+      </div>
       
+      {/* Overlay for mobile sidebar */}
+      {menuOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
 
       {/* Top Bar (mobile hamburger) */}
       <div className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-40 md:hidden flex items-center justify-between px-4 py-3">

@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import TextType from "./TextType";
 // --- CONFIGURATION ---
 const DEFAULT_PARTICLE_COUNT = 12;
@@ -212,6 +212,7 @@ const ParticleCard = ({
     element.addEventListener("mouseleave", handleMouseLeave);
     element.addEventListener("mousemove", handleMouseMove);
     element.addEventListener("click", handleClick);
+    element.addEventListener("touchend", handleClick); // Add touch support
 
     return () => {
       isHoveredRef.current = false;
@@ -219,6 +220,7 @@ const ParticleCard = ({
       element.removeEventListener("mouseleave", handleMouseLeave);
       element.removeEventListener("mousemove", handleMouseMove);
       element.removeEventListener("click", handleClick);
+      element.removeEventListener("touchend", handleClick);
       clearAllParticles();
     };
   }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor, onClick]);
@@ -354,6 +356,7 @@ const Features = ({
             card p-5 rounded-[20px] border border-[3px]
             hover:shadow-xl transition-all duration-300 font-light
             cursor-pointer flex flex-col justify-between min-h-[200px] aspect-[4/3]
+            touch-manipulation select-none
             ${enableBorderGlow ? "card--border-glow" : ""}
           `;
 
@@ -391,33 +394,33 @@ const Features = ({
 
           if (enableStars) {
             return (
-              <ParticleCard
-                key={index}
-                className={cardClassName}
-                style={cardStyle}
-                onClick={() => navigate(card.path)}
-                disableAnimations={shouldDisableAnimations}
-                particleCount={particleCount}
-                glowColor={glowColor}
-                enableTilt={enableTilt}
-                clickEffect={clickEffect}
-                enableMagnetism={enableMagnetism}
-              >
-                {cardContent}
-              </ParticleCard>
+              <Link to={card.path} key={index} className="block">
+                <ParticleCard
+                  className={cardClassName}
+                  style={cardStyle}
+                  disableAnimations={shouldDisableAnimations}
+                  particleCount={particleCount}
+                  glowColor={glowColor}
+                  enableTilt={enableTilt}
+                  clickEffect={clickEffect}
+                  enableMagnetism={enableMagnetism}
+                >
+                  {cardContent}
+                </ParticleCard>
+              </Link>
             );
           }
 
           // Fallback for when stars are disabled
           return (
-            <div
-              key={index}
-              className={`${cardClassName} relative overflow-hidden`}
-              style={cardStyle}
-              onClick={() => navigate(card.path)}
-            >
-              {cardContent}
-            </div>
+            <Link to={card.path} key={index} className="block">
+              <div
+                className={`${cardClassName} relative overflow-hidden`}
+                style={cardStyle}
+              >
+                {cardContent}
+              </div>
+            </Link>
           );
         })}
       </div>
