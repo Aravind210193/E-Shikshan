@@ -1,6 +1,13 @@
 const Enrollment = require('../models/Enrollment');
 const Course = require('../models/Course');
 const User = require('../models/User');
+const Razorpay = require('razorpay');
+
+// Initialize Razorpay instance
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET
+});
 
 // @desc    Enroll in a course
 // @route   POST /api/enrollments
@@ -9,6 +16,11 @@ const enrollInCourse = async (req, res) => {
   try {
     const { courseId, userDetails } = req.body;
     const userId = req.user._id;
+
+    console.log('\n🎓 === NEW ENROLLMENT REQUEST ===');
+    console.log('👤 User ID:', userId);
+    console.log('📚 Course ID:', courseId);
+    console.log('📋 User Details:', userDetails);
 
     // Validate required fields
     if (!courseId || !userDetails?.fullName || !userDetails?.email) {
@@ -26,14 +38,39 @@ const enrollInCourse = async (req, res) => {
     // Check if already enrolled
     const existingEnrollment = await Enrollment.findOne({ userId, courseId });
     if (existingEnrollment) {
-      return res.status(400).json({ 
-        message: 'You are already enrolled in this course',
-        enrollment: existingEnrollment
-      });
+      console.log('⚠️ User already enrolled:', existingEnrollment._id);
+      
+      // If already enrolled and payment completed, return enrollment
+      if (existingEnrollment.paymentStatus === 'completed' || existingEnrollment.paymentStatus === 'free') {
+        return res.status(200).json({ 
+          message: 'You are already enrolled in this course',
+          enrollment: existingEnrollment,
+          requiresPayment: false
+        });
+      }
+      
+      // If enrollment exists but payment pending, return existing enrollment with Razorpay order
+      if (existingEnrollment.paymentStatus === 'pending' && existingEnrollment.paymentDetails?.razorpayOrderId) {
+        return res.status(200).json({
+          message: 'Enrollment exists with pending payment. Please complete payment.',
+          enrollment: existingEnrollment,
+          requiresPayment: true,
+          razorpayOrderId: existingEnrollment.paymentDetails.razorpayOrderId,
+          razorpayKeyId: process.env.RAZORPAY_KEY_ID,
+          course: {
+            title: course.title,
+            price: course.price,
+            priceAmount: course.priceAmount
+          }
+        });
+      }
     }
 
     // Determine if course is free
     const isFree = course.price === 'Free' || course.priceAmount === 0;
+
+    console.log('💰 Course Price:', course.price, '(₹' + course.priceAmount + ')');
+    console.log('🎫 Is Free:', isFree);
 
     // Create enrollment
     const enrollment = new Enrollment({
@@ -42,15 +79,58 @@ const enrollInCourse = async (req, res) => {
       userDetails,
       paymentStatus: isFree ? 'free' : 'pending',
       paymentMethod: isFree ? 'free' : undefined,
-      amountPaid: isFree ? 0 : course.priceAmount,
-      status: isFree ? 'active' : 'pending', // Only activate for free courses, paid courses need payment verification
+      amountPaid: isFree ? 0 : undefined,
+      status: isFree ? 'active' : 'pending',
       enrolledAt: new Date()
     });
 
-    await enrollment.save();
+    // If course is paid, create Razorpay order
+    let razorpayOrder = null;
+    if (!isFree) {
+      try {
+        console.log('\n💳 === CREATING RAZORPAY ORDER ===');
+        console.log('💰 Amount:', course.priceAmount * 100, 'paise (₹' + course.priceAmount + ')');
+        
+        // Create Razorpay order
+        razorpayOrder = await razorpay.orders.create({
+          amount: Math.round(course.priceAmount * 100), // Convert to paise (smallest currency unit)
+          currency: 'INR',
+          receipt: `ENROLLMENT_${enrollment._id}`,
+          notes: {
+            enrollmentId: enrollment._id.toString(),
+            userId: userId.toString(),
+            courseId: courseId.toString(),
+            courseName: course.title,
+            userEmail: userDetails.email,
+            userName: userDetails.fullName
+          }
+        });
 
-    // Increment student count only for free courses immediately.
-    // For paid courses, increment will happen after successful payment in webhook.
+        console.log('✅ Razorpay Order Created:', razorpayOrder.id);
+        console.log('📦 Order Details:', razorpayOrder);
+
+        // Store Razorpay order details in enrollment
+        enrollment.paymentDetails = {
+          razorpayOrderId: razorpayOrder.id,
+          amount: course.priceAmount,
+          currency: 'INR',
+          status: 'created',
+          createdAt: new Date()
+        };
+
+      } catch (razorpayError) {
+        console.error('❌ Razorpay Order Creation Failed:', razorpayError);
+        return res.status(500).json({
+          message: 'Failed to create payment order',
+          error: razorpayError.message
+        });
+      }
+    }
+
+    await enrollment.save();
+    console.log('✅ Enrollment created:', enrollment._id);
+
+    // For free courses, grant immediate access
     if (isFree) {
       course.students += 1;
       await course.save();
@@ -70,24 +150,44 @@ const enrollInCourse = async (req, res) => {
             status: 'active'
           });
           await user.save();
+          console.log('✅ Course added to user enrolledCourses');
         }
       }
+
+      console.log('✅ Free course - Access granted immediately');
+      console.log('================================\n');
+
+      return res.status(201).json({
+        message: 'Successfully enrolled in the course!',
+        enrollment,
+        requiresPayment: false,
+        course: {
+          title: course.title,
+          price: course.price,
+          priceAmount: course.priceAmount
+        }
+      });
     }
 
+    // For paid courses, return Razorpay order details for payment
+    console.log('📤 Returning enrollment with Razorpay order for payment');
+    console.log('================================\n');
+
     res.status(201).json({
-      message: isFree 
-        ? 'Successfully enrolled in the course!' 
-        : 'Enrollment created. Please complete payment to access course content.',
+      message: 'Enrollment created. Please complete payment to access course content.',
       enrollment,
-      requiresPayment: !isFree,
+      requiresPayment: true,
+      razorpayOrderId: razorpayOrder.id,
+      razorpayKeyId: process.env.RAZORPAY_KEY_ID,
       course: {
         title: course.title,
         price: course.price,
         priceAmount: course.priceAmount
       }
     });
+
   } catch (error) {
-    console.error('Enrollment error:', error);
+    console.error('❌ Enrollment error:', error);
     res.status(500).json({ 
       message: 'Failed to enroll in course', 
       error: error.message 
@@ -95,24 +195,8 @@ const enrollInCourse = async (req, res) => {
   }
 };
 
-// @desc    Process payment for enrollment (Payment Gateway Webhook Simulation)
-// @route   POST /api/enrollments/:id/payment
-// @access  Private
-// 
-// PAYMENT FLOW WITH GATEWAY:
-// 1. User enrolls → enrollment created with status='pending'
-// 2. User completes UPI payment through PhonePe/Google Pay/Paytm
-// 3. Payment gateway detects payment and sends webhook to this endpoint
-// 4. This endpoint receives transaction ID from payment gateway
-// 5. Verifies transaction ID matches the payment in gateway
-// 6. Updates enrollment status to 'completed' and grants access
-//
-// CURRENT IMPLEMENTATION:
-// - Simulates payment gateway by generating transaction ID
-// - In production, replace with actual gateway webhook (Razorpay/Stripe)
-// - Transaction ID will come from gateway's webhook payload
-// - Verify payment signature from gateway for security
-//
+// ⚠️ DEPRECATED - This endpoint is no longer used with real payment gateway
+// Payment processing now happens via Razorpay webhook
 const processPayment = async (req, res) => {
   try {
     const { enrollmentId } = req.params;

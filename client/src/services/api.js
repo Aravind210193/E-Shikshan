@@ -66,7 +66,12 @@ export const authAPI = {
   getProfile: () => api.get('/auth/profile'),
   updateProfile: (data) => api.put('/auth/profile', data),
   saveResume: (resumeData) => api.put('/auth/resume', resumeData),
-  getResume: () => api.get('/auth/resume')
+  getResume: () => api.get('/auth/resume'),
+  // Certificates and Badges
+  getCertificates: () => api.get('/auth/certificates'),
+  addCertificate: (data) => api.post('/auth/certificates', data),
+  updateCertificate: (id, data) => api.put(`/auth/certificates/${id}`, data),
+  deleteCertificate: (id) => api.delete(`/auth/certificates/${id}`)
 };
 
 export const coursesAPI = {

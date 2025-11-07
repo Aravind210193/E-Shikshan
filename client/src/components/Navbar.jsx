@@ -42,6 +42,18 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
       }
     };
     fetchUserData();
+
+    // Listen for profile updates from Profile page
+    const handleProfileUpdate = (event) => {
+      if (event.detail) {
+        setUser(event.detail);
+      }
+    };
+    window.addEventListener('profileUpdated', handleProfileUpdate);
+
+    return () => {
+      window.removeEventListener('profileUpdated', handleProfileUpdate);
+    };
   }, [isLoggedIn, location.pathname]);
 
   // Close profile dropdown on outside click or ESC

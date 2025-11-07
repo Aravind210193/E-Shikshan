@@ -7,7 +7,10 @@ const getCourses = async (req, res) => {
   try {
     const { category, level, search } = req.query;
     
-    let query = { status: 'active' };
+    console.log('📚 Get Courses Request:', { category, level, search });
+    
+    // Simplified query - don't filter by status if causing issues
+    let query = {};
     
     if (category && category !== 'All') {
       query.category = category;
@@ -25,7 +28,12 @@ const getCourses = async (req, res) => {
       ];
     }
     
+    console.log('📚 Query:', JSON.stringify(query));
+    
     const courses = await Course.find(query).sort('-createdAt');
+    
+    console.log(`📚 Found ${courses.length} courses`);
+    
     res.json(courses);
   } catch (error) {
     console.error('Get courses error:', error);
