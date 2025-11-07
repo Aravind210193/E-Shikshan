@@ -6,7 +6,7 @@ import semesterData from '../data/semesterData.json';
 import semesterDataMedical from '../data/semesterDataMedical.json';
 
 const SubjectDetail = () => {
-  const { branch, semester, code } = useParams();
+  const { branch, semester, subjectCode } = useParams();
   const navigate = useNavigate();
   const [subject, setSubject] = useState(null);
   const [branchData, setBranchData] = useState(null);
@@ -22,12 +22,12 @@ const SubjectDetail = () => {
     const branchInfo = allBranches[branch];
     if (branchInfo && branchInfo.semesters && branchInfo.semesters[semester]) {
       setBranchData(branchInfo);
-      const subjectInfo = branchInfo.semesters[semester].subjects.find(s => s.code === code);
+      const subjectInfo = branchInfo.semesters[semester].subjects.find(s => s.code === subjectCode);
       setSubject(subjectInfo);
     }
-  }, [branch, semester, code]);
+  }, [branch, semester, subjectCode]);
 
-  if (!subject || !branchData) {
+  if (!branchData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 flex items-center justify-center">
         <div className="text-white text-xl">Loading...</div>
@@ -35,8 +35,43 @@ const SubjectDetail = () => {
     );
   }
 
-  const hasVideos = subject.videos && subject.videos.length > 0;
-  const hasPdfs = subject.pdfs && subject.pdfs.length > 0;
+  if (!subject) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
+        <div className="max-w-4xl mx-auto px-4 py-10">
+          <button
+            onClick={() => navigate(`/content/${branch}`)}
+            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6"
+          >
+            <ArrowLeft size={20} />
+            <span>Back to Semesters</span>
+          </button>
+          <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6">
+            <h1 className="text-2xl font-bold mb-2">Subject not found</h1>
+            <p className="text-gray-300">We couldn't find the subject with code "{subjectCode}" in semester {semester} of {branch}.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Derive resources: prefer subject-level arrays; otherwise aggregate from units
+  const unitVideos = Array.isArray(subject.units)
+    ? subject.units.flatMap(u => Array.isArray(u.videos) ? u.videos : [])
+    : [];
+  const unitPdfs = Array.isArray(subject.units)
+    ? subject.units.flatMap(u => Array.isArray(u.pdfs) ? u.pdfs : [])
+    : [];
+
+  const subjectVideos = Array.isArray(subject.videos) && subject.videos.length > 0
+    ? subject.videos
+    : unitVideos;
+  const subjectPdfs = Array.isArray(subject.pdfs) && subject.pdfs.length > 0
+    ? subject.pdfs
+    : unitPdfs;
+
+  const hasVideos = subjectVideos.length > 0;
+  const hasPdfs = subjectPdfs.length > 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
@@ -44,7 +79,7 @@ const SubjectDetail = () => {
       <div className="bg-gray-800/50 border-b border-gray-700/50 sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <button
-            onClick={() => navigate(`/semesters/${branch}`)}
+            onClick={() => navigate(`/content/${branch}`)}
             className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
           >
             <ArrowLeft size={20} />
@@ -100,7 +135,7 @@ const SubjectDetail = () => {
             <div className="flex items-center gap-3">
               <Video className="h-8 w-8 text-blue-400" />
               <div>
-                <div className="text-2xl font-bold">{hasVideos ? subject.videos.length : 0}</div>
+                <div className="text-2xl font-bold">{hasVideos ? subjectVideos.length : 0}</div>
                 <div className="text-sm text-gray-400">Video Lectures</div>
               </div>
             </div>
@@ -115,7 +150,7 @@ const SubjectDetail = () => {
             <div className="flex items-center gap-3">
               <FileText className="h-8 w-8 text-purple-400" />
               <div>
-                <div className="text-2xl font-bold">{hasPdfs ? subject.pdfs.length : 0}</div>
+                <div className="text-2xl font-bold">{hasPdfs ? subjectPdfs.length : 0}</div>
                 <div className="text-sm text-gray-400">PDF Resources</div>
               </div>
             </div>
@@ -149,7 +184,7 @@ const SubjectDetail = () => {
               }`}
             >
               <Video size={20} />
-              Video Lectures ({hasVideos ? subject.videos.length : 0})
+              Video Lectures ({hasVideos ? subjectVideos.length : 0})
             </button>
             <button
               onClick={() => setActiveTab('pdfs')}
@@ -160,7 +195,7 @@ const SubjectDetail = () => {
               }`}
             >
               <FileText size={20} />
-              PDF Resources ({hasPdfs ? subject.pdfs.length : 0})
+              PDF Resources ({hasPdfs ? subjectPdfs.length : 0})
             </button>
           </div>
 
@@ -169,7 +204,7 @@ const SubjectDetail = () => {
             {activeTab === 'videos' && (
               <div className="space-y-4">
                 {hasVideos ? (
-                  subject.videos.map((video, index) => (
+                  subjectVideos.map((video, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, x: -20 }}
@@ -184,7 +219,7 @@ const SubjectDetail = () => {
                           </div>
                           <div className="flex-1">
                             <h3 className="font-semibold text-white mb-1">{video.title}</h3>
-                            <p className="text-sm text-gray-400">Duration: {video.duration}</p>
+                            {video.duration && <p className="text-sm text-gray-400">Duration: {video.duration}</p>}
                           </div>
                         </div>
                         <a
@@ -212,7 +247,7 @@ const SubjectDetail = () => {
             {activeTab === 'pdfs' && (
               <div className="space-y-4">
                 {hasPdfs ? (
-                  subject.pdfs.map((pdf, index) => (
+                  subjectPdfs.map((pdf, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, x: -20 }}

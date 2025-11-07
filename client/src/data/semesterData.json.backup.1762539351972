@@ -162,76 +162,6 @@
                 ],
                 "hours": 20
               }
-            ],
-            "videos": [
-              {
-                "title": "Introduction to Real Numbers",
-                "description": "Understanding the concept of real numbers and their properties",
-                "duration": "25:30",
-                "url": "https://www.youtube.com/watch?v=L3LCe1h227o"
-              },
-              {
-                "title": "Euclid's Division Algorithm Explained",
-                "description": "Step-by-step explanation of Euclid's Division Algorithm with examples",
-                "duration": "18:45",
-                "url": "https://www.youtube.com/watch?v=H_2_nqKAZ5w"
-              },
-              {
-                "title": "Fundamental Theorem of Arithmetic",
-                "description": "Understanding prime factorization and unique factorization theorem",
-                "duration": "22:15",
-                "url": "https://www.youtube.com/watch?v=5BFgwYqRlXs"
-              },
-              {
-                "title": "Irrational Numbers Deep Dive",
-                "description": "Exploring irrational numbers with proofs and examples",
-                "duration": "30:00",
-                "url": "https://www.youtube.com/watch?v=p73EXRYnCgw"
-              }
-            ],
-            "pdfs": [
-              {
-                "title": "Real Numbers Complete Notes",
-                "description": "Comprehensive notes covering all topics in Real Numbers unit",
-                "pages": 25,
-                "size": "2.5 MB",
-                "url": "https://ncert.nic.in/textbook/pdf/iemth1.pdf"
-              },
-              {
-                "title": "Practice Problems - Real Numbers",
-                "description": "100+ practice problems with detailed solutions",
-                "pages": 40,
-                "size": "3.8 MB",
-                "url": "https://www.mathsisfun.com/algebra/real-numbers.html"
-              },
-              {
-                "title": "Quick Revision Guide",
-                "description": "Important formulas and concepts for quick revision",
-                "pages": 10,
-                "size": "1.2 MB",
-                "url": "https://byjus.com/maths/real-numbers/"
-              },
-              {
-                "title": "NCERT Solutions - Real Numbers",
-                "description": "Complete solutions to all NCERT textbook exercises",
-                "pages": 28,
-                "size": "2.8 MB",
-                "url": "https://ncert.nic.in/textbook/pdf/iemth1.pdf"
-              },
-              {
-                "title": "Class 10 Math Formula Sheet",
-                "description": "All important formulas for Class 10 Mathematics",
-                "pages": 15,
-                "size": "1.5 MB",
-                "url": "https://www.toppr.com/guides/maths-formulas/class-10-maths-formulas/"
-              },
-              {
-                "title": "Previous Year Board Questions - Real Numbers",
-                "description": "Collection of CBSE board exam questions from past 5 years",
-                "pages": 22,
-                "size": "2.2 MB",
-                "url": "https://www.cbse.gov.in/"
-              }
             ]
           },
           {
@@ -332,42 +262,6 @@
                 ],
                 "hours": 15
               }
-            ],
-            "videos": [
-              {
-                "title": "Reflection of Light - Complete Chapter",
-                "description": "Laws of reflection, plane mirrors, and spherical mirrors",
-                "duration": "35:20",
-                "url": "https://www.youtube.com/watch?v=p3-lj3XSEok"
-              },
-              {
-                "title": "Refraction and Snell's Law",
-                "description": "Understanding refraction, refractive index, and Snell's law",
-                "duration": "28:45",
-                "url": "https://www.youtube.com/watch?v=u8BXPmG56yw"
-              },
-              {
-                "title": "Lenses: Convex and Concave",
-                "description": "Image formation by lenses and lens formula",
-                "duration": "32:15",
-                "url": "https://www.youtube.com/watch?v=fzHOWKMF7ME"
-              }
-            ],
-            "pdfs": [
-              {
-                "title": "Light - NCERT Class 10",
-                "description": "Complete chapter from NCERT textbook",
-                "pages": 35,
-                "size": "3.2 MB",
-                "url": "https://ncert.nic.in/textbook/pdf/jesc110.pdf"
-              },
-              {
-                "title": "Ray Optics Practice Problems",
-                "description": "100+ solved problems on reflection and refraction",
-                "pages": 42,
-                "size": "3.8 MB",
-                "url": "https://www.cbse.nic.in/"
-              }
             ]
           },
           {
@@ -407,9 +301,7 @@
                 ],
                 "hours": 15
               }
-            ],
-            "videos": [],
-            "pdfs": []
+            ]
           },
           {
             "name": "English",
@@ -448,9 +340,7 @@
                 ],
                 "hours": 15
               }
-            ],
-            "videos": [],
-            "pdfs": []
+            ]
           },
           {
             "name": "Hindi",
@@ -489,9 +379,7 @@
                 ],
                 "hours": 15
               }
-            ],
-            "videos": [],
-            "pdfs": []
+            ]
           }
         ]
       },
@@ -535,9 +423,7 @@
                 ],
                 "hours": 20
               }
-            ],
-            "videos": [],
-            "pdfs": []
+            ]
           },
           {
             "name": "Science",
@@ -576,9 +462,7 @@
                 ],
                 "hours": 18
               }
-            ],
-            "videos": [],
-            "pdfs": []
+            ]
           },
           {
             "name": "Social Science",
@@ -617,9 +501,7 @@
                 ],
                 "hours": 15
               }
-            ],
-            "videos": [],
-            "pdfs": []
+            ]
           }
         ]
       }
@@ -2044,294 +1926,6 @@
                     }
                   ]
                 }
-              ],
-              "videos": [
-                {
-                  "title": "Introduction to Limits and Continuity",
-                  "description": "Comprehensive introduction to the concept of limits, continuity, and their applications in calculus",
-                  "duration": "32:45",
-                  "url": "https://www.youtube.com/watch?v=riXcZT2ICjA"
-                },
-                {
-                  "title": "Derivatives and Differentiation Rules",
-                  "description": "Learn the fundamental rules of differentiation including product, quotient, and chain rules",
-                  "duration": "28:30",
-                  "url": "https://www.youtube.com/watch?v=S0_qX4VJhMQ"
-                },
-                {
-                  "title": "L'Hospital's Rule and Applications",
-                  "description": "Understanding L'Hospital's Rule for evaluating limits of indeterminate forms",
-                  "duration": "24:15",
-                  "url": "https://www.youtube.com/watch?v=wXXej6AmVjQ"
-                },
-                {
-                  "title": "Maxima and Minima Problems",
-                  "description": "Solving optimization problems using calculus - finding maximum and minimum values",
-                  "duration": "35:20",
-                  "url": "https://www.youtube.com/watch?v=AMKQZYuEMgA"
-                },
-                {
-                  "title": "Applications of Differential Calculus",
-                  "description": "Real-world applications including rate of change, velocity, and acceleration",
-                  "duration": "26:50",
-                  "url": "https://www.youtube.com/watch?v=54_XRjHhZzI"
-                },
-                {
-                  "title": "Introduction to Integration",
-                  "description": "Basic concepts of integration and antiderivatives",
-                  "duration": "28:15",
-                  "url": "https://www.youtube.com/watch?v=rfG8ce4nNh0"
-                },
-                {
-                  "title": "Integration Techniques",
-                  "description": "Substitution, integration by parts, and partial fractions",
-                  "duration": "35:42",
-                  "url": "https://www.youtube.com/watch?v=H9eCT6f_ZBU"
-                },
-                {
-                  "title": "Definite Integrals",
-                  "description": "Understanding and computing definite integrals",
-                  "duration": "24:30",
-                  "url": "https://www.youtube.com/watch?v=Gc3QvUB0PkI"
-                },
-                {
-                  "title": "Introduction to Matrices",
-                  "description": "Basic matrix operations and properties",
-                  "duration": "22:45",
-                  "url": "https://www.youtube.com/watch?v=xyAuNHPsq-g"
-                },
-                {
-                  "title": "Determinants Explained",
-                  "description": "Computing determinants and their properties",
-                  "duration": "26:18",
-                  "url": "https://www.youtube.com/watch?v=Ip3X9LOh2dk"
-                },
-                {
-                  "title": "Matrix Inverse and Applications",
-                  "description": "Finding inverse matrices and solving linear systems",
-                  "duration": "31:20",
-                  "url": "https://www.youtube.com/watch?v=uQhTuRlWMxw"
-                },
-                {
-                  "title": "Introduction to Vectors",
-                  "description": "Vector basics, components, and magnitude",
-                  "duration": "25:30",
-                  "url": "https://www.youtube.com/watch?v=ml4NSzCQobk"
-                },
-                {
-                  "title": "Dot Product and Cross Product",
-                  "description": "Understanding scalar and vector products",
-                  "duration": "29:45",
-                  "url": "https://www.youtube.com/watch?v=h0NJK4mEIJU"
-                },
-                {
-                  "title": "Vector Calculus Applications",
-                  "description": "Differentiation and integration of vector functions",
-                  "duration": "33:15",
-                  "url": "https://www.youtube.com/watch?v=1lGM5DEdMaw"
-                },
-                {
-                  "title": "Introduction to Differential Equations",
-                  "description": "Basic concepts and first-order equations",
-                  "duration": "27:40",
-                  "url": "https://www.youtube.com/watch?v=6o7b9yyhH7k"
-                },
-                {
-                  "title": "Solving Linear Differential Equations",
-                  "description": "Techniques for solving linear DEs",
-                  "duration": "32:25",
-                  "url": "https://www.youtube.com/watch?v=IUb-vWSqBeQ"
-                },
-                {
-                  "title": "Applications of Differential Equations",
-                  "description": "Real-world applications in physics and engineering",
-                  "duration": "29:50",
-                  "url": "https://www.youtube.com/watch?v=Hmx1pFoWN_4"
-                }
-              ],
-              "pdfs": [
-                {
-                  "title": "Differential Calculus Complete Notes",
-                  "description": "Comprehensive lecture notes covering all topics with detailed explanations and examples",
-                  "pages": 45,
-                  "size": "4.2 MB",
-                  "url": "https://www.math.ucdavis.edu/~kouba/CalcOneDIRECTORY/lhopitaldirectory/LHopital.pdf"
-                },
-                {
-                  "title": "Practice Problems - Differentiation",
-                  "description": "150+ solved problems with step-by-step solutions for practice",
-                  "pages": 60,
-                  "size": "5.8 MB",
-                  "url": "https://tutorial.math.lamar.edu/pdf/calculus_cheat_sheet_derivatives.pdf"
-                },
-                {
-                  "title": "Formula Sheet - Differential Calculus",
-                  "description": "Quick reference guide with all important formulas and theorems",
-                  "pages": 8,
-                  "size": "800 KB",
-                  "url": "https://www.whitman.edu/mathematics/calculus_online/calculus.pdf"
-                },
-                {
-                  "title": "Previous Year Question Papers",
-                  "description": "Collection of previous exam questions with detailed solutions",
-                  "pages": 35,
-                  "size": "3.5 MB",
-                  "url": "https://www.math.ucdavis.edu/~kouba/CalcTwoDIRECTORY/maxmindirectory/MaxMin.pdf"
-                },
-                {
-                  "title": "MIT OpenCourseWare - Single Variable Calculus",
-                  "description": "MIT's comprehensive calculus notes with detailed proofs and examples",
-                  "pages": 120,
-                  "size": "8.5 MB",
-                  "url": "https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/resources/mit18_01scf10_text/"
-                },
-                {
-                  "title": "Calculus Made Easy by Silvanus Thompson",
-                  "description": "Classic textbook explaining calculus concepts in simple language",
-                  "pages": 180,
-                  "size": "6.2 MB",
-                  "url": "https://calculusmadeeasy.org/calculus-made-easy.pdf"
-                },
-                {
-                  "title": "Stewart Calculus - Chapter 2 & 3",
-                  "description": "Excerpts from Stewart's Calculus covering limits and derivatives",
-                  "pages": 85,
-                  "size": "7.4 MB",
-                  "url": "https://www.stewartcalculus.com/data/CALCULUS%20Concepts%20and%20Contexts/upfiles/3c3-Graphing_Stu.pdf"
-                },
-                {
-                  "title": "Khan Academy Calculus Workbook",
-                  "description": "Interactive workbook with practice exercises and video links",
-                  "pages": 42,
-                  "size": "3.8 MB",
-                  "url": "https://www.khanacademy.org/math/differential-calculus"
-                },
-                {
-                  "title": "Integral Calculus Notes",
-                  "description": "Complete notes on integration techniques and applications",
-                  "pages": 52,
-                  "size": "4.8 MB",
-                  "url": "https://tutorial.math.lamar.edu/pdf/calculus_cheat_sheet_integrals.pdf"
-                },
-                {
-                  "title": "Integration Practice Problems",
-                  "description": "200+ solved integration problems",
-                  "pages": 68,
-                  "size": "6.2 MB",
-                  "url": "https://www.math.ucdavis.edu/~kouba/CalcTwoDIRECTORY/defintdirectory/DefInt.pdf"
-                },
-                {
-                  "title": "Applications of Integration",
-                  "description": "Real-world applications including area, volume, and work",
-                  "pages": 38,
-                  "size": "3.5 MB",
-                  "url": "https://www.whitman.edu/mathematics/calculus_online/chapter08.pdf"
-                },
-                {
-                  "title": "Integration Formula Sheet",
-                  "description": "Quick reference for all integration formulas",
-                  "pages": 6,
-                  "size": "650 KB",
-                  "url": "https://www.stewartcalculus.com/data/default/upfiles/integration_formulas.pdf"
-                },
-                {
-                  "title": "Linear Algebra - Matrices",
-                  "description": "Comprehensive notes on matrix theory and operations",
-                  "pages": 45,
-                  "size": "4.2 MB",
-                  "url": "https://www.math.ucdavis.edu/~linear/linear-guest.pdf"
-                },
-                {
-                  "title": "Matrix Algebra Problems",
-                  "description": "Practice problems with detailed solutions",
-                  "pages": 55,
-                  "size": "5.1 MB",
-                  "url": "https://www.mathcentre.ac.uk/resources/uploaded/sigma-matrices1-2009-1.pdf"
-                },
-                {
-                  "title": "Determinants and Inverses",
-                  "description": "Complete guide to determinants and matrix inverses",
-                  "pages": 32,
-                  "size": "2.8 MB",
-                  "url": "https://www.whitman.edu/mathematics/calculus_online/chapter14.pdf"
-                },
-                {
-                  "title": "Linear Systems Solutions",
-                  "description": "Solving systems of linear equations using matrices",
-                  "pages": 28,
-                  "size": "2.5 MB",
-                  "url": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/resources/mit18_06s10_pset1_soln/"
-                },
-                {
-                  "title": "Matrix Operations Cheat Sheet",
-                  "description": "Quick reference for all matrix operations",
-                  "pages": 8,
-                  "size": "750 KB",
-                  "url": "https://www.math.brown.edu/~treil/papers/LADW/LADW_2021-09-04.pdf"
-                },
-                {
-                  "title": "Vector Calculus Complete Notes",
-                  "description": "Comprehensive guide to vector algebra and calculus",
-                  "pages": 58,
-                  "size": "5.4 MB",
-                  "url": "https://www.math.ust.hk/~machas/vector-calculus.pdf"
-                },
-                {
-                  "title": "Vector Operations Practice",
-                  "description": "Problems on dot product, cross product, and applications",
-                  "pages": 42,
-                  "size": "3.9 MB",
-                  "url": "https://www.whitman.edu/mathematics/calculus_online/chapter13.pdf"
-                },
-                {
-                  "title": "Vector Differentiation Guide",
-                  "description": "Techniques for differentiating vector functions",
-                  "pages": 35,
-                  "size": "3.2 MB",
-                  "url": "https://www.mathcentre.ac.uk/resources/uploaded/mc-ty-vectordiff-2009-1.pdf"
-                },
-                {
-                  "title": "3D Geometry and Vectors",
-                  "description": "Vectors in three dimensions with geometric applications",
-                  "pages": 48,
-                  "size": "4.5 MB",
-                  "url": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/resources/mit18_02sc_notes_1/"
-                },
-                {
-                  "title": "Differential Equations Fundamentals",
-                  "description": "Complete guide to first and second-order differential equations",
-                  "pages": 62,
-                  "size": "5.8 MB",
-                  "url": "https://www.math.ust.hk/~machas/differential-equations.pdf"
-                },
-                {
-                  "title": "DE Solution Methods",
-                  "description": "Comprehensive collection of solution techniques",
-                  "pages": 55,
-                  "size": "5.2 MB",
-                  "url": "https://tutorial.math.lamar.edu/pdf/differential_equations_cheat_sheet.pdf"
-                },
-                {
-                  "title": "Applications in Engineering",
-                  "description": "Practical applications of differential equations",
-                  "pages": 45,
-                  "size": "4.1 MB",
-                  "url": "https://www.whitman.edu/mathematics/calculus_online/chapter17.pdf"
-                },
-                {
-                  "title": "Practice Problems - DEs",
-                  "description": "100+ problems with step-by-step solutions",
-                  "pages": 72,
-                  "size": "6.5 MB",
-                  "url": "https://www.math.ucdavis.edu/~kouba/CalcTwoDIRECTORY/defdirectory/DE.pdf"
-                },
-                {
-                  "title": "MIT OCW - Differential Equations",
-                  "description": "MIT course notes on differential equations",
-                  "pages": 88,
-                  "size": "7.2 MB",
-                  "url": "https://ocw.mit.edu/courses/18-03-differential-equations-spring-2010/resources/mit18_03s10_notes/"
-                }
               ]
             },
             {
@@ -2623,159 +2217,6 @@
                       "url": "https://ocw.mit.edu/courses/22-02-introduction-to-applied-nuclear-physics-spring-2012/"
                     }
                   ]
-                }
-              ],
-              "videos": [
-                {
-                  "title": "Newton's Laws of Motion",
-                  "description": "Understanding the three fundamental laws of motion",
-                  "duration": "24:35",
-                  "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
-                },
-                {
-                  "title": "Work, Energy, and Power",
-                  "description": "Conservation of energy and work-energy theorem",
-                  "duration": "28:50",
-                  "url": "https://www.youtube.com/watch?v=w4QFJb9a8vo"
-                },
-                {
-                  "title": "Momentum and Collisions",
-                  "description": "Conservation of momentum and types of collisions",
-                  "duration": "26:15",
-                  "url": "https://www.youtube.com/watch?v=jEYXLlPRdYI"
-                },
-                {
-                  "title": "Rotational Motion and Torque",
-                  "description": "Angular velocity, acceleration, and moment of inertia",
-                  "duration": "32:40",
-                  "url": "https://www.youtube.com/watch?v=iNCDaLPJwyI"
-                },
-                {
-                  "title": "Elasticity and Young's Modulus",
-                  "description": "Understanding stress, strain, and elastic moduli",
-                  "duration": "24:30",
-                  "url": "https://www.youtube.com/watch?v=SZS-aToVT1k"
-                },
-                {
-                  "title": "Surface Tension Explained",
-                  "description": "Molecular theory of surface tension and applications",
-                  "duration": "22:15",
-                  "url": "https://www.youtube.com/watch?v=9AqHZBRIfYY"
-                },
-                {
-                  "title": "Viscosity and Fluid Flow",
-                  "description": "Understanding viscosity, coefficient, and Stokes' law",
-                  "duration": "26:40",
-                  "url": "https://www.youtube.com/watch?v=TbPiRH4BCKA"
-                },
-                {
-                  "title": "Fluid Mechanics: Bernoulli's Principle",
-                  "description": "Fluid dynamics and Bernoulli's equation applications",
-                  "duration": "28:20",
-                  "url": "https://www.youtube.com/watch?v=p_di4Zn4wz4"
-                },
-                {
-                  "title": "Kinetic Theory of Gases",
-                  "description": "Molecular interpretation of temperature and pressure",
-                  "duration": "26:45",
-                  "url": "https://www.youtube.com/watch?v=wQh7ARO6r-s"
-                },
-                {
-                  "title": "First Law of Thermodynamics",
-                  "description": "Energy conservation in thermodynamic processes",
-                  "duration": "28:30",
-                  "url": "https://www.youtube.com/watch?v=NyOYW07-L5g"
-                },
-                {
-                  "title": "Second Law and Entropy",
-                  "description": "Understanding entropy and irreversibility",
-                  "duration": "32:15",
-                  "url": "https://www.youtube.com/watch?v=vbJ_SLZvJWo"
-                },
-                {
-                  "title": "Heat Engines and Refrigerators",
-                  "description": "Carnot cycle, efficiency, and COP",
-                  "duration": "30:20",
-                  "url": "https://www.youtube.com/watch?v=l4Jy1NEf72M"
-                }
-              ],
-              "pdfs": [
-                {
-                  "title": "Classical Mechanics Notes",
-                  "description": "Complete notes on Newtonian mechanics",
-                  "pages": 58,
-                  "size": "5.3 MB",
-                  "url": "https://www.feynmanlectures.caltech.edu/I_toc.html"
-                },
-                {
-                  "title": "Mechanics Problem Set",
-                  "description": "Practice problems on forces, motion, and energy",
-                  "pages": 42,
-                  "size": "3.8 MB",
-                  "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/resources/"
-                },
-                {
-                  "title": "Rotational Dynamics Guide",
-                  "description": "Comprehensive guide to rotational motion",
-                  "pages": 35,
-                  "size": "3.2 MB",
-                  "url": "https://www.physics.purdue.edu/academic_programs/courses/phys172/"
-                },
-                {
-                  "title": "Properties of Matter",
-                  "description": "Notes on elasticity, viscosity, and surface tension",
-                  "pages": 48,
-                  "size": "4.4 MB",
-                  "url": "https://www.physicsclassroom.com/class/fluids"
-                },
-                {
-                  "title": "Fluid Mechanics Basics",
-                  "description": "Introduction to fluid statics and dynamics",
-                  "pages": 52,
-                  "size": "4.8 MB",
-                  "url": "https://web.mit.edu/16.unified/www/FALL/fluids/Lectures/fluids.pdf"
-                },
-                {
-                  "title": "Thermodynamics Fundamentals",
-                  "description": "Complete guide to thermodynamic laws and processes",
-                  "pages": 65,
-                  "size": "6.0 MB",
-                  "url": "https://www.feynmanlectures.caltech.edu/II_toc.html"
-                },
-                {
-                  "title": "Heat Transfer and Engines",
-                  "description": "Heat engines, refrigerators, and entropy",
-                  "pages": 45,
-                  "size": "4.2 MB",
-                  "url": "https://ocw.mit.edu/courses/8-044-statistical-physics-i-spring-2013/"
-                },
-                {
-                  "title": "Waves and Oscillations",
-                  "description": "Complete notes on SHM, wave motion, and sound",
-                  "pages": 55,
-                  "size": "5.0 MB",
-                  "url": "https://www.feynmanlectures.caltech.edu/I_21.html"
-                },
-                {
-                  "title": "Wave Physics Problems",
-                  "description": "Practice problems on waves and oscillations",
-                  "pages": 38,
-                  "size": "3.5 MB",
-                  "url": "https://ocw.mit.edu/courses/8-03sc-physics-iii-vibrations-and-waves-fall-2016/"
-                },
-                {
-                  "title": "Introduction to Quantum Mechanics",
-                  "description": "Basic concepts of quantum physics and atomic structure",
-                  "pages": 72,
-                  "size": "6.5 MB",
-                  "url": "https://www.feynmanlectures.caltech.edu/III_toc.html"
-                },
-                {
-                  "title": "Nuclear Physics Fundamentals",
-                  "description": "Radioactivity, nuclear reactions, and applications",
-                  "pages": 48,
-                  "size": "4.4 MB",
-                  "url": "https://ocw.mit.edu/courses/22-02-introduction-to-applied-nuclear-physics-spring-2012/"
                 }
               ]
             },
@@ -3080,128 +2521,128 @@
                     "Arrays",
                     "String Handling"
                   ],
-                  "hours": 16,
-                  "videos": [
-                    {
-                      "title": "Functions in C Programming",
-                      "description": "Complete guide to function declaration, definition, and calling",
-                      "duration": "32:40",
-                      "url": "https://www.youtube.com/watch?v=VJwjXA1NsaA"
-                    },
-                    {
-                      "title": "Recursion in C - Complete Tutorial",
-                      "description": "Understanding recursion with factorial, fibonacci, and tower of hanoi",
-                      "duration": "28:25",
-                      "url": "https://www.youtube.com/watch?v=kepBmgvWNDw"
-                    },
-                    {
-                      "title": "Arrays in C - One Dimensional",
-                      "description": "Learn array declaration, initialization, and manipulation",
-                      "duration": "25:30",
-                      "url": "https://www.youtube.com/watch?v=RQ0JHMGiobo"
-                    },
-                    {
-                      "title": "Multidimensional Arrays",
-                      "description": "2D and 3D arrays with matrix operations",
-                      "duration": "30:15",
-                      "url": "https://www.youtube.com/watch?v=_lKKOGTVles"
-                    },
-                    {
-                      "title": "Strings in C Programming",
-                      "description": "String declaration, input, output, and string functions",
-                      "duration": "35:20",
-                      "url": "https://www.youtube.com/watch?v=Gh4T1wX4VfA"
-                    },
-                    {
-                      "title": "String Functions: strlen, strcpy, strcmp",
-                      "description": "Complete guide to C string library functions",
-                      "duration": "24:45",
-                      "url": "https://www.youtube.com/watch?v=DXd-dPJN1Tk"
-                    }
-                  ],
-                  "pdfs": [
-                    {
-                      "title": "Functions in C Programming",
-                      "description": "Complete guide to function declaration, definition, and recursion",
-                      "pages": 48,
-                      "size": "4.3 MB",
-                      "url": "https://www.programiz.com/c-programming/c-functions"
-                    },
-                    {
-                      "title": "Arrays and Strings",
-                      "description": "Comprehensive notes on arrays and string manipulation",
-                      "pages": 52,
-                      "size": "4.7 MB",
-                      "url": "https://www.geeksforgeeks.org/arrays-in-c-cpp/"
-                    },
-                    {
-                      "title": "C Programming Practice - Functions",
-                      "description": "100+ practice problems on functions and arrays",
-                      "pages": 65,
-                      "size": "5.8 MB",
-                      "url": "https://www.hackerrank.com/domains/c"
-                    }
-                  ],
-                  "assignments": [
-                    {
-                      "title": "Assignment 1: Function Programs",
-                      "description": "Create programs with user-defined functions: prime check, palindrome, perfect number",
-                      "dueDate": "2025-12-22",
-                      "maxScore": 30,
-                      "difficulty": "Medium"
-                    },
-                    {
-                      "title": "Assignment 2: Recursive Functions",
-                      "description": "Implement factorial, fibonacci, GCD using recursion",
-                      "dueDate": "2025-12-28",
-                      "maxScore": 35,
-                      "difficulty": "Hard"
-                    },
-                    {
-                      "title": "Assignment 3: Array Operations",
-                      "description": "Programs on array sorting, searching, and manipulation",
-                      "dueDate": "2026-01-05",
-                      "maxScore": 30,
-                      "difficulty": "Medium"
-                    },
-                    {
-                      "title": "Assignment 4: String Programs",
-                      "description": "String reverse, palindrome check, string concatenation without library",
-                      "dueDate": "2026-01-10",
-                      "maxScore": 35,
-                      "difficulty": "Medium"
-                    },
-                    {
-                      "title": "Assignment 5: Matrix Operations",
-                      "description": "2D array programs: matrix addition, multiplication, transpose",
-                      "dueDate": "2026-01-15",
-                      "maxScore": 40,
-                      "difficulty": "Hard"
-                    }
-                  ],
-                  "quizzes": [
-                    {
-                      "title": "Functions Basics Quiz",
-                      "description": "Test on function syntax, parameters, and return values",
-                      "questions": 15,
-                      "duration": "20 mins",
-                      "passingScore": 75
-                    },
-                    {
-                      "title": "Arrays and Strings Assessment",
-                      "description": "Comprehensive quiz on arrays and string handling",
-                      "questions": 20,
-                      "duration": "30 mins",
-                      "passingScore": 80
-                    },
-                    {
-                      "title": "Recursion Challenge",
-                      "description": "Advanced quiz on recursive thinking and implementation",
-                      "questions": 12,
-                      "duration": "25 mins",
-                      "passingScore": 85
-                    }
-                  ]
+                    "hours": 16,
+                    "videos": [
+                      {
+                        "title": "Functions in C Programming",
+                        "description": "Complete guide to function declaration, definition, and calling",
+                        "duration": "32:40",
+                        "url": "https://www.youtube.com/watch?v=VJwjXA1NsaA"
+                      },
+                      {
+                        "title": "Recursion in C - Complete Tutorial",
+                        "description": "Understanding recursion with factorial, fibonacci, and tower of hanoi",
+                        "duration": "28:25",
+                        "url": "https://www.youtube.com/watch?v=kepBmgvWNDw"
+                      },
+                      {
+                        "title": "Arrays in C - One Dimensional",
+                        "description": "Learn array declaration, initialization, and manipulation",
+                        "duration": "25:30",
+                        "url": "https://www.youtube.com/watch?v=RQ0JHMGiobo"
+                      },
+                      {
+                        "title": "Multidimensional Arrays",
+                        "description": "2D and 3D arrays with matrix operations",
+                        "duration": "30:15",
+                        "url": "https://www.youtube.com/watch?v=_lKKOGTVles"
+                      },
+                      {
+                        "title": "Strings in C Programming",
+                        "description": "String declaration, input, output, and string functions",
+                        "duration": "35:20",
+                        "url": "https://www.youtube.com/watch?v=Gh4T1wX4VfA"
+                      },
+                      {
+                        "title": "String Functions: strlen, strcpy, strcmp",
+                        "description": "Complete guide to C string library functions",
+                        "duration": "24:45",
+                        "url": "https://www.youtube.com/watch?v=DXd-dPJN1Tk"
+                      }
+                    ],
+                    "pdfs": [
+                      {
+                        "title": "Functions in C Programming",
+                        "description": "Complete guide to function declaration, definition, and recursion",
+                        "pages": 48,
+                        "size": "4.3 MB",
+                        "url": "https://www.programiz.com/c-programming/c-functions"
+                      },
+                      {
+                        "title": "Arrays and Strings",
+                        "description": "Comprehensive notes on arrays and string manipulation",
+                        "pages": 52,
+                        "size": "4.7 MB",
+                        "url": "https://www.geeksforgeeks.org/arrays-in-c-cpp/"
+                      },
+                      {
+                        "title": "C Programming Practice - Functions",
+                        "description": "100+ practice problems on functions and arrays",
+                        "pages": 65,
+                        "size": "5.8 MB",
+                        "url": "https://www.hackerrank.com/domains/c"
+                      }
+                    ],
+                    "assignments": [
+                      {
+                        "title": "Assignment 1: Function Programs",
+                        "description": "Create programs with user-defined functions: prime check, palindrome, perfect number",
+                        "dueDate": "2025-12-22",
+                        "maxScore": 30,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 2: Recursive Functions",
+                        "description": "Implement factorial, fibonacci, GCD using recursion",
+                        "dueDate": "2025-12-28",
+                        "maxScore": 35,
+                        "difficulty": "Hard"
+                      },
+                      {
+                        "title": "Assignment 3: Array Operations",
+                        "description": "Programs on array sorting, searching, and manipulation",
+                        "dueDate": "2026-01-05",
+                        "maxScore": 30,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 4: String Programs",
+                        "description": "String reverse, palindrome check, string concatenation without library",
+                        "dueDate": "2026-01-10",
+                        "maxScore": 35,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 5: Matrix Operations",
+                        "description": "2D array programs: matrix addition, multiplication, transpose",
+                        "dueDate": "2026-01-15",
+                        "maxScore": 40,
+                        "difficulty": "Hard"
+                      }
+                    ],
+                    "quizzes": [
+                      {
+                        "title": "Functions Basics Quiz",
+                        "description": "Test on function syntax, parameters, and return values",
+                        "questions": 15,
+                        "duration": "20 mins",
+                        "passingScore": 75
+                      },
+                      {
+                        "title": "Arrays and Strings Assessment",
+                        "description": "Comprehensive quiz on arrays and string handling",
+                        "questions": 20,
+                        "duration": "30 mins",
+                        "passingScore": 80
+                      },
+                      {
+                        "title": "Recursion Challenge",
+                        "description": "Advanced quiz on recursive thinking and implementation",
+                        "questions": 12,
+                        "duration": "25 mins",
+                        "passingScore": 85
+                      }
+                    ]
                 },
                 {
                   "title": "Unit 5: Pointers and Dynamic Memory",
@@ -3211,379 +2652,135 @@
                     "Dynamic Memory Allocation",
                     "File Handling"
                   ],
-                  "hours": 16,
-                  "videos": [
-                    {
-                      "title": "Pointers in C - Complete Tutorial",
-                      "description": "Introduction to pointers, address operators, and dereferencing",
-                      "duration": "38:45",
-                      "url": "https://www.youtube.com/watch?v=zuegQmMdy8M"
-                    },
-                    {
-                      "title": "Pointer Arithmetic Explained",
-                      "description": "Incrementing, decrementing, and arithmetic operations on pointers",
-                      "duration": "22:30",
-                      "url": "https://www.youtube.com/watch?v=0hYzJRS4vPc"
-                    },
-                    {
-                      "title": "Pointers and Arrays Relationship",
-                      "description": "How arrays and pointers are related in C",
-                      "duration": "26:15",
-                      "url": "https://www.youtube.com/watch?v=q24-QTbKQS8"
-                    },
-                    {
-                      "title": "Dynamic Memory Allocation: malloc, calloc, realloc",
-                      "description": "Complete guide to dynamic memory management in C",
-                      "duration": "32:40",
-                      "url": "https://www.youtube.com/watch?v=lQP4X3odvHE"
-                    },
-                    {
-                      "title": "Structures in C Programming",
-                      "description": "Creating and using structures, nested structures, and typedef",
-                      "duration": "28:20",
-                      "url": "https://www.youtube.com/watch?v=E4OQO75CgPk"
-                    },
-                    {
-                      "title": "File Handling in C",
-                      "description": "Reading and writing files using fopen, fclose, fprintf, fscanf",
-                      "duration": "35:50",
-                      "url": "https://www.youtube.com/watch?v=SXw2hZhxPzs"
-                    }
-                  ],
-                  "pdfs": [
-                    {
-                      "title": "Pointers in C",
-                      "description": "Complete guide to pointers, pointer arithmetic, and applications",
-                      "pages": 58,
-                      "size": "5.2 MB",
-                      "url": "https://www.programiz.com/c-programming/c-pointers"
-                    },
-                    {
-                      "title": "Dynamic Memory Management",
-                      "description": "malloc, calloc, realloc, and memory management techniques",
-                      "pages": 42,
-                      "size": "3.8 MB",
-                      "url": "https://www.geeksforgeeks.org/dynamic-memory-allocation-in-c-using-malloc-calloc-free-and-realloc/"
-                    },
-                    {
-                      "title": "Structures and File I/O",
-                      "description": "Working with structures and file operations in C",
-                      "pages": 48,
-                      "size": "4.4 MB",
-                      "url": "https://www.tutorialspoint.com/cprogramming/c_structures.htm"
-                    }
-                  ],
-                  "assignments": [
-                    {
-                      "title": "Assignment 1: Pointer Basics",
-                      "description": "Write programs demonstrating pointer declaration, initialization, and dereferencing",
-                      "dueDate": "2026-01-20",
-                      "maxScore": 25,
-                      "difficulty": "Medium"
-                    },
-                    {
-                      "title": "Assignment 2: Dynamic Memory Programs",
-                      "description": "Implement programs using malloc, calloc, and free for dynamic arrays",
-                      "dueDate": "2026-01-28",
-                      "maxScore": 35,
-                      "difficulty": "Hard"
-                    },
-                    {
-                      "title": "Assignment 3: Structure Programs",
-                      "description": "Create student/employee management system using structures",
-                      "dueDate": "2026-02-05",
-                      "maxScore": 40,
-                      "difficulty": "Hard"
-                    },
-                    {
-                      "title": "Assignment 4: File Operations",
-                      "description": "File reading, writing, and manipulation programs",
-                      "dueDate": "2026-02-12",
-                      "maxScore": 35,
-                      "difficulty": "Medium"
-                    },
-                    {
-                      "title": "Assignment 5: Final Project",
-                      "description": "Build a complete file-based record management system using all concepts",
-                      "dueDate": "2026-02-20",
-                      "maxScore": 50,
-                      "difficulty": "Hard"
-                    }
-                  ],
-                  "quizzes": [
-                    {
-                      "title": "Pointers Fundamentals Quiz",
-                      "description": "Test your understanding of pointer basics and arithmetic",
-                      "questions": 18,
-                      "duration": "25 mins",
-                      "passingScore": 75
-                    },
-                    {
-                      "title": "Dynamic Memory Test",
-                      "description": "Assessment on malloc, calloc, realloc, and free",
-                      "questions": 15,
-                      "duration": "20 mins",
-                      "passingScore": 80
-                    },
-                    {
-                      "title": "Structures and Files Quiz",
-                      "description": "Comprehensive quiz on structures and file handling",
-                      "questions": 20,
-                      "duration": "30 mins",
-                      "passingScore": 80
-                    },
-                    {
-                      "title": "C Programming Final Exam",
-                      "description": "Complete course assessment covering all units",
-                      "questions": 40,
-                      "duration": "60 mins",
-                      "passingScore": 85
-                    }
-                  ]
-                }
-              ],
-              "videos": [
-                {
-                  "title": "Introduction to C Programming",
-                  "description": "Complete introduction to C programming language and its history",
-                  "duration": "18:25",
-                  "url": "https://www.youtube.com/watch?v=KJgsSFOSQv0"
-                },
-                {
-                  "title": "C Program Structure Explained",
-                  "description": "Understanding the structure of a C program with examples",
-                  "duration": "22:15",
-                  "url": "https://www.youtube.com/watch?v=irqbmMNs2Bo"
-                },
-                {
-                  "title": "Setting Up Your C Development Environment",
-                  "description": "Installing and configuring IDE for C programming (VS Code, Code::Blocks)",
-                  "duration": "15:40",
-                  "url": "https://www.youtube.com/watch?v=1uR4tL-OSNI"
-                },
-                {
-                  "title": "Compilation Process in C",
-                  "description": "How C programs are compiled: preprocessing, compilation, assembly, linking",
-                  "duration": "20:30",
-                  "url": "https://www.youtube.com/watch?v=VDslRumKvRA"
-                },
-                {
-                  "title": "C Data Types Complete Tutorial",
-                  "description": "Learn about int, float, double, char and their variations",
-                  "duration": "26:45",
-                  "url": "https://www.youtube.com/watch?v=wXd2KdOwY5A"
-                },
-                {
-                  "title": "Variables and Constants in C",
-                  "description": "Understanding variable declaration, initialization, and constants",
-                  "duration": "18:20",
-                  "url": "https://www.youtube.com/watch?v=vs0_BfN0AJA"
-                },
-                {
-                  "title": "C Operators: Arithmetic, Relational, Logical",
-                  "description": "Complete guide to all operators in C with examples",
-                  "duration": "32:15",
-                  "url": "https://www.youtube.com/watch?v=SV0b1_kV_jQ"
-                },
-                {
-                  "title": "Type Conversion and Type Casting",
-                  "description": "Implicit and explicit type conversion with practical examples",
-                  "duration": "22:30",
-                  "url": "https://www.youtube.com/watch?v=uI10H1jzw00"
-                },
-                {
-                  "title": "If-Else Statements in C",
-                  "description": "Complete tutorial on conditional statements and nested if-else",
-                  "duration": "24:35",
-                  "url": "https://www.youtube.com/watch?v=sQDMDmF0xF8"
-                },
-                {
-                  "title": "For Loop Tutorial",
-                  "description": "Understanding for loops with practical examples and patterns",
-                  "duration": "28:20",
-                  "url": "https://www.youtube.com/watch?v=qxCLRu7qvvU"
-                },
-                {
-                  "title": "While and Do-While Loops",
-                  "description": "Difference between while and do-while loops with use cases",
-                  "duration": "22:45",
-                  "url": "https://www.youtube.com/watch?v=0eDhgskNE6Y"
-                },
-                {
-                  "title": "Switch Case Statement",
-                  "description": "Using switch-case for multi-way decision making",
-                  "duration": "18:30",
-                  "url": "https://www.youtube.com/watch?v=1e5FPVrz1pE"
-                },
-                {
-                  "title": "Break, Continue, and Goto",
-                  "description": "Jump statements in C programming with examples",
-                  "duration": "16:40",
-                  "url": "https://www.youtube.com/watch?v=eooHYNi_1NY"
-                },
-                {
-                  "title": "Nested Loops and Pattern Programs",
-                  "description": "Creating patterns using nested loops - stars, pyramids, numbers",
-                  "duration": "35:15",
-                  "url": "https://www.youtube.com/watch?v=DbvFg_5tIc8"
-                },
-                {
-                  "title": "Functions in C Programming",
-                  "description": "Complete guide to function declaration, definition, and calling",
-                  "duration": "32:40",
-                  "url": "https://www.youtube.com/watch?v=VJwjXA1NsaA"
-                },
-                {
-                  "title": "Recursion in C - Complete Tutorial",
-                  "description": "Understanding recursion with factorial, fibonacci, and tower of hanoi",
-                  "duration": "28:25",
-                  "url": "https://www.youtube.com/watch?v=kepBmgvWNDw"
-                },
-                {
-                  "title": "Arrays in C - One Dimensional",
-                  "description": "Learn array declaration, initialization, and manipulation",
-                  "duration": "25:30",
-                  "url": "https://www.youtube.com/watch?v=RQ0JHMGiobo"
-                },
-                {
-                  "title": "Multidimensional Arrays",
-                  "description": "2D and 3D arrays with matrix operations",
-                  "duration": "30:15",
-                  "url": "https://www.youtube.com/watch?v=_lKKOGTVles"
-                },
-                {
-                  "title": "Strings in C Programming",
-                  "description": "String declaration, input, output, and string functions",
-                  "duration": "35:20",
-                  "url": "https://www.youtube.com/watch?v=Gh4T1wX4VfA"
-                },
-                {
-                  "title": "String Functions: strlen, strcpy, strcmp",
-                  "description": "Complete guide to C string library functions",
-                  "duration": "24:45",
-                  "url": "https://www.youtube.com/watch?v=DXd-dPJN1Tk"
-                },
-                {
-                  "title": "Pointers in C - Complete Tutorial",
-                  "description": "Introduction to pointers, address operators, and dereferencing",
-                  "duration": "38:45",
-                  "url": "https://www.youtube.com/watch?v=zuegQmMdy8M"
-                },
-                {
-                  "title": "Pointer Arithmetic Explained",
-                  "description": "Incrementing, decrementing, and arithmetic operations on pointers",
-                  "duration": "22:30",
-                  "url": "https://www.youtube.com/watch?v=0hYzJRS4vPc"
-                },
-                {
-                  "title": "Pointers and Arrays Relationship",
-                  "description": "How arrays and pointers are related in C",
-                  "duration": "26:15",
-                  "url": "https://www.youtube.com/watch?v=q24-QTbKQS8"
-                },
-                {
-                  "title": "Dynamic Memory Allocation: malloc, calloc, realloc",
-                  "description": "Complete guide to dynamic memory management in C",
-                  "duration": "32:40",
-                  "url": "https://www.youtube.com/watch?v=lQP4X3odvHE"
-                },
-                {
-                  "title": "Structures in C Programming",
-                  "description": "Creating and using structures, nested structures, and typedef",
-                  "duration": "28:20",
-                  "url": "https://www.youtube.com/watch?v=E4OQO75CgPk"
-                },
-                {
-                  "title": "File Handling in C",
-                  "description": "Reading and writing files using fopen, fclose, fprintf, fscanf",
-                  "duration": "35:50",
-                  "url": "https://www.youtube.com/watch?v=SXw2hZhxPzs"
-                }
-              ],
-              "pdfs": [
-                {
-                  "title": "C Programming Basics",
-                  "description": "Introduction to C language and programming fundamentals",
-                  "pages": 45,
-                  "size": "4.0 MB",
-                  "url": "https://www.learn-c.org/"
-                },
-                {
-                  "title": "The C Programming Language (K&R)",
-                  "description": "Classic textbook by Kernighan and Ritchie - Chapter 1",
-                  "pages": 35,
-                  "size": "3.2 MB",
-                  "url": "https://kremlin.cc/k&r.pdf"
-                },
-                {
-                  "title": "C Data Types Guide",
-                  "description": "Complete guide to data types and operators in C",
-                  "pages": 38,
-                  "size": "3.5 MB",
-                  "url": "https://www.tutorialspoint.com/cprogramming/c_data_types.htm"
-                },
-                {
-                  "title": "Operators and Expressions",
-                  "description": "Detailed notes on C operators and type conversions",
-                  "pages": 32,
-                  "size": "2.9 MB",
-                  "url": "https://www.geeksforgeeks.org/operators-in-c/"
-                },
-                {
-                  "title": "Control Flow in C",
-                  "description": "Complete guide to if-else, loops, and switch statements",
-                  "pages": 42,
-                  "size": "3.8 MB",
-                  "url": "https://www.programiz.com/c-programming/c-if-else-statement"
-                },
-                {
-                  "title": "Loop Programming Examples",
-                  "description": "Practice problems on for, while, and do-while loops",
-                  "pages": 35,
-                  "size": "3.2 MB",
-                  "url": "https://www.w3schools.com/c/c_for_loop.php"
-                },
-                {
-                  "title": "Functions in C Programming",
-                  "description": "Complete guide to function declaration, definition, and recursion",
-                  "pages": 48,
-                  "size": "4.3 MB",
-                  "url": "https://www.programiz.com/c-programming/c-functions"
-                },
-                {
-                  "title": "Arrays and Strings",
-                  "description": "Comprehensive notes on arrays and string manipulation",
-                  "pages": 52,
-                  "size": "4.7 MB",
-                  "url": "https://www.geeksforgeeks.org/arrays-in-c-cpp/"
-                },
-                {
-                  "title": "C Programming Practice - Functions",
-                  "description": "100+ practice problems on functions and arrays",
-                  "pages": 65,
-                  "size": "5.8 MB",
-                  "url": "https://www.hackerrank.com/domains/c"
-                },
-                {
-                  "title": "Pointers in C",
-                  "description": "Complete guide to pointers, pointer arithmetic, and applications",
-                  "pages": 58,
-                  "size": "5.2 MB",
-                  "url": "https://www.programiz.com/c-programming/c-pointers"
-                },
-                {
-                  "title": "Dynamic Memory Management",
-                  "description": "malloc, calloc, realloc, and memory management techniques",
-                  "pages": 42,
-                  "size": "3.8 MB",
-                  "url": "https://www.geeksforgeeks.org/dynamic-memory-allocation-in-c-using-malloc-calloc-free-and-realloc/"
-                },
-                {
-                  "title": "Structures and File I/O",
-                  "description": "Working with structures and file operations in C",
-                  "pages": 48,
-                  "size": "4.4 MB",
-                  "url": "https://www.tutorialspoint.com/cprogramming/c_structures.htm"
+                    "hours": 16,
+                    "videos": [
+                      {
+                        "title": "Pointers in C - Complete Tutorial",
+                        "description": "Introduction to pointers, address operators, and dereferencing",
+                        "duration": "38:45",
+                        "url": "https://www.youtube.com/watch?v=zuegQmMdy8M"
+                      },
+                      {
+                        "title": "Pointer Arithmetic Explained",
+                        "description": "Incrementing, decrementing, and arithmetic operations on pointers",
+                        "duration": "22:30",
+                        "url": "https://www.youtube.com/watch?v=0hYzJRS4vPc"
+                      },
+                      {
+                        "title": "Pointers and Arrays Relationship",
+                        "description": "How arrays and pointers are related in C",
+                        "duration": "26:15",
+                        "url": "https://www.youtube.com/watch?v=q24-QTbKQS8"
+                      },
+                      {
+                        "title": "Dynamic Memory Allocation: malloc, calloc, realloc",
+                        "description": "Complete guide to dynamic memory management in C",
+                        "duration": "32:40",
+                        "url": "https://www.youtube.com/watch?v=lQP4X3odvHE"
+                      },
+                      {
+                        "title": "Structures in C Programming",
+                        "description": "Creating and using structures, nested structures, and typedef",
+                        "duration": "28:20",
+                        "url": "https://www.youtube.com/watch?v=E4OQO75CgPk"
+                      },
+                      {
+                        "title": "File Handling in C",
+                        "description": "Reading and writing files using fopen, fclose, fprintf, fscanf",
+                        "duration": "35:50",
+                        "url": "https://www.youtube.com/watch?v=SXw2hZhxPzs"
+                      }
+                    ],
+                    "pdfs": [
+                      {
+                        "title": "Pointers in C",
+                        "description": "Complete guide to pointers, pointer arithmetic, and applications",
+                        "pages": 58,
+                        "size": "5.2 MB",
+                        "url": "https://www.programiz.com/c-programming/c-pointers"
+                      },
+                      {
+                        "title": "Dynamic Memory Management",
+                        "description": "malloc, calloc, realloc, and memory management techniques",
+                        "pages": 42,
+                        "size": "3.8 MB",
+                        "url": "https://www.geeksforgeeks.org/dynamic-memory-allocation-in-c-using-malloc-calloc-free-and-realloc/"
+                      },
+                      {
+                        "title": "Structures and File I/O",
+                        "description": "Working with structures and file operations in C",
+                        "pages": 48,
+                        "size": "4.4 MB",
+                        "url": "https://www.tutorialspoint.com/cprogramming/c_structures.htm"
+                      }
+                    ],
+                    "assignments": [
+                      {
+                        "title": "Assignment 1: Pointer Basics",
+                        "description": "Write programs demonstrating pointer declaration, initialization, and dereferencing",
+                        "dueDate": "2026-01-20",
+                        "maxScore": 25,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 2: Dynamic Memory Programs",
+                        "description": "Implement programs using malloc, calloc, and free for dynamic arrays",
+                        "dueDate": "2026-01-28",
+                        "maxScore": 35,
+                        "difficulty": "Hard"
+                      },
+                      {
+                        "title": "Assignment 3: Structure Programs",
+                        "description": "Create student/employee management system using structures",
+                        "dueDate": "2026-02-05",
+                        "maxScore": 40,
+                        "difficulty": "Hard"
+                      },
+                      {
+                        "title": "Assignment 4: File Operations",
+                        "description": "File reading, writing, and manipulation programs",
+                        "dueDate": "2026-02-12",
+                        "maxScore": 35,
+                        "difficulty": "Medium"
+                      },
+                      {
+                        "title": "Assignment 5: Final Project",
+                        "description": "Build a complete file-based record management system using all concepts",
+                        "dueDate": "2026-02-20",
+                        "maxScore": 50,
+                        "difficulty": "Hard"
+                      }
+                    ],
+                    "quizzes": [
+                      {
+                        "title": "Pointers Fundamentals Quiz",
+                        "description": "Test your understanding of pointer basics and arithmetic",
+                        "questions": 18,
+                        "duration": "25 mins",
+                        "passingScore": 75
+                      },
+                      {
+                        "title": "Dynamic Memory Test",
+                        "description": "Assessment on malloc, calloc, realloc, and free",
+                        "questions": 15,
+                        "duration": "20 mins",
+                        "passingScore": 80
+                      },
+                      {
+                        "title": "Structures and Files Quiz",
+                        "description": "Comprehensive quiz on structures and file handling",
+                        "questions": 20,
+                        "duration": "30 mins",
+                        "passingScore": 80
+                      },
+                      {
+                        "title": "C Programming Final Exam",
+                        "description": "Complete course assessment covering all units",
+                        "questions": 40,
+                        "duration": "60 mins",
+                        "passingScore": 85
+                      }
+                    ]
                 }
               ]
             },
@@ -3601,23 +2798,23 @@
                     "Lines and Lettering",
                     "Geometric Constructions"
                   ],
-                  "hours": 8,
-                  "pdfs": [
-                    {
-                      "title": "Engineering Drawing Basics",
-                      "description": "Introduction to engineering drawing standards and conventions",
-                      "pages": 35,
-                      "size": "3.2 MB",
-                      "url": "https://www.nptel.ac.in/courses/112/105/112105125/"
-                    },
-                    {
-                      "title": "Geometric Constructions Guide",
-                      "description": "Step-by-step guide to basic geometric constructions",
-                      "pages": 28,
-                      "size": "2.5 MB",
-                      "url": "https://www.engineeringgraphics.in/"
-                    }
-                  ]
+                    "hours": 8,
+                    "pdfs": [
+                      {
+                        "title": "Engineering Drawing Basics",
+                        "description": "Introduction to engineering drawing standards and conventions",
+                        "pages": 35,
+                        "size": "3.2 MB",
+                        "url": "https://www.nptel.ac.in/courses/112/105/112105125/"
+                      },
+                      {
+                        "title": "Geometric Constructions Guide",
+                        "description": "Step-by-step guide to basic geometric constructions",
+                        "pages": 28,
+                        "size": "2.5 MB",
+                        "url": "https://www.engineeringgraphics.in/"
+                      }
+                    ]
                 },
                 {
                   "title": "Unit 2: Orthographic Projections",
@@ -3626,23 +2823,23 @@
                     "Third Angle Projection",
                     "Multi-view Drawings"
                   ],
-                  "hours": 10,
-                  "pdfs": [
-                    {
-                      "title": "Orthographic Projection Complete Guide",
-                      "description": "Comprehensive notes on first and third angle projections",
-                      "pages": 45,
-                      "size": "4.0 MB",
-                      "url": "https://www.nptel.ac.in/courses/112/107/112107127/"
-                    },
-                    {
-                      "title": "Multi-view Drawing Practice",
-                      "description": "Practice problems on creating multi-view drawings",
-                      "pages": 38,
-                      "size": "3.5 MB",
-                      "url": "https://www.engineeringgraphics.in/orthographic-projection/"
-                    }
-                  ]
+                    "hours": 10,
+                    "pdfs": [
+                      {
+                        "title": "Orthographic Projection Complete Guide",
+                        "description": "Comprehensive notes on first and third angle projections",
+                        "pages": 45,
+                        "size": "4.0 MB",
+                        "url": "https://www.nptel.ac.in/courses/112/107/112107127/"
+                      },
+                      {
+                        "title": "Multi-view Drawing Practice",
+                        "description": "Practice problems on creating multi-view drawings",
+                        "pages": 38,
+                        "size": "3.5 MB",
+                        "url": "https://www.engineeringgraphics.in/orthographic-projection/"
+                      }
+                    ]
                 },
                 {
                   "title": "Unit 3: Isometric Projections",
@@ -3651,16 +2848,16 @@
                     "Isometric Drawing",
                     "Dimensioning"
                   ],
-                  "hours": 8,
-                  "pdfs": [
-                    {
-                      "title": "Isometric Drawing Techniques",
-                      "description": "Complete guide to isometric projections and views",
-                      "pages": 42,
-                      "size": "3.8 MB",
-                      "url": "https://www.nptel.ac.in/courses/112/107/112107128/"
-                    }
-                  ]
+                    "hours": 8,
+                    "pdfs": [
+                      {
+                        "title": "Isometric Drawing Techniques",
+                        "description": "Complete guide to isometric projections and views",
+                        "pages": 42,
+                        "size": "3.8 MB",
+                        "url": "https://www.nptel.ac.in/courses/112/107/112107128/"
+                      }
+                    ]
                 },
                 {
                   "title": "Unit 4: Computer Aided Design",
@@ -3669,75 +2866,23 @@
                     "2D Drawing",
                     "Basic 3D Modeling"
                   ],
-                  "hours": 4,
-                  "pdfs": [
-                    {
-                      "title": "AutoCAD Basics Tutorial",
-                      "description": "Introduction to 2D drawing using AutoCAD",
-                      "pages": 52,
-                      "size": "4.8 MB",
-                      "url": "https://www.autodesk.com/products/autocad/learn-autocad"
-                    },
-                    {
-                      "title": "CAD 3D Modeling Guide",
-                      "description": "Basics of 3D modeling in CAD software",
-                      "pages": 48,
-                      "size": "4.4 MB",
-                      "url": "https://help.autodesk.com/view/ACD/2024/ENU/"
-                    }
-                  ]
-                }
-              ],
-              "videos": [],
-              "pdfs": [
-                {
-                  "title": "Engineering Drawing Basics",
-                  "description": "Introduction to engineering drawing standards and conventions",
-                  "pages": 35,
-                  "size": "3.2 MB",
-                  "url": "https://www.nptel.ac.in/courses/112/105/112105125/"
-                },
-                {
-                  "title": "Geometric Constructions Guide",
-                  "description": "Step-by-step guide to basic geometric constructions",
-                  "pages": 28,
-                  "size": "2.5 MB",
-                  "url": "https://www.engineeringgraphics.in/"
-                },
-                {
-                  "title": "Orthographic Projection Complete Guide",
-                  "description": "Comprehensive notes on first and third angle projections",
-                  "pages": 45,
-                  "size": "4.0 MB",
-                  "url": "https://www.nptel.ac.in/courses/112/107/112107127/"
-                },
-                {
-                  "title": "Multi-view Drawing Practice",
-                  "description": "Practice problems on creating multi-view drawings",
-                  "pages": 38,
-                  "size": "3.5 MB",
-                  "url": "https://www.engineeringgraphics.in/orthographic-projection/"
-                },
-                {
-                  "title": "Isometric Drawing Techniques",
-                  "description": "Complete guide to isometric projections and views",
-                  "pages": 42,
-                  "size": "3.8 MB",
-                  "url": "https://www.nptel.ac.in/courses/112/107/112107128/"
-                },
-                {
-                  "title": "AutoCAD Basics Tutorial",
-                  "description": "Introduction to 2D drawing using AutoCAD",
-                  "pages": 52,
-                  "size": "4.8 MB",
-                  "url": "https://www.autodesk.com/products/autocad/learn-autocad"
-                },
-                {
-                  "title": "CAD 3D Modeling Guide",
-                  "description": "Basics of 3D modeling in CAD software",
-                  "pages": 48,
-                  "size": "4.4 MB",
-                  "url": "https://help.autodesk.com/view/ACD/2024/ENU/"
+                    "hours": 4,
+                    "pdfs": [
+                      {
+                        "title": "AutoCAD Basics Tutorial",
+                        "description": "Introduction to 2D drawing using AutoCAD",
+                        "pages": 52,
+                        "size": "4.8 MB",
+                        "url": "https://www.autodesk.com/products/autocad/learn-autocad"
+                      },
+                      {
+                        "title": "CAD 3D Modeling Guide",
+                        "description": "Basics of 3D modeling in CAD software",
+                        "pages": 48,
+                        "size": "4.4 MB",
+                        "url": "https://help.autodesk.com/view/ACD/2024/ENU/"
+                      }
+                    ]
                 }
               ]
             },
@@ -3795,9 +2940,7 @@
                   ],
                   "hours": 8
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -3857,9 +3000,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Physics II",
@@ -3908,9 +3049,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Data Structures",
@@ -3966,9 +3105,7 @@
                   ],
                   "hours": 8
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Digital Logic Design",
@@ -4017,9 +3154,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Environmental Science",
@@ -4052,9 +3187,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -4115,9 +3248,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Computer Organization",
@@ -4166,9 +3297,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Object Oriented Programming",
@@ -4224,9 +3353,7 @@
                   ],
                   "hours": 10
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Database Management Systems",
@@ -4275,9 +3402,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Operating Systems",
@@ -4326,9 +3451,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -4388,9 +3511,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Computer Networks",
@@ -4444,9 +3565,7 @@
                   ],
                   "hours": 14
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Software Engineering",
@@ -4500,9 +3619,7 @@
                   ],
                   "hours": 7
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Theory of Computation",
@@ -4556,9 +3673,7 @@
                   ],
                   "hours": 5
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Web Technologies",
@@ -4616,9 +3731,7 @@
                   ],
                   "hours": 3
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -4677,9 +3790,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Machine Learning",
@@ -4734,9 +3845,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Computer Graphics",
@@ -4791,9 +3900,7 @@
                   ],
                   "hours": 7
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Cybersecurity",
@@ -4849,9 +3956,7 @@
                   ],
                   "hours": 7
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Mobile App Development",
@@ -4907,9 +4012,7 @@
                   ],
                   "hours": 7
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -4968,9 +4071,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Data Mining",
@@ -5024,9 +4125,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Human Computer Interaction",
@@ -5080,9 +4179,7 @@
                   ],
                   "hours": 9
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Internet of Things",
@@ -5137,9 +4234,7 @@
                   ],
                   "hours": 9
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Blockchain Technology",
@@ -5194,9 +4289,7 @@
                   ],
                   "hours": 9
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -5255,9 +4348,7 @@
                   ],
                   "hours": 9
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Advanced Algorithms",
@@ -5311,9 +4402,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Cloud Computing",
@@ -5368,9 +4457,7 @@
                   ],
                   "hours": 9
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Artificial Intelligence",
@@ -5424,9 +4511,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project I",
@@ -5471,9 +4556,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -5523,9 +4606,7 @@
                   ],
                   "hours": 6
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Quantum Computing",
@@ -5579,9 +4660,7 @@
                   ],
                   "hours": 9
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "DevOps & Automation",
@@ -5635,9 +4714,7 @@
                   ],
                   "hours": 9
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project II",
@@ -5682,9 +4759,7 @@
                   ],
                   "hours": 24
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Industrial Training",
@@ -5729,9 +4804,7 @@
                   ],
                   "hours": 6
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         }
@@ -5801,9 +4874,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Physics I",
@@ -5857,9 +4928,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Basic Electronics",
@@ -6264,206 +5333,6 @@
                     }
                   ]
                 }
-              ],
-              "videos": [
-                {
-                  "title": "Resistors and Resistance",
-                  "description": "Understanding resistors, color codes, and resistance calculations",
-                  "duration": "24:30",
-                  "url": "https://www.youtube.com/watch?v=7w5I-Sh2T2o"
-                },
-                {
-                  "title": "Capacitors Explained",
-                  "description": "Capacitor basics, types, and applications in circuits",
-                  "duration": "28:15",
-                  "url": "https://www.youtube.com/watch?v=X4EUwTwZ110"
-                },
-                {
-                  "title": "Inductors and Inductance",
-                  "description": "Understanding inductors, self-inductance, and mutual inductance",
-                  "duration": "26:40",
-                  "url": "https://www.youtube.com/watch?v=KSylo01n5FY"
-                },
-                {
-                  "title": "Voltage and Current Sources",
-                  "description": "Ideal and practical voltage and current sources",
-                  "duration": "22:20",
-                  "url": "https://www.youtube.com/watch?v=v-dXTZxV_6Q"
-                },
-                {
-                  "title": "Ohm's Law Explained",
-                  "description": "Understanding voltage, current, and resistance relationship",
-                  "duration": "18:45",
-                  "url": "https://www.youtube.com/watch?v=Ri3UtBxTYqE"
-                },
-                {
-                  "title": "Kirchhoff's Current Law (KCL)",
-                  "description": "Node analysis using KCL with solved examples",
-                  "duration": "24:30",
-                  "url": "https://www.youtube.com/watch?v=33-488FBkjg"
-                },
-                {
-                  "title": "Kirchhoff's Voltage Law (KVL)",
-                  "description": "Mesh analysis using KVL for circuit solving",
-                  "duration": "26:15",
-                  "url": "https://www.youtube.com/watch?v=n6AzHvfDpZg"
-                },
-                {
-                  "title": "Network Theorems: Thevenin and Norton",
-                  "description": "Circuit simplification using Thevenin's and Norton's theorems",
-                  "duration": "32:40",
-                  "url": "https://www.youtube.com/watch?v=5cUJUH_Pcqs"
-                },
-                {
-                  "title": "Superposition Theorem",
-                  "description": "Analyzing circuits with multiple sources using superposition",
-                  "duration": "28:20",
-                  "url": "https://www.youtube.com/watch?v=7Gq0SJ9Vbpw"
-                },
-                {
-                  "title": "Introduction to AC Circuits",
-                  "description": "Understanding alternating current, frequency, and period",
-                  "duration": "26:30",
-                  "url": "https://www.youtube.com/watch?v=3PjU8Sd0bRA"
-                },
-                {
-                  "title": "Phasors and Complex Numbers",
-                  "description": "Phasor representation of AC quantities",
-                  "duration": "30:15",
-                  "url": "https://www.youtube.com/watch?v=6OvJQjYmFJ8"
-                },
-                {
-                  "title": "Impedance in AC Circuits",
-                  "description": "Calculating impedance for R, L, C in AC circuits",
-                  "duration": "28:40",
-                  "url": "https://www.youtube.com/watch?v=rPnS_R4rz-c"
-                },
-                {
-                  "title": "AC Power: Real, Reactive, and Apparent",
-                  "description": "Understanding power triangle and power factor",
-                  "duration": "32:20",
-                  "url": "https://www.youtube.com/watch?v=E8jo-A94YHc"
-                },
-                {
-                  "title": "PN Junction Diode Fundamentals",
-                  "description": "Understanding diode operation, characteristics, and applications",
-                  "duration": "30:45",
-                  "url": "https://www.youtube.com/watch?v=Fwj_d3uO5g8"
-                },
-                {
-                  "title": "Bipolar Junction Transistor (BJT)",
-                  "description": "BJT construction, working principle, and configurations",
-                  "duration": "35:20",
-                  "url": "https://www.youtube.com/watch?v=7ukDKVHnac4"
-                },
-                {
-                  "title": "Field Effect Transistor (FET & MOSFET)",
-                  "description": "JFET and MOSFET basics, characteristics, and applications",
-                  "duration": "32:15",
-                  "url": "https://www.youtube.com/watch?v=o4_NeqlJgOs"
-                },
-                {
-                  "title": "Transistor Characteristics and Biasing",
-                  "description": "V-I characteristics and biasing techniques for transistors",
-                  "duration": "28:30",
-                  "url": "https://www.youtube.com/watch?v=WRm2oUw4owE"
-                },
-                {
-                  "title": "Transistor Amplifiers - Common Emitter",
-                  "description": "Design and analysis of CE amplifier with gain calculations",
-                  "duration": "34:20",
-                  "url": "https://www.youtube.com/watch?v=ZBu2GhSOagQ"
-                },
-                {
-                  "title": "Rectifier Circuits: Half and Full Wave",
-                  "description": "AC to DC conversion using diode rectifiers",
-                  "duration": "28:45",
-                  "url": "https://www.youtube.com/watch?v=Ou9DPK1HhJg"
-                },
-                {
-                  "title": "Passive Filters: Low Pass, High Pass",
-                  "description": "Filter design and frequency response analysis",
-                  "duration": "30:15",
-                  "url": "https://www.youtube.com/watch?v=kCPeYRJTuNY"
-                },
-                {
-                  "title": "Operational Amplifier Basics",
-                  "description": "Op-amp fundamentals and basic configurations",
-                  "duration": "32:40",
-                  "url": "https://www.youtube.com/watch?v=7FYHt5XviKc"
-                }
-              ],
-              "pdfs": [
-                {
-                  "title": "Circuit Elements Complete Notes",
-                  "description": "Comprehensive notes on passive circuit elements",
-                  "pages": 45,
-                  "size": "4.2 MB",
-                  "url": "https://www.allaboutcircuits.com/textbook/"
-                },
-                {
-                  "title": "Resistor Color Code Guide",
-                  "description": "Quick reference for resistor color coding",
-                  "pages": 8,
-                  "size": "750 KB",
-                  "url": "https://www.electronics-tutorials.ws/resistor/res_2.html"
-                },
-                {
-                  "title": "Circuit Analysis Fundamentals",
-                  "description": "Complete guide to circuit laws and theorems",
-                  "pages": 55,
-                  "size": "5.1 MB",
-                  "url": "https://www.allaboutcircuits.com/textbook/direct-current/"
-                },
-                {
-                  "title": "Network Theorems Workbook",
-                  "description": "Practice problems on all network theorems",
-                  "pages": 42,
-                  "size": "3.9 MB",
-                  "url": "https://www.electronics-tutorials.ws/dccircuits/dcp_1.html"
-                },
-                {
-                  "title": "AC Circuit Analysis",
-                  "description": "Complete guide to analyzing AC circuits",
-                  "pages": 48,
-                  "size": "4.5 MB",
-                  "url": "https://www.allaboutcircuits.com/textbook/alternating-current/"
-                },
-                {
-                  "title": "Phasor Diagrams and Calculations",
-                  "description": "Step-by-step phasor analysis methods",
-                  "pages": 35,
-                  "size": "3.2 MB",
-                  "url": "https://www.electronics-tutorials.ws/accircuits/ac-2.html"
-                },
-                {
-                  "title": "Semiconductor Devices Complete Notes",
-                  "description": "Comprehensive guide to diodes, BJT, and FET",
-                  "pages": 65,
-                  "size": "6.0 MB",
-                  "url": "https://www.allaboutcircuits.com/textbook/semiconductors/"
-                },
-                {
-                  "title": "Transistor Characteristics Manual",
-                  "description": "Detailed characteristics curves and analysis",
-                  "pages": 42,
-                  "size": "3.8 MB",
-                  "url": "https://www.electronics-tutorials.ws/transistor/tran_1.html"
-                },
-                {
-                  "title": "Electronic Circuits Design Guide",
-                  "description": "Complete notes on amplifiers, rectifiers, and filters",
-                  "pages": 72,
-                  "size": "6.5 MB",
-                  "url": "https://www.allaboutcircuits.com/textbook/"
-                },
-                {
-                  "title": "Amplifier Design Handbook",
-                  "description": "Practical amplifier design with examples",
-                  "pages": 58,
-                  "size": "5.2 MB",
-                  "url": "https://www.electronics-tutorials.ws/amplifier/amp_1.html"
-                }
               ]
             },
             {
@@ -6507,9 +5376,7 @@
                   ],
                   "hours": 8
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "English Communication",
@@ -6564,9 +5431,7 @@
                   ],
                   "hours": 9
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -6620,9 +5485,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Circuit Theory",
@@ -6671,9 +5534,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Electronic Devices",
@@ -6722,9 +5583,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Digital Electronics",
@@ -6760,9 +5619,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Programming in C",
@@ -6798,9 +5655,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -6854,9 +5709,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Analog Electronics",
@@ -6905,9 +5758,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Digital Signal Processing",
@@ -6956,9 +5807,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Microprocessors",
@@ -7007,9 +5856,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Electromagnetic Theory",
@@ -7045,9 +5892,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -7101,9 +5946,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Control Systems",
@@ -7152,9 +5995,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "VLSI Design",
@@ -7190,9 +6031,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Microcontrollers",
@@ -7228,9 +6067,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Linear IC Applications",
@@ -7266,9 +6103,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -7322,9 +6157,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Antenna & Wave Propagation",
@@ -7373,9 +6206,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Embedded Systems",
@@ -7411,9 +6242,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Optical Communication",
@@ -7449,9 +6278,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "RF & Microwave Engineering",
@@ -7487,9 +6314,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -7543,9 +6368,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Information Theory & Coding",
@@ -7594,9 +6417,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Satellite Communication",
@@ -7632,9 +6453,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Biomedical Electronics",
@@ -7670,9 +6489,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Internet of Things",
@@ -7708,9 +6525,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -7751,9 +6566,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Advanced Communication Systems",
@@ -7802,9 +6615,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "MEMS & Nanotechnology",
@@ -7840,9 +6651,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Image Processing",
@@ -7891,9 +6700,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project I",
@@ -7942,9 +6749,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -7982,9 +6787,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Artificial Intelligence in ECE",
@@ -8020,9 +6823,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Radar Systems",
@@ -8058,9 +6859,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project II",
@@ -8119,9 +6918,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Industrial Training",
@@ -8154,9 +6951,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         }
@@ -8219,9 +7014,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Physics I",
@@ -8270,9 +7063,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Basic Electrical Engineering",
@@ -8603,162 +7394,6 @@
                     }
                   ]
                 }
-              ],
-              "videos": [
-                {
-                  "title": "DC Circuit Analysis Fundamentals",
-                  "description": "Complete guide to analyzing DC circuits using Ohm's law",
-                  "duration": "28:45",
-                  "url": "https://www.youtube.com/watch?v=m4jzgqZu-4s"
-                },
-                {
-                  "title": "Kirchhoff's Laws (KCL & KVL)",
-                  "description": "Understanding current and voltage laws with practical examples",
-                  "duration": "32:20",
-                  "url": "https://www.youtube.com/watch?v=33-488FBkjg"
-                },
-                {
-                  "title": "Network Theorems: Thevenin and Norton",
-                  "description": "Circuit simplification using fundamental theorems",
-                  "duration": "35:15",
-                  "url": "https://www.youtube.com/watch?v=5cUJUH_Pcqs"
-                },
-                {
-                  "title": "Mesh and Nodal Analysis",
-                  "description": "Systematic methods for analyzing complex circuits",
-                  "duration": "30:40",
-                  "url": "https://www.youtube.com/watch?v=FYSuiCfmJ6Q"
-                },
-                {
-                  "title": "AC Circuit Fundamentals",
-                  "description": "Understanding alternating current, frequency, and RMS values",
-                  "duration": "26:30",
-                  "url": "https://www.youtube.com/watch?v=3PjU8Sd0bRA"
-                },
-                {
-                  "title": "Phasor Representation of AC Quantities",
-                  "description": "Converting sinusoidal quantities to phasor form",
-                  "duration": "30:15",
-                  "url": "https://www.youtube.com/watch?v=6OvJQjYmFJ8"
-                },
-                {
-                  "title": "Impedance and Reactance in AC Circuits",
-                  "description": "Understanding impedance for R, L, C elements",
-                  "duration": "28:40",
-                  "url": "https://www.youtube.com/watch?v=rPnS_R4rz-c"
-                },
-                {
-                  "title": "AC Power: Real, Reactive, and Apparent",
-                  "description": "Power triangle, power factor, and power calculations",
-                  "duration": "32:20",
-                  "url": "https://www.youtube.com/watch?v=E8jo-A94YHc"
-                },
-                {
-                  "title": "Magnetism and Magnetic Materials",
-                  "description": "Understanding magnetic fields, flux, and magnetic materials",
-                  "duration": "26:45",
-                  "url": "https://www.youtube.com/watch?v=hFAOXdXZ5TM"
-                },
-                {
-                  "title": "Magnetic Circuit Analysis",
-                  "description": "Solving magnetic circuits using Ohm's law analogy",
-                  "duration": "28:30",
-                  "url": "https://www.youtube.com/watch?v=KSm44h3TnHc"
-                },
-                {
-                  "title": "Electromagnetic Induction - Faraday's Law",
-                  "description": "Understanding EMF generation and Lenz's law",
-                  "duration": "30:15",
-                  "url": "https://www.youtube.com/watch?v=N7jz2eY7PWg"
-                },
-                {
-                  "title": "Transformer Working Principle",
-                  "description": "Construction, working, and types of transformers",
-                  "duration": "32:40",
-                  "url": "https://www.youtube.com/watch?v=UchitHGF4n8"
-                },
-                {
-                  "title": "DC Generator Working Principle",
-                  "description": "Construction, working, and types of DC generators",
-                  "duration": "30:20",
-                  "url": "https://www.youtube.com/watch?v=cDoUbhtMoIg"
-                },
-                {
-                  "title": "DC Motor Fundamentals",
-                  "description": "DC motor operation, types, and characteristics",
-                  "duration": "32:15",
-                  "url": "https://www.youtube.com/watch?v=CWulQ1ZSE3c"
-                },
-                {
-                  "title": "Three Phase Induction Motor",
-                  "description": "Construction, working principle, and rotating magnetic field",
-                  "duration": "35:40",
-                  "url": "https://www.youtube.com/watch?v=LtJoJBUSe28"
-                },
-                {
-                  "title": "Synchronous Machines",
-                  "description": "Synchronous generator and motor operation",
-                  "duration": "34:25",
-                  "url": "https://www.youtube.com/watch?v=h2pYs16wnx4"
-                }
-              ],
-              "pdfs": [
-                {
-                  "title": "DC Circuits Complete Notes",
-                  "description": "Comprehensive notes on DC circuit analysis",
-                  "pages": 55,
-                  "size": "5.1 MB",
-                  "url": "https://www.allaboutcircuits.com/textbook/direct-current/"
-                },
-                {
-                  "title": "Network Theorems Handbook",
-                  "description": "Detailed guide to all network theorems with solved examples",
-                  "pages": 42,
-                  "size": "3.9 MB",
-                  "url": "https://www.electrical4u.com/network-theorems/"
-                },
-                {
-                  "title": "AC Circuit Analysis Guide",
-                  "description": "Complete notes on AC circuit theory and analysis",
-                  "pages": 58,
-                  "size": "5.4 MB",
-                  "url": "https://www.allaboutcircuits.com/textbook/alternating-current/"
-                },
-                {
-                  "title": "Phasor Diagrams and Calculations",
-                  "description": "Step-by-step guide to phasor analysis",
-                  "pages": 38,
-                  "size": "3.5 MB",
-                  "url": "https://www.electrical4u.com/phasor-diagram/"
-                },
-                {
-                  "title": "Magnetic Circuits Complete Notes",
-                  "description": "Comprehensive guide to magnetic circuit theory",
-                  "pages": 48,
-                  "size": "4.5 MB",
-                  "url": "https://www.electrical4u.com/magnetic-circuit/"
-                },
-                {
-                  "title": "Transformer Design and Analysis",
-                  "description": "Detailed notes on transformer operation and design",
-                  "pages": 52,
-                  "size": "4.8 MB",
-                  "url": "https://www.electrical4u.com/transformer-theory/"
-                },
-                {
-                  "title": "Electrical Machines Complete Guide",
-                  "description": "Comprehensive notes on DC and AC machines",
-                  "pages": 72,
-                  "size": "6.5 MB",
-                  "url": "https://www.electrical4u.com/electrical-machine/"
-                },
-                {
-                  "title": "Motor Characteristics and Control",
-                  "description": "Performance characteristics of various motors",
-                  "pages": 58,
-                  "size": "5.2 MB",
-                  "url": "https://www.electrical4u.com/dc-motor/"
-                }
               ]
             },
             {
@@ -8792,9 +7427,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "English Communication",
@@ -8830,9 +7463,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -8886,9 +7517,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Circuit Analysis",
@@ -8937,9 +7566,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Electronic Devices",
@@ -8988,9 +7615,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Digital Electronics",
@@ -9026,9 +7651,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Programming in C",
@@ -9064,9 +7687,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -9120,9 +7741,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Electrical Machines I",
@@ -9171,9 +7790,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Electromagnetic Fields",
@@ -9222,9 +7839,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Analog Electronics",
@@ -9273,9 +7888,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Measurements & Instrumentation",
@@ -9311,9 +7924,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -9367,9 +7978,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Control Systems",
@@ -9418,9 +8027,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Power Electronics",
@@ -9469,9 +8076,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Signals & Systems",
@@ -9507,9 +8112,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Microprocessors",
@@ -9545,9 +8148,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -9601,9 +8202,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Electric Drives",
@@ -9652,9 +8251,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Digital Signal Processing",
@@ -9690,9 +8287,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Renewable Energy Systems",
@@ -9728,9 +8323,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Industrial Automation",
@@ -9766,9 +8359,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -9822,9 +8413,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Power System Protection",
@@ -9873,9 +8462,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "HVDC Transmission",
@@ -9911,9 +8498,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Smart Grid Technology",
@@ -9949,9 +8534,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Electric Vehicle Technology",
@@ -9987,9 +8570,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -10030,9 +8611,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Power Quality",
@@ -10081,9 +8660,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Energy Management",
@@ -10119,9 +8696,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Power System Economics",
@@ -10157,9 +8732,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project I",
@@ -10208,9 +8781,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -10248,9 +8819,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Artificial Intelligence in Power Systems",
@@ -10286,9 +8855,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Power System Deregulation",
@@ -10324,9 +8891,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project II",
@@ -10385,9 +8950,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Industrial Training",
@@ -10420,9 +8983,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         }
@@ -10485,9 +9046,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Physics I",
@@ -10536,9 +9095,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Engineering Mechanics",
@@ -10856,156 +9413,6 @@
                     }
                   ]
                 }
-              ],
-              "videos": [
-                {
-                  "title": "Introduction to Engineering Mechanics",
-                  "description": "Fundamentals of statics and force systems",
-                  "duration": "28:45",
-                  "url": "https://www.youtube.com/watch?v=FKyTR2x8vug"
-                },
-                {
-                  "title": "Force Vectors and Resultants",
-                  "description": "Vector addition and resolution of forces",
-                  "duration": "32:20",
-                  "url": "https://www.youtube.com/watch?v=2SmZ8GHCeTA"
-                },
-                {
-                  "title": "Equilibrium of Particles and Bodies",
-                  "description": "Conditions for equilibrium and problem-solving",
-                  "duration": "35:15",
-                  "url": "https://www.youtube.com/watch?v=gk9FtcojRAo"
-                },
-                {
-                  "title": "Free Body Diagrams",
-                  "description": "Drawing and using FBDs for problem solving",
-                  "duration": "26:30",
-                  "url": "https://www.youtube.com/watch?v=UZBvegQ8xq0"
-                },
-                {
-                  "title": "Friction in Engineering",
-                  "description": "Understanding dry friction, angle of repose, and applications",
-                  "duration": "28:40",
-                  "url": "https://www.youtube.com/watch?v=fo_pmp5rtzo"
-                },
-                {
-                  "title": "Wedge and Screw Friction",
-                  "description": "Analysis of friction in wedges and screws",
-                  "duration": "26:15",
-                  "url": "https://www.youtube.com/watch?v=9EaURY_tH4s"
-                },
-                {
-                  "title": "Center of Gravity and Centroid",
-                  "description": "Calculating CG and centroid for various shapes",
-                  "duration": "32:30",
-                  "url": "https://www.youtube.com/watch?v=fEW8FGl2V7U"
-                },
-                {
-                  "title": "Composite Areas and Centroids",
-                  "description": "Finding centroids of composite shapes",
-                  "duration": "30:20",
-                  "url": "https://www.youtube.com/watch?v=gkg3J68wW3g"
-                },
-                {
-                  "title": "Moment of Inertia Fundamentals",
-                  "description": "Understanding second moment of area and its applications",
-                  "duration": "30:45",
-                  "url": "https://www.youtube.com/watch?v=3K9UOTuPTJc"
-                },
-                {
-                  "title": "Parallel Axis Theorem",
-                  "description": "Using parallel axis theorem for complex shapes",
-                  "duration": "28:20",
-                  "url": "https://www.youtube.com/watch?v=XYWYxnX_UpY"
-                },
-                {
-                  "title": "Moment of Inertia for Composite Sections",
-                  "description": "Calculating MOI for composite cross-sections",
-                  "duration": "32:15",
-                  "url": "https://www.youtube.com/watch?v=EGu9y95KPr8"
-                },
-                {
-                  "title": "Kinematics of Particles",
-                  "description": "Motion analysis using displacement, velocity, and acceleration",
-                  "duration": "32:40",
-                  "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
-                },
-                {
-                  "title": "Curvilinear Motion - Normal and Tangential Components",
-                  "description": "Analyzing motion along curved paths",
-                  "duration": "30:15",
-                  "url": "https://www.youtube.com/watch?v=N10T_vBJJBQ"
-                },
-                {
-                  "title": "Relative Motion Analysis",
-                  "description": "Understanding relative velocity and acceleration",
-                  "duration": "28:30",
-                  "url": "https://www.youtube.com/watch?v=9h27v5yFMZQ"
-                },
-                {
-                  "title": "Projectile Motion Problems",
-                  "description": "Solving projectile motion in engineering applications",
-                  "duration": "26:45",
-                  "url": "https://www.youtube.com/watch?v=JCxaHVZL6TM"
-                }
-              ],
-              "pdfs": [
-                {
-                  "title": "Engineering Mechanics: Statics",
-                  "description": "Complete notes on statics by R.C. Hibbeler",
-                  "pages": 65,
-                  "size": "6.0 MB",
-                  "url": "https://www.pearson.com/us/higher-education/program/Hibbeler-Engineering-Mechanics-Statics-14th-Edition/PGM263809.html"
-                },
-                {
-                  "title": "Statics Problem Solutions",
-                  "description": "200+ solved problems on force systems",
-                  "pages": 85,
-                  "size": "7.5 MB",
-                  "url": "https://www.engineeringtoolbox.com/statics-d_1645.html"
-                },
-                {
-                  "title": "Friction Analysis Guide",
-                  "description": "Complete notes on friction in mechanical systems",
-                  "pages": 42,
-                  "size": "3.9 MB",
-                  "url": "https://www.mechanicalengineeringblog.com/friction-analysis/"
-                },
-                {
-                  "title": "Centroid Calculation Manual",
-                  "description": "Step-by-step guide for centroid problems",
-                  "pages": 38,
-                  "size": "3.5 MB",
-                  "url": "https://www.engineeringtoolbox.com/centroid-d_1720.html"
-                },
-                {
-                  "title": "Moment of Inertia Complete Guide",
-                  "description": "Comprehensive notes on MOI and its applications",
-                  "pages": 52,
-                  "size": "4.8 MB",
-                  "url": "https://www.engineeringtoolbox.com/moment-inertia-d_1328.html"
-                },
-                {
-                  "title": "MOI Problem Solutions",
-                  "description": "100+ solved problems on moment of inertia",
-                  "pages": 68,
-                  "size": "6.2 MB",
-                  "url": "https://www.mechanicalengineeringblog.com/moment-of-inertia/"
-                },
-                {
-                  "title": "Engineering Dynamics: Kinematics",
-                  "description": "Complete notes on particle kinematics",
-                  "pages": 58,
-                  "size": "5.4 MB",
-                  "url": "https://www.engineeringtoolbox.com/kinematics-d_1646.html"
-                },
-                {
-                  "title": "Dynamics Problem Set",
-                  "description": "150+ solved kinematics problems",
-                  "pages": 72,
-                  "size": "6.5 MB",
-                  "url": "https://www.mechanicalengineeringblog.com/kinematics/"
-                }
               ]
             },
             {
@@ -11039,9 +9446,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Workshop Practice",
@@ -11074,9 +9479,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -11130,9 +9533,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Thermodynamics",
@@ -11181,9 +9582,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Strength of Materials",
@@ -11232,9 +9631,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Material Science",
@@ -11270,9 +9667,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Programming in C",
@@ -11308,9 +9703,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -11364,9 +9757,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Machine Design I",
@@ -11415,9 +9806,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Manufacturing Processes",
@@ -11466,9 +9855,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Heat Transfer",
@@ -11517,9 +9904,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Engineering Economics",
@@ -11555,9 +9940,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -11611,9 +9994,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Dynamics of Machines",
@@ -11662,9 +10043,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Production Engineering",
@@ -11713,9 +10092,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Control Systems",
@@ -11751,9 +10128,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "CAD/CAM",
@@ -11789,9 +10164,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -11845,9 +10218,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Refrigeration & Air Conditioning",
@@ -11896,9 +10267,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Finite Element Analysis",
@@ -11934,9 +10303,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Robotics",
@@ -11972,9 +10339,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Automotive Engineering",
@@ -12010,9 +10375,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -12066,9 +10429,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Industrial Engineering",
@@ -12117,9 +10478,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Mechatronics",
@@ -12155,9 +10514,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Renewable Energy",
@@ -12193,9 +10550,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Advanced Manufacturing",
@@ -12231,9 +10586,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -12274,9 +10627,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Advanced Heat Transfer",
@@ -12325,9 +10676,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Tribology",
@@ -12363,9 +10712,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Composite Materials",
@@ -12401,9 +10748,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project I",
@@ -12452,9 +10797,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -12492,9 +10835,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Additive Manufacturing",
@@ -12530,9 +10871,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Energy Systems",
@@ -12568,9 +10907,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project II",
@@ -12629,9 +10966,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Industrial Training",
@@ -12664,9 +10999,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         }
@@ -12729,9 +11062,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Physics I",
@@ -12780,9 +11111,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Engineering Mechanics",
@@ -12831,9 +11160,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Building Materials",
@@ -13060,118 +11387,6 @@
                     }
                   ]
                 }
-              ],
-              "videos": [
-                {
-                  "title": "Building Stones - Types and Properties",
-                  "description": "Classification, properties, and uses of natural stones in construction",
-                  "duration": "26:30",
-                  "url": "https://www.youtube.com/watch?v=YJxiH8hd2TI"
-                },
-                {
-                  "title": "Bricks Manufacturing and Testing",
-                  "description": "Brick making process, types, and quality tests",
-                  "duration": "28:45",
-                  "url": "https://www.youtube.com/watch?v=4mXkn5Qr4XE"
-                },
-                {
-                  "title": "Tiles and Flooring Materials",
-                  "description": "Types of tiles, ceramic, vitrified, and their applications",
-                  "duration": "24:20",
-                  "url": "https://www.youtube.com/watch?v=8zRV5NhzZx0"
-                },
-                {
-                  "title": "Cement Manufacturing Process",
-                  "description": "Dry and wet process of cement production",
-                  "duration": "30:15",
-                  "url": "https://www.youtube.com/watch?v=7ZFHGNjEONY"
-                },
-                {
-                  "title": "Types of Cement and Their Uses",
-                  "description": "OPC, PPC, PSC and special cements",
-                  "duration": "26:40",
-                  "url": "https://www.youtube.com/watch?v=k8u2sFdmVNQ"
-                },
-                {
-                  "title": "Concrete Mix Design",
-                  "description": "Proportioning of concrete ingredients for desired strength",
-                  "duration": "32:30",
-                  "url": "https://www.youtube.com/watch?v=VXc3QE8U7bw"
-                },
-                {
-                  "title": "Concrete Testing: Slump, Compressive Strength",
-                  "description": "Standard tests for concrete quality control",
-                  "duration": "28:45",
-                  "url": "https://www.youtube.com/watch?v=FHm0Ggp_qbs"
-                },
-                {
-                  "title": "Structural Steel in Construction",
-                  "description": "Types of steel, properties, and structural applications",
-                  "duration": "28:20",
-                  "url": "https://www.youtube.com/watch?v=SqFW9jGNdWU"
-                },
-                {
-                  "title": "Steel Production and Testing",
-                  "description": "Manufacturing process and quality tests for steel",
-                  "duration": "26:35",
-                  "url": "https://www.youtube.com/watch?v=kHNUVqmIFDs"
-                },
-                {
-                  "title": "Timber as Construction Material",
-                  "description": "Properties, types, and uses of timber in building",
-                  "duration": "24:45",
-                  "url": "https://www.youtube.com/watch?v=3QvTMZzRfkE"
-                },
-                {
-                  "title": "Timber Preservation Methods",
-                  "description": "Techniques to protect timber from decay and insects",
-                  "duration": "22:30",
-                  "url": "https://www.youtube.com/watch?v=wHnXS07cEsA"
-                }
-              ],
-              "pdfs": [
-                {
-                  "title": "Building Materials - Stones and Bricks",
-                  "description": "Complete notes on natural stones and clay products",
-                  "pages": 45,
-                  "size": "4.2 MB",
-                  "url": "https://www.iricen.gov.in/iricen/Building_Materials.pdf"
-                },
-                {
-                  "title": "Construction Materials Testing Manual",
-                  "description": "Standard tests for building materials",
-                  "pages": 38,
-                  "size": "3.5 MB",
-                  "url": "https://www.ce.berkeley.edu/materials"
-                },
-                {
-                  "title": "Cement and Concrete Technology",
-                  "description": "Comprehensive guide to cement and concrete",
-                  "pages": 62,
-                  "size": "5.8 MB",
-                  "url": "https://www.iricen.gov.in/Cement_Concrete.pdf"
-                },
-                {
-                  "title": "IS Codes for Concrete Mix Design",
-                  "description": "Indian Standard specifications for concrete",
-                  "pages": 45,
-                  "size": "4.2 MB",
-                  "url": "https://archive.org/details/gov.in.is.456.2000"
-                },
-                {
-                  "title": "Steel and Timber in Construction",
-                  "description": "Complete notes on metallic and organic materials",
-                  "pages": 48,
-                  "size": "4.5 MB",
-                  "url": "https://www.iricen.gov.in/Steel_Timber.pdf"
-                },
-                {
-                  "title": "IS Codes for Steel Structures",
-                  "description": "Indian standards for structural steel",
-                  "pages": 52,
-                  "size": "4.8 MB",
-                  "url": "https://archive.org/details/gov.in.is.800.2007"
-                }
               ]
             },
             {
@@ -13208,9 +11423,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -13264,9 +11477,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Strength of Materials",
@@ -13315,9 +11526,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Fluid Mechanics",
@@ -13366,9 +11575,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Engineering Geology",
@@ -13404,9 +11611,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Computer Programming",
@@ -13442,9 +11647,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -13498,9 +11701,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Concrete Technology",
@@ -13549,9 +11750,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Soil Mechanics",
@@ -13600,9 +11799,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Hydraulics",
@@ -13651,9 +11848,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Transportation Engineering",
@@ -13689,9 +11884,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -13745,9 +11938,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "RCC Design",
@@ -13796,9 +11987,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Foundation Engineering",
@@ -13847,9 +12036,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Hydrology",
@@ -13885,9 +12072,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Environmental Engineering I",
@@ -13923,9 +12108,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -13979,9 +12162,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Water Resources Engineering",
@@ -14030,9 +12211,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Highway Engineering",
@@ -14068,9 +12247,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Earthquake Engineering",
@@ -14106,9 +12283,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Construction Management",
@@ -14144,9 +12319,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -14200,9 +12373,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Environmental Engineering II",
@@ -14251,9 +12422,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Bridge Engineering",
@@ -14289,9 +12458,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Remote Sensing & GIS",
@@ -14327,9 +12494,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Urban Planning",
@@ -14365,9 +12530,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -14408,9 +12571,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Advanced Structural Design",
@@ -14459,9 +12620,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Coastal Engineering",
@@ -14497,9 +12656,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Green Building Technology",
@@ -14535,9 +12692,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project I",
@@ -14586,9 +12741,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -14626,9 +12779,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Smart Cities",
@@ -14664,9 +12815,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Disaster Management",
@@ -14702,9 +12851,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project II",
@@ -14763,9 +12910,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Industrial Training",
@@ -14798,9 +12943,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         }
@@ -14863,9 +13006,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Physics I",
@@ -14914,9 +13055,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Programming Fundamentals",
@@ -15090,71 +13229,6 @@
                     }
                   ]
                 }
-              ],
-              "videos": [
-                {
-                  "title": "What is Programming?",
-                  "description": "Programming basics and how computers execute code",
-                  "duration": "18:30",
-                  "url": "https://www.youtube.com/watch?v=zOjov-2OZ0E"
-                },
-                {
-                  "title": "Algorithms and Flowcharts",
-                  "description": "Designing solutions before coding",
-                  "duration": "22:10",
-                  "url": "https://www.youtube.com/watch?v=SjSHVDfXHQ4"
-                },
-                {
-                  "title": "Variables and Data Types",
-                  "description": "Primitive types and variable usage",
-                  "duration": "24:45",
-                  "url": "https://www.youtube.com/watch?v=8PopR3x-VMY"
-                },
-                {
-                  "title": "Conditionals in Programming",
-                  "description": "If-else and switch statements",
-                  "duration": "25:15",
-                  "url": "https://www.youtube.com/watch?v=sQDMDmF0xF8"
-                },
-                {
-                  "title": "Loops Explained",
-                  "description": "for, while, do-while with examples",
-                  "duration": "26:40",
-                  "url": "https://www.youtube.com/watch?v=0eDhgskNE6Y"
-                },
-                {
-                  "title": "Functions Explained",
-                  "description": "How and why to use functions",
-                  "duration": "24:30",
-                  "url": "https://www.youtube.com/watch?v=VJwjXA1NsaA"
-                },
-                {
-                  "title": "Arrays and 2D Arrays",
-                  "description": "Data storage patterns and traversal",
-                  "duration": "27:20",
-                  "url": "https://www.youtube.com/watch?v=RQ0JHMGiobo"
-                },
-                {
-                  "title": "Strings and Text Processing",
-                  "description": "Working with strings and text manipulation",
-                  "duration": "25:10",
-                  "url": "https://www.youtube.com/watch?v=Gh4T1wX4VfA"
-                },
-                {
-                  "title": "File Handling Basics",
-                  "description": "Reading and writing files in programs",
-                  "duration": "26:20",
-                  "url": "https://www.youtube.com/watch?v=SXw2hZhxPzs"
-                }
-              ],
-              "pdfs": [
-                {
-                  "title": "Intro to Programming Notes",
-                  "description": "Comprehensive notes for programming beginners",
-                  "pages": 40,
-                  "size": "3.6 MB",
-                  "url": "https://www.cs.cmu.edu/~15110-s13/Wing06-ComputationalThinking.pdf"
-                }
               ]
             },
             {
@@ -15297,49 +13371,6 @@
                     }
                   ]
                 }
-              ],
-              "videos": [
-                {
-                  "title": "Binary Numbers and Base Systems",
-                  "description": "Understanding binary and other bases",
-                  "duration": "10:02",
-                  "url": "https://www.youtube.com/watch?v=LpuPe81bc2w"
-                },
-                {
-                  "title": "Binary Addition Explained",
-                  "description": "How computers add numbers in binary",
-                  "duration": "9:12",
-                  "url": "https://www.youtube.com/watch?v=wvJc9CZcvBc"
-                },
-                {
-                  "title": "Binary Adders Overview",
-                  "description": "Ripple-carry adders and full adders",
-                  "duration": "8:54",
-                  "url": "https://www.youtube.com/watch?v=wvJc9CZcvBc"
-                }
-              ],
-              "pdfs": [
-                {
-                  "title": "Binary and Hex Guide (Stanford CS101)",
-                  "description": "Beginner-friendly guide to binary and hexadecimal",
-                  "pages": 12,
-                  "size": "0.6 MB",
-                  "url": "https://web.stanford.edu/class/cs101/binary-hex.html"
-                },
-                {
-                  "title": "K-Map Simplification Guide",
-                  "description": "Step-by-step Karnaugh map minimization",
-                  "pages": 10,
-                  "size": "0.5 MB",
-                  "url": "https://people.cs.pitt.edu/~mehmud/cs447/Kmap.pdf"
-                },
-                {
-                  "title": "Flip-Flops and Registers Notes",
-                  "description": "Introductory notes on sequential logic",
-                  "pages": 18,
-                  "size": "1.1 MB",
-                  "url": "https://www.cs.umd.edu/class/fall2011/cmsc311/Notes/Seq/seq.html"
-                }
               ]
             },
             {
@@ -15376,9 +13407,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -15432,9 +13461,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Data Structures",
@@ -15483,9 +13510,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Computer Organization",
@@ -15534,9 +13559,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Web Technologies I",
@@ -15572,9 +13595,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Environmental Science",
@@ -15607,9 +13628,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -15663,9 +13682,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Database Management Systems",
@@ -15714,9 +13731,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Operating Systems",
@@ -15765,9 +13780,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Computer Networks",
@@ -15816,9 +13829,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Discrete Mathematics",
@@ -15854,9 +13865,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -15910,9 +13919,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Web Technologies II",
@@ -15961,9 +13968,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "System Administration",
@@ -15999,9 +14004,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Information Security",
@@ -16037,9 +14040,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Python Programming",
@@ -16075,9 +14076,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -16131,9 +14130,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Cloud Computing",
@@ -16182,9 +14179,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Data Analytics",
@@ -16220,9 +14215,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Machine Learning",
@@ -16258,9 +14251,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "DevOps",
@@ -16296,9 +14287,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -16352,9 +14341,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Big Data Analytics",
@@ -16403,9 +14390,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Internet of Things",
@@ -16441,9 +14426,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Blockchain Technology",
@@ -16479,9 +14462,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "UI/UX Design",
@@ -16517,9 +14498,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -16560,9 +14539,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Artificial Intelligence",
@@ -16611,9 +14588,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Cyber Security",
@@ -16649,9 +14624,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Quality Assurance",
@@ -16687,9 +14660,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project I",
@@ -16738,9 +14709,7 @@
                   ],
                   "hours": 15
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         },
@@ -16778,9 +14747,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Digital Marketing",
@@ -16816,9 +14783,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "IT Service Management",
@@ -16854,9 +14819,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Major Project II",
@@ -16915,9 +14878,7 @@
                   ],
                   "hours": 12
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             },
             {
               "name": "Industrial Training",
@@ -16950,9 +14911,7 @@
                   ],
                   "hours": 20
                 }
-              ],
-              "videos": [],
-              "pdfs": []
+              ]
             }
           ]
         }
