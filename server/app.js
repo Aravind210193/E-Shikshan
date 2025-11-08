@@ -70,9 +70,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-console.log('📝 Loading routes...');
 app.use('/api/auth', authRoutes);
-console.log('✅ Auth routes loaded (includes /api/auth/certificates)');
 app.use('/api/courses', courseRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/jobs', jobRoutes);
@@ -115,36 +113,6 @@ app.use(errorHandler);
 // Health check route
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
-});
-
-// Debug route to check loaded routes
-app.get('/api/debug/routes', (req, res) => {
-  const routes = [];
-  app._router.stack.forEach((middleware) => {
-    if (middleware.route) {
-      routes.push({
-        path: middleware.route.path,
-        methods: Object.keys(middleware.route.methods)
-      });
-    } else if (middleware.name === 'router') {
-      middleware.handle.stack.forEach((handler) => {
-        if (handler.route) {
-          const path = middleware.regexp.source
-            .replace('\\/?', '')
-            .replace('(?=\\/|$)', '')
-            .replace(/\\\//g, '/');
-          routes.push({
-            path: path + handler.route.path,
-            methods: Object.keys(handler.route.methods)
-          });
-        }
-      });
-    }
-  });
-  res.json({ 
-    totalRoutes: routes.length,
-    routes: routes.filter(r => r.path.includes('certificate'))
-  });
 });
 
 module.exports = app;
