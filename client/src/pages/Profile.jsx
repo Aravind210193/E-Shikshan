@@ -32,7 +32,13 @@ import {
   GitBranch,
   BookOpen,
   Zap,
-  TrendingUp
+  TrendingUp,
+  Upload,
+  Download,
+  Trash2,
+  ExternalLink,
+  Plus,
+  Medal
 } from 'lucide-react';
 
 const Profile = () => {
@@ -51,6 +57,25 @@ const Profile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const bannerInputRef = React.useRef(null);
   const profileInputRef = React.useRef(null);
+
+  // Certificates state
+  const [certificates, setCertificates] = useState([]);
+  const [isAddCertificateModalOpen, setIsAddCertificateModalOpen] = useState(false);
+  const [certificateFormData, setCertificateFormData] = useState({
+    title: '',
+    issuer: '',
+    issuedDate: '',
+    expiryDate: '',
+    credentialId: '',
+    credentialUrl: '',
+    type: 'certificate',
+    description: '',
+    skills: '',
+    imageUrl: '',
+    pdfUrl: ''
+  });
+  const [isUploadingCertificate, setIsUploadingCertificate] = useState(false);
+  const certificateFileInputRef = React.useRef(null);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -93,6 +118,14 @@ const Profile = () => {
           setSavedResume(null);
         }
 
+        try {
+          const certificatesResponse = await authAPI.getCertificates();
+          setCertificates(certificatesResponse.data.certificates || []);
+        } catch (err) {
+          console.warn('Could not fetch certificates:', err);
+          setCertificates([]);
+        }
+
         setLoading(false);
       } catch (err) {
         console.error('Error fetching profile:', err);
@@ -121,7 +154,7 @@ const Profile = () => {
   const totalCourses = enrolledCourses.length;
   const completedCourses = enrolledCourses.filter(course => course.progress?.overallProgress === 100).length;
   const ongoingCourses = totalCourses - completedCourses;
-  const certificates = enrolledCourses.filter(course => course.progress?.overallProgress === 100).length;
+  const totalCertificates = certificates.length;
 
   const [activeTab, setActiveTab] = useState('overview');
 
@@ -215,6 +248,95 @@ const Profile = () => {
       />
     </div>
   );
+
+  // Certificate handlers
+  const handleAddCertificate = async (e) => {
+    e.preventDefault();
+    setIsUploadingCertificate(true);
+    
+    try {
+      const skillsArray = certificateFormData.skills 
+        ? certificateFormData.skills.split(',').map(s => s.trim()).filter(s => s)
+        : [];
+      
+      const dataToSend = {
+        ...certificateFormData,
+        skills: skillsArray
+      };
+      
+      const response = await authAPI.addCertificate(dataToSend);
+      
+      setCertificates([...certificates, response.data.certificate]);
+      setIsAddCertificateModalOpen(false);
+      resetCertificateForm();
+      toast.success('Certificate added successfully!');
+    } catch (error) {
+      console.error('Error adding certificate:', error);
+      toast.error(error.response?.data?.message || 'Failed to add certificate');
+    } finally {
+      setIsUploadingCertificate(false);
+    }
+  };
+
+  const handleCertificateFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const fileType = file.type;
+    const isImage = fileType.startsWith('image/');
+    const isPDF = fileType === 'application/pdf';
+    
+    if (!isImage && !isPDF) {
+      toast.error('Please upload an image or PDF file');
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result;
+      if (isImage) {
+        setCertificateFormData(prev => ({ ...prev, imageUrl: base64String }));
+      } else {
+        setCertificateFormData(prev => ({ ...prev, pdfUrl: base64String }));
+      }
+      toast.success(`${isImage ? 'Image' : 'PDF'} uploaded successfully`);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleDeleteCertificate = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this certificate?')) {
+      return;
+    }
+    
+    try {
+      await authAPI.deleteCertificate(id);
+      setCertificates(certificates.filter(cert => cert._id !== id));
+      toast.success('Certificate deleted successfully');
+    } catch (error) {
+      console.error('Error deleting certificate:', error);
+      toast.error(error.response?.data?.message || 'Failed to delete certificate');
+    }
+  };
+
+  const resetCertificateForm = () => {
+    setCertificateFormData({
+      title: '',
+      issuer: '',
+      issuedDate: '',
+      expiryDate: '',
+      credentialId: '',
+      credentialUrl: '',
+      type: 'certificate',
+      description: '',
+      skills: '',
+      imageUrl: '',
+      pdfUrl: ''
+    });
+    if (certificateFileInputRef.current) {
+      certificateFileInputRef.current.value = '';
+    }
+  };
 
   const StatCard = ({ icon: Icon, label, value, color = "blue" }) => {
     const colorClasses = {
@@ -460,7 +582,7 @@ const Profile = () => {
           <StatCard icon={Book} label="Total Courses" value={totalCourses} color="blue" />
           <StatCard icon={Target} label="Completed Courses" value={completedCourses} color="green" />
           <StatCard icon={Award} label="Ongoing Courses" value={ongoingCourses} color="orange" />
-          <StatCard icon={Trophy} label="Certificates" value={certificates} color="purple" />
+          <StatCard icon={Trophy} label="Certificates" value={totalCertificates} color="purple" />
         </div>
         
         {/* Quick Access */}
@@ -991,20 +1113,151 @@ const Profile = () => {
               )}
 
               {activeTab === 'achievements' && (
-                <div className="text-center py-12">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-800 rounded-full mb-4">
-                    <Trophy className="w-8 h-8 text-gray-500" />
+                <div className="space-y-6">
+                  {/* Header with Add Button */}
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h2 className="text-2xl font-bold mb-2">Certificates & Badges</h2>
+                      <p className="text-gray-400">Your earned and uploaded certifications</p>
+                    </div>
+                    <button
+                      onClick={() => setIsAddCertificateModalOpen(true)}
+                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+                    >
+                      <Plus size={18} />
+                      Add Certificate
+                    </button>
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Achievements Coming Soon</h3>
-                  <p className="text-gray-400 mb-6">
-                    Complete courses and challenges to earn achievements and certificates!
-                  </p>
-                  <Link
-                    to="/courses"
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-all font-medium shadow-lg shadow-blue-500/20"
-                  >
-                    Start Learning <ArrowRight size={18} />
-                  </Link>
+
+                  {/* Certificates Grid */}
+                  {certificates.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {certificates.map((cert) => (
+                        <motion.div
+                          key={cert._id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="bg-gray-800/60 rounded-xl p-6 border border-gray-700 hover:border-blue-500/50 transition-all"
+                        >
+                          {/* Certificate Image/Badge */}
+                          {cert.imageUrl ? (
+                            <div className="w-full h-40 rounded-lg overflow-hidden mb-4 bg-gray-700/50">
+                              <img 
+                                src={cert.imageUrl} 
+                                alt={cert.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-full h-40 rounded-lg mb-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center border border-gray-700">
+                              <Medal className="w-16 h-16 text-blue-400" />
+                            </div>
+                          )}
+
+                          {/* Certificate Info */}
+                          <div className="space-y-3">
+                            <div className="flex items-start justify-between">
+                              <h3 className="font-bold text-lg leading-tight">{cert.title}</h3>
+                              {cert.source === 'platform' && (
+                                <Shield className="w-5 h-5 text-blue-400 flex-shrink-0" title="Platform Generated" />
+                              )}
+                            </div>
+                            
+                            {cert.issuer && (
+                              <p className="text-sm text-gray-400">{cert.issuer}</p>
+                            )}
+                            
+                            {cert.issuedDate && (
+                              <p className="text-xs text-gray-500">
+                                Issued: {new Date(cert.issuedDate).toLocaleDateString()}
+                              </p>
+                            )}
+                            
+                            {cert.credentialId && (
+                              <p className="text-xs text-gray-500 font-mono">
+                                ID: {cert.credentialId}
+                              </p>
+                            )}
+                            
+                            {cert.description && (
+                              <p className="text-sm text-gray-400 line-clamp-2">{cert.description}</p>
+                            )}
+                            
+                            {cert.skills && cert.skills.length > 0 && (
+                              <div className="flex flex-wrap gap-2">
+                                {cert.skills.slice(0, 3).map((skill, idx) => (
+                                  <span key={idx} className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">
+                                    {skill}
+                                  </span>
+                                ))}
+                                {cert.skills.length > 3 && (
+                                  <span className="text-xs text-gray-500">+{cert.skills.length - 3} more</span>
+                                )}
+                              </div>
+                            )}
+                            
+                            {/* Actions */}
+                            <div className="flex gap-2 pt-2">
+                              {cert.credentialUrl && (
+                                <a
+                                  href={cert.credentialUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex-1 flex items-center justify-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg transition-colors"
+                                >
+                                  <ExternalLink size={14} />
+                                  Verify
+                                </a>
+                              )}
+                              {cert.pdfUrl && (
+                                <a
+                                  href={cert.pdfUrl}
+                                  download={`${cert.title}.pdf`}
+                                  className="flex-1 flex items-center justify-center gap-1 text-xs bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg transition-colors"
+                                >
+                                  <Download size={14} />
+                                  PDF
+                                </a>
+                              )}
+                              {cert.source === 'manual' && (
+                                <button
+                                  onClick={() => handleDeleteCertificate(cert._id)}
+                                  className="flex items-center justify-center gap-1 text-xs bg-red-600/20 hover:bg-red-600/30 text-red-400 px-3 py-2 rounded-lg transition-colors"
+                                >
+                                  <Trash2 size={14} />
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12 bg-gray-800/30 rounded-xl border border-gray-700">
+                      <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-800 rounded-full mb-4">
+                        <Award className="w-8 h-8 text-gray-500" />
+                      </div>
+                      <h3 className="text-xl font-bold mb-2">No Certificates Yet</h3>
+                      <p className="text-gray-400 mb-6">
+                        Complete courses to earn certificates or upload your external certifications!
+                      </p>
+                      <div className="flex gap-4 justify-center">
+                        <Link
+                          to="/courses"
+                          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-all font-medium"
+                        >
+                          Browse Courses <ArrowRight size={18} />
+                        </Link>
+                        <button
+                          onClick={() => setIsAddCertificateModalOpen(true)}
+                          className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg transition-all font-medium"
+                        >
+                          <Upload size={18} />
+                          Upload Certificate
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1644,6 +1897,201 @@ const Profile = () => {
                 )}
               </button>
             </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Add Certificate Modal */}
+      {isAddCertificateModalOpen && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-gray-900 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-700"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold">Add Certificate or Badge</h2>
+              <button
+                onClick={() => {
+                  setIsAddCertificateModalOpen(false);
+                  resetCertificateForm();
+                }}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                ×
+              </button>
+            </div>
+
+            <form onSubmit={handleAddCertificate} className="space-y-6">
+              {/* File Upload */}
+              <div className="border-2 border-dashed border-gray-700 rounded-lg p-6 text-center">
+                <input
+                  ref={certificateFileInputRef}
+                  type="file"
+                  accept="image/*,application/pdf"
+                  onChange={handleCertificateFileUpload}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => certificateFileInputRef.current?.click()}
+                  className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors"
+                >
+                  <Upload size={18} />
+                  Upload Image or PDF
+                </button>
+                <p className="text-sm text-gray-400 mt-2">
+                  {certificateFormData.imageUrl ? '✓ Image uploaded' : 
+                   certificateFormData.pdfUrl ? '✓ PDF uploaded' : 
+                   'Supports JPG, PNG, PDF'}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Title */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium mb-2">
+                    Certificate Title <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={certificateFormData.title}
+                    onChange={(e) => setCertificateFormData(prev => ({ ...prev, title: e.target.value }))}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                    placeholder="e.g., AWS Certified Solutions Architect"
+                  />
+                </div>
+
+                {/* Type */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">Type</label>
+                  <select
+                    value={certificateFormData.type}
+                    onChange={(e) => setCertificateFormData(prev => ({ ...prev, type: e.target.value }))}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                  >
+                    <option value="certificate">Certificate</option>
+                    <option value="badge">Badge</option>
+                    <option value="achievement">Achievement</option>
+                  </select>
+                </div>
+
+                {/* Issuer */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">Issuing Organization</label>
+                  <input
+                    type="text"
+                    value={certificateFormData.issuer}
+                    onChange={(e) => setCertificateFormData(prev => ({ ...prev, issuer: e.target.value }))}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                    placeholder="e.g., Amazon Web Services"
+                  />
+                </div>
+
+                {/* Issue Date */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">Issue Date</label>
+                  <input
+                    type="date"
+                    value={certificateFormData.issuedDate}
+                    onChange={(e) => setCertificateFormData(prev => ({ ...prev, issuedDate: e.target.value }))}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                {/* Expiry Date */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">Expiry Date (Optional)</label>
+                  <input
+                    type="date"
+                    value={certificateFormData.expiryDate}
+                    onChange={(e) => setCertificateFormData(prev => ({ ...prev, expiryDate: e.target.value }))}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                {/* Credential ID */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">Credential ID</label>
+                  <input
+                    type="text"
+                    value={certificateFormData.credentialId}
+                    onChange={(e) => setCertificateFormData(prev => ({ ...prev, credentialId: e.target.value }))}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                    placeholder="e.g., ABC123XYZ"
+                  />
+                </div>
+
+                {/* Verification URL */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">Verification URL</label>
+                  <input
+                    type="url"
+                    value={certificateFormData.credentialUrl}
+                    onChange={(e) => setCertificateFormData(prev => ({ ...prev, credentialUrl: e.target.value }))}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                    placeholder="https://..."
+                  />
+                </div>
+
+                {/* Description */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium mb-2">Description</label>
+                  <textarea
+                    value={certificateFormData.description}
+                    onChange={(e) => setCertificateFormData(prev => ({ ...prev, description: e.target.value }))}
+                    rows={3}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 resize-none"
+                    placeholder="Brief description of what this certification covers..."
+                  />
+                </div>
+
+                {/* Skills */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium mb-2">Skills (comma separated)</label>
+                  <input
+                    type="text"
+                    value={certificateFormData.skills}
+                    onChange={(e) => setCertificateFormData(prev => ({ ...prev, skills: e.target.value }))}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                    placeholder="e.g., AWS, Cloud Computing, DevOps"
+                  />
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAddCertificateModalOpen(false);
+                    resetCertificateForm();
+                  }}
+                  className="flex-1 bg-gray-800 hover:bg-gray-700 px-6 py-3 rounded-lg transition-colors"
+                  disabled={isUploadingCertificate}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isUploadingCertificate || !certificateFormData.title}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {isUploadingCertificate ? (
+                    <>
+                      <Loader className="w-4 h-4 animate-spin" />
+                      Adding...
+                    </>
+                  ) : (
+                    <>
+                      <Plus size={18} />
+                      Add Certificate
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
           </motion.div>
         </div>
       )}

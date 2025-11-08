@@ -33,6 +33,26 @@ router.put('/resume', protect, authController.saveResume);
 // @access  Private
 router.get('/resume', protect, authController.getResume);
 
+// @route   POST api/auth/certificates
+// @desc    Add certificate or badge
+// @access  Private
+router.post('/certificates', protect, authController.addCertificate);
+
+// @route   GET api/auth/certificates
+// @desc    Get user certificates and badges
+// @access  Private
+router.get('/certificates', protect, authController.getCertificates);
+
+// @route   PUT api/auth/certificates/:id
+// @desc    Update certificate or badge
+// @access  Private
+router.put('/certificates/:id', protect, authController.updateCertificate);
+
+// @route   DELETE api/auth/certificates/:id
+// @desc    Delete certificate or badge
+// @access  Private
+router.delete('/certificates/:id', protect, authController.deleteCertificate);
+
 // @route   POST api/auth/login
 // @desc    Login user & get token
 // @access  Public

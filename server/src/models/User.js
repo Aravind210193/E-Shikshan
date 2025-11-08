@@ -53,6 +53,35 @@ const userSchema = new mongoose.Schema({
   profilePicture: { type: String },
   bannerImage: { type: String },
   
+  // Certificates and Badges
+  certificatesAndBadges: [{
+    title: { type: String, required: true },
+    issuer: { type: String },
+    issuedDate: { type: Date },
+    expiryDate: { type: Date },
+    credentialId: { type: String },
+    credentialUrl: { type: String },
+    type: { 
+      type: String, 
+      enum: ['certificate', 'badge', 'achievement'],
+      default: 'certificate'
+    },
+    source: {
+      type: String,
+      enum: ['platform', 'manual'],
+      default: 'manual'
+    },
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course'
+    },
+    imageUrl: { type: String },
+    pdfUrl: { type: String },
+    description: { type: String },
+    skills: [{ type: String }],
+    uploadedAt: { type: Date, default: Date.now }
+  }],
+  
   // Resume Data
   resume: {
     personalInfo: {
