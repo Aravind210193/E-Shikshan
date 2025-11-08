@@ -50,7 +50,9 @@ const corsOptions = {
     'http://localhost:5173',
     'http://localhost:5174',
     'https://eshikshan.vercel.app',
-    'https://www.eshikshan.vercel.app'
+    'https://www.eshikshan.vercel.app',
+    'https://e-shikshan.vercel.app',
+    'https://www.e-shikshan.vercel.app'
   ],
   credentials: true,
   optionsSuccessStatus: 200
