@@ -3,6 +3,8 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const { protect } = require('../middlewares/authMiddleware');
 
+// Certificates & Badges API Routes - Added Nov 2025
+
 // @route   GET api/auth/profile
 // @desc    Get user profile
 // @access  Private
