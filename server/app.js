@@ -70,7 +70,9 @@ app.use((req, res, next) => {
 });
 
 // Routes
+console.log('📝 Loading routes...');
 app.use('/api/auth', authRoutes);
+console.log('✅ Auth routes loaded (includes /api/auth/certificates)');
 app.use('/api/courses', courseRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/jobs', jobRoutes);
