@@ -256,7 +256,7 @@ export default function RoadmapDetail() {
       <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center text-center p-4">
         <h1 className="text-4xl font-bold mb-4">Roadmap Not Found</h1>
         <p className="text-gray-400 mb-8">We couldn't find the roadmap you were looking for.</p>
-        <Link to="/roadmaps" className="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">
+        <Link to="/roadmap" className="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">
           Back to All Roadmaps
         </Link>
       </div>
@@ -269,7 +269,7 @@ export default function RoadmapDetail() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-20 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link to="/roadmaps" className="text-gray-400 hover:text-white transition-colors">
+              <Link to="/roadmap" className="text-gray-400 hover:text-white transition-colors">
                 <ArrowRight size={20} className="rotate-180" />
               </Link>
               <h1 className="text-xl font-bold text-white">{roadmap.title}</h1>

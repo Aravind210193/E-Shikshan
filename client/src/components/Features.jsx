@@ -23,12 +23,12 @@ const cardData = [
   {
     title: "Job Roles",
     description: "Explore different tech roles & required skills.",
-    path: "/jobrole",
+    path: "/jobs",
   },
   {
     title: "Roadmaps",
     description: "Step-by-step guides for your tech career path.",
-    path: "/roadmaps",
+    path: "/roadmap",
   },
   {
     title: "Content Library",
@@ -349,14 +349,14 @@ const Features = ({
       {/* Main Grid Layout */}
       <div
         ref={gridRef}
-        className="bento-section grid grid-cols-1 md:grid-cols-3 gap-2 px-6 max-w-4xl mx-auto"
+        className="bento-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 px-4 sm:px-6 max-w-7xl mx-auto"
       >
         {cardData.map((card, index) => {
           const cardClassName = `
-            card p-5 rounded-[20px] border border-[3px]
-            hover:shadow-xl transition-all duration-300 font-light
-            cursor-pointer flex flex-col justify-between min-h-[200px] aspect-[4/3]
-            touch-manipulation select-none
+            card p-5 sm:p-6 rounded-2xl border-2 sm:border-[3px]
+            hover:shadow-2xl transition-all duration-300 font-light
+            cursor-pointer flex flex-col justify-between min-h-[180px] sm:min-h-[200px]
+            touch-manipulation select-none active:scale-95
             ${enableBorderGlow ? "card--border-glow" : ""}
           `;
 
@@ -372,22 +372,15 @@ const Features = ({
           const cardContent = (
             <>
               <div className="relative z-10">
-                <h3 className="text-xl font-semibold text-white">
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
                   {card.title}
                 </h3>
-                <TextType 
-                  text={[card.description,card.description]}
-                  typingSpeed={60}
-                  pauseDuration={2500}
-                  showCursor={true}
-                  cursorCharacter="|"
-                />
-                {/* <p className="mt-2 text-gray-400">
+                <p className="text-sm sm:text-base text-gray-400 line-clamp-3">
                   {card.description}
-                </p> */}
+                </p>
               </div>
-              <span className="inline-block mt-4 text-yellow-400 hover:underline relative z-10">
-                Explore
+              <span className="inline-block mt-3 sm:mt-4 text-sm sm:text-base text-yellow-400 hover:underline relative z-10 font-medium">
+                Explore →
               </span>
             </>
           );

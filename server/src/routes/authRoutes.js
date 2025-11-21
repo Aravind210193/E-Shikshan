@@ -2,6 +2,36 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 const { protect } = require('../middlewares/authMiddleware');
+const passport = require('passport');
+
+// @route   POST api/auth/login
+// @desc    Login user
+// @access  Public
+router.post('/login', authController.login);
+
+// @route   POST api/auth/register
+// @desc    Register new user
+// @access  Public
+router.post('/register', authController.register);
+
+// Google OAuth routes
+// @route   GET api/auth/google
+// @desc    Start Google OAuth flow
+// @access  Public
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// @route   GET api/auth/google/callback
+// @desc    Google OAuth callback
+// @access  Public
+router.get('/google/callback',
+  passport.authenticate('google', { 
+    failureRedirect: `${process.env.CLIENT_URL || 'http://localhost:5173'}/login?error=google_auth_failed`,
+    session: false 
+  }),
+  authController.googleAuthCallback
+);
 
 // @route   GET api/auth/profile
 // @desc    Get user profile

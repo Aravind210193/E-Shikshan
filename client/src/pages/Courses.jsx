@@ -197,15 +197,15 @@ const Courses = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 }}
-                      className="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-5 border border-purple-500/20 shadow-lg"
+                      className="bg-slate-800/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-purple-500/20 shadow-lg"
                     >
-                      <h3 className="font-semibold mb-4 flex items-center gap-2 text-white">
-                        <span className="p-2 bg-indigo-500/20 rounded-lg">
-                          <BookOpen size={18} className="text-indigo-400" />
+                      <h3 className="font-semibold mb-3 sm:mb-4 flex items-center gap-2 text-white text-sm sm:text-base">
+                        <span className="p-1.5 sm:p-2 bg-indigo-500/20 rounded-lg">
+                          <BookOpen size={16} className="text-indigo-400" />
                         </span>
                         Category
                       </h3>
-                      <div className="space-y-2">
+                      <div className="space-y-1.5 sm:space-y-2 max-h-60 sm:max-h-none overflow-y-auto">
                         {categories.map((cat, index) => (
                           <motion.button
                             key={cat}
@@ -215,10 +215,10 @@ const Courses = () => {
                             whileHover={{ scale: 1.02, x: 4 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setSelectedCategory(cat)}
-                            className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium ${
+                            className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl transition-all duration-300 text-xs sm:text-sm font-medium touch-manipulation ${
                               selectedCategory === cat
                                 ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
-                                : 'hover:bg-slate-700/50 text-slate-300 hover:text-white border border-transparent hover:border-slate-600'
+                                : 'hover:bg-slate-700/50 active:bg-slate-700 text-slate-300 hover:text-white border border-transparent hover:border-slate-600'
                             }`}
                           >
                             {cat}
@@ -303,14 +303,14 @@ const Courses = () => {
           {/* Courses Grid */}
           <main className="lg:col-span-3">
             {/* Sort and Results Count */}
-            <div className="flex justify-between items-center mb-6">
-              <p className="text-slate-400">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6 px-2">
+              <p className="text-sm sm:text-base text-slate-400">
                 {filteredCourses.length} courses found
               </p>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 rounded-lg bg-slate-800 text-white border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full sm:w-auto px-3 sm:px-4 py-2 rounded-lg bg-slate-800 text-white border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm sm:text-base touch-manipulation"
               >
                 <option value="popular">Most Popular</option>
                 <option value="rating">Highest Rated</option>
@@ -332,57 +332,57 @@ const Courses = () => {
                 <p className="text-slate-400 text-lg">No courses found matching your criteria</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
                 {filteredCourses.map((course, index) => (
                   <motion.div
                     key={course._id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.05 }}
                     onClick={() => handleCourseClick(course)}
-                    className="bg-slate-800 rounded-xl overflow-hidden hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300 group cursor-pointer"
+                    className="bg-slate-800 rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/20 transition-all duration-300 group cursor-pointer active:scale-[0.98] touch-manipulation"
                   >
                   {/* Course Image */}
-                  <div className="relative h-40 bg-cover bg-center overflow-hidden" style={{ backgroundImage: `url(${course.thumbnail})` }}>
+                  <div className="relative h-36 sm:h-40 bg-cover bg-center overflow-hidden" style={{ backgroundImage: `url(${course.thumbnail})` }}>
                     <div className="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/10 transition-all"></div>
                     <div className="absolute top-2 right-2">
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();
                         }}
-                        className="p-2 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-colors"
+                        className="p-1.5 sm:p-2 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 active:bg-white/30 transition-colors touch-manipulation"
                       >
-                        <Heart size={18} />
+                        <Heart size={16} />
                       </button>
                     </div>
                     {course.price === 'Free' && (
-                      <div className="absolute top-2 left-2 px-3 py-1 bg-green-500 text-white text-xs font-semibold rounded-full">
+                      <div className="absolute top-2 left-2 px-2 sm:px-3 py-0.5 sm:py-1 bg-green-500 text-white text-xs font-semibold rounded-full">
                         FREE
                       </div>
                     )}
                   </div>
 
                   {/* Course Content */}
-                  <div className="p-4">
-                    <div className="mb-2">
-                      <span className="text-xs text-indigo-400 font-semibold">{course.provider}</span>
+                  <div className="p-3 sm:p-4">
+                    <div className="mb-1.5 sm:mb-2">
+                      <span className="text-[10px] sm:text-xs text-indigo-400 font-semibold">{course.provider}</span>
                     </div>
-                    <h3 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-indigo-400 transition-colors">
+                    <h3 className="font-bold text-sm sm:text-base lg:text-lg mb-1.5 sm:mb-2 line-clamp-2 group-hover:text-indigo-400 transition-colors">
                       {course.title}
                     </h3>
-                    <p className="text-sm text-slate-400 mb-3 line-clamp-2">
+                    <p className="text-xs sm:text-sm text-slate-400 mb-2 sm:mb-3 line-clamp-2">
                       {course.description}
                     </p>
 
                     {/* Instructor */}
-                    <p className="text-xs text-slate-500 mb-3">by {course.instructor}</p>
+                    <p className="text-[10px] sm:text-xs text-slate-500 mb-2 sm:mb-3">by {course.instructor}</p>
 
                     {/* Skills */}
-                    <div className="flex flex-wrap gap-1 mb-3">
+                    <div className="flex flex-wrap gap-1 mb-2 sm:mb-3">
                       {course.skills.slice(0, 3).map(skill => (
                         <span
                           key={skill}
-                          className="px-2 py-1 bg-slate-700 text-xs rounded-full text-slate-300"
+                          className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-slate-700 text-[10px] sm:text-xs rounded-full text-slate-300"
                         >
                           {skill}
                         </span>
@@ -390,76 +390,76 @@ const Courses = () => {
                     </div>
 
                     {/* Course Stats */}
-                    <div className="flex items-center justify-between text-sm mb-4">
-                      <div className="flex items-center gap-1 text-yellow-400">
-                        <Star size={16} fill="currentColor" />
+                    <div className="flex items-center justify-between text-xs sm:text-sm mb-3 sm:mb-4">
+                      <div className="flex items-center gap-0.5 sm:gap-1 text-yellow-400">
+                        <Star size={14} fill="currentColor" />
                         <span className="font-semibold">{course.rating}</span>
                       </div>
-                      <div className="flex items-center gap-1 text-slate-400">
-                        <Users size={16} />
+                      <div className="flex items-center gap-0.5 sm:gap-1 text-slate-400">
+                        <Users size={14} />
                         <span>{(course.students / 1000).toFixed(0)}k</span>
                       </div>
-                      <div className="flex items-center gap-1 text-slate-400">
-                        <Clock size={16} />
+                      <div className="flex items-center gap-0.5 sm:gap-1 text-slate-400">
+                        <Clock size={14} />
                         <span>{course.duration}</span>
                       </div>
                     </div>
                     {/* Video and PDF Links */}
-                    <div className="flex items-center gap-4 text-sm mb-4">
+                    <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm mb-3 sm:mb-4">
                       {course.videoLectures && course.videoLectures.length > 0 && (
-                        <div className="flex items-center gap-1 text-indigo-400">
-                          <Video size={16} />
+                        <div className="flex items-center gap-0.5 sm:gap-1 text-indigo-400">
+                          <Video size={14} />
                           <span>{course.videoLectures.length} videos</span>
                         </div>
                       )}
                       {course.resources && course.resources.length > 0 && (
-                        <div className="flex items-center gap-1 text-green-400">
-                          <FileText size={16} />
+                        <div className="flex items-center gap-0.5 sm:gap-1 text-green-400">
+                          <FileText size={14} />
                           <span>{course.resources.length} PDFs</span>
                         </div>
                       )}
                     </div>
 
                     {/* Level Badge and Price */}
-                    <div className="flex items-center justify-between mb-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
+                      <span className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
                         course.level === 'Beginner' ? 'bg-green-900/50 text-green-400' :
                         course.level === 'Intermediate' ? 'bg-yellow-900/50 text-yellow-400' :
                         'bg-red-900/50 text-red-400'
                       }`}>
                         {course.level}
                       </span>
-                      <span className="font-bold text-indigo-400">
+                      <span className="font-bold text-sm sm:text-base text-indigo-400">
                         {course.price === 'Free' ? 'Free' : `₹${course.priceAmount?.toLocaleString()}`}
                       </span>
                     </div>
 
                     {/* EdX-Style Enrollment Button */}
-                    <div className="border-t border-slate-700 pt-4">
+                    <div className="border-t border-slate-700 pt-3 sm:pt-4">
                       {enrollmentStatus[course._id]?.enrolled ? (
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             navigate(`/courses/${course._id}`);
                           }}
-                          className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-green-500/20"
+                          className="w-full py-2 sm:py-3 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 text-xs sm:text-sm touch-manipulation"
                         >
-                          <BookOpen size={18} />
+                          <BookOpen size={16} />
                           View Course
                         </button>
                       ) : (
                         <button
                           onClick={(e) => handleEnrollClick(e, course)}
-                          className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 group"
+                          className="w-full py-2 sm:py-3 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 group text-xs sm:text-sm touch-manipulation"
                         >
                           {course.price === 'Free' ? (
                             <>
-                              <Award size={18} className="group-hover:scale-110 transition-transform" />
+                              <Award size={16} className="group-hover:scale-110 transition-transform" />
                               Enroll for Free
                             </>
                           ) : (
                             <>
-                              <Zap size={18} className="group-hover:scale-110 transition-transform" />
+                              <Zap size={16} className="group-hover:scale-110 transition-transform" />
                               Enroll Now
                             </>
                           )}

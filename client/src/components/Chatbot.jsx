@@ -60,7 +60,7 @@ const Chatbot = () => {
     }
 
     if (lowerQuery.includes("where") && lowerQuery.includes("job")) {
-      return "💼 Jobs are at '/jobrole'. Navigate via the navbar or go directly to see career opportunities from top companies. You can filter by category, type, location, and sort by salary, date, or alphabetically!";
+      return "💼 Jobs are at '/jobs'. Navigate via the navbar or go directly to see career opportunities from top companies. You can filter by category, type, location, and sort by salary, date, or alphabetically!";
     }
 
     if (lowerQuery.includes("where") && lowerQuery.includes("hackathon")) {
@@ -68,11 +68,11 @@ const Chatbot = () => {
     }
 
     if (lowerQuery.includes("where") && lowerQuery.includes("roadmap")) {
-      return "🗺️ Roadmaps are at '/roadmaps'. Find structured learning paths for different skills. Each roadmap guides you step-by-step through technologies and milestones!";
+      return "🗺️ Roadmaps are at '/roadmap'. Find structured learning paths for different skills. Each roadmap guides you step-by-step through technologies and milestones!";
     }
 
     if (lowerQuery.includes("where") && (lowerQuery.includes("resume") || lowerQuery.includes("cv"))) {
-      return "📄 Resume Builder is at '/resume' (or '/resumestepper' for step-by-step). Access via navbar to create professional resumes with templates and guidance!";
+      return "📄 Resume Builder is at '/resume-builder' (or '/resume' for quick access). Access via navbar to create professional resumes with templates and guidance!";
     }
 
     if (lowerQuery.includes("where") && (lowerQuery.includes("content") || lowerQuery.includes("study material"))) {
@@ -93,7 +93,7 @@ const Chatbot = () => {
     }
 
     if ((lowerQuery.includes("what") || lowerQuery.includes("list") || lowerQuery.includes("all")) && lowerQuery.includes("page")) {
-      return "📑 All Pages in E-Shikshan:\n\n🏠 Home: /\n📚 Courses: /courses\n💼 Jobs: /jobrole\n🏆 Hackathons: /hackathons\n🗺️ Roadmaps: /roadmaps\n📄 Resume: /resume\n📖 Content: /content\n🔐 Login: /login\n✍️ Signup: /signup\n👤 Profile: /profile\n\n📂 Content sub-sections:\n- 10th Grade: /content/10th\n- Intermediate: /content/intermediate\n- Postgraduate: /content/postgraduate\n- Branch-specific: /content/{branch}\n\n📋 Admin Panel: /admin (restricted access)";
+      return "📁 All Pages in E-Shikshan:\n\n🏠 Home: /\n📚 Courses: /courses\n💼 Jobs: /jobs\n🏆 Hackathons: /hackathons\n🗺️ Roadmaps: /roadmap\n📄 Resume: /resume-builder\n📖 Content: /content\n🔐 Login: /login\n✍️ Signup: /signup\n👤 Profile: /profile\n\n📂 Content sub-sections:\n- 10th Grade: /content/10th\n- Intermediate: /content/intermediate\n- Postgraduate: /content/postgraduate\n- Branch-specific: /content/{branch}\n\n📋 Admin Panel: /admin (restricted access)";
     }
 
     if ((lowerQuery.includes("what") || lowerQuery.includes("all")) && (lowerQuery.includes("component") || lowerQuery.includes("feature"))) {
@@ -136,7 +136,7 @@ const Chatbot = () => {
 
     // ========== JOBS ==========
     if (lowerQuery.includes("job") && (lowerQuery.includes("how") || lowerQuery.includes("apply") || lowerQuery.includes("find"))) {
-      return "💼 How to Find & Apply for Jobs:\n1. Visit '/jobrole'\n2. Browse job listings (Google, TCS, Amazon, etc.)\n3. Filter by: category, type, location\n4. Sort by: newest, salary, A-Z, remote-first\n5. Click a job card\n6. View full details at '/jobs/{id}'\n7. See: description, responsibilities, curriculum, skills, salary, benefits\n8. Click 'Apply Now' → redirects to company portal\n\nTip: Each job includes a learning pathway to prepare!";
+      return "💼 How to Find & Apply for Jobs:\n1. Visit '/jobs'\n2. Browse job listings (Google, TCS, Amazon, etc.)\n3. Filter by: category, type, location\n4. Sort by: newest, salary, A-Z, remote-first\n5. Click a job card\n6. View full details at '/jobs/{id}'\n7. See: description, responsibilities, curriculum, skills, salary, benefits\n8. Click 'Apply Now' → redirects to company portal\n\nTip: Each job includes a learning pathway to prepare!";
     }
 
     if (lowerQuery.includes("job") && (lowerQuery.includes("type") || lowerQuery.includes("kind") || lowerQuery.includes("category"))) {
@@ -241,7 +241,7 @@ const Chatbot = () => {
     }
 
     if ((lowerQuery.includes("is there") || lowerQuery.includes("do you have") || lowerQuery.includes("available")) && lowerQuery.includes("job")) {
-      return "✅ YES! Jobs are available at '/jobrole'. Features:\n- Career opportunities from top companies\n- Full-time, internships, contracts\n- Detailed job descriptions\n- Salary information\n- Application links\n- Learning pathways\n\nExplore job listings now!";
+      return "✅ YES! Jobs are available at '/jobs'. Features:\n- Career opportunities from top companies\n- Full-time, internships, contracts\n- Detailed job descriptions\n- Salary information\n- Application links\n- Learning pathways\n\nExplore job listings now!";
     }
 
     if ((lowerQuery.includes("is there") || lowerQuery.includes("do you have") || lowerQuery.includes("available")) && lowerQuery.includes("hackathon")) {

@@ -102,22 +102,18 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
   }
 
   return (
-    <div className="flex justify-between   items-center px-6  ">
-        <nav className='w-full'>
-            <div className='max-w-7xl mx-auto flex items-center justify-between px-6 '>
+    <div className="w-full">
+        <nav className='w-full bg-gray-900 shadow-lg'>
+            <div className='max-w-7xl mx-auto flex items-center justify-between px-3 sm:px-4 md:px-6 py-3'>
 
-              <div className='hidden md:flex items-center justify-between px-6   '>
-                  <Link to='/' className={` transition-all duration-300 `}>
-                       <div >
-                          
-                             <img src='/logo1.png' alt='logo' className='h-30 w-auto ' />
-                          
+              <div className='hidden md:flex items-center flex-shrink-0'>
+                  <Link to='/' className='transition-all duration-300'>
+                       <div className='flex items-center'>
+                          <img src='/logo1.png' alt='logo' className='h-12 lg:h-14 w-auto' />
                         </div>
-                   
-                    
                      </Link>
               </div>
-                <div className='hidden md:flex   rounded-full border border-gray-700 p-1 '>
+                <div className='hidden md:flex rounded-full border border-gray-700 p-1 mx-4'>
                     <Link to='/' className={`px-5 py-2 rounded-full text-sm font-medium transition-all
                     duration-300 ${location.pathname === "/" ? 'text-white hover:bg-gray-500':'hover:bg-gray-400'}`}>
                         Home
@@ -128,27 +124,27 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                         Courses
                     </Link>
             
-                    <Link to='/roadmaps' className={`px-5 py-2 rounded-full text-sm font-medium transition-all
-                    duration-300 ${location.pathname === "/roadmaps" ? 'text-white hover:bg-gray-500':'hover:bg-gray-400'}`}>
+                    <Link to='/roadmap' className={`px-5 py-2 rounded-full text-sm font-medium transition-all
+                    duration-300 ${location.pathname === "/roadmap" ? 'text-white hover:bg-gray-500':'hover:bg-gray-400'}`}>
                         Roadmaps
                     </Link>
   
-                    <Link to='/jobrole' className={`px-5 py-2 rounded-full text-sm font-medium transition-all
-                    duration-300 ${location.pathname === "/jobrole" ? 'text-white hover:bg-gray-500':'hover:bg-gray-400'}`}>
+                    <Link to='/jobs' className={`px-5 py-2 rounded-full text-sm font-medium transition-all
+                    duration-300 ${location.pathname === "/jobs" ? 'text-white hover:bg-gray-500':'hover:bg-gray-400'}`}>
                         Job Details
                     </Link>
             
                     </div>
                 <div className='relative' ref={desktopMenuRef}>
                             {!isLoggedIn ? (
-                            <div className='hidden md:flex space-x-3'>
+                            <div className='hidden md:flex space-x-2 lg:space-x-3 flex-shrink-0'>
                 
-                                <button onClick={()=>navigate('/login')} className='px-4 py-2 
-                                rounded-full cursor-pointer bg-blue-500 text-white hover:bg-blue-600 text-sm '>
+                                <button onClick={()=>navigate('/login')} className='px-3 lg:px-4 py-2 
+                                rounded-full cursor-pointer bg-blue-500 text-white hover:bg-blue-600 text-xs lg:text-sm font-medium transition-colors'>
                                 Login
                                 </button>  
                 
-                                <button onClick={()=>navigate('/signup')} className='cursor-pointer px-4 text-sm py-2 rounded-full bg-green-500 text-white hover:bg-green-600'>
+                                <button onClick={()=>navigate('/signup')} className='cursor-pointer px-3 lg:px-4 text-xs lg:text-sm py-2 rounded-full bg-green-500 text-white hover:bg-green-600 font-medium transition-colors'>
                                 Sign up
                                 </button>
                             </div>
@@ -166,12 +162,12 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                                   <User size={36} onClick={()=>setShowMenu(!showMenu)} className=' hidden md:flex text-3xl rounded-full bg-gray-700 text-gray-300 hover:text-white cursor-pointer' />
                                 )}
                                 { showMenu && (
-              <div className='absolute right-0 mt-2 w-56 z-50 rounded-lg bg-gray-800 border border-gray-700 shadow-2xl py-2'>
+              <div className='absolute right-0 mt-2 w-48 lg:w-56 z-[100] rounded-lg bg-gray-800 border border-gray-700 shadow-2xl py-2'>
                 
-                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Profile</Link>
-                <Link onClick={() => setShowMenu(false)} to='/profile?edit=true' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Edit Details</Link>
-                <Link onClick={() => setShowMenu(false)} to='/settings' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Settings</Link>
-                <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700 transition-colors'>Log out</button>
+                <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 transition-colors'>Profile</Link>
+                <Link onClick={() => setShowMenu(false)} to='/profile?edit=true' className='block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 transition-colors'>Edit Details</Link>
+                <Link onClick={() => setShowMenu(false)} to='/settings' className='block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 transition-colors'>Settings</Link>
+                <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors'>Log out</button>
                             </div>
                                 )}
                             </div>
@@ -182,55 +178,57 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
       
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-gray-950 shadow-md transition-transform duration-500 z-50 ${
+        className={`fixed top-0 left-0 h-full w-72 sm:w-80 bg-gray-950 shadow-2xl transition-transform duration-300 ease-in-out z-[200] ${
           menuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700">
-          <span className="text-white text-lg font-semibold">Menu</span>
-          <XIcon className="w-6 h-6 text-white cursor-pointer" onClick={() => setMenuOpen(false)} />
+        <div className="flex items-center justify-between px-5 py-5 border-b border-gray-700 bg-gray-900">
+          <span className="text-white text-xl font-bold">Menu</span>
+          <button onClick={() => setMenuOpen(false)} className="p-2 hover:bg-gray-800 rounded-lg transition-colors">
+            <XIcon className="w-6 h-6 text-white" />
+          </button>
         </div>
-        <nav className="flex flex-col p-4 space-y-3">
-          <Link to="/" onClick={() => setMenuOpen(false)} className={getLinkClasses('/')}>Home</Link>
-          <Link to="/content" onClick={() => setMenuOpen(false)} className={getLinkClasses('/content')}>Content</Link>
-          <Link to="/courses" onClick={() => setMenuOpen(false)} className={getLinkClasses('/courses')}>Courses</Link>
-          <Link to="/hackathons" onClick={() => setMenuOpen(false)} className={getLinkClasses('/hackathons')}>Hackathons</Link>
-          <Link to="/roadmaps" onClick={() => setMenuOpen(false)} className={getLinkClasses('/roadmaps')}>Roadmaps</Link>
-          <Link to="/jobrole" onClick={() => setMenuOpen(false)} className={getLinkClasses('/jobrole')}>Job Details</Link>
+        <nav className="flex flex-col p-5 space-y-2">
+          <Link to="/" onClick={() => setMenuOpen(false)} className={`${getLinkClasses('/')} text-base py-3 px-4 touch-manipulation`}>Home</Link>
+          <Link to="/content" onClick={() => setMenuOpen(false)} className={`${getLinkClasses('/content')} text-base py-3 px-4 touch-manipulation`}>Content</Link>
+          <Link to="/courses" onClick={() => setMenuOpen(false)} className={`${getLinkClasses('/courses')} text-base py-3 px-4 touch-manipulation`}>Courses</Link>
+          <Link to="/hackathons" onClick={() => setMenuOpen(false)} className={`${getLinkClasses('/hackathons')} text-base py-3 px-4 touch-manipulation`}>Hackathons</Link>
+          <Link to="/roadmap" onClick={() => setMenuOpen(false)} className={`${getLinkClasses('/roadmap')} text-base py-3 px-4 touch-manipulation`}>Roadmaps</Link>
+          <Link to="/jobs" onClick={() => setMenuOpen(false)} className={`${getLinkClasses('/jobs')} text-base py-3 px-4 touch-manipulation`}>Job Details</Link>
         </nav>
       </div>
       
       {/* Overlay for mobile sidebar */}
       {menuOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          className="fixed inset-0 bg-black bg-opacity-60 z-[190] md:hidden backdrop-blur-sm"
           onClick={() => setMenuOpen(false)}
         />
       )}
 
       {/* Top Bar (mobile hamburger) */}
-      <div className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-40 md:hidden flex items-center justify-between px-4 py-3">
-        <button onClick={() => setMenuOpen(true)} className="flex-shrink-0">
+      <div className="fixed top-0 left-0 w-full bg-gray-900 shadow-lg z-[180] md:hidden flex items-center justify-between px-3 sm:px-4 py-3 border-b border-gray-800">
+        <button onClick={() => setMenuOpen(true)} className="flex-shrink-0 p-2 hover:bg-gray-800 rounded-lg transition-colors touch-manipulation">
           <MenuIcon className="w-6 h-6 text-white" />
         </button>
         
         {/* Logo in center for mobile */}
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex justify-center mx-2">
           <Link to='/' onClick={() => setMenuOpen(false)}>
-            <img src='/logo1.png' alt='logo' className='h-10 w-auto' />
+            <img src='/logo1.png' alt='logo' className='h-9 sm:h-10 w-auto' />
           </Link>
         </div>
         
         {/* Login/Profile section */}
         <div className='flex-shrink-0'>
           {!isLoggedIn ? (
-            <div className='flex space-x-2'>
-              <button onClick={()=>navigate('/login')} className='px-3 py-1.5 text-sm
-              rounded-full bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'>
+            <div className='flex space-x-1.5 sm:space-x-2'>
+              <button onClick={()=>navigate('/login')} className='px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm
+              rounded-full bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 cursor-pointer font-medium transition-colors touch-manipulation'>
                 Login
               </button>  
 
-              <button onClick={()=>navigate('/signup')} className='cursor-pointer px-3 py-1.5 text-sm rounded-full bg-green-500 text-white hover:bg-green-600'>
+              <button onClick={()=>navigate('/signup')} className='cursor-pointer px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm rounded-full bg-green-500 text-white hover:bg-green-600 active:bg-green-700 font-medium transition-colors touch-manipulation'>
                 Sign up
               </button>
             </div>
@@ -242,19 +240,19 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
                   src={user.profilePicture} 
                   alt={user?.name || 'User'}
                   onClick={()=>setShowMenu(!showMenu)}
-                  className='w-9 h-9 rounded-full object-cover border-2 border-gray-600 hover:border-gray-400 cursor-pointer transition-all'
+                  className='w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gray-600 hover:border-gray-400 active:border-gray-500 cursor-pointer transition-all touch-manipulation'
                 />
               ) : (
-                <User size={36} onClick={()=>setShowMenu(!showMenu)} className='text-3xl rounded-full bg-gray-700 text-gray-300 hover:text-white cursor-pointer' />
+                <User size={36} onClick={()=>setShowMenu(!showMenu)} className='w-9 h-9 sm:w-10 sm:h-10 p-1 rounded-full bg-gray-700 text-gray-300 hover:text-white active:bg-gray-600 cursor-pointer transition-colors touch-manipulation' />
               )}
               
               {/* Profile Dropdown - Mobile */}
               {showMenu && (
-                <div className='absolute right-0 mt-2 w-48 rounded-lg bg-gray-800 border border-gray-700 shadow-2xl py-2 z-[60]'>
-                  <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Profile</Link>
-                  <Link onClick={() => setShowMenu(false)} to='/profile?edit=true' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Edit Details</Link>
-                  <Link onClick={() => setShowMenu(false)} to='/settings' className='block px-4 py-2 text-gray-200 hover:bg-gray-700 transition-colors'>Settings</Link>
-                  <button onClick={handleLogout} className='w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700 transition-colors'>Log out</button>
+                <div className='absolute right-0 mt-2 w-44 sm:w-48 rounded-lg bg-gray-800 border border-gray-700 shadow-2xl py-2 z-[200]'>
+                  <Link onClick={() => setShowMenu(false)} to='/profile' className='block px-4 py-2.5 text-sm text-gray-200 hover:bg-gray-700 active:bg-gray-600 transition-colors touch-manipulation'>Profile</Link>
+                  <Link onClick={() => setShowMenu(false)} to='/profile?edit=true' className='block px-4 py-2.5 text-sm text-gray-200 hover:bg-gray-700 active:bg-gray-600 transition-colors touch-manipulation'>Edit Details</Link>
+                  <Link onClick={() => setShowMenu(false)} to='/settings' className='block px-4 py-2.5 text-sm text-gray-200 hover:bg-gray-700 active:bg-gray-600 transition-colors touch-manipulation'>Settings</Link>
+                  <button onClick={handleLogout} className='w-full text-left px-4 py-2.5 text-sm text-red-400 hover:bg-gray-700 active:bg-gray-600 transition-colors touch-manipulation'>Log out</button>
                 </div>
               )}
             </div>
@@ -262,14 +260,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
         </div>
       </div>
 
-      {/* Main content */}
-      <div
-        className={`flex-1 transition-all duration-500 pt-16 px-4 ${
-          menuOpen ? 'ml-64' : ''
-        }`}
-      >
-        {children}
-      </div>
+      {/* Main content spacer for mobile navbar */}
+      <div className="md:hidden h-16" />
+      {children}
     </div>
   );
 };

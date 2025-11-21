@@ -303,6 +303,43 @@ const ResumeBuilding = () => {
         { id: 'tech-3', name: 'Data Scientist', description: 'Analytics and projects focus', colorScheme: 'indigo' },
         { id: 'tech-4', name: 'Tech Lead', description: 'Technical leadership emphasis', colorScheme: 'sky' }
       ]
+    },
+    { 
+      id: 'academic', 
+      name: 'Academic & Research', 
+      color: 'indigo',
+      description: 'Professional templates for academic positions, research roles, and scholarly applications',
+      preview: '📚',
+      subTemplates: [
+        { 
+          id: 'academic-1', 
+          name: 'Research Scholar', 
+          description: 'LaTeX-style academic CV with publications, conferences, and research focus', 
+          colorScheme: 'indigo',
+          features: ['Publications Section', 'Conference Presentations', 'Research Experience', 'Academic Format']
+        },
+        { 
+          id: 'academic-2', 
+          name: 'PhD Candidate', 
+          description: 'Comprehensive CV format for doctoral students with emphasis on research and teaching', 
+          colorScheme: 'violet',
+          features: ['Research Projects', 'Teaching Experience', 'Academic Achievements', 'Grant Applications']
+        },
+        { 
+          id: 'academic-3', 
+          name: 'Faculty Position', 
+          description: 'Professional academic CV for faculty applications with detailed publication list', 
+          colorScheme: 'purple',
+          features: ['Publications List', 'Grants & Funding', 'Committee Work', 'Service Activities']
+        },
+        { 
+          id: 'academic-4', 
+          name: 'Post-Doc Researcher', 
+          description: 'Research-focused CV highlighting publications, collaborations, and technical expertise', 
+          colorScheme: 'blue',
+          features: ['Research Impact', 'Collaborations', 'Technical Skills', 'Lab Experience']
+        }
+      ]
     }
   ];
 
@@ -630,6 +667,8 @@ const ResumeBuilding = () => {
 
   // Resume Preview Component
   const ResumePreview = () => {
+    const isAcademicTemplate = selectedTemplate === 'academic';
+    
     const getTemplateColors = () => {
       // Find the selected sub-template to get its color scheme
       const mainTemplate = templates.find(t => t.id === selectedTemplate);
@@ -663,6 +702,162 @@ const ResumeBuilding = () => {
 
     const colors = getTemplateColors();
 
+    // Academic/LaTeX-style resume
+    if (isAcademicTemplate) {
+      return (
+        <div ref={resumeRef} id="resume-preview" className="bg-white text-gray-900 p-12 shadow-lg h-full overflow-auto font-serif" style={{ minHeight: '297mm', fontSize: '11pt', lineHeight: '1.4' }}>
+          {/* LaTeX-style Header */}
+          <div className="text-center mb-8 border-b-2 border-gray-800 pb-4">
+            <h1 className="text-4xl font-bold mb-3 tracking-wide uppercase" style={{ fontFamily: 'Georgia, serif' }}>
+              {personalInfo.fullName || 'Your Name'}
+            </h1>
+            <div className="text-sm space-y-1">
+              {personalInfo.location && <div>{personalInfo.location}</div>}
+              <div className="flex justify-center gap-4 flex-wrap">
+                {personalInfo.email && <span>{personalInfo.email}</span>}
+                {personalInfo.phone && <span>• {personalInfo.phone}</span>}
+              </div>
+              <div className="flex justify-center gap-4 flex-wrap">
+                {personalInfo.linkedin && <span className="text-blue-700">{personalInfo.linkedin}</span>}
+                {personalInfo.github && <span>• {personalInfo.github}</span>}
+                {personalInfo.portfolio && <span>• {personalInfo.portfolio}</span>}
+              </div>
+            </div>
+          </div>
+
+          {/* Research Interests / Summary */}
+          {personalInfo.summary && (
+            <div className="mb-6">
+              <h2 className="text-lg font-bold uppercase tracking-wider mb-2 border-b border-gray-400">
+                Research Interests
+              </h2>
+              <p className="text-justify">{personalInfo.summary}</p>
+            </div>
+          )}
+
+          {/* Education - Prominent in academic CVs */}
+          {education.some(edu => edu.institution || edu.degree) && (
+            <div className="mb-6">
+              <h2 className="text-lg font-bold uppercase tracking-wider mb-2 border-b border-gray-400">
+                Education
+              </h2>
+              <div className="space-y-3">
+                {education.filter(edu => edu.institution || edu.degree).map(edu => (
+                  <div key={edu.id}>
+                    <div className="flex justify-between">
+                      <div className="font-bold">{edu.degree} {edu.field && `in ${edu.field}`}</div>
+                      <div className="text-sm">{edu.startDate && `${edu.startDate} - `}{edu.endDate}</div>
+                    </div>
+                    <div className="italic">{edu.institution || 'Institution'}{edu.location && `, ${edu.location}`}</div>
+                    {edu.gpa && <div className="text-sm">GPA: {edu.gpa}</div>}
+                    {edu.description && <div className="text-sm mt-1 text-justify">{edu.description}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Research Experience / Work Experience */}
+          {experience.some(exp => exp.company || exp.position) && (
+            <div className="mb-6">
+              <h2 className="text-lg font-bold uppercase tracking-wider mb-2 border-b border-gray-400">
+                Research Experience
+              </h2>
+              <div className="space-y-4">
+                {experience.filter(exp => exp.company || exp.position).map(exp => (
+                  <div key={exp.id}>
+                    <div className="flex justify-between">
+                      <div className="font-bold">{exp.position || 'Position'}</div>
+                      <div className="text-sm">
+                        {exp.startDate && `${exp.startDate} - `}
+                        {exp.current ? 'Present' : exp.endDate || 'End Date'}
+                      </div>
+                    </div>
+                    <div className="italic">{exp.company || 'Institution'}{exp.location && `, ${exp.location}`}</div>
+                    {exp.description && (
+                      <div className="text-sm mt-1 text-justify">{exp.description}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Publications (using Projects section) */}
+          {projects.some(proj => proj.name) && (
+            <div className="mb-6">
+              <h2 className="text-lg font-bold uppercase tracking-wider mb-2 border-b border-gray-400">
+                Publications
+              </h2>
+              <div className="space-y-2">
+                {projects.filter(proj => proj.name).map((proj, idx) => (
+                  <div key={proj.id} className="text-sm">
+                    <span className="font-semibold">[{idx + 1}] {proj.name}</span>
+                    {proj.description && <span>. {proj.description}</span>}
+                    {proj.technologies && <span className="italic"> {proj.technologies}</span>}
+                    {proj.link && (
+                      <span className="text-blue-700"> Available at: {proj.link}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Skills / Technical Skills */}
+          {(skills.technical.length > 0 || skills.languages.length > 0 || skills.tools.length > 0) && (
+            <div className="mb-6">
+              <h2 className="text-lg font-bold uppercase tracking-wider mb-2 border-b border-gray-400">
+                Technical Skills
+              </h2>
+              <div className="space-y-1 text-sm">
+                {skills.technical.length > 0 && (
+                  <div>
+                    <span className="font-semibold">Programming: </span>
+                    <span>{skills.technical.join(', ')}</span>
+                  </div>
+                )}
+                {skills.tools.length > 0 && (
+                  <div>
+                    <span className="font-semibold">Tools & Technologies: </span>
+                    <span>{skills.tools.join(', ')}</span>
+                  </div>
+                )}
+                {skills.languages.length > 0 && (
+                  <div>
+                    <span className="font-semibold">Languages: </span>
+                    <span>{skills.languages.join(', ')}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Certifications / Awards & Honors */}
+          {certifications.some(cert => cert.name) && (
+            <div className="mb-6">
+              <h2 className="text-lg font-bold uppercase tracking-wider mb-2 border-b border-gray-400">
+                Awards & Honors
+              </h2>
+              <div className="space-y-1 text-sm">
+                {certifications.filter(cert => cert.name).map(cert => (
+                  <div key={cert.id} className="flex justify-between">
+                    <div>
+                      <span className="font-semibold">{cert.name}</span>
+                      {cert.issuer && <span>, {cert.issuer}</span>}
+                      {cert.credentialId && <span className="text-xs"> (ID: {cert.credentialId})</span>}
+                    </div>
+                    <span>{cert.date}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Default template styles
     return (
       <div ref={resumeRef} id="resume-preview" className="bg-white text-gray-900 p-8 shadow-lg h-full overflow-auto" style={{ minHeight: '297mm' }}>
         {/* Header */}

@@ -243,6 +243,11 @@ const Login = ({setIsLoggedIn}) => {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                const API_URL = import.meta.env.VITE_API_URL || 'https://e-shikshan.onrender.com/api';
+                window.location.href = `${API_URL}/auth/google`;
+              }}
+              type="button"
               className="w-full flex items-center justify-center gap-3 border border-gray-700 bg-gray-800/50 py-3.5 rounded-xl text-white hover:bg-gray-800 hover:border-gray-600 transition-all"
             >
               <img
@@ -253,11 +258,18 @@ const Login = ({setIsLoggedIn}) => {
               Sign in with Google
             </motion.button>
 
+            {/* Note about registration */}
+            <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+              <p className="text-xs text-blue-300 text-center">
+                🔒 For security, we only accept real Google email accounts for sign in/sign up
+              </p>
+            </div>
+
             {/* Signup Link */}
             <p className="text-center text-sm text-gray-400 mt-8">
               New to E-Shikshan?{" "}
-              <Link to="/signup" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
-                Create an Account →
+              <Link to="/signin" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+                Sign up with Google →
               </Link>
             </p>
           </motion.div>

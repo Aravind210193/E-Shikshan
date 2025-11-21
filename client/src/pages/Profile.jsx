@@ -596,7 +596,7 @@ const Profile = () => {
               <div className="flex-1">
                 <h3 className="text-lg font-semibold mb-2">Resume Builder</h3>
                 <p className="text-gray-400 mb-4 text-sm">Create and update your professional resume with our AI-powered tools.</p>
-                <Link to="/resume-building" className="inline-flex items-center text-blue-400 text-sm font-semibold group-hover:text-blue-300 transition-colors">
+                <Link to="/resume-builder" className="inline-flex items-center text-blue-400 text-sm font-semibold group-hover:text-blue-300 transition-colors">
                   Build Resume <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -716,7 +716,7 @@ const Profile = () => {
                           <p className="text-sm text-gray-400 mb-3">
                             Follow structured paths to master new technologies
                           </p>
-                          <Link to="/roadmaps" className="text-blue-400 text-sm font-semibold hover:text-blue-300 transition-colors">
+                          <Link to="/roadmap" className="text-blue-400 text-sm font-semibold hover:text-blue-300 transition-colors">
                             View Roadmaps →
                           </Link>
                         </div>
@@ -917,7 +917,7 @@ const Profile = () => {
                           </p>
                         </div>
                         <Link
-                          to="/resume-building"
+                          to="/resume-builder"
                           className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-all font-medium"
                         >
                           <Edit size={18} />
@@ -1101,7 +1101,7 @@ const Profile = () => {
                       <h3 className="text-xl font-bold mb-2">No Resume Found</h3>
                       <p className="text-gray-400 mb-6">You haven't created your resume yet. Build your professional resume now!</p>
                       <Link
-                        to="/resume-building"
+                        to="/resume-builder"
                         className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-all font-medium shadow-lg shadow-blue-500/20"
                       >
                         <FileText size={18} />
@@ -1132,7 +1132,7 @@ const Profile = () => {
                   {/* Certificates Grid */}
                   {certificates.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {certificates.map((cert) => (
+                      {certificates.filter(cert => cert && typeof cert === 'object' && cert._id).map((cert) => (
                         <motion.div
                           key={cert._id}
                           initial={{ opacity: 0, y: 20 }}
@@ -1157,14 +1157,14 @@ const Profile = () => {
                           {/* Certificate Info */}
                           <div className="space-y-3">
                             <div className="flex items-start justify-between">
-                              <h3 className="font-bold text-lg leading-tight">{cert.title}</h3>
+                              <h3 className="font-bold text-lg leading-tight">{String(cert.title || 'Certificate')}</h3>
                               {cert.source === 'platform' && (
                                 <Shield className="w-5 h-5 text-blue-400 flex-shrink-0" title="Platform Generated" />
                               )}
                             </div>
                             
                             {cert.issuer && (
-                              <p className="text-sm text-gray-400">{cert.issuer}</p>
+                              <p className="text-sm text-gray-400">{String(cert.issuer)}</p>
                             )}
                             
                             {cert.issuedDate && (
@@ -1175,19 +1175,19 @@ const Profile = () => {
                             
                             {cert.credentialId && (
                               <p className="text-xs text-gray-500 font-mono">
-                                ID: {cert.credentialId}
+                                ID: {String(cert.credentialId)}
                               </p>
                             )}
                             
                             {cert.description && (
-                              <p className="text-sm text-gray-400 line-clamp-2">{cert.description}</p>
+                              <p className="text-sm text-gray-400 line-clamp-2">{String(cert.description)}</p>
                             )}
                             
-                            {cert.skills && cert.skills.length > 0 && (
+                            {cert.skills && Array.isArray(cert.skills) && cert.skills.length > 0 && (
                               <div className="flex flex-wrap gap-2">
                                 {cert.skills.slice(0, 3).map((skill, idx) => (
                                   <span key={idx} className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">
-                                    {skill}
+                                    {typeof skill === 'string' ? skill : String(skill)}
                                   </span>
                                 ))}
                                 {cert.skills.length > 3 && (
@@ -1545,7 +1545,7 @@ const Profile = () => {
                       </div>
                       <h3 className="font-semibold mb-2 line-clamp-1">Full-Stack Development Path</h3>
                       <p className="text-sm text-gray-400 mb-3 line-clamp-2">A comprehensive guide to becoming a full-stack developer with both frontend and backend skills.</p>
-                      <Link to="/roadmaps/full-stack" className="text-green-400 text-sm hover:text-green-300 transition-colors font-medium">View Roadmap →</Link>
+                      <Link to="/roadmap/full-stack" className="text-green-400 text-sm hover:text-green-300 transition-colors font-medium">View Roadmap →</Link>
                     </div>
                   </div>
                 </div>
@@ -1582,7 +1582,7 @@ const Profile = () => {
                       <div className="text-sm text-gray-400 font-medium">In Progress</div>
                     </div>
                     <div className="bg-gray-700/50 rounded-lg p-5 text-center border border-gray-600">
-                      <div className="text-3xl font-bold text-purple-400 mb-2">{certificates}</div>
+                      <div className="text-3xl font-bold text-purple-400 mb-2">{totalCertificates}</div>
                       <div className="text-sm text-gray-400 font-medium">Certificates</div>
                     </div>
                   </div>

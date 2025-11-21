@@ -46,12 +46,37 @@ const register = async (req, res) => {
   const { name, email, password, phone, university, department, semester, role } = req.body;
 
   try {
+    // Validate email domain - only allow real email providers
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ 
+        message: 'Please enter a valid email address' 
+      });
+    }
+
+    // Block common dummy/fake email patterns
+    const blockedDomains = ['test.com', 'example.com', 'dummy.com', 'fake.com', 'temp.com'];
+    const emailDomain = email.split('@')[1].toLowerCase();
+    
+    if (blockedDomains.includes(emailDomain)) {
+      return res.status(400).json({ 
+        message: 'Please use a valid email address from a real email provider (Gmail, Outlook, Yahoo, etc.)' 
+      });
+    }
+
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      res.status(400).json({ message: 'User already exists' });
+      res.status(400).json({ message: 'User already exists with this email' });
       return;
     }
+
+    // Block registration without Google OAuth for now
+    // Users MUST use "Sign in with Google" button
+    return res.status(403).json({ 
+      message: 'Direct registration is disabled. Please sign in with Google to ensure email verification.',
+      useGoogleAuth: true
+    });
 
     // Create a new user instance with all available fields
     const user = new User({
@@ -63,6 +88,7 @@ const register = async (req, res) => {
       department: department || '',
       semester: semester || '',
       role: role || 'student',
+      emailVerified: false // Email not verified for direct registration
     });
 
     // Explicitly save the user to trigger the 'pre-save' hook
@@ -79,6 +105,7 @@ const register = async (req, res) => {
         semester: createdUser.semester,
         role: createdUser.role,
         isAdmin: createdUser.isAdmin,
+        emailVerified: createdUser.emailVerified,
         token: generateToken(createdUser._id),
       });
     } else {
@@ -442,6 +469,29 @@ const deleteCertificate = async (req, res) => {
   }
 };
 
+// @desc    Google OAuth callback handler
+// @route   GET /api/auth/google/callback
+// @access  Public
+const googleAuthCallback = async (req, res) => {
+  try {
+    // User is authenticated by passport, available in req.user
+    const user = req.user;
+    
+    if (!user) {
+      return res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/login?error=authentication_failed`);
+    }
+
+    // Generate JWT token
+    const token = generateToken(user._id);
+
+    // Redirect to frontend with token
+    res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/auth/success?token=${token}`);
+  } catch (error) {
+    console.error('Google Auth Callback Error:', error);
+    res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/login?error=server_error`);
+  }
+};
+
 module.exports = { 
   login, 
   register, 
@@ -452,5 +502,6 @@ module.exports = {
   addCertificate,
   getCertificates,
   updateCertificate,
-  deleteCertificate
+  deleteCertificate,
+  googleAuthCallback
 };

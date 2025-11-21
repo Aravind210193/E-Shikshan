@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session');
+const passport = require('./src/config/passport');
 const connectDB = require('./src/config/db');
 const authRoutes = require('./src/routes/authRoutes');
 const courseRoutes = require('./src/routes/courseRoutes');
@@ -11,6 +13,7 @@ const enrollmentRoutes = require('./src/routes/enrollmentRoutes');
 const hackathonRoutes = require('./src/routes/hackathonRoutes');
 const hackathonRegistrationRoutes = require('./src/routes/hackathonRegistrationRoutes');
 const webhookRoutes = require('./src/routes/webhookRoutes');
+const gamificationRoutes = require('./src/routes/gamification');
 
 // Content routes
 const branchRoutes = require('./src/routes/branchRoutes');
@@ -64,6 +67,21 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Session middleware for Passport
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key-change-this-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Request logging middleware
 app.use((req, res, next) => {
   console.log(`\n📥 ${req.method} ${req.url}`);
@@ -81,6 +99,7 @@ app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/hackathons', hackathonRoutes);
 app.use('/api/hackathon-registrations', hackathonRegistrationRoutes);
 app.use('/api/webhooks', webhookRoutes);
+app.use('/api/gamification', gamificationRoutes);
 
 // Content routes  
 app.use('/api/branches', branchRoutes);

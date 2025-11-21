@@ -10,7 +10,7 @@ const RoadmapCard = ({ roadmap, index }) => {
   const isTrending = (roadmap.trending || 0) > 50;
 
   return (
-    <Link to={`/roadmaps/${roadmap.id}`} className="block h-full group">
+    <Link to={`/roadmap/${roadmap.id}`} className="block h-full group">
       <motion.div
         layout
         initial={{ opacity: 0, y: 20 }}

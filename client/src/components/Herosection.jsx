@@ -329,8 +329,8 @@ const HeroWithOrb = () => {
   };
 
   return (
-    <div style={{ width: '100%', height: '80vh', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}>
+    <div className="w-full h-[60vh] sm:h-[70vh] md:h-[80vh] relative overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <Orb
           hoverIntensity={0.5}
           rotateOnHover={true}
@@ -338,13 +338,13 @@ const HeroWithOrb = () => {
           forceHoverState={false}
         />
       </div>
-      <section className='absolute top-0 left-0 w-full h-full z-10 text-white flex flex-col justify-center items-center text-center px-4 md:px-6'>
-        <div className="flex flex-col items-center max-w-4xl mx-auto">
-            <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight'>
+      <section className='absolute inset-0 z-10 text-white flex flex-col justify-center items-center text-center px-4 sm:px-6 md:px-8'>
+        <div className="flex flex-col items-center w-full max-w-5xl mx-auto space-y-4 sm:space-y-6">
+            <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight px-2'>
               Learn Smarter. Build Your Future
             </h1>
 
-            <p className='mt-4 text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl'>
+            <p className='text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 max-w-2xl px-2'>
               <TextType 
                 text={["Welcome To E-Shikshan", "Explore AI,ML,Data Analytics,Competative Exams,Hackathos,Labs & more!"]}
                 typingSpeed={60}
@@ -354,23 +354,23 @@ const HeroWithOrb = () => {
               />
             </p>
 
-            <div className='mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0'>
+            <div className='flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto max-w-md sm:max-w-none px-4 sm:px-0'>
               <Link 
                 to='/courses' 
-                className='px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md transition-colors text-center touch-manipulation cursor-pointer'
+                className='px-6 sm:px-8 py-3 sm:py-3.5 bg-yellow-500 hover:bg-yellow-600 active:bg-yellow-700 text-black font-semibold rounded-lg transition-colors text-center touch-manipulation cursor-pointer text-sm sm:text-base shadow-lg hover:shadow-xl'
               >
                 Explore Courses
               </Link>
               <button 
                 onClick={scrollToFeatures} 
-                className='px-6 py-3 border-2 border-gray-300 hover:bg-white hover:text-black font-semibold rounded-md transition-colors touch-manipulation cursor-pointer'
+                className='px-6 sm:px-8 py-3 sm:py-3.5 border-2 border-gray-300 hover:bg-white hover:text-black active:bg-gray-100 font-semibold rounded-lg transition-colors touch-manipulation cursor-pointer text-sm sm:text-base shadow-lg hover:shadow-xl'
               >
                 Get Started
               </button>
             </div>
         </div>
 
-        <div className='absolute bottom-6 text-gray-300 animate-bounce text-sm md:text-base'>
+        <div className='absolute bottom-4 sm:bottom-6 text-gray-300 animate-bounce text-xs sm:text-sm'>
           Scroll To Explore
         </div>
       </section>

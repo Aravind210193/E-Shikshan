@@ -136,12 +136,12 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to='/roadmaps' className='text-sm hover:text-white hover:pl-2 transition-all duration-200 inline-block'>
+                <Link to='/roadmap' className='text-sm hover:text-white hover:pl-2 transition-all duration-200 inline-block'>
                   Career Roadmaps
                 </Link>
               </li>
               <li>
-                <Link to='/jobrole' className='text-sm hover:text-white hover:pl-2 transition-all duration-200 inline-block'>
+                <Link to='/jobs' className='text-sm hover:text-white hover:pl-2 transition-all duration-200 inline-block'>
                   Job Roles
                 </Link>
               </li>

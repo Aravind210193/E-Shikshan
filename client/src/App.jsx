@@ -12,6 +12,7 @@ import JobRole from './pages/JobRole'
 import Footer from './components/Footer'
 import Login from './pages/Login'
 import Signin from './pages/Signin'
+import AuthSuccess from './pages/AuthSuccess'
 import ResumeStepper from './components/ResumeStepper'
 import Subjects from './pages/Subjects'
 import Semesters from './pages/Semesters'
@@ -113,14 +114,17 @@ const App = () => {
           <Route path='/courses/:id' element={<CourseDetail />}/>
           <Route path='/hackathons' element={<Hakathons />}/>
           <Route path='/hackathon/:id' element={<HackathonDetails />} />
-          <Route path='/roadmaps' element={<Roadmap />} />
-          <Route path='/roadmaps/:id' element={<RoadmapDetail />} />
+          <Route path='/roadmap' element={<Roadmap />} />
+          <Route path='/roadmap/:id' element={<RoadmapDetail />} />
           <Route path='/resume' element={<ResumeBuilding />} />
+          <Route path='/resume-builder' element={<ResumeBuilding />} />
           <Route path='/resumestepper' element={<ResumeStepper/>} />
-          <Route path='/jobrole' element={<JobRole />} />
+          <Route path='/jobs' element={<JobRole />} />
           <Route path='/jobs/:id' element={<JobDetail />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn}  /> }  />
-          <Route path='/signup' element={<Signin setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path='/signin' element={<Signin setIsLoggedIn={setIsLoggedIn}  /> }  />
+          <Route path='/signup' element={<Signin setIsLoggedIn={setIsLoggedIn}  /> }  />
+          <Route path='/auth/success' element={<AuthSuccess setIsLoggedIn={setIsLoggedIn}  /> }  />
           <Route path='/profile' element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Profile />

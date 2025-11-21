@@ -276,17 +276,32 @@ const Signin = ({ setIsLoggedIn }) => {
 
           <div className="flex items-center gap-2 mb-4">
             <hr className="flex-1 border-gray-600" />
-            <span className="text-gray-400 text-sm">Or register with</span>
+            <span className="text-gray-400 text-sm">Or sign up with</span>
             <hr className="flex-1 border-gray-600" />
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4">
-            <button className="flex-1 border border-gray-600 p-2 rounded-md text-white hover:bg-gray-700">
-              🌐 Google
-            </button>
-            <button className="flex-1 border border-gray-600 p-2 rounded-md text-white hover:bg-gray-700">
-               Apple
-            </button>
+          <button 
+            type="button"
+            onClick={() => {
+              const API_URL = import.meta.env.VITE_API_URL || 'https://e-shikshan.onrender.com/api';
+              window.location.href = `${API_URL}/auth/google`;
+            }}
+            className="w-full flex items-center justify-center gap-3 border-2 border-purple-500 p-3 rounded-lg text-white bg-gradient-to-r from-purple-600/20 to-indigo-600/20 hover:from-purple-600/30 hover:to-indigo-600/30 transition-all shadow-lg"
+          >
+            <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" className="w-6 h-6" />
+            <span className="font-semibold">Continue with Google</span>
+          </button>
+
+          <div className="mt-6 p-4 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+            <p className="text-sm text-purple-300 text-center">
+              🔒 We only accept verified Google emails for security
+            </p>
+          </div>
+
+          <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+            <p className="text-xs text-yellow-300 text-center">
+              ⚠️ Direct registration disabled. Use Google Sign-In.
+            </p>
           </div>
         </div>
       </div>
