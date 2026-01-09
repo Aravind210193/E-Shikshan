@@ -66,12 +66,15 @@ const Login = ({setIsLoggedIn}) => {
         transition={{ duration: 0.5 }}
         className="w-full max-w-6xl flex justify-between items-center mb-8 px-2 relative z-10"
       >
-        <motion.img
+        <motion.div
           whileHover={{ scale: 1.05 }}
-          src="/logo1.png"
-          alt="logo"
-          className="h-16 w-auto object-contain drop-shadow-lg"
-        />
+          className="cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          <span className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent drop-shadow-lg">
+            E-Shikshan
+          </span>
+        </motion.div>
         <motion.button
           whileHover={{ scale: 1.05, x: 5 }}
           whileTap={{ scale: 0.95 }}

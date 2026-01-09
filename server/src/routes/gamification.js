@@ -12,10 +12,10 @@ const {
   trackCourseProgress,
   POINTS_CONFIG
 } = require('../utils/gamification');
-const auth = require('../middlewares/auth');
+const { protect } = require('../middlewares/authMiddleware');
 
 // Get user's gamification data
-router.get('/profile', auth, async (req, res) => {
+router.get('/profile', protect, async (req, res) => {
   try {
     const gamification = await getUserGamification(req.user._id);
     
@@ -33,7 +33,7 @@ router.get('/profile', auth, async (req, res) => {
 });
 
 // Get user's activity log
-router.get('/activity', auth, async (req, res) => {
+router.get('/activity', protect, async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 50;
     const activities = await getUserActivity(req.user._id, limit);
@@ -52,7 +52,7 @@ router.get('/activity', auth, async (req, res) => {
 });
 
 // Get leaderboard
-router.get('/leaderboard', auth, async (req, res) => {
+router.get('/leaderboard', protect, async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 100;
     const category = req.query.category || 'overall';
@@ -83,7 +83,7 @@ router.get('/leaderboard', auth, async (req, res) => {
 });
 
 // Get all badges
-router.get('/badges', auth, async (req, res) => {
+router.get('/badges', protect, async (req, res) => {
   try {
     const allBadges = await Badge.find({ isActive: true }).sort({ rarity: 1, points: 1 });
     const userGamification = await getUserGamification(req.user._id);
@@ -118,7 +118,7 @@ router.get('/badges', auth, async (req, res) => {
 });
 
 // Track video watched
-router.post('/track/video', auth, async (req, res) => {
+router.post('/track/video', protect, async (req, res) => {
   try {
     const { courseId, moduleId, videoId, title, duration, completed } = req.body;
     
@@ -146,7 +146,7 @@ router.post('/track/video', auth, async (req, res) => {
 });
 
 // Track quiz completion
-router.post('/track/quiz', auth, async (req, res) => {
+router.post('/track/quiz', protect, async (req, res) => {
   try {
     const { courseId, quizId, score, passingScore, firstAttempt } = req.body;
     
@@ -173,7 +173,7 @@ router.post('/track/quiz', auth, async (req, res) => {
 });
 
 // Track assignment submission
-router.post('/track/assignment', auth, async (req, res) => {
+router.post('/track/assignment', protect, async (req, res) => {
   try {
     const { courseId, assignmentId, title, onTime, completed } = req.body;
     
@@ -200,7 +200,7 @@ router.post('/track/assignment', auth, async (req, res) => {
 });
 
 // Track course progress
-router.post('/track/course', auth, async (req, res) => {
+router.post('/track/course', protect, async (req, res) => {
   try {
     const { courseId, title, started, completed } = req.body;
     
@@ -226,7 +226,7 @@ router.post('/track/course', auth, async (req, res) => {
 });
 
 // Track daily login
-router.post('/track/login', auth, async (req, res) => {
+router.post('/track/login', protect, async (req, res) => {
   try {
     const result = await trackDailyLogin(req.user._id);
     
@@ -245,7 +245,7 @@ router.post('/track/login', auth, async (req, res) => {
 });
 
 // Get points configuration
-router.get('/config', auth, async (req, res) => {
+router.get('/config', protect, async (req, res) => {
   try {
     res.json({
       success: true,
@@ -261,7 +261,7 @@ router.get('/config', auth, async (req, res) => {
 });
 
 // Admin: Create badge
-router.post('/admin/badges', auth, async (req, res) => {
+router.post('/admin/badges', protect, async (req, res) => {
   try {
     // Check if user is admin
     if (!req.user.isAdmin) {
@@ -289,7 +289,7 @@ router.post('/admin/badges', auth, async (req, res) => {
 });
 
 // Admin: Get all users gamification stats
-router.get('/admin/stats', auth, async (req, res) => {
+router.get('/admin/stats', protect, async (req, res) => {
   try {
     // Check if user is admin
     if (!req.user.isAdmin) {

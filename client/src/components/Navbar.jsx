@@ -109,7 +109,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
               <div className='hidden md:flex items-center flex-shrink-0'>
                   <Link to='/' className='transition-all duration-300'>
                        <div className='flex items-center'>
-                          <img src='/logo1.png' alt='logo' className='h-12 lg:h-14 w-auto' />
+                          <span className='text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent hover:from-blue-500 hover:via-purple-600 hover:to-pink-600 transition-all'>
+                            E-Shikshan
+                          </span>
                         </div>
                      </Link>
               </div>
@@ -212,15 +214,8 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
           <MenuIcon className="w-6 h-6 text-white" />
         </button>
         
-        {/* Logo in center for mobile */}
-        <div className="flex-1 flex justify-center mx-2">
-          <Link to='/' onClick={() => setMenuOpen(false)}>
-            <img src='/logo1.png' alt='logo' className='h-9 sm:h-10 w-auto' />
-          </Link>
-        </div>
-        
         {/* Login/Profile section */}
-        <div className='flex-shrink-0'>
+        <div className='flex-shrink-0 ml-auto'>
           {!isLoggedIn ? (
             <div className='flex space-x-1.5 sm:space-x-2'>
               <button onClick={()=>navigate('/login')} className='px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm
