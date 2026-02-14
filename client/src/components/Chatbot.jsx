@@ -478,7 +478,7 @@ const Chatbot = () => {
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             ref={containerRef}
-            className="fixed z-[60] bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:bottom-6 w-auto sm:w-96 h-[70vh] sm:h-[600px] bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-purple-500/30 flex flex-col overflow-hidden"
+            className="fixed z-[60] bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:bottom-6 w-auto sm:w-80 h-[65vh] sm:h-[500px] bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-purple-500/30 flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-4 flex items-center justify-between">
@@ -518,11 +518,10 @@ const Chatbot = () => {
                   className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[80%] p-3 rounded-2xl ${
-                      message.sender === "user"
+                    className={`max-w-[80%] p-3 rounded-2xl ${message.sender === "user"
                         ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-br-none"
                         : "bg-gray-800 text-gray-100 rounded-bl-none border border-gray-700"
-                    }`}
+                      }`}
                   >
                     <p className="text-sm leading-relaxed">{message.text}</p>
                     <p className="text-xs opacity-60 mt-1">

@@ -381,19 +381,24 @@ const deleteEnrollment = async (req, res) => {
 // @access  Private/Admin
 const getDashboardStats = async (req, res) => {
   try {
-    const isManager = req.admin && req.admin.role === 'course_manager';
+    const adminRole = req.admin?.role?.toLowerCase();
+    const isManager = adminRole === 'course_manager' || adminRole === 'instructor' || adminRole === 'faculty';
     const courseQuery = isManager ? { instructorEmail: req.admin.email } : {};
 
-    // Filter total users to only those enrolled in instructor's courses if manager
+    // Filter total users/students
     let totalUsers;
+    let totalStudents;
     if (isManager) {
       const instructorCourses = await Course.find(courseQuery).select('_id');
       const courseIds = instructorCourses.map(c => c._id);
       const uniqueStudentIds = await Enrollment.distinct('userId', { courseId: { $in: courseIds } });
       totalUsers = uniqueStudentIds.length;
+      totalStudents = uniqueStudentIds.length; // For manager, total students equals total unique users they see
     } else {
       totalUsers = await User.countDocuments();
+      totalStudents = await User.countDocuments({ role: 'student' });
     }
+    console.log(`[DEBUG] Dashboard Stats Request - Role: ${adminRole}, Manager: ${isManager}, Students: ${totalStudents}`);
 
     const totalCourses = await Course.countDocuments(courseQuery);
     const activeCourses = await Course.countDocuments({ ...courseQuery, status: 'active' });
@@ -471,6 +476,34 @@ const getDashboardStats = async (req, res) => {
       .sort('-createdAt')
       .limit(10);
 
+    // Trends Aggregation (Last 6 Months)
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
+    sixMonthsAgo.setDate(1);
+    sixMonthsAgo.setHours(0, 0, 0, 0);
+
+    const enrollmentTrend = await Enrollment.aggregate([
+      { $match: { ...enrollmentQuery, enrolledAt: { $gte: sixMonthsAgo } } },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m", date: "$enrolledAt" } },
+          enrollments: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    const userMonthlyTrend = isManager ? [] : await User.aggregate([
+      { $match: { role: 'student', createdAt: { $gte: sixMonthsAgo } } },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+          users: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
     // Doubts for instructor if applicable
     let doubtsStats = { total: 0, pending: 0, resolved: 0 };
     let recentDoubts = [];
@@ -488,7 +521,9 @@ const getDashboardStats = async (req, res) => {
 
     res.json({
       stats: {
+        apiVersion: "v2-students-fixed",
         totalUsers,
+        totalStudents,
         totalCourses,
         activeCourses,
         draftCourses,
@@ -513,7 +548,9 @@ const getDashboardStats = async (req, res) => {
       recentRoadmaps,
       recentContent,
       contentByType,
-      recentDoubts
+      recentDoubts,
+      enrollmentTrend,
+      userMonthlyTrend
     });
   } catch (error) {
     console.error('Get stats error:', error);

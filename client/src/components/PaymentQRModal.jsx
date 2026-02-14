@@ -33,28 +33,37 @@ const PaymentQRModal = ({ enrollmentId, amount, onSuccess, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-gray-800 rounded-2xl max-w-md w-full p-6 border border-gray-700">
-        <h2 className="text-2xl font-bold mb-4 text-white">Complete Payment</h2>
+      <div className="bg-gray-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 border border-gray-700 relative">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-700 rounded-lg z-10"
+          aria-label="Close"
+        >
+          <XCircle className="w-6 h-6" />
+        </button>
+
+        <h2 className="text-2xl font-bold mb-4 text-white pr-10">Complete Payment</h2>
 
         {/* QR Code Section */}
-        <div className="bg-white p-6 rounded-xl mb-6">
+        <div className="bg-white p-4 rounded-xl mb-4">
           <div className="flex justify-center">
-            <img 
+            <img
               src={qrCodeURL}
               alt="Payment QR Code"
-              className="w-64 h-64"
+              className="w-48 h-48 sm:w-56 sm:h-56"
             />
           </div>
         </div>
 
         {/* Amount Display */}
-        <div className="text-center mb-6">
-          <p className="text-gray-400 mb-2">Amount to Pay</p>
-          <p className="text-3xl font-bold text-white">₹{amount.toFixed(2)}</p>
+        <div className="text-center mb-4">
+          <p className="text-gray-400 mb-1 text-sm">Amount to Pay</p>
+          <p className="text-2xl font-bold text-white">₹{amount.toFixed(2)}</p>
         </div>
 
         {/* Payment Status */}
-        <div className="mb-6">
+        <div className="mb-4">
           {paymentStatus === 'pending' && (
             <div className="flex items-center gap-3 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
               <Loader className="w-5 h-5 text-blue-400 animate-spin" />
@@ -80,7 +89,7 @@ const PaymentQRModal = ({ enrollmentId, amount, onSuccess, onClose }) => {
             <li>4. After payment, click "I Have Paid" button below</li>
             <li>5. Enter your transaction ID to verify payment</li>
           </ol>
-          
+
           {/* Manual Payment Details */}
           <div className="mt-4 pt-4 border-t border-gray-600">
             <h4 className="font-semibold mb-2 text-white text-sm">Or Pay Manually:</h4>

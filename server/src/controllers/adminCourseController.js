@@ -1,5 +1,6 @@
 const Course = require('../models/Course');
 const AdminCourse = require('../models/AdminCourse');
+const sendEmail = require('../utils/sendEmail');
 
 // @desc    Get all courses (from both Course and AdminCourse collections)
 // @route   GET /api/admin/courses
@@ -99,6 +100,9 @@ exports.getCourseById = async (req, res) => {
 // @access  Private
 exports.createCourse = async (req, res) => {
   try {
+    console.log('📝 Creating course with data:', req.body);
+    console.log('👤 Admin info:', { role: req.admin?.role, email: req.admin?.email });
+
     const {
       title,
       category,
@@ -122,9 +126,10 @@ exports.createCourse = async (req, res) => {
     } = req.body;
 
     // Determine instructor email
-    const emailToSave = req.admin.role === 'course_manager' ? req.admin.email : instructorEmail;
+    const emailToSave = req.admin?.role === 'course_manager' ? req.admin?.email : instructorEmail;
+    console.log('📧 Email to save:', emailToSave);
 
-    const course = await Course.create({
+    const courseData = {
       title,
       category,
       level,
@@ -145,12 +150,40 @@ exports.createCourse = async (req, res) => {
       language: language || 'English',
       subtitles: subtitles || [],
       createdBy: req.admin?._id
-    });
+    };
 
+    console.log('💾 Attempting to create course with data:', courseData);
+
+    const course = await Course.create(courseData);
+    console.log('✅ Course created successfully:', course._id);
+
+    // Send response
     res.status(201).json({ success: true, course });
+
+    // TODO: Re-enable email after fixing core issue
+    // Send email notification asynchronously (non-blocking)
+    // if (req.admin?.role === 'admin' && emailToSave) {
+    //   setImmediate(async () => {
+    //     try {
+    //       await sendEmail({
+    //         to: emailToSave,
+    //         subject: `🎓 New Course Assigned: ${title}`,
+    //         html: emailHTML
+    //       });
+    //       console.log(`✅ Course assignment email sent to ${emailToSave}`);
+    //     } catch (emailError) {
+    //       console.error('❌ Failed to send course assignment email:', emailError);
+    //     }
+    //   });
+    // }
   } catch (error) {
     console.error('Create course error:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    console.error('Error stack:', error.stack);
+    res.status(500).json({
+      message: 'Server error',
+      error: error.message,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 };
 

@@ -91,7 +91,7 @@ const AdminLayout = ({ setIsAdminLoggedIn, children }) => {
             <div className={`w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20`}>
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-white font-extrabold text-2xl tracking-tight">Yora<span className="text-indigo-500">UI</span></h1>
+            <h1 className="text-white font-extrabold text-2xl tracking-tight">E-<span className="text-indigo-500">Shikshan</span></h1>
           </div>
         </div>
 

@@ -835,31 +835,31 @@ const CourseDetail = () => {
 
       {/* Enrollment Modal */}
       {showEnrollModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 max-w-2xl w-full shadow-2xl border border-slate-700 my-8"
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-5 max-w-lg w-full shadow-2xl border border-slate-700 max-h-[90vh] overflow-y-auto"
           >
-            <div className="flex justify-between items-start mb-8">
+            <div className="flex justify-between items-start mb-3 sticky top-0 bg-inherit z-10 pb-2 border-b border-slate-700/50">
               <div>
-                <h2 className="text-3xl font-bold text-white mb-2">Enroll in Course</h2>
-                <p className="text-slate-400 text-sm">Fill in your details to get started</p>
+                <h2 className="text-xl font-bold text-white mb-0.5">Enroll in Course</h2>
+                <p className="text-slate-400 text-xs">Fill in your details to get started</p>
               </div>
               <button
                 onClick={() => setShowEnrollModal(false)}
-                className="text-white bg-slate-700/50 hover:bg-red-600 p-3 rounded-lg transition-all flex-shrink-0 ml-4"
+                className="text-white bg-slate-700/50 hover:bg-red-600 p-1.5 rounded-lg transition-all flex-shrink-0 ml-4"
                 title="Close"
               >
-                <X size={24} className="stroke-2" />
+                <X size={18} className="stroke-2" />
               </button>
             </div>
 
-            <form onSubmit={handleEnrollSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold mb-2 text-slate-300">
+            <form onSubmit={handleEnrollSubmit} className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="col-span-2 md:col-span-1">
+                  <label className="block text-xs font-semibold mb-1 text-slate-300">
                     Full Name <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -867,99 +867,98 @@ const CourseDetail = () => {
                     required
                     value={userDetails.fullName}
                     onChange={(e) => setUserDetails({ ...userDetails, fullName: e.target.value })}
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                    placeholder="Enter your full name"
+                    className="w-full px-2.5 py-1.5 bg-slate-700/50 border border-slate-600 text-white text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                    placeholder="Full Name"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold mb-2 text-slate-300">
-                    Email Address <span className="text-red-400">*</span>
+                <div className="col-span-2 md:col-span-1">
+                  <label className="block text-xs font-semibold mb-1 text-slate-300">
+                    Email <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="email"
                     required
                     value={userDetails.email}
                     onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                    placeholder="your.email@example.com"
+                    className="w-full px-2.5 py-1.5 bg-slate-700/50 border border-slate-600 text-white text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                    placeholder="Email"
+                  />
+                </div>
+
+                <div className="col-span-2 md:col-span-1">
+                  <label className="block text-xs font-semibold mb-1 text-slate-300">
+                    Phone <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={userDetails.phone}
+                    onChange={(e) => setUserDetails({ ...userDetails, phone: e.target.value })}
+                    className="w-full px-2.5 py-1.5 bg-slate-700/50 border border-slate-600 text-white text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                    placeholder="Phone"
+                  />
+                </div>
+
+                <div className="col-span-2">
+                  <label className="block text-xs font-semibold mb-1 text-slate-300">
+                    Address <span className="text-red-400">*</span>
+                  </label>
+                  <textarea
+                    required
+                    value={userDetails.address}
+                    onChange={(e) => setUserDetails({ ...userDetails, address: e.target.value })}
+                    className="w-full px-2.5 py-1.5 bg-slate-700/50 border border-slate-600 text-white text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none"
+                    placeholder="Complete Address"
+                    rows="2"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold mb-2 text-slate-300">
-                  Phone Number <span className="text-red-400">*</span>
-                </label>
-                <input
-                  type="tel"
-                  required
-                  value={userDetails.phone}
-                  onChange={(e) => setUserDetails({ ...userDetails, phone: e.target.value })}
-                  className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                  placeholder="+91 1234567890"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-2 text-slate-300">
-                  Address <span className="text-red-400">*</span>
-                </label>
-                <textarea
-                  required
-                  value={userDetails.address}
-                  onChange={(e) => setUserDetails({ ...userDetails, address: e.target.value })}
-                  className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none"
-                  placeholder="Enter your complete address"
-                  rows="3"
-                />
-              </div>
-
               {course.price === 'Free' && (
-                <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4 flex items-center gap-3">
-                  <div className="text-green-400 text-2xl">✓</div>
+                <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-2.5 flex items-center gap-3">
+                  <div className="text-green-400 text-lg">✓</div>
                   <div>
-                    <p className="text-green-400 font-semibold">This course is completely free!</p>
-                    <p className="text-green-300/70 text-sm">No payment required - instant access</p>
+                    <p className="text-green-400 font-semibold text-sm">Free Course</p>
+                    <p className="text-green-300/70 text-xs">Instant access, no payment.</p>
                   </div>
                 </div>
               )}
 
               {course.price !== 'Free' && (
-                <div className="bg-indigo-900/20 border border-indigo-500/30 rounded-lg p-4">
+                <div className="bg-indigo-900/20 border border-indigo-500/30 rounded-lg p-2.5">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-slate-400 text-sm">Course Price</p>
-                      <p className="text-2xl font-bold text-indigo-400">₹{course.priceAmount?.toLocaleString()}</p>
+                      <p className="text-slate-400 text-xs">Course Price</p>
+                      <p className="text-lg font-bold text-indigo-400">₹{course.priceAmount?.toLocaleString()}</p>
                     </div>
                     <div className="text-indigo-400">
-                      <BookOpen size={32} />
+                      <BookOpen size={20} />
                     </div>
                   </div>
-                  <p className="text-slate-400 text-xs mt-2">You'll be redirected to payment after enrollment</p>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={isEnrolling}
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-4 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-indigo-500/50 flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-2.5 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-indigo-500/50 flex items-center justify-center gap-2 text-sm"
               >
                 {isEnrolling ? (
                   <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                     Processing...
                   </>
                 ) : (
                   <>
                     {course.price === 'Free' ? (
                       <>
-                        <CheckCircle size={20} />
-                        Confirm Enrollment - Start Learning
+                        <CheckCircle size={16} />
+                        Confirm Enrollment
                       </>
                     ) : (
                       <>
-                        <ArrowLeft className="rotate-180" size={20} />
+                        <ArrowLeft className="rotate-180" size={16} />
                         Proceed to Payment
                       </>
                     )}

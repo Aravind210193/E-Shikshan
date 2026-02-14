@@ -423,7 +423,7 @@ const Courses = () => {
                         </div>
                         <div className="flex items-center gap-0.5 sm:gap-1 text-slate-400">
                           <Users size={14} />
-                          <span>{(course.students / 1000).toFixed(0)}k</span>
+                          <span>{course.students.toLocaleString()}</span>
                         </div>
                         <div className="flex items-center gap-0.5 sm:gap-1 text-slate-400">
                           <Clock size={14} />

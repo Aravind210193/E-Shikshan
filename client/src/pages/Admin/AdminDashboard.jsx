@@ -20,12 +20,14 @@ import {
 const AdminDashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const role = sessionStorage.getItem('adminRole');
-  const base = role === 'course_manager' ? '/instructor' : '/admin';
+  const role = sessionStorage.getItem('adminRole')?.toLowerCase();
+  const base = (role === 'course_manager' || role === 'instructor') ? '/instructor' : '/admin';
+  const isManager = role === 'course_manager' || role === 'instructor';
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [stats, setStats] = useState({
     totalUsers: 0,
+    totalStudents: 0,
     totalCourses: 0,
     activeCourses: 0,
     draftCourses: 0,
@@ -45,6 +47,8 @@ const AdminDashboard = () => {
   const [recentRoadmaps, setRecentRoadmaps] = useState([]);
   const [recentContent, setRecentContent] = useState([]);
   const [recentDoubts, setRecentDoubts] = useState([]);
+  const [enrollmentTrend, setEnrollmentTrend] = useState([]);
+  const [userTrend, setUserTrend] = useState([]);
 
   useEffect(() => {
     const load = async () => {
@@ -52,7 +56,18 @@ const AdminDashboard = () => {
       setError("");
       try {
         const res = await adminAPI.getStats();
-        const { stats: s, recentEnrollments: r, topCourses: tc, coursesByCategory: cc, recentRoadmaps: rm, recentContent: rc, recentDoubts: rd } = res.data || {};
+        const {
+          stats: s,
+          recentEnrollments: r,
+          topCourses: tc,
+          coursesByCategory: cc,
+          recentRoadmaps: rm,
+          recentContent: rc,
+          recentDoubts: rd,
+          enrollmentTrend: et,
+          userMonthlyTrend: ut
+        } = res.data || {};
+        console.log('API Version Check:', s?.apiVersion);
         if (s) setStats(s);
         setRecentEnrollments(Array.isArray(r) ? r : []);
         setTopCourses(Array.isArray(tc) ? tc : []);
@@ -60,6 +75,8 @@ const AdminDashboard = () => {
         setRecentRoadmaps(Array.isArray(rm) ? rm : []);
         setRecentContent(Array.isArray(rc) ? rc : []);
         setRecentDoubts(Array.isArray(rd) ? rd : []);
+        setEnrollmentTrend(Array.isArray(et) ? et.map(d => ({ name: d._id, enrollments: d.enrollments })) : []);
+        setUserTrend(Array.isArray(ut) ? ut.map(d => ({ name: d._id, users: d.users })) : []);
       } catch (err) {
         console.error('Dashboard load failed', err);
         setError(err?.response?.data?.message || 'Failed to load dashboard');
@@ -71,43 +88,17 @@ const AdminDashboard = () => {
   }, [location.pathname]);
 
   // Chart data Preparation
-  const barChartData = [
-    { name: '6am', enrollments: 400, avg: 240 },
-    { name: '7am', enrollments: 700, avg: 300 },
-    { name: '8am', enrollments: 900, avg: 400 },
-    { name: '9am', enrollments: 1200, avg: 500 },
-    { name: '1pm', enrollments: 1500, avg: 600 },
-    { name: '2pm', enrollments: 1800, avg: 900 },
-    { name: '3pm', enrollments: 1400, avg: 800 },
-    { name: '4pm', enrollments: 1600, avg: 700 },
-    { name: '5pm', enrollments: 1100, avg: 600 },
-    { name: '6pm', enrollments: 1300, avg: 500 },
-    { name: '7pm', enrollments: 1000, avg: 400 },
+  const chartEnrollmentTrend = enrollmentTrend.length > 0 ? enrollmentTrend : [
+    { name: 'No Data', enrollments: 0 }
   ];
 
-  const lineChartData = [
-    { name: '5am', visitors: 100000, visits: 80000 },
-    { name: '6am', visitors: 110000, visits: 90000 },
-    { name: '7am', visitors: 130000, visits: 100000 },
-    { name: '8am', visitors: 150000, visits: 120000 },
-    { name: '9am', visitors: 180000, visits: 140000 },
-    { name: '10am', visitors: 220000, visits: 180000 },
-    { name: '11am', visitors: 250000, visits: 200000 },
-    { name: '12nn', visitors: 230000, visits: 240000 },
-    { name: '1pm', visitors: 250000, visits: 220000 },
-    { name: '2pm', visitors: 210000, visits: 180000 },
-    { name: '3pm', visitors: 150000, visits: 140000 },
-    { name: '4pm', visitors: 120000, visits: 100000 },
+  const chartUserTrend = userTrend.length > 0 ? userTrend : [
+    { name: 'No Data', users: 0 }
   ];
 
   const chartCoursesByCategory = useMemo(() => {
     if (!coursesByCategory || coursesByCategory.length === 0) {
-      return [
-        { name: 'Development', value: 45, color: '#6366f1' },
-        { name: 'Business', value: 25, color: '#3b82f6' },
-        { name: 'Design', value: 20, color: '#06b6d4' },
-        { name: 'Marketing', value: 10, color: '#7a7f9a' },
-      ];
+      return [];
     }
     const colors = ['#6366f1', '#3b82f6', '#06b6d4', '#ec4899', '#10b981', '#f59e0b'];
     return coursesByCategory.map((item, index) => ({
@@ -130,13 +121,13 @@ const AdminDashboard = () => {
             <span className="flex items-center gap-2 text-white text-xs font-semibold">
               <span className="w-2 h-2 bg-green-500 rounded-sm"></span> {stats.totalEnrollments} Enrollments
             </span>
-            {role === 'course_manager' ? (
+            {isManager ? (
               <span className="flex items-center gap-2 text-white text-xs font-semibold">
                 <span className="w-2 h-2 bg-red-500 rounded-sm animate-pulse"></span> {stats.doubtsStats?.pending || 0} Pending Doubts
               </span>
             ) : (
               <span className="flex items-center gap-2 text-white text-xs font-semibold">
-                <span className="w-2 h-2 bg-cyan-500 rounded-sm"></span> {stats.totalUsers} Students
+                <span className="w-2 h-2 bg-cyan-500 rounded-sm"></span> {stats.totalStudents || 0} Students
               </span>
             )}
           </div>
@@ -144,7 +135,7 @@ const AdminDashboard = () => {
 
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 text-[#7a7f9a] text-xs font-bold">
-            {role !== 'course_manager' && (
+            {!isManager && (
               <button onClick={() => navigate(`${base}/users`)} className="flex items-center gap-1 hover:text-white transition-colors">
                 <Users className="w-4 h-4 text-indigo-500" /> Users
               </button>
@@ -173,10 +164,10 @@ const AdminDashboard = () => {
       {/* Row 0: Quick Metrics Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: role === 'course_manager' ? "Your Students" : "Total Students", value: stats.totalUsers, icon: Users, color: "text-indigo-500", bg: "bg-indigo-500/10" },
-          { label: role === 'course_manager' ? "Your Courses" : "Total Courses", value: stats.totalCourses, icon: BookOpen, color: "text-pink-500", bg: "bg-pink-500/10" },
-          { label: role === 'course_manager' ? "Pending Doubts" : "Enrollments", value: role === 'course_manager' ? (stats.doubtsStats?.pending || 0) : stats.totalEnrollments, icon: role === 'course_manager' ? MessageSquare : Briefcase, color: role === 'course_manager' ? "text-red-500" : "text-green-500", bg: role === 'course_manager' ? "bg-red-500/10" : "bg-green-500/10" },
-          { label: role === 'course_manager' ? "Resolved" : "Revenue", value: role === 'course_manager' ? (stats.doubtsStats?.resolved || 0) : `₹${stats.totalRevenue}`, icon: Activity, color: "text-cyan-500", bg: "bg-cyan-500/10" }
+          { label: isManager ? "Your Students" : "Total Students", value: stats.totalStudents || 0, icon: Users, color: "text-indigo-500", bg: "bg-indigo-500/10" },
+          { label: isManager ? "Your Courses" : "Total Courses", value: stats.totalCourses || 0, icon: BookOpen, color: "text-pink-500", bg: "bg-pink-500/10" },
+          { label: isManager ? "Pending Doubts" : "Enrollments", value: isManager ? (stats.doubtsStats?.pending || 0) : (stats.totalEnrollments || 0), icon: isManager ? MessageSquare : Briefcase, color: isManager ? "text-red-500" : "text-green-500", bg: isManager ? "bg-red-500/10" : "bg-green-500/10" },
+          { label: isManager ? "Resolved" : "Revenue", value: isManager ? (stats.doubtsStats?.resolved || 0) : `₹${stats.totalRevenue || 0}`, icon: Activity, color: "text-cyan-500", bg: "bg-cyan-500/10" }
         ].map((item, i) => (
           <motion.div
             key={i}
@@ -196,7 +187,7 @@ const AdminDashboard = () => {
         ))}
       </div>
 
-      {role === 'course_manager' && (
+      {isManager && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -253,7 +244,7 @@ const AdminDashboard = () => {
         </motion.div>
       )}
 
-      {role !== 'course_manager' && (
+      {!isManager && (
         <>
           {/* Row 1: Key Metrics Overview */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -277,13 +268,12 @@ const AdminDashboard = () => {
               </div>
               <div className="h-[250px] w-full mt-4">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={barChartData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                  <BarChart data={chartEnrollmentTrend} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                     <CartesianGrid vertical={false} stroke="#2d2f45" strokeDasharray="3 3" />
                     <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#7a7f9a', fontSize: 10 }} dy={10} />
                     <YAxis axisLine={false} tickLine={false} tick={{ fill: '#7a7f9a', fontSize: 10 }} />
                     <Tooltip cursor={{ fill: '#2d2f45', opacity: 0.4 }} contentStyle={{ background: '#1a1c2c', border: '1px solid #2d2f45', borderRadius: '8px' }} />
                     <Bar dataKey="enrollments" fill="#00d1ff" radius={[2, 2, 0, 0]} barSize={12} />
-                    <Bar dataKey="avg" fill="#2d2f45" radius={[2, 2, 0, 0]} barSize={12} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -296,7 +286,11 @@ const AdminDashboard = () => {
                   <h3 className="text-[#7a7f9a] font-bold text-sm tracking-wide">Platform Metrics</h3>
                   <div className="flex gap-8 mt-4 text-white">
                     <div>
-                      <p className="text-2xl font-extrabold">{stats.totalUsers}</p>
+                      <p className="text-2xl font-extrabold">{stats.totalStudents}</p>
+                      <p className="text-[10px] text-indigo-400 font-bold uppercase tracking-wider">Total Students</p>
+                    </div>
+                    <div>
+                      <p className="text-2xl font-extrabold text-[#7a7f9a]">{stats.totalUsers}</p>
                       <p className="text-[10px] text-[#7a7f9a] font-bold uppercase tracking-wider">Total Users</p>
                     </div>
                     <div>
@@ -313,13 +307,12 @@ const AdminDashboard = () => {
               </div>
               <div className="h-[250px] w-full mt-4">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={lineChartData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                  <LineChart data={chartUserTrend} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                     <CartesianGrid vertical={false} stroke="#2d2f45" strokeDasharray="3 3" />
                     <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#7a7f9a', fontSize: 10 }} dy={10} />
                     <YAxis axisLine={false} tickLine={false} tick={{ fill: '#7a7f9a', fontSize: 10 }} />
                     <Tooltip contentStyle={{ background: '#1a1c2c', border: '1px solid #2d2f45', borderRadius: '8px' }} />
-                    <Line type="monotone" dataKey="visitors" stroke="#ff5a9a" strokeWidth={3} dot={false} activeDot={{ r: 6 }} />
-                    <Line type="monotone" dataKey="visits" stroke="#ffffff" strokeWidth={2} strokeDasharray="5 5" dot={false} />
+                    <Line type="monotone" dataKey="users" stroke="#ff5a9a" strokeWidth={3} dot={false} activeDot={{ r: 6 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -355,14 +348,16 @@ const AdminDashboard = () => {
                   </ResponsiveContainer>
                 </div>
                 <div className="space-y-4 flex-1">
-                  {chartCoursesByCategory.map((item, index) => (
+                  {chartCoursesByCategory.length > 0 ? chartCoursesByCategory.map((item, index) => (
                     <div key={index} className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: item.color }}></span>
                         <span className="text-[#7a7f9a] text-sm font-semibold">{item.name} ({item.value} units)</span>
                       </div>
                     </div>
-                  ))}
+                  )) : (
+                    <div className="text-[#5a5f7a] text-sm text-center py-4">No categories data</div>
+                  )}
                 </div>
               </div>
             </div>
@@ -401,7 +396,13 @@ const AdminDashboard = () => {
               </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recentRoadmaps.length > 0 ? recentRoadmaps.map((roadmap, idx) => (
+              {loading ? (
+                [1, 2, 3].map((i) => (
+                  <div key={i} className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl h-64 animate-pulse flex items-center justify-center">
+                    <Map className="w-8 h-8 text-[#2d2f45]" />
+                  </div>
+                ))
+              ) : recentRoadmaps.length > 0 ? recentRoadmaps.map((roadmap, idx) => (
                 <motion.div
                   key={roadmap._id || idx}
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -433,18 +434,17 @@ const AdminDashboard = () => {
                         <span className="text-[10px] font-bold uppercase">{roadmap.steps?.length || 0} Modules</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Star className="w-3 h-3 text-yellow-500" />
-                        <span className="text-[10px] font-bold">4.9</span>
+                        <Clock className="w-3 h-3 text-indigo-500" />
+                        <span className="text-[10px] font-bold">{new Date(roadmap.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
                   </div>
                 </motion.div>
               )) : (
-                [1, 2, 3].map((i) => (
-                  <div key={i} className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl h-64 animate-pulse flex items-center justify-center">
-                    <Map className="w-8 h-8 text-[#2d2f45]" />
-                  </div>
-                ))
+                <div className="col-span-full py-12 text-center bg-[#1a1c2c] border border-dashed border-[#2d2f45] rounded-xl">
+                  <Map className="w-8 h-8 text-[#5a5f7a] mx-auto mb-2" />
+                  <p className="text-[#7a7f9a] text-sm">No learning roadmaps configured yet</p>
+                </div>
               )}
             </div>
           </div>
@@ -481,16 +481,13 @@ const AdminDashboard = () => {
                       <div>
                         <h4 className="text-white text-sm font-bold truncate max-w-[180px]">{course.title}</h4>
                         <p className="text-[#5a5f7a] text-[10px] font-bold flex items-center gap-1 mt-1">
-                          <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" /> {course.rating || '4.8'} • {course.students || 0} Students
+                          <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" /> {course.rating?.toFixed(1) || '0.0'} • {course.students || 0} Students
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
                         <p className="text-white text-sm font-extrabold">₹{course.price || '0'}</p>
-                        <p className="text-green-500 text-[10px] font-bold flex items-center justify-end gap-1">
-                          <ArrowUpRight className="w-3 h-3" /> +12.5%
-                        </p>
                       </div>
                       <button className="p-2 text-[#7a7f9a] hover:text-white transition-colors opacity-0 group-hover:opacity-100">
                         <ChevronRight className="w-4 h-4" />
@@ -593,7 +590,14 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#2d2f45]">
-                  {recentContent.length > 0 ? recentContent.map((item, idx) => (
+                  {loading ? (
+                    <tr>
+                      <td colSpan="5" className="py-8 text-center text-[#5a5f7a]">
+                        <div className="animate-spin w-5 h-5 border-t-2 border-indigo-500 rounded-full mx-auto mb-2"></div>
+                        Loading content...
+                      </td>
+                    </tr>
+                  ) : recentContent.length > 0 ? recentContent.map((item, idx) => (
                     <tr key={item._id || idx} className="group hover:bg-[#10111a]/50 transition-all text-xs">
                       <td className="py-4">
                         <div className="flex items-center gap-3">
@@ -624,7 +628,12 @@ const AdminDashboard = () => {
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan="5" className="text-center py-8 text-[#5a5f7a]">No recent content items found</td>
+                      <td colSpan="5" className="text-center py-12 text-[#5a5f7a]">
+                        <div className="w-10 h-10 border border-dashed border-[#2d2f45] rounded-lg flex items-center justify-center mx-auto mb-3">
+                          <BookOpen className="w-4 h-4 opacity-30" />
+                        </div>
+                        <p className="text-xs">No educational content has been uploaded yet</p>
+                      </td>
                     </tr>
                   )}
                 </tbody>
