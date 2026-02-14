@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_API_URL = import.meta.env.VITE_API_URL || 'https://e-shikshan.onrender.com/api';
+const BASE_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const API_URL = `${BASE_API_URL}/admin`;
 
 // Create axios instance with default config
@@ -18,8 +18,8 @@ adminAPI.interceptors.request.use(
     if (config.url === '/auth/login') {
       return config;
     }
-    
-    const token = localStorage.getItem('adminToken');
+
+    const token = sessionStorage.getItem('adminToken');
     if (token && token !== 'admin-authenticated' && token !== 'course-manager') {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -34,6 +34,21 @@ export const adminAuthAPI = {
   getProfile: () => adminAPI.get('/auth/profile'),
   register: (data) => adminAPI.post('/auth/register', data),
   logout: () => adminAPI.post('/auth/logout'),
+};
+
+// Doubt Management APIs
+export const adminDoubtAPI = {
+  getInstructorDoubts: () => adminAPI.get('/doubts/instructor'),
+  getPendingCount: () => adminAPI.get('/doubts/pending-count'),
+  reply: (id, reply) => adminAPI.put(`/doubts/${id}/reply`, { reply }),
+};
+
+// Notification APIs
+export const adminNotificationAPI = {
+  getNotifications: () => adminAPI.get('/notifications'),
+  markAsRead: (id) => adminAPI.patch(`/notifications/${id}/read`),
+  markAllAsRead: () => adminAPI.patch('/notifications/read-all'),
+  delete: (id) => adminAPI.delete(`/notifications/${id}`),
 };
 
 // User Management APIs

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with default config
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://e-shikshan.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -11,9 +11,10 @@ const api = axios.create({
 // Add a request interceptor to attach the token
 api.interceptors.request.use(
   (config) => {
-    console.log(`API Request: ${config.method.toUpperCase()} ${config.baseURL}${config.url}`);
+    const finalURL = `${config.baseURL}${config.url}`;
+    console.log(`API Request: ${config.method.toUpperCase()} ${finalURL}`);
     const isAdminEndpoint = typeof config.url === 'string' && config.url.startsWith('/admin');
-    const adminToken = localStorage.getItem('adminToken');
+    const adminToken = sessionStorage.getItem('adminToken');
     const userToken = localStorage.getItem('token');
 
     if (isAdminEndpoint && adminToken) {
@@ -44,8 +45,8 @@ api.interceptors.response.use(
         const isAdminEndpoint = typeof reqUrl === 'string' && reqUrl.startsWith('/admin');
         if (isAdminEndpoint) {
           console.log('Admin unauthorized, redirecting to admin login');
-          localStorage.removeItem('adminToken');
-          localStorage.removeItem('adminRole');
+          sessionStorage.removeItem('adminToken');
+          sessionStorage.removeItem('adminRole');
           window.location.href = '/admin';
         } else {
           console.log('User unauthorized, redirecting to login');
@@ -115,28 +116,32 @@ export const hackathonRegistrationAPI = {
   cancelRegistration: (hackathonId) => api.delete(`/hackathon-registrations/${hackathonId}/cancel`),
 };
 
+export const doubtsAPI = {
+  create: (data) => api.post('/doubts', data),
+};
+
 // Content API
 export const contentAPI = {
   // Branches
   getAllBranches: () => api.get('/branches'),
   getBranchById: (id) => api.get(`/branches/${id}`),
   getBranchByTitle: (title) => api.get(`/branches/title/${title}`),
-  
+
   // Education Levels
   getAllEducationLevels: () => api.get('/education-levels'),
   getEducationLevelById: (id) => api.get(`/education-levels/${id}`),
   getEducationLevelByName: (level) => api.get(`/education-levels/level/${level}`),
-  
+
   // Subjects
   getAllSubjects: (params) => api.get('/subjects', { params }),
   getSubjectsByBranch: (branch) => api.get(`/subjects/branch/${branch}`),
   getSubjectsByBranchAndSemester: (branch, semester) => api.get(`/subjects/branch/${branch}/semester/${semester}`),
-  
+
   // Programs (Semester Data)
   getAllPrograms: () => api.get('/programs'),
   getProgramByKey: (programKey) => api.get(`/programs/${programKey}`),
   getSemesterData: (programKey, semesterNumber) => api.get(`/programs/${programKey}/semester/${semesterNumber}`),
-  
+
   // Folders
   getAllFolders: (params) => api.get('/folders', { params }),
   getFoldersByBranch: (branch) => api.get(`/folders/branch/${branch}`),
@@ -146,7 +151,7 @@ export const contentAPI = {
 export const adminAPI = {
   // Dashboard
   getStats: () => api.get('/admin/stats'),
-  
+
   // User Management
   getAllUsers: (params) => api.get('/admin/users', { params }),
   getUserById: (id) => api.get(`/admin/users/${id}`),
@@ -154,7 +159,7 @@ export const adminAPI = {
   createUser: (data) => api.post('/admin/users', data),
   updateUser: (id, data) => api.put(`/admin/users/${id}`, data),
   deleteUser: (id) => api.delete(`/admin/users/${id}`),
-  
+
   // Enrollment Management
   grantCourseAccess: (data) => api.post('/admin/enrollments/grant', data),
   revokeCourseAccess: (id) => api.put(`/admin/enrollments/${id}/revoke`),

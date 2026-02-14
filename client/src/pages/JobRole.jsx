@@ -117,11 +117,10 @@ const FilterModal = ({
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => onTagToggle(t)}
-                    className={`px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-300 ${
-                      selectedTags.includes(t)
+                    className={`px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-300 ${selectedTags.includes(t)
                         ? 'bg-purple-500/30 border-purple-400/60 text-purple-100 shadow-lg shadow-purple-500/20'
                         : 'bg-gray-700/40 border-gray-600/60 text-gray-300 hover:bg-gray-700/60 hover:border-gray-500'
-                    }`}
+                      }`}
                   >
                     {t}
                   </motion.button>
@@ -249,15 +248,23 @@ export default function JobRole() {
         </header>
 
         <div className="bg-black/20 backdrop-blur-lg border border-pink-500/20 rounded-xl p-4 mb-4 sticky top-4 z-40 flex flex-col sm:flex-row items-center gap-4 shadow-lg">
-          <div className="relative w-full flex-grow">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="relative w-full flex-grow group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-purple-500 transition-colors w-5 h-5" />
             <input
               type="text"
-              placeholder="Search by job title..."
+              placeholder="Search by job title, company..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full bg-gray-800/50 border border-gray-700 rounded-lg pl-12 pr-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
+              className="w-full bg-gray-800/40 border border-gray-700 rounded-xl pl-12 pr-10 py-3.5 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 outline-none transition-all shadow-inner"
             />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 hover:bg-gray-700 rounded-lg text-gray-400 hover:text-white transition-all active:scale-95"
+              >
+                <X className="w-4 h-4 shadow-sm" />
+              </button>
+            )}
           </div>
           <div>
             <select
@@ -295,8 +302,8 @@ export default function JobRole() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
           {[
             { label: 'Total Roles', value: jobs.length },
-            { label: 'Remote', value: jobs.filter(j => String(j.location||'').toLowerCase().includes('remote')).length },
-            { label: 'Highest Salary', value: `₹${(Math.max(...jobs.map(j=>parseInt(String(j.salary).match(/([0-9,]+)/g)?.pop()?.replace(/,/g,'')||'0',10)))||0).toLocaleString('en-IN')}` },
+            { label: 'Remote', value: jobs.filter(j => String(j.location || '').toLowerCase().includes('remote')).length },
+            { label: 'Highest Salary', value: `₹${(Math.max(...jobs.map(j => parseInt(String(j.salary).match(/([0-9,]+)/g)?.pop()?.replace(/,/g, '') || '0', 10))) || 0).toLocaleString('en-IN')}` },
             { label: 'Categories', value: categories.length },
           ].map((s, i) => (
             <div key={i} className="text-center bg-gray-800/40 border border-gray-700/60 rounded-lg py-2">
@@ -316,7 +323,7 @@ export default function JobRole() {
           onCategoryToggle={handleCategoryToggle}
           onTagToggle={handleTagToggle}
           onApply={() => setShowFilter(false)}
-          onReset={resetFilters}/>
+          onReset={resetFilters} />
         <AnimatePresence>
           <motion.div
             layout
@@ -333,7 +340,7 @@ export default function JobRole() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
                   exit={{ opacity: 0, y: -20 }}
->
+                >
                   <Link to={`/jobs/${job._id}`} className="block h-full">
                     <JobCard job={job} />
                   </Link>

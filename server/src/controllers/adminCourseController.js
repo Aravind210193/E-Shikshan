@@ -7,9 +7,9 @@ const AdminCourse = require('../models/AdminCourse');
 exports.getAllCourses = async (req, res) => {
   try {
     const { search, category, level, status, page = 1, limit = 10 } = req.query;
-    
+
     const query = {};
-    
+
     if (search) {
       query.$or = [
         { title: { $regex: search, $options: 'i' } },
@@ -17,7 +17,7 @@ exports.getAllCourses = async (req, res) => {
         { instructor: { $regex: search, $options: 'i' } }
       ];
     }
-    
+
     if (category && category !== 'all' && category !== 'All') {
       query.category = category;
     }
@@ -28,6 +28,11 @@ exports.getAllCourses = async (req, res) => {
 
     if (status && status !== 'all') {
       query.status = status;
+    }
+
+    // Filter by instructor email if user is a course_manager
+    if (req.admin && req.admin.role === 'course_manager') {
+      query.instructorEmail = req.admin.email;
     }
 
     // Fetch from both Course and AdminCourse collections
@@ -77,7 +82,7 @@ exports.getAllCourses = async (req, res) => {
 exports.getCourseById = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    
+
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
@@ -94,13 +99,13 @@ exports.getCourseById = async (req, res) => {
 // @access  Private
 exports.createCourse = async (req, res) => {
   try {
-    const { 
-      title, 
-      category, 
-      level, 
-      duration, 
-      status, 
-      description, 
+    const {
+      title,
+      category,
+      level,
+      duration,
+      status,
+      description,
       instructor,
       instructorBio,
       thumbnail,
@@ -112,8 +117,12 @@ exports.createCourse = async (req, res) => {
       syllabus,
       certificate,
       language,
-      subtitles
+      subtitles,
+      instructorEmail // New field
     } = req.body;
+
+    // Determine instructor email
+    const emailToSave = req.admin.role === 'course_manager' ? req.admin.email : instructorEmail;
 
     const course = await Course.create({
       title,
@@ -123,6 +132,7 @@ exports.createCourse = async (req, res) => {
       status: status || 'draft',
       description,
       instructor,
+      instructorEmail: emailToSave,
       instructorBio,
       thumbnail,
       price: price || 'Free',
@@ -150,7 +160,7 @@ exports.createCourse = async (req, res) => {
 exports.updateCourse = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    
+
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
@@ -158,10 +168,10 @@ exports.updateCourse = async (req, res) => {
     // Update fields if provided
     const updates = req.body;
     const allowedFields = [
-      'title', 'category', 'level', 'duration', 'status', 'description', 
-      'instructor', 'instructorBio', 'thumbnail', 'price', 'priceAmount',
-      'skills', 'prerequisites', 'whatYoullLearn', 'syllabus', 
-      'certificate', 'language', 'subtitles', 'videoLectures', 
+      'title', 'category', 'level', 'duration', 'status', 'description',
+      'instructor', 'instructorEmail', 'instructorBio', 'thumbnail', 'price', 'priceAmount',
+      'skills', 'prerequisites', 'whatYoullLearn', 'syllabus',
+      'certificate', 'language', 'subtitles', 'videoLectures',
       'assignments', 'projectsDetails', 'rating'
     ];
 
@@ -186,7 +196,7 @@ exports.updateCourse = async (req, res) => {
 exports.deleteCourse = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    
+
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
@@ -205,23 +215,27 @@ exports.deleteCourse = async (req, res) => {
 // @access  Private
 exports.getCourseStats = async (req, res) => {
   try {
-    const total = await Course.countDocuments();
-    const active = await Course.countDocuments({ status: 'active' });
-    const draft = await Course.countDocuments({ status: 'draft' });
-    const archived = await Course.countDocuments({ status: 'archived' });
+    const isManager = req.admin && req.admin.role === 'course_manager';
+    const query = isManager ? { instructorEmail: req.admin.email } : {};
+
+    const total = await Course.countDocuments(query);
+    const active = await Course.countDocuments({ ...query, status: 'active' });
+    const draft = await Course.countDocuments({ ...query, status: 'draft' });
+    const archived = await Course.countDocuments({ ...query, status: 'archived' });
 
     const totalStudentsResult = await Course.aggregate([
+      { $match: query },
       { $group: { _id: null, total: { $sum: '$students' } } }
     ]);
 
     res.json({
       success: true,
-      stats: { 
-        total, 
-        active, 
-        draft, 
+      stats: {
+        total,
+        active,
+        draft,
         archived,
-        totalStudents: totalStudentsResult[0]?.total || 0 
+        totalStudents: totalStudentsResult[0]?.total || 0
       },
     });
   } catch (error) {

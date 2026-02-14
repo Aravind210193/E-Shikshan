@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { 
-  BookOpen, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Facebook, 
-  Twitter, 
-  Linkedin, 
-  Instagram, 
+import {
+  BookOpen,
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Linkedin,
+  Instagram,
   Youtube,
   Send,
   GraduationCap,
@@ -25,7 +25,7 @@ const Footer = () => {
       {/* Main Footer Content */}
       <div className='container mx-auto px-6 py-12'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12'>
-          
+
           {/* Company Info - Spans 2 columns on large screens */}
           <div className='lg:col-span-2'>
             <div className='flex items-center space-x-2 mb-4'>
@@ -37,7 +37,7 @@ const Footer = () => {
             <p className='text-gray-400 mb-4 leading-relaxed'>
               Empowering learners worldwide with quality education. Beyond Learning - Explore, Learn, and Grow with comprehensive courses, resources, and career guidance.
             </p>
-            
+
             {/* Contact Info */}
             <div className='space-y-2 mb-4'>
               <div className='flex items-center space-x-2 text-sm'>
@@ -60,45 +60,45 @@ const Footer = () => {
 
             {/* Social Links */}
             <div className='flex space-x-3'>
-              <a 
-                href='https://facebook.com' 
-                target='_blank' 
+              <a
+                href='https://facebook.com'
+                target='_blank'
                 rel='noopener noreferrer'
                 className='bg-gray-700 hover:bg-blue-600 p-2 rounded-full transition-all duration-300 hover:scale-110'
                 aria-label='Facebook'
               >
                 <Facebook className='h-4 w-4' />
               </a>
-              <a 
-                href='https://twitter.com' 
-                target='_blank' 
+              <a
+                href='https://twitter.com'
+                target='_blank'
                 rel='noopener noreferrer'
                 className='bg-gray-700 hover:bg-blue-400 p-2 rounded-full transition-all duration-300 hover:scale-110'
                 aria-label='Twitter'
               >
                 <Twitter className='h-4 w-4' />
               </a>
-              <a 
-                href='https://linkedin.com' 
-                target='_blank' 
+              <a
+                href='https://linkedin.com'
+                target='_blank'
                 rel='noopener noreferrer'
                 className='bg-gray-700 hover:bg-blue-700 p-2 rounded-full transition-all duration-300 hover:scale-110'
                 aria-label='LinkedIn'
               >
                 <Linkedin className='h-4 w-4' />
               </a>
-              <a 
-                href='https://instagram.com' 
-                target='_blank' 
+              <a
+                href='https://instagram.com'
+                target='_blank'
                 rel='noopener noreferrer'
                 className='bg-gray-700 hover:bg-pink-600 p-2 rounded-full transition-all duration-300 hover:scale-110'
                 aria-label='Instagram'
               >
                 <Instagram className='h-4 w-4' />
               </a>
-              <a 
-                href='https://youtube.com' 
-                target='_blank' 
+              <a
+                href='https://youtube.com'
+                target='_blank'
                 rel='noopener noreferrer'
                 className='bg-gray-700 hover:bg-red-600 p-2 rounded-full transition-all duration-300 hover:scale-110'
                 aria-label='YouTube'
@@ -216,8 +216,10 @@ const Footer = () => {
                 </Link>
               </li>
               <li className='pt-2'>
-                <Link 
-                  to='/admin' 
+                <Link
+                  to='/admin'
+                  target='_blank'
+                  rel='noopener noreferrer'
                   className='text-sm text-red-400 hover:text-red-300 hover:pl-2 transition-all duration-200 inline-block font-medium'
                 >
                   🔐 Admin Portal

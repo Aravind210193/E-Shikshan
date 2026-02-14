@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, Shield } from "lucide-react";
@@ -7,9 +7,24 @@ import { adminAuthAPI } from '../../services/adminApi';
 
 const AdminLogin = ({ setIsAdminLoggedIn }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('adminToken');
+    const role = sessionStorage.getItem('adminRole');
+    if (token && role) {
+      if (role === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (role === 'course_manager') {
+        navigate('/instructor/dashboard');
+      }
+    }
+  }, [navigate]);
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const [loginRole, setLoginRole] = useState("admin"); // 'admin' or 'course_manager'
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,28 +37,35 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
 
     try {
       const response = await adminAuthAPI.login(formData.email, formData.password);
-      
+
       if (response.data.success) {
         const { token, admin } = response.data;
-        
+
+        // Check if role matches selected login role (optional, but good for UX)
+        if (loginRole === 'course_manager' && admin.role === 'admin') {
+          toast.error('You are logging in as Instructor but have Admin privileges. Redirecting to Dashboard.');
+        } else if (loginRole === 'admin' && admin.role === 'course_manager') {
+          toast.error('You are logging in as Admin but only have Instructor privileges. Redirecting to Courses.');
+        }
+
         // Store token and role
-        localStorage.setItem('adminToken', token);
-        localStorage.setItem('adminRole', admin.role);
-        localStorage.setItem('adminData', JSON.stringify(admin));
-        
+        sessionStorage.setItem('adminToken', token);
+        sessionStorage.setItem('adminRole', admin.role);
+        sessionStorage.setItem('adminData', JSON.stringify(admin));
+
         setIsAdminLoggedIn(true);
-        toast.success(`${admin.role === 'admin' ? 'Admin' : 'Course Manager'} login successful!`);
-        
+        toast.success(`${admin.role === 'admin' ? 'Admin' : 'Instructor'} login successful!`);
+
         // Redirect based on role
         if (admin.role === 'admin') {
           navigate('/admin/dashboard');
         } else if (admin.role === 'course_manager') {
-          navigate('/admin/courses');
+          navigate('/instructor/dashboard');
         }
       }
     } catch (error) {
       console.error('Login error:', error);
-      toast.error(error.response?.data?.message || 'Invalid admin credentials');
+      toast.error(error.response?.data?.message || 'Invalid credentials');
     } finally {
       setLoading(false);
     }
@@ -72,12 +94,38 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
             <motion.div
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
-              className="inline-flex items-center justify-center w-16 h-16 bg-red-600 rounded-full mb-4"
+              className={`inline-flex items-center justify-center w-16 h-16 ${loginRole === 'admin' ? 'bg-red-600' : 'bg-blue-600'} rounded-full mb-4 transition-colors duration-300`}
             >
               <Shield className="w-8 h-8 text-white" />
             </motion.div>
-            <h1 className="text-3xl font-bold text-white mb-2">Admin Portal</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              {loginRole === 'admin' ? 'Admin Portal' : 'Instructor Portal'}
+            </h1>
             <p className="text-gray-400">E-Shikshan Management System</p>
+          </div>
+
+          {/* Role Toggle */}
+          <div className="flex bg-gray-700 rounded-xl p-1 mb-6">
+            <button
+              type="button"
+              onClick={() => setLoginRole('admin')}
+              className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${loginRole === 'admin'
+                ? 'bg-red-600 text-white shadow-lg'
+                : 'text-gray-400 hover:text-white'
+                }`}
+            >
+              Admin Login
+            </button>
+            <button
+              type="button"
+              onClick={() => setLoginRole('course_manager')}
+              className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${loginRole === 'course_manager'
+                ? 'bg-blue-600 text-white shadow-lg'
+                : 'text-gray-400 hover:text-white'
+                }`}
+            >
+              Instructor Login
+            </button>
           </div>
 
           {/* Login Form */}
@@ -95,7 +143,7 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3.5 rounded-xl bg-gray-700 border border-gray-600 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                className={`w-full px-4 py-3.5 rounded-xl bg-gray-700 border border-gray-600 text-white placeholder-gray-400 outline-none focus:ring-2 ${loginRole === 'admin' ? 'focus:ring-red-500' : 'focus:ring-blue-500'} focus:border-transparent transition-all`}
               />
             </div>
 
@@ -113,7 +161,7 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3.5 rounded-xl bg-gray-700 border border-gray-600 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all pr-12"
+                  className={`w-full px-4 py-3.5 rounded-xl bg-gray-700 border border-gray-600 text-white placeholder-gray-400 outline-none focus:ring-2 ${loginRole === 'admin' ? 'focus:ring-red-500' : 'focus:ring-blue-500'} focus:border-transparent transition-all pr-12`}
                 />
                 <button
                   type="button"
@@ -131,7 +179,7 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold shadow-lg shadow-red-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className={`w-full py-4 ${loginRole === 'admin' ? 'bg-red-600 hover:bg-red-700 shadow-red-500/20' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/20'} text-white rounded-xl font-semibold shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
             >
               {loading ? (
                 <>
@@ -145,7 +193,7 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
               ) : (
                 <>
                   <Shield className="w-5 h-5" />
-                  Admin Login
+                  {loginRole === 'admin' ? 'Admin Login' : 'Instructor Login'}
                 </>
               )}
             </motion.button>

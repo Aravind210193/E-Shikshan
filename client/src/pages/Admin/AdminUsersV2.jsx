@@ -30,9 +30,12 @@ const AdminUsers = () => {
   const [grantSubmitting, setGrantSubmitting] = useState(false);
 
   useEffect(() => {
-    fetchUsers();
+    const timer = setTimeout(() => {
+      fetchUsers();
+    }, 500);
+    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, roleFilter]);
+  }, [page, roleFilter, searchQuery]);
 
   const fetchUsers = async () => {
     setIsLoading(true);
@@ -64,10 +67,6 @@ const AdminUsers = () => {
     }
   };
 
-  const searchNow = () => {
-    setPage(1);
-    fetchUsers();
-  };
 
   const openUserDetails = async (userId) => {
     try {
@@ -228,32 +227,35 @@ const AdminUsers = () => {
       <div>
         <label className="text-sm text-gray-400">Search & Filters</label>
         <div className="mt-2 flex flex-col md:flex-row gap-3">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <div className="relative flex-1 group">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors w-4 h-4" />
             <input
               type="text"
               placeholder="Search by name or email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full pl-9 pr-10 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 outline-none transition-all"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-600 rounded-lg text-gray-400 hover:text-white transition-colors"
+                title="Clear search"
+              >
+                <XCircle className="w-4 h-4" />
+              </button>
+            )}
           </div>
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+            className="px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-blue-500/50 outline-none transition-all"
           >
             <option value="">All roles</option>
             <option value="student">Student</option>
             <option value="faculty">Faculty</option>
             <option value="admin">Admin</option>
           </select>
-          <button
-            onClick={searchNow}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
-          >
-            Search
-          </button>
           <button
             onClick={() => setJsonModal(true)}
             className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg"
@@ -531,7 +533,7 @@ const AdminUsers = () => {
             </div>
             <div className="p-4 overflow-auto">
               <pre className="text-sm text-gray-200 whitespace-pre-wrap">
-{JSON.stringify({ users, pagination: { page, pages, total, limit } }, null, 2)}
+                {JSON.stringify({ users, pagination: { page, pages, total, limit } }, null, 2)}
               </pre>
             </div>
           </div>
@@ -555,47 +557,47 @@ const AdminUsers = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm text-gray-400">Name</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.name} onChange={(e)=>setUserForm({...userForm,name:e.target.value})} />
+                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.name} onChange={(e) => setUserForm({ ...userForm, name: e.target.value })} />
                 </div>
                 <div>
                   <label className="text-sm text-gray-400">Email</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.email} onChange={(e)=>setUserForm({...userForm,email:e.target.value})} />
+                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.email} onChange={(e) => setUserForm({ ...userForm, email: e.target.value })} />
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400">Password {userModal.mode==='edit' && <span className="text-gray-400">(leave blank to keep)</span>}</label>
-                  <input type="password" className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.password} onChange={(e)=>setUserForm({...userForm,password:e.target.value})} />
+                  <label className="text-sm text-gray-400">Password {userModal.mode === 'edit' && <span className="text-gray-400">(leave blank to keep)</span>}</label>
+                  <input type="password" className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.password} onChange={(e) => setUserForm({ ...userForm, password: e.target.value })} />
                 </div>
                 <div>
                   <label className="text-sm text-gray-400">Role</label>
-                  <select className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.role} onChange={(e)=>setUserForm({...userForm,role:e.target.value})}>
+                  <select className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.role} onChange={(e) => setUserForm({ ...userForm, role: e.target.value })}>
                     <option value="student">Student</option>
                     <option value="faculty">Faculty</option>
                     <option value="admin">Admin</option>
                   </select>
                 </div>
                 <div className="flex items-center gap-2">
-                  <input id="isAdmin" type="checkbox" checked={!!userForm.isAdmin} onChange={(e)=>setUserForm({...userForm,isAdmin:e.target.checked})} />
+                  <input id="isAdmin" type="checkbox" checked={!!userForm.isAdmin} onChange={(e) => setUserForm({ ...userForm, isAdmin: e.target.checked })} />
                   <label htmlFor="isAdmin" className="text-sm text-gray-300">Is Admin</label>
                 </div>
                 <div>
                   <label className="text-sm text-gray-400">Phone</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.phone} onChange={(e)=>setUserForm({...userForm,phone:e.target.value})} />
+                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.phone} onChange={(e) => setUserForm({ ...userForm, phone: e.target.value })} />
                 </div>
                 <div>
                   <label className="text-sm text-gray-400">University</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.university} onChange={(e)=>setUserForm({...userForm,university:e.target.value})} />
+                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.university} onChange={(e) => setUserForm({ ...userForm, university: e.target.value })} />
                 </div>
                 <div>
                   <label className="text-sm text-gray-400">Department</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.department} onChange={(e)=>setUserForm({...userForm,department:e.target.value})} />
+                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.department} onChange={(e) => setUserForm({ ...userForm, department: e.target.value })} />
                 </div>
                 <div>
                   <label className="text-sm text-gray-400">Semester</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.semester} onChange={(e)=>setUserForm({...userForm,semester:e.target.value})} />
+                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.semester} onChange={(e) => setUserForm({ ...userForm, semester: e.target.value })} />
                 </div>
               </div>
               <div className="mt-6 flex justify-end gap-2">
-                <button onClick={()=>setUserModal({ open:false, mode:'add' })} className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">Cancel</button>
+                <button onClick={() => setUserModal({ open: false, mode: 'add' })} className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">Cancel</button>
                 <button disabled={savingUser} onClick={saveUser} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg disabled:opacity-50">{savingUser ? 'Saving...' : 'Save'}</button>
               </div>
             </div>

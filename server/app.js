@@ -55,7 +55,8 @@ const corsOptions = {
     'https://eshikshan.vercel.app',
     'https://www.eshikshan.vercel.app',
     'https://e-shikshan.vercel.app',
-    'https://www.e-shikshan.vercel.app'
+    'https://www.e-shikshan.vercel.app',
+    'http://localhost:5175'
   ],
   credentials: true,
   optionsSuccessStatus: 200
@@ -107,6 +108,10 @@ app.use('/api/education-levels', educationLevelRoutes);
 app.use('/api/subjects', subjectRoutes);
 app.use('/api/programs', semesterDataRoutes);
 app.use('/api/folders', folderRoutes);
+
+// Doubt routes
+const doubtRoutes = require('./src/routes/doubtRoutes');
+app.use('/api/doubts', doubtRoutes);
 
 // Admin routes - IMPORTANT: More specific routes must come FIRST!
 app.use('/api/admin/auth', adminAuthRoutes);

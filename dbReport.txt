@@ -1,0 +1,32 @@
+
+=== Admin users ===
+  admin: admin@eshikshan.com (System Administrator)
+  course_manager: o210900@rguktong.ac.in (Swarna Raja)
+  course_manager: o210193@rguktong.ac.in (Aravind)
+  course_manager: o210318@rguktong.ac.in (Sruthi)
+  course_manager: o210377@rgukong.ac.in (Anusha)
+
+=== Courses with instructorEmail ===
+  Data Structures and Algorithms -> o210900@rguktong.ac.in
+  Machine Learning Fundamentals -> o210318@rguktong.ac.in
+  UX/UI Design Principles -> o210193@rguktong.ac.in
+  DevOps Engineering Bootcamp -> o210193@rguktong.ac.in
+  Game Development with Unity -> o210900@rguktong.ac.in
+  Artificial Intelligence Fundamentals -> o210900@rguktong.ac.in
+  Cloud Computing with AWS -> o210318@rguktong.ac.in
+  Python for Data Analytics -> o210900@rguktong.ac.in
+  Introduction to Computer Science -> o210193@rguktong.ac.in
+  Web Development Bootcamp -> o210318@rguktong.ac.in
+  Cybersecurity Essentials -> o210377@rgukong.ac.in
+  Mobile App Development with Flutter -> o210377@rgukong.ac.in
+  Digital Marketing Masterclass -> o210318@rguktong.ac.in
+  Blockchain and Cryptocurrency -> o210193@rguktong.ac.in
+  Full Stack JavaScript Development -> o210377@rgukong.ac.in
+
+=== Unique instructor emails in courses: 4 ===
+  o210193@rguktong.ac.in
+  o210318@rguktong.ac.in
+  o210377@rgukong.ac.in
+  o210900@rguktong.ac.in
+
+=== Total courses: 15 ===

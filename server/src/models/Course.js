@@ -53,6 +53,7 @@ const CourseSchema = new mongoose.Schema({
   description: { type: String, required: true },
   skills: [{ type: String }],
   instructor: { type: String, required: true },
+  instructorEmail: { type: String, lowercase: true },
   instructorBio: { type: String },
   syllabus: [SyllabusSchema],
   prerequisites: [{ type: String }],

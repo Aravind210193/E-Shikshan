@@ -13,6 +13,13 @@ const {
   deleteEnrollment,
   getDashboardStats
 } = require('../controllers/adminController');
+const notificationController = require('../controllers/notificationController');
+const {
+  getDoubtsForInstructor,
+  getAllDoubts,
+  replyDoubt,
+  getPendingDoubtsCount,
+} = require('../controllers/doubtController');
 const { adminAuth } = require('../middlewares/adminAuth');
 
 // All routes require authentication and admin privileges
@@ -34,5 +41,17 @@ router.post('/enrollments/grant', grantCourseAccess);
 router.put('/enrollments/:id/revoke', revokeCourseAccess);
 router.put('/enrollments/:id/restore', restoreCourseAccess);
 router.delete('/enrollments/:id', deleteEnrollment);
+
+// Notifications
+router.get('/notifications', notificationController.getNotifications);
+router.patch('/notifications/:id/read', notificationController.markAsRead);
+router.patch('/notifications/read-all', notificationController.markAllAsRead);
+router.delete('/notifications/:id', notificationController.deleteNotification);
+
+// Doubts
+router.get('/doubts/instructor', getDoubtsForInstructor);
+router.get('/doubts/pending-count', getPendingDoubtsCount);
+router.put('/doubts/:id/reply', replyDoubt);
+router.get('/doubts/all', getAllDoubts);
 
 module.exports = router;

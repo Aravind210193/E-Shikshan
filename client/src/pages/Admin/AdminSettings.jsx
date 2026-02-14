@@ -17,6 +17,21 @@ const AdminSettings = () => {
     console.log("Settings saved:", settings);
   };
 
+  // Get admin data for personalization
+  const adminData = React.useMemo(() => {
+    try {
+      const data = sessionStorage.getItem('adminData');
+      return data ? JSON.parse(data) : null;
+    } catch (e) {
+      return null;
+    }
+  }, []);
+
+  const adminName = adminData?.name || 'Admin';
+  const adminEmail = adminData?.email || 'admin@eshikshan.com';
+  const displayRole = adminData?.role === 'admin' ? 'Super Admin' : 'Instructor';
+  const roleColor = adminData?.role === 'admin' ? 'bg-red-500/20 text-red-400' : 'bg-blue-500/20 text-blue-400';
+
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -65,14 +80,12 @@ const AdminSettings = () => {
             </div>
             <button
               onClick={() => setSettings({ ...settings, maintenanceMode: !settings.maintenanceMode })}
-              className={`relative w-14 h-7 rounded-full transition-colors ${
-                settings.maintenanceMode ? 'bg-blue-600' : 'bg-gray-600'
-              }`}
+              className={`relative w-14 h-7 rounded-full transition-colors ${settings.maintenanceMode ? 'bg-blue-600' : 'bg-gray-600'
+                }`}
             >
               <span
-                className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${
-                  settings.maintenanceMode ? 'translate-x-7' : 'translate-x-0'
-                }`}
+                className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.maintenanceMode ? 'translate-x-7' : 'translate-x-0'
+                  }`}
               />
             </button>
           </div>
@@ -97,14 +110,12 @@ const AdminSettings = () => {
             </div>
             <button
               onClick={() => setSettings({ ...settings, twoFactorAuth: !settings.twoFactorAuth })}
-              className={`relative w-14 h-7 rounded-full transition-colors ${
-                settings.twoFactorAuth ? 'bg-blue-600' : 'bg-gray-600'
-              }`}
+              className={`relative w-14 h-7 rounded-full transition-colors ${settings.twoFactorAuth ? 'bg-blue-600' : 'bg-gray-600'
+                }`}
             >
               <span
-                className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${
-                  settings.twoFactorAuth ? 'translate-x-7' : 'translate-x-0'
-                }`}
+                className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.twoFactorAuth ? 'translate-x-7' : 'translate-x-0'
+                  }`}
               />
             </button>
           </div>
@@ -136,14 +147,12 @@ const AdminSettings = () => {
             </div>
             <button
               onClick={() => setSettings({ ...settings, emailNotifications: !settings.emailNotifications })}
-              className={`relative w-14 h-7 rounded-full transition-colors ${
-                settings.emailNotifications ? 'bg-blue-600' : 'bg-gray-600'
-              }`}
+              className={`relative w-14 h-7 rounded-full transition-colors ${settings.emailNotifications ? 'bg-blue-600' : 'bg-gray-600'
+                }`}
             >
               <span
-                className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${
-                  settings.emailNotifications ? 'translate-x-7' : 'translate-x-0'
-                }`}
+                className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.emailNotifications ? 'translate-x-7' : 'translate-x-0'
+                  }`}
               />
             </button>
           </div>
@@ -155,14 +164,12 @@ const AdminSettings = () => {
             </div>
             <button
               onClick={() => setSettings({ ...settings, pushNotifications: !settings.pushNotifications })}
-              className={`relative w-14 h-7 rounded-full transition-colors ${
-                settings.pushNotifications ? 'bg-blue-600' : 'bg-gray-600'
-              }`}
+              className={`relative w-14 h-7 rounded-full transition-colors ${settings.pushNotifications ? 'bg-blue-600' : 'bg-gray-600'
+                }`}
             >
               <span
-                className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${
-                  settings.pushNotifications ? 'translate-x-7' : 'translate-x-0'
-                }`}
+                className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.pushNotifications ? 'translate-x-7' : 'translate-x-0'
+                  }`}
               />
             </button>
           </div>
@@ -181,20 +188,25 @@ const AdminSettings = () => {
           </div>
 
           <div>
-            <p className="text-sm text-gray-400 mb-2">Admin Email</p>
-            <p className="text-white font-medium">admin@eshikshan.com</p>
+            <p className="text-sm text-gray-400 mb-1">Full Name</p>
+            <p className="text-white font-medium">{adminName}</p>
+          </div>
+
+          <div>
+            <p className="text-sm text-gray-400 mb-1">Admin Email</p>
+            <p className="text-white font-medium">{adminEmail}</p>
           </div>
 
           <div>
             <p className="text-sm text-gray-400 mb-2">Role</p>
-            <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-xs font-medium">
-              Super Admin
+            <span className={`px-3 py-1 ${roleColor} rounded-full text-xs font-medium`}>
+              {displayRole}
             </span>
           </div>
 
           <div>
-            <p className="text-sm text-gray-400 mb-2">Last Login</p>
-            <p className="text-white font-medium">Today at 10:30 AM</p>
+            <p className="text-sm text-gray-400 mb-1">Last Login</p>
+            <p className="text-white font-medium">{adminData?.lastLogin ? new Date(adminData.lastLogin).toLocaleString() : 'Recently'}</p>
           </div>
         </motion.div>
       </div>

@@ -4,6 +4,9 @@ const Enrollment = require('../models/Enrollment');
 const Course = require('../models/Course');
 const AdminHackathon = require('../models/AdminHackathon');
 const AdminJob = require('../models/AdminJob');
+const AdminRoadmap = require('../models/AdminRoadmap');
+const AdminContent = require('../models/AdminContent');
+const Doubt = require('../models/Doubt');
 
 // @desc    Get all users with their enrollments
 // @route   GET /api/admin/users
@@ -11,7 +14,7 @@ const AdminJob = require('../models/AdminJob');
 const getAllUsers = async (req, res) => {
   try {
     const { search, role, page = 1, limit = 10 } = req.query;
-    
+
     // Build query
     const userQuery = {};
     if (search) {
@@ -55,7 +58,7 @@ const getAllUsers = async (req, res) => {
         const enrollments = await Enrollment.find({ userId: user._id })
           .populate('courseId', 'title price priceAmount thumbnail')
           .select('courseId paymentStatus status enrolledAt progress');
-        
+
         return {
           ...user.toObject(),
           accountType: 'user',
@@ -112,9 +115,9 @@ const getAllUsers = async (req, res) => {
     });
   } catch (error) {
     console.error('Get all users error:', error);
-    res.status(500).json({ 
-      message: 'Failed to fetch users', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to fetch users',
+      error: error.message
     });
   }
 };
@@ -154,9 +157,9 @@ const getUserById = async (req, res) => {
     return res.status(404).json({ message: 'User not found' });
   } catch (error) {
     console.error('Get user error:', error);
-    res.status(500).json({ 
-      message: 'Failed to fetch user', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to fetch user',
+      error: error.message
     });
   }
 };
@@ -195,9 +198,9 @@ const updateUserRole = async (req, res) => {
     });
   } catch (error) {
     console.error('Update user role error:', error);
-    res.status(500).json({ 
-      message: 'Failed to update user role', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to update user role',
+      error: error.message
     });
   }
 };
@@ -210,8 +213,8 @@ const grantCourseAccess = async (req, res) => {
     const { userId, courseId, userDetails } = req.body;
 
     if (!userId || !courseId) {
-      return res.status(400).json({ 
-        message: 'User ID and Course ID are required' 
+      return res.status(400).json({
+        message: 'User ID and Course ID are required'
       });
     }
 
@@ -229,7 +232,7 @@ const grantCourseAccess = async (req, res) => {
 
     // Check if enrollment already exists
     let enrollment = await Enrollment.findOne({ userId, courseId });
-    
+
     if (enrollment) {
       // Update existing enrollment
       enrollment.paymentStatus = 'completed';
@@ -237,9 +240,9 @@ const grantCourseAccess = async (req, res) => {
       enrollment.paymentMethod = 'admin_granted';
       enrollment.amountPaid = 0;
       enrollment.paymentDate = new Date();
-      
+
       await enrollment.save();
-      
+
       return res.json({
         message: 'Course access updated successfully',
         enrollment
@@ -275,9 +278,9 @@ const grantCourseAccess = async (req, res) => {
     });
   } catch (error) {
     console.error('Grant access error:', error);
-    res.status(500).json({ 
-      message: 'Failed to grant course access', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to grant course access',
+      error: error.message
     });
   }
 };
@@ -304,9 +307,9 @@ const revokeCourseAccess = async (req, res) => {
     });
   } catch (error) {
     console.error('Revoke access error:', error);
-    res.status(500).json({ 
-      message: 'Failed to revoke course access', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to revoke course access',
+      error: error.message
     });
   }
 };
@@ -333,9 +336,9 @@ const restoreCourseAccess = async (req, res) => {
     });
   } catch (error) {
     console.error('Restore access error:', error);
-    res.status(500).json({ 
-      message: 'Failed to restore course access', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to restore course access',
+      error: error.message
     });
   }
 };
@@ -366,9 +369,9 @@ const deleteEnrollment = async (req, res) => {
     });
   } catch (error) {
     console.error('Delete enrollment error:', error);
-    res.status(500).json({ 
-      message: 'Failed to delete enrollment', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to delete enrollment',
+      error: error.message
     });
   }
 };
@@ -378,48 +381,110 @@ const deleteEnrollment = async (req, res) => {
 // @access  Private/Admin
 const getDashboardStats = async (req, res) => {
   try {
-    const totalUsers = await User.countDocuments();
-    const totalCourses = await Course.countDocuments();
-    const totalEnrollments = await Enrollment.countDocuments();
-    const activeEnrollments = await Enrollment.countDocuments({ status: 'active' });
-    const suspendedEnrollments = await Enrollment.countDocuments({ status: 'suspended' });
-    const totalHackathons = await AdminHackathon.countDocuments();
-    const activeHackathons = await AdminHackathon.countDocuments({ status: 'active' });
-    const totalJobs = await AdminJob.countDocuments();
-    const activeJobs = await AdminJob.countDocuments({ status: 'Active' });
-    
-    // Course stats
-    const activeCourses = await Course.countDocuments({ status: 'active' });
-    const draftCourses = await Course.countDocuments({ status: 'draft' });
-    const archivedCourses = await Course.countDocuments({ status: 'archived' });
-    
-    // Top courses by enrollment
-    const topCourses = await Course.find({ status: 'active' })
+    const isManager = req.admin && req.admin.role === 'course_manager';
+    const courseQuery = isManager ? { instructorEmail: req.admin.email } : {};
+
+    // Filter total users to only those enrolled in instructor's courses if manager
+    let totalUsers;
+    if (isManager) {
+      const instructorCourses = await Course.find(courseQuery).select('_id');
+      const courseIds = instructorCourses.map(c => c._id);
+      const uniqueStudentIds = await Enrollment.distinct('userId', { courseId: { $in: courseIds } });
+      totalUsers = uniqueStudentIds.length;
+    } else {
+      totalUsers = await User.countDocuments();
+    }
+
+    const totalCourses = await Course.countDocuments(courseQuery);
+    const activeCourses = await Course.countDocuments({ ...courseQuery, status: 'active' });
+    const draftCourses = await Course.countDocuments({ ...courseQuery, status: 'draft' });
+    const archivedCourses = await Course.countDocuments({ ...courseQuery, status: 'archived' });
+
+    // Top courses by enrollment (manager filtered)
+    const topCourses = await Course.find({ ...courseQuery, status: 'active' })
       .select('title students thumbnail category rating')
       .sort('-students')
       .limit(5);
-    
+
+    // Filter enrollments if manager
+    let enrollmentQuery = {};
+    if (isManager) {
+      // Get all course IDs owned by this manager
+      const managerCourses = await Course.find(courseQuery).select('_id');
+      const courseIds = managerCourses.map(c => c._id);
+      enrollmentQuery = { courseId: { $in: courseIds } };
+    }
+
+    const totalEnrollments = await Enrollment.countDocuments(enrollmentQuery);
+    const activeEnrollments = await Enrollment.countDocuments({ ...enrollmentQuery, status: 'active' });
+    const suspendedEnrollments = await Enrollment.countDocuments({ ...enrollmentQuery, status: 'suspended' });
+
+    // Admin only stats (hide or zero for manager)
+    const totalHackathons = isManager ? 0 : await AdminHackathon.countDocuments();
+    const activeHackathons = isManager ? 0 : await AdminHackathon.countDocuments({ status: 'active' });
+    const totalJobs = isManager ? 0 : await AdminJob.countDocuments();
+    const activeJobs = isManager ? 0 : await AdminJob.countDocuments({ status: 'Active' });
+
     // Courses by category
     const coursesByCategory = await Course.aggregate([
-      { $match: { status: 'active' } },
+      { $match: { ...courseQuery, status: 'active' } },
       { $group: { _id: '$category', count: { $sum: 1 }, students: { $sum: '$students' } } },
       { $sort: { count: -1 } },
       { $limit: 10 }
     ]);
-    
-    // Recent enrollments
-    const recentEnrollments = await Enrollment.find()
+
+    // Recent enrollments (filtered for manager)
+    const recentEnrollments = await Enrollment.find(enrollmentQuery)
       .populate('userId', 'name email')
       .populate('courseId', 'title price')
       .sort('-enrolledAt')
       .limit(10);
 
-    // Revenue calculation (only completed payments)
+    // Revenue calculation (only completed payments, filtered for manager)
+    const revenueMatch = {
+      paymentStatus: 'completed',
+      paymentMethod: { $ne: 'admin_granted' },
+      ...enrollmentQuery
+    };
     const revenueData = await Enrollment.aggregate([
-      { $match: { paymentStatus: 'completed', paymentMethod: { $ne: 'admin_granted' } } },
+      { $match: revenueMatch },
       { $group: { _id: null, totalRevenue: { $sum: '$amountPaid' } } }
     ]);
     const totalRevenue = revenueData[0]?.totalRevenue || 0;
+
+    // Roadmaps for dashboard
+    const totalRoadmaps = await AdminRoadmap.countDocuments();
+    const activeRoadmaps = await AdminRoadmap.countDocuments({ status: 'active' });
+    const recentRoadmaps = await AdminRoadmap.find({ status: 'active' })
+      .select('title category thumbnail level steps')
+      .sort('-createdAt')
+      .limit(6);
+
+    // Content for dashboard
+    const totalContent = await AdminContent.countDocuments();
+    const publishedContent = await AdminContent.countDocuments({ status: 'published' });
+    const contentByType = await AdminContent.aggregate([
+      { $group: { _id: '$type', count: { $sum: 1 } } }
+    ]);
+    const recentContent = await AdminContent.find()
+      .select('title type branch subject status createdAt')
+      .sort('-createdAt')
+      .limit(10);
+
+    // Doubts for instructor if applicable
+    let doubtsStats = { total: 0, pending: 0, resolved: 0 };
+    let recentDoubts = [];
+    if (isManager) {
+      const doubtQuery = { instructorEmail: req.admin.email };
+      doubtsStats.total = await Doubt.countDocuments(doubtQuery);
+      doubtsStats.pending = await Doubt.countDocuments({ ...doubtQuery, status: 'pending' });
+      doubtsStats.resolved = await Doubt.countDocuments({ ...doubtQuery, status: 'resolved' });
+      recentDoubts = await Doubt.find({ ...doubtQuery, status: 'pending' })
+        .populate('student', 'name email')
+        .populate('course', 'title')
+        .sort('-createdAt')
+        .limit(10);
+    }
 
     res.json({
       stats: {
@@ -435,17 +500,26 @@ const getDashboardStats = async (req, res) => {
         totalHackathons,
         activeHackathons,
         totalJobs,
-        activeJobs
+        activeJobs,
+        totalRoadmaps,
+        activeRoadmaps,
+        totalContent,
+        publishedContent,
+        doubtsStats
       },
       topCourses,
       coursesByCategory,
-      recentEnrollments
+      recentEnrollments,
+      recentRoadmaps,
+      recentContent,
+      contentByType,
+      recentDoubts
     });
   } catch (error) {
     console.error('Get stats error:', error);
-    res.status(500).json({ 
-      message: 'Failed to fetch dashboard stats', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Failed to fetch dashboard stats',
+      error: error.message
     });
   }
 };

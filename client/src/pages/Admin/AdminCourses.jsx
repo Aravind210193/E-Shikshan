@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Plus, Edit, Trash2, Eye, BookOpen, Clock, Users, CheckCircle, XCircle, X, Save, Star } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { adminCourseAPI } from "../../services/adminApi";
 
 const AdminCourses = () => {
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [filterLevel, setFilterLevel] = useState("all");
@@ -38,8 +40,17 @@ const AdminCourses = () => {
     prerequisites: [],
     whatYoullLearn: [],
     certificate: false,
-    language: "English"
+    language: "English",
+    instructorEmail: "" // New field
   });
+
+  const [currentUser, setCurrentUser] = useState({ role: 'admin', email: '' });
+
+  useEffect(() => {
+    const role = sessionStorage.getItem('adminRole');
+    const data = JSON.parse(sessionStorage.getItem('adminData') || '{}');
+    setCurrentUser({ role, email: data.email });
+  }, []);
 
   const [courses, setCourses] = useState([]);
 
@@ -47,7 +58,7 @@ const AdminCourses = () => {
   useEffect(() => {
     fetchCourses();
     fetchStats();
-  }, [currentPage, searchQuery, filterCategory, filterLevel, filterStatus]);
+  }, [currentPage, searchQuery, filterCategory, filterLevel, filterStatus, location.pathname]);
 
   const fetchCourses = async () => {
     try {
@@ -60,7 +71,7 @@ const AdminCourses = () => {
         level: filterLevel !== 'all' ? filterLevel : undefined,
         status: filterStatus !== 'all' ? filterStatus : undefined
       };
-      
+
       const response = await adminCourseAPI.getAll(params);
       setCourses(response.data.courses || []);
       setTotalPages(response.data.totalPages || 1);
@@ -95,7 +106,8 @@ const AdminCourses = () => {
       duration: "",
       status: "active",
       description: "",
-      instructor: "",
+      instructor: currentUser.role === 'course_manager' ? JSON.parse(sessionStorage.getItem('adminData')).name : "",
+      instructorEmail: currentUser.role === 'course_manager' ? currentUser.email : "",
       instructorBio: "",
       thumbnail: "",
       price: "Free",
@@ -112,14 +124,15 @@ const AdminCourses = () => {
   const handleEdit = (course) => {
     setModalMode("edit");
     setSelectedCourse(course);
-    setFormData({ 
-      title: course.title, 
-      category: course.category, 
-      level: course.level, 
-      duration: course.duration, 
+    setFormData({
+      title: course.title,
+      category: course.category,
+      level: course.level,
+      duration: course.duration,
       status: course.status,
       description: course.description || "",
       instructor: course.instructor || "",
+      instructorEmail: course.instructorEmail || "", // Populate existing email
       instructorBio: course.instructorBio || "",
       thumbnail: course.thumbnail || "",
       price: course.price || "Free",
@@ -208,19 +221,17 @@ const AdminCourses = () => {
           >
             <div className="flex items-center justify-between mb-2">
               <p className="text-gray-400 text-sm">{stat.label}</p>
-              <stat.icon className={`w-5 h-5 ${
-                stat.color === 'blue' ? 'text-blue-400' :
+              <stat.icon className={`w-5 h-5 ${stat.color === 'blue' ? 'text-blue-400' :
                 stat.color === 'green' ? 'text-green-400' :
-                stat.color === 'yellow' ? 'text-yellow-400' :
-                'text-purple-400'
-              }`} />
+                  stat.color === 'yellow' ? 'text-yellow-400' :
+                    'text-purple-400'
+                }`} />
             </div>
-            <p className={`text-2xl font-bold ${
-              stat.color === 'blue' ? 'text-blue-400' :
+            <p className={`text-2xl font-bold ${stat.color === 'blue' ? 'text-blue-400' :
               stat.color === 'green' ? 'text-green-400' :
-              stat.color === 'yellow' ? 'text-yellow-400' :
-              'text-purple-400'
-            }`}>{stat.value}</p>
+                stat.color === 'yellow' ? 'text-yellow-400' :
+                  'text-purple-400'
+              }`}>{stat.value}</p>
           </motion.div>
         ))}
       </div>
@@ -228,15 +239,23 @@ const AdminCourses = () => {
       {/* Search and Filters */}
       <div className="bg-gray-800 rounded-2xl p-4 border border-gray-700">
         <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="flex-1 relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors w-5 h-5" />
             <input
               type="text"
-              placeholder="Search courses..."
+              placeholder="Search courses by title, instructor..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full pl-12 pr-10 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 outline-none transition-all"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-600 rounded-lg text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
           <select
             value={filterCategory}
@@ -298,8 +317,8 @@ const AdminCourses = () => {
             >
               <div className="h-48 bg-gradient-to-br from-blue-600 to-purple-600 relative overflow-hidden">
                 {course.thumbnail ? (
-                  <img 
-                    src={course.thumbnail} 
+                  <img
+                    src={course.thumbnail}
                     alt={course.title}
                     className="w-full h-full object-cover"
                   />
@@ -309,21 +328,19 @@ const AdminCourses = () => {
                   </div>
                 )}
                 <div className="absolute top-4 right-4 flex gap-2">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    course.status === 'active' 
-                      ? 'bg-green-500 text-white' 
-                      : course.status === 'draft'
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${course.status === 'active'
+                    ? 'bg-green-500 text-white'
+                    : course.status === 'draft'
                       ? 'bg-yellow-500 text-white'
                       : 'bg-gray-500 text-white'
-                  }`}>
+                    }`}>
                     {course.status}
                   </span>
                   {course.source && (
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      course.source === 'admin' 
-                        ? 'bg-purple-500 text-white' 
-                        : 'bg-blue-500 text-white'
-                    }`}>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${course.source === 'admin'
+                      ? 'bg-purple-500 text-white'
+                      : 'bg-blue-500 text-white'
+                      }`}>
                       {course.source === 'admin' ? 'Admin Course' : 'Normal Course'}
                     </span>
                   )}
@@ -426,11 +443,10 @@ const AdminCourses = () => {
               <button
                 key={pageNum}
                 onClick={() => setCurrentPage(pageNum)}
-                className={`px-4 py-2 rounded-lg transition-colors ${
-                  currentPage === pageNum
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-800 hover:bg-gray-700 text-white border border-gray-700'
-                }`}
+                className={`px-4 py-2 rounded-lg transition-colors ${currentPage === pageNum
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-800 hover:bg-gray-700 text-white border border-gray-700'
+                  }`}
               >
                 {pageNum}
               </button>
@@ -638,6 +654,18 @@ const AdminCourses = () => {
                         onChange={(e) => setFormData({ ...formData, instructor: e.target.value })}
                         className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none"
                         placeholder="Instructor name"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-sm text-gray-400 mb-2 block">Instructor Email {currentUser.role === 'course_manager' && '(Auto-filled)'}</label>
+                      <input
+                        type="email"
+                        value={formData.instructorEmail}
+                        onChange={(e) => setFormData({ ...formData, instructorEmail: e.target.value })}
+                        className={`w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none ${currentUser.role === 'course_manager' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        placeholder="Instructor email"
+                        readOnly={currentUser.role === 'course_manager'}
                       />
                     </div>
 

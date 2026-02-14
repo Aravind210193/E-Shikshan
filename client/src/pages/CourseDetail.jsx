@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  ArrowLeft, Star, Users, Clock, Award, BookOpen, CheckCircle, 
-  Video, FileText,X, Calendar, Globe, Lock, Play, ExternalLink 
+import {
+  ArrowLeft, Star, Users, Clock, Award, BookOpen, CheckCircle,
+  Video, FileText, X, Calendar, Globe, Lock, Play, ExternalLink
 } from 'lucide-react';
-import { coursesAPI, enrollmentAPI } from '../services/api';
+import { coursesAPI, enrollmentAPI, doubtsAPI } from '../services/api';
 import toast from 'react-hot-toast';
 
 const CourseDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [enrollmentStatus, setEnrollmentStatus] = useState(null);
@@ -22,14 +22,14 @@ const CourseDetail = () => {
   const [pendingEnrollmentId, setPendingEnrollmentId] = useState(null);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [autoOpenHandled, setAutoOpenHandled] = useState(false);
-  
+
   const [userDetails, setUserDetails] = useState({
     fullName: '',
     email: '',
     phone: '',
     address: ''
   });
-  
+
   const [activeCommentBox, setActiveCommentBox] = useState(null);
   const [commentText, setCommentText] = useState({});
   const [activeProjectCommentBox, setActiveProjectCommentBox] = useState(null);
@@ -131,8 +131,8 @@ const CourseDetail = () => {
         paymentStatus: course.price === 'Free' ? 'free' : 'pending'
       };
 
-  const response = await enrollmentAPI.enroll(enrollData);
-      
+      const response = await enrollmentAPI.enroll(enrollData);
+
       if (course.price === 'Free') {
         toast.success('Successfully enrolled in the course!');
         setEnrollmentStatus({
@@ -170,7 +170,7 @@ const CourseDetail = () => {
         toast.error('Failed to cancel enrollment');
       }
     }
-    
+
     setPendingEnrollmentId(null);
     setShowPaymentModal(false);
     checkEnrollment();
@@ -178,20 +178,20 @@ const CourseDetail = () => {
 
   const handlePaymentComplete = async () => {
     if (!pendingEnrollmentId) return;
-    
+
     setIsProcessingPayment(true);
     try {
       console.log('🔄 Confirming payment completion...');
-      
-  const response = await enrollmentAPI.processPayment(pendingEnrollmentId, {
-    paymentMethod: 'upi',
+
+      const response = await enrollmentAPI.processPayment(pendingEnrollmentId, {
+        paymentMethod: 'upi',
         amount: course.priceAmount,
         phoneNumber: userDetails.phone || ''
       });
 
       console.log('✅ Payment verified!');
       console.log('💳 Transaction ID:', response.data.transactionId);
-      
+
       toast.success('Payment verified! You now have access to the course.');
       setEnrollmentStatus({
         enrolled: true,
@@ -225,7 +225,7 @@ const CourseDetail = () => {
     return null;
   }
 
-  
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
@@ -239,7 +239,7 @@ const CourseDetail = () => {
         </button>
       </div>
 
-  <div className="bg-slate-800/50 border-b border-slate-700">
+      <div className="bg-slate-800/50 border-b border-slate-700">
         <div className="container mx-auto px-4 py-12">
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
@@ -250,8 +250,8 @@ const CourseDetail = () => {
               </div>
               <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
               <p className="text-xl text-slate-300 mb-6">{course.description}</p>
-              
-              
+
+
               <div className="flex flex-wrap gap-6 text-sm">
                 <div className="flex items-center gap-2">
                   <Star className="text-yellow-400" size={20} fill="currentColor" />
@@ -268,7 +268,7 @@ const CourseDetail = () => {
                 </div>
               </div>
 
-              
+
               <div className="mt-6 flex items-center gap-4">
                 <div className="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center font-bold">
                   {course.instructor.charAt(0)}
@@ -280,15 +280,15 @@ const CourseDetail = () => {
               </div>
             </div>
 
-            
+
             <div className="lg:col-span-1">
               <div className="bg-slate-800 rounded-xl p-6 border-2 border-indigo-500/30 sticky top-6">
-                <img 
-                  src={course.thumbnail} 
+                <img
+                  src={course.thumbnail}
                   alt={course.title}
                   className="w-full h-48 object-cover rounded-lg mb-4"
                 />
-                
+
                 <div className="mb-4">
                   {course.price === 'Free' ? (
                     <div className="text-3xl font-bold text-green-400">Free</div>
@@ -395,13 +395,12 @@ const CourseDetail = () => {
                 <div className="space-y-3">
                   {course.videoLectures.map((video, index) => {
                     const isLocked = !video.free && !hasAccess;
-                    
+
                     return (
-                      <div 
+                      <div
                         key={video._id || index}
-                        className={`bg-slate-700/50 rounded-lg p-4 flex items-center justify-between ${
-                          isLocked ? 'opacity-70' : 'hover:bg-slate-700 cursor-pointer'
-                        }`}
+                        className={`bg-slate-700/50 rounded-lg p-4 flex items-center justify-between ${isLocked ? 'opacity-70' : 'hover:bg-slate-700 cursor-pointer'
+                          }`}
                         onClick={() => !isLocked && video.url && window.open(video.url, '_blank')}
                       >
                         <div className="flex items-center gap-3">
@@ -448,9 +447,9 @@ const CourseDetail = () => {
                     const isLocked = course.price !== 'Free' && !hasAccess;
                     const showCommentBox = activeCommentBox === assignment._id;
                     const comment = commentText[assignment._id] || '';
-                    
+
                     return (
-                      <div 
+                      <div
                         key={assignment._id || index}
                         className={`bg-slate-700/50 rounded-lg p-4 ${isLocked ? 'opacity-70' : ''}`}
                       >
@@ -465,11 +464,10 @@ const CourseDetail = () => {
                               {assignment.title}
                             </h4>
                           </div>
-                          <span className={`text-xs font-semibold px-2 py-1 rounded ${
-                            assignment.difficulty === 'Easy' ? 'bg-green-900/50 text-green-400' :
+                          <span className={`text-xs font-semibold px-2 py-1 rounded ${assignment.difficulty === 'Easy' ? 'bg-green-900/50 text-green-400' :
                             assignment.difficulty === 'Medium' ? 'bg-yellow-900/50 text-yellow-400' :
-                            'bg-red-900/50 text-red-400'
-                          }`}>
+                              'bg-red-900/50 text-red-400'
+                            }`}>
                             {assignment.difficulty}
                           </span>
                         </div>
@@ -502,20 +500,14 @@ const CourseDetail = () => {
                           <div className="flex items-center gap-2">
                             {!isLocked ? (
                               <>
-                                <button 
-                                  onClick={() => {
-                                    if (assignment.askAdminUrl) {
-                                      window.open(assignment.askAdminUrl, '_blank');
-                                    } else {
-                                      setActiveCommentBox(showCommentBox ? null : assignment._id);
-                                    }
-                                  }}
+                                <button
+                                  onClick={() => setActiveCommentBox(showCommentBox ? null : assignment._id)}
                                   className="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-xs font-semibold transition-colors flex items-center gap-1"
                                 >
                                   <FileText size={14} />
                                   Ask Admin
                                 </button>
-                                <button 
+                                <button
                                   onClick={() => {
                                     if (assignment.submitUrl) {
                                       window.open(assignment.submitUrl, '_blank');
@@ -548,17 +540,33 @@ const CourseDetail = () => {
                               rows="3"
                             />
                             <div className="flex justify-end gap-2 mt-2">
-                              <button 
+                              <button
                                 onClick={() => setActiveCommentBox(null)}
                                 className="px-3 py-1 bg-slate-600 hover:bg-slate-700 rounded text-xs font-semibold transition-colors"
                               >
                                 Cancel
                               </button>
-                              <button 
-                                onClick={() => {
-                                  toast.success('Your question has been sent to admin!');
-                                  setCommentText({ ...commentText, [assignment._id]: '' });
-                                  setActiveCommentBox(null);
+                              <button
+                                onClick={async () => {
+                                  try {
+                                    const reply = commentText[assignment._id];
+                                    if (!reply) return toast.error('Please enter a question');
+
+                                    await doubtsAPI.create({
+                                      courseId: course._id,
+                                      itemType: 'assignment',
+                                      itemId: assignment._id,
+                                      itemTitle: assignment.title,
+                                      question: reply
+                                    });
+
+                                    toast.success('Your question has been sent to the instructor!');
+                                    setCommentText({ ...commentText, [assignment._id]: '' });
+                                    setActiveCommentBox(null);
+                                  } catch (error) {
+                                    console.error(error);
+                                    toast.error('Failed to send question');
+                                  }
                                 }}
                                 className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded text-xs font-semibold transition-colors"
                               >
@@ -586,9 +594,9 @@ const CourseDetail = () => {
                     const isLocked = course.price !== 'Free' && !hasAccess;
                     const isCommentOpen = activeProjectCommentBox === project._id;
                     const currentComment = projectCommentText[project._id] || '';
-                    
+
                     return (
-                      <div 
+                      <div
                         key={project._id || index}
                         className={`bg-slate-700/50 rounded-lg p-4 ${isLocked ? 'opacity-70' : ''}`}
                       >
@@ -612,7 +620,7 @@ const CourseDetail = () => {
                             <p className="text-sm text-slate-400 mb-2">
                               {project.description}
                             </p>
-                            
+
                             {!isLocked && project.instructions && (
                               <div className="mt-3 p-3 bg-slate-700/50 rounded-lg">
                                 <h5 className="text-sm font-semibold text-purple-300 mb-2">Project Instructions:</h5>
@@ -621,7 +629,7 @@ const CourseDetail = () => {
                                 </p>
                               </div>
                             )}
-                            
+
                             <div className="flex items-center justify-between mt-3">
                               <div className="flex items-center gap-3 text-xs text-slate-500">
                                 <span className="flex items-center gap-1">
@@ -638,18 +646,12 @@ const CourseDetail = () => {
                               {!isLocked && (
                                 <div className="flex gap-2">
                                   <button
-                                    onClick={() => {
-                                      if (project.askAdminUrl) {
-                                        window.open(project.askAdminUrl, '_blank');
-                                      } else {
-                                        setActiveProjectCommentBox(isCommentOpen ? null : project._id);
-                                      }
-                                    }}
+                                    onClick={() => setActiveProjectCommentBox(isCommentOpen ? null : project._id)}
                                     className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-xs font-semibold transition-colors"
                                   >
                                     Ask Admin
                                   </button>
-                                  <button 
+                                  <button
                                     onClick={() => {
                                       if (project.submitUrl) {
                                         window.open(project.submitUrl, '_blank');
@@ -679,7 +681,7 @@ const CourseDetail = () => {
                                   placeholder="Type your question about this project..."
                                 />
                                 <div className="flex justify-end gap-2 mt-2">
-                                  <button 
+                                  <button
                                     onClick={() => {
                                       setActiveProjectCommentBox(null);
                                       setProjectCommentText({
@@ -691,14 +693,30 @@ const CourseDetail = () => {
                                   >
                                     Cancel
                                   </button>
-                                  <button 
-                                    onClick={() => {
-                                      toast.success('Question sent to admin!');
-                                      setActiveProjectCommentBox(null);
-                                      setProjectCommentText({
-                                        ...projectCommentText,
-                                        [project._id]: ''
-                                      });
+                                  <button
+                                    onClick={async () => {
+                                      try {
+                                        const reply = projectCommentText[project._id];
+                                        if (!reply) return toast.error('Please enter a question');
+
+                                        await doubtsAPI.create({
+                                          courseId: course._id,
+                                          itemType: 'project',
+                                          itemId: project._id,
+                                          itemTitle: project.title,
+                                          question: reply
+                                        });
+
+                                        toast.success('Your question has been sent to the instructor!');
+                                        setActiveProjectCommentBox(null);
+                                        setProjectCommentText({
+                                          ...projectCommentText,
+                                          [project._id]: ''
+                                        });
+                                      } catch (error) {
+                                        console.error(error);
+                                        toast.error('Failed to send question');
+                                      }
                                     }}
                                     className="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-xs transition-colors"
                                   >
@@ -721,7 +739,7 @@ const CourseDetail = () => {
               <h2 className="text-2xl font-bold mb-4">Skills you'll gain</h2>
               <div className="flex flex-wrap gap-2">
                 {course.skills?.map((skill, index) => (
-                  <span 
+                  <span
                     key={index}
                     className="px-4 py-2 bg-indigo-500/20 text-indigo-300 rounded-full text-sm font-semibold"
                   >
@@ -848,7 +866,7 @@ const CourseDetail = () => {
                     type="text"
                     required
                     value={userDetails.fullName}
-                    onChange={(e) => setUserDetails({...userDetails, fullName: e.target.value})}
+                    onChange={(e) => setUserDetails({ ...userDetails, fullName: e.target.value })}
                     className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                     placeholder="Enter your full name"
                   />
@@ -862,7 +880,7 @@ const CourseDetail = () => {
                     type="email"
                     required
                     value={userDetails.email}
-                    onChange={(e) => setUserDetails({...userDetails, email: e.target.value})}
+                    onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
                     className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                     placeholder="your.email@example.com"
                   />
@@ -877,7 +895,7 @@ const CourseDetail = () => {
                   type="tel"
                   required
                   value={userDetails.phone}
-                  onChange={(e) => setUserDetails({...userDetails, phone: e.target.value})}
+                  onChange={(e) => setUserDetails({ ...userDetails, phone: e.target.value })}
                   className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                   placeholder="+91 1234567890"
                 />
@@ -890,7 +908,7 @@ const CourseDetail = () => {
                 <textarea
                   required
                   value={userDetails.address}
-                  onChange={(e) => setUserDetails({...userDetails, address: e.target.value})}
+                  onChange={(e) => setUserDetails({ ...userDetails, address: e.target.value })}
                   className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none"
                   placeholder="Enter your complete address"
                   rows="3"
@@ -1003,7 +1021,7 @@ const CourseDetail = () => {
               <div>
                 <h4 className="font-semibold text-yellow-300 mb-1">Enrollment Status: Pending</h4>
                 <p className="text-sm text-yellow-200/80">
-                  Your enrollment has been created and is waiting for payment verification. 
+                  Your enrollment has been created and is waiting for payment verification.
                   Complete the payment below to get instant access to the course.
                 </p>
               </div>
@@ -1015,7 +1033,7 @@ const CourseDetail = () => {
                 <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                   <span className="text-purple-400">💳</span> Pay via PhonePe
                 </h3>
-                
+
                 {/* QR Code Section */}
                 <div className="bg-white p-4 rounded-lg mb-4 shadow">
                   <div className="text-center">
@@ -1113,7 +1131,7 @@ const CourseDetail = () => {
                     <p className="text-sm text-slate-400">Click verify after payment</p>
                   </div>
                 </div>
-                
+
                 <div className="bg-slate-800/50 rounded-lg p-4 mb-4">
                   <div className="flex items-start gap-3">
                     <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={20} />
@@ -1136,11 +1154,10 @@ const CourseDetail = () => {
                   <button
                     onClick={handlePaymentComplete}
                     disabled={isProcessingPayment}
-                    className={`w-full font-semibold py-3 rounded-lg transition-all text-sm ${
-                      isProcessingPayment
-                        ? 'bg-gray-600 cursor-not-allowed text-gray-400'
-                        : 'bg-green-600 hover:bg-green-700 text-white'
-                    }`}
+                    className={`w-full font-semibold py-3 rounded-lg transition-all text-sm ${isProcessingPayment
+                      ? 'bg-gray-600 cursor-not-allowed text-gray-400'
+                      : 'bg-green-600 hover:bg-green-700 text-white'
+                      }`}
                   >
                     {isProcessingPayment ? (
                       <span className="flex items-center justify-center gap-2">
