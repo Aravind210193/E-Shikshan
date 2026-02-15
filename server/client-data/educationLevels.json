@@ -1,0 +1,330 @@
+[
+  {
+    "level": "10th",
+    "description": "10th grade education focuses on fundamental concepts across core subjects, preparing students for higher education choices.",
+    "branches": [
+      {
+        "title": "Mathematics",
+        "link": "/folders/mathematics-10"
+      },
+      {
+        "title": "Science",
+        "link": "/folders/science-10"
+      },
+      {
+        "title": "Social Studies",
+        "link": "/folders/social-10"
+      },
+      {
+        "title": "English",
+        "link": "/folders/english-10"
+      },
+      {
+        "title": "Hindi",
+        "link": "/folders/hindi-10"
+      },
+      {
+        "title": "Information Technology",
+        "link": "/folders/it-10"
+      },
+      {
+        "title": "Physical Education",
+        "link": "/folders/pe-10"
+      },
+      {
+        "title": "Board Exam Preparation",
+        "link": "/folders/board-10"
+      }
+    ]
+  },
+  {
+    "level": "Intermediate",
+    "description": "Intermediate education (11th & 12th) allows students to specialize in streams like Science, Commerce, or Arts before entering undergraduate programs.",
+    "branches": [
+      {
+        "title": "Physics",
+        "link": "/folders/physics-inter"
+      },
+      {
+        "title": "Chemistry",
+        "link": "/folders/chemistry-inter"
+      },
+      {
+        "title": "Mathematics",
+        "link": "/folders/mathematics-inter"
+      },
+      {
+        "title": "Biology",
+        "link": "/folders/biology-inter"
+      },
+      {
+        "title": "Commerce",
+        "link": "/folders/commerce-inter"
+      },
+      {
+        "title": "Economics",
+        "link": "/folders/economics-inter"
+      },
+      {
+        "title": "Computer Science",
+        "link": "/folders/cs-inter"
+      },
+      {
+        "title": "JEE Preparation",
+        "link": "/folders/jee-inter"
+      },
+      {
+        "title": "NEET Preparation",
+        "link": "/folders/neet-inter"
+      },
+      {
+        "title": "Arts",
+        "link": "/folders/arts-inter"
+      },
+      {
+        "title": "Humanities",
+        "link": "/folders/humanities-inter"
+      }
+    ]
+  },
+  {
+    "level": "UG",
+    "description": "Undergraduate programs provide specialized knowledge in various engineering and professional fields, typically spanning 3-4 years of study.",
+    "branches": [
+      {
+        "title": "Computer Science & Engineering",
+        "link": "/folders/computer-science--engineering"
+      },
+      {
+        "title": "Electrical Engineering",
+        "link": "/folders/electrical-engineering"
+      },
+      {
+        "title": "Mechanical Engineering",
+        "link": "/folders/mechanical-engineering"
+      },
+      {
+        "title": "Civil Engineering",
+        "link": "/folders/civil-engineering"
+      },
+      {
+        "title": "Electronics & Communication",
+        "link": "/folders/electronics--communication"
+      },
+      {
+        "title": "Information Technology",
+        "link": "/folders/information-technology"
+      }
+    ]
+  },
+  {
+    "level": "Medical",
+    "description": "Medical education encompasses comprehensive study of human health, diseases, and treatments. From MBBS to specialized medical fields, this pathway prepares healthcare professionals.",
+    "branches": [
+      {
+        "title": "MBBS - Anatomy",
+        "link": "/folders/mbbs-anatomy",
+        "description": "Study of human body structure and organization"
+      },
+      {
+        "title": "MBBS - Physiology",
+        "link": "/folders/mbbs-physiology",
+        "description": "Understanding body functions and mechanisms"
+      },
+      {
+        "title": "MBBS - Biochemistry",
+        "link": "/folders/mbbs-biochemistry",
+        "description": "Chemical processes within living organisms"
+      },
+      {
+        "title": "MBBS - Pathology",
+        "link": "/folders/mbbs-pathology",
+        "description": "Study of diseases and their causes"
+      },
+      {
+        "title": "MBBS - Pharmacology",
+        "link": "/folders/mbbs-pharmacology",
+        "description": "Drug actions and therapeutic applications"
+      },
+      {
+        "title": "MBBS - Microbiology",
+        "link": "/folders/mbbs-microbiology",
+        "description": "Study of microorganisms and infections"
+      },
+      {
+        "title": "MBBS - Forensic Medicine",
+        "link": "/folders/mbbs-forensic",
+        "description": "Medical jurisprudence and toxicology"
+      },
+      {
+        "title": "MBBS - Community Medicine",
+        "link": "/folders/mbbs-community",
+        "description": "Public health and preventive medicine"
+      },
+      {
+        "title": "General Medicine",
+        "link": "/folders/general-medicine",
+        "description": "Diagnosis and non-surgical treatment of diseases"
+      },
+      {
+        "title": "General Surgery",
+        "link": "/folders/general-surgery",
+        "description": "Surgical procedures and operative techniques"
+      },
+      {
+        "title": "Pediatrics",
+        "link": "/folders/pediatrics",
+        "description": "Medical care for infants, children, and adolescents"
+      },
+      {
+        "title": "Obstetrics & Gynecology",
+        "link": "/folders/obs-gyn",
+        "description": "Women's reproductive health and childbirth"
+      },
+      {
+        "title": "Orthopedics",
+        "link": "/folders/orthopedics",
+        "description": "Musculoskeletal system and bone disorders"
+      },
+      {
+        "title": "Ophthalmology",
+        "link": "/folders/ophthalmology",
+        "description": "Eye diseases and vision care"
+      },
+      {
+        "title": "ENT (Otolaryngology)",
+        "link": "/folders/ent",
+        "description": "Ear, nose, and throat disorders"
+      },
+      {
+        "title": "Dermatology",
+        "link": "/folders/dermatology",
+        "description": "Skin, hair, and nail conditions"
+      },
+      {
+        "title": "Psychiatry",
+        "link": "/folders/psychiatry",
+        "description": "Mental health and behavioral disorders"
+      },
+      {
+        "title": "Radiology",
+        "link": "/folders/radiology",
+        "description": "Medical imaging and diagnostics"
+      },
+      {
+        "title": "Anesthesiology",
+        "link": "/folders/anesthesiology",
+        "description": "Pain management and perioperative care"
+      },
+      {
+        "title": "Cardiology",
+        "link": "/folders/cardiology",
+        "description": "Heart and cardiovascular system"
+      },
+      {
+        "title": "Neurology",
+        "link": "/folders/neurology",
+        "description": "Nervous system and brain disorders"
+      },
+      {
+        "title": "Nephrology",
+        "link": "/folders/nephrology",
+        "description": "Kidney diseases and renal care"
+      },
+      {
+        "title": "Gastroenterology",
+        "link": "/folders/gastroenterology",
+        "description": "Digestive system and liver diseases"
+      },
+      {
+        "title": "Pulmonology",
+        "link": "/folders/pulmonology",
+        "description": "Respiratory system and lung diseases"
+      },
+      {
+        "title": "Endocrinology",
+        "link": "/folders/endocrinology",
+        "description": "Hormonal and metabolic disorders"
+      },
+      {
+        "title": "Emergency Medicine",
+        "link": "/folders/emergency-medicine",
+        "description": "Acute care and trauma management"
+      },
+      {
+        "title": "BDS (Dental Surgery)",
+        "link": "/folders/bds",
+        "description": "Oral health and dental care"
+      },
+      {
+        "title": "Nursing",
+        "link": "/folders/nursing",
+        "description": "Patient care and healthcare support"
+      },
+      {
+        "title": "Physiotherapy",
+        "link": "/folders/physiotherapy",
+        "description": "Physical rehabilitation and therapy"
+      },
+      {
+        "title": "Pharmacy",
+        "link": "/folders/pharmacy",
+        "description": "Pharmaceutical sciences and drug dispensing"
+      }
+    ]
+  },
+  {
+    "level": "PG",
+    "description": "Postgraduate studies offer advanced specialization and research opportunities for students who have completed their undergraduate education.",
+    "branches": [
+      {
+        "title": "Computer Science & Engineering",
+        "link": "/folders/pg-cse"
+      },
+      {
+        "title": "Electrical Engineering",
+        "link": "/folders/pg-ee"
+      },
+      {
+        "title": "Mechanical Engineering",
+        "link": "/folders/pg-me"
+      },
+      {
+        "title": "Civil Engineering",
+        "link": "/folders/pg-ce"
+      },
+      {
+        "title": "Electronics & Communication",
+        "link": "/folders/pg-ece"
+      },
+      {
+        "title": "Information Technology",
+        "link": "/folders/pg-it"
+      },
+      {
+        "title": "Data Science",
+        "link": "/folders/pg-ds"
+      },
+      {
+        "title": "Artificial Intelligence",
+        "link": "/folders/pg-ai"
+      },
+      {
+        "title": "MBA",
+        "link": "/folders/pg-mba"
+      },
+      {
+        "title": "Medicine & Specializations",
+        "link": "/folders/pg-med"
+      },
+      {
+        "title": "Law",
+        "link": "/folders/pg-law"
+      },
+      {
+        "title": "Ph.D. Programs",
+        "link": "/folders/pg-phd"
+      }
+    ]
+  }
+]

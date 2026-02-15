@@ -1,0 +1,384 @@
+{
+  "branches": {
+    "computer-science--engineering": {
+      "name": "Computer Science & Engineering",
+      "shortName": "CSE",
+      "totalSemesters": 8,
+      "color": "blue",
+      "description": "Computer Science and Engineering covers software development, algorithms, computer systems, and emerging technologies.",
+      "semesters": {
+        "1": {"name": "Semester 1", "subjects": [
+          {"name": "Mathematics I", "code": "MA101", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Differential Calculus", "topics": ["Limits", "Continuity", "Derivatives", "L'Hospital's Rule", "Maxima and Minima"], "hours": 12},
+            {"title": "Unit 2: Integral Calculus", "topics": ["Indefinite Integrals", "Definite Integrals", "Applications of Integration", "Area under curves"], "hours": 12},
+            {"title": "Unit 3: Matrices", "topics": ["Matrix Operations", "Determinants", "Inverse of Matrix", "System of Linear Equations"], "hours": 12},
+            {"title": "Unit 4: Vector Calculus", "topics": ["Vector Algebra", "Scalar and Vector Products", "Differentiation of Vectors"], "hours": 12},
+            {"title": "Unit 5: Differential Equations", "topics": ["First Order Differential Equations", "Linear Differential Equations", "Applications"], "hours": 12}
+          ]}, 
+          {"name": "Physics I", "code": "PH101", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Mechanics", "topics": ["Newton's Laws", "Work and Energy", "Momentum", "Rotational Motion"], "hours": 12},
+            {"title": "Unit 2: Properties of Matter", "topics": ["Elasticity", "Surface Tension", "Viscosity", "Fluid Mechanics"], "hours": 12},
+            {"title": "Unit 3: Heat and Thermodynamics", "topics": ["Kinetic Theory", "Laws of Thermodynamics", "Heat Engines"], "hours": 12},
+            {"title": "Unit 4: Waves and Oscillations", "topics": ["Simple Harmonic Motion", "Wave Motion", "Sound Waves"], "hours": 12},
+            {"title": "Unit 5: Modern Physics", "topics": ["Quantum Mechanics", "Atomic Structure", "Nuclear Physics"], "hours": 12}
+          ]}, 
+          {"name": "Programming in C", "code": "CS101", "credits": 4, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: Introduction to Programming", "topics": ["History of C", "Program Structure", "Compilation Process", "IDE Setup"], "hours": 10},
+            {"title": "Unit 2: Data Types and Operators", "topics": ["Basic Data Types", "Variables", "Constants", "Operators", "Type Conversion"], "hours": 12},
+            {"title": "Unit 3: Control Structures", "topics": ["Conditional Statements", "Loops", "Switch Case", "Break and Continue"], "hours": 14},
+            {"title": "Unit 4: Functions and Arrays", "topics": ["Function Definition", "Parameter Passing", "Arrays", "String Handling"], "hours": 16},
+            {"title": "Unit 5: Pointers and Dynamic Memory", "topics": ["Pointer Basics", "Pointer Arithmetic", "Dynamic Memory Allocation", "File Handling"], "hours": 8}
+          ]}, 
+          {"name": "Engineering Graphics", "code": "EG101", "credits": 2, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: Introduction to Engineering Drawing", "topics": ["Drawing Standards", "Lines and Lettering", "Geometric Constructions"], "hours": 8},
+            {"title": "Unit 2: Orthographic Projections", "topics": ["First Angle Projection", "Third Angle Projection", "Multi-view Drawings"], "hours": 10},
+            {"title": "Unit 3: Isometric Projections", "topics": ["Isometric Views", "Isometric Drawing", "Dimensioning"], "hours": 8},
+            {"title": "Unit 4: Computer Aided Design", "topics": ["CAD Software", "2D Drawing", "Basic 3D Modeling"], "hours": 4}
+          ]}, 
+          {"name": "English Communication", "code": "EN101", "credits": 3, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: Grammar and Usage", "topics": ["Parts of Speech", "Tenses", "Voice and Narration", "Error Correction"], "hours": 8},
+            {"title": "Unit 2: Vocabulary Building", "topics": ["Word Formation", "Synonyms and Antonyms", "Idioms and Phrases"], "hours": 6},
+            {"title": "Unit 3: Reading Comprehension", "topics": ["Reading Strategies", "Critical Analysis", "Summary Writing"], "hours": 8},
+            {"title": "Unit 4: Writing Skills", "topics": ["Paragraph Writing", "Essay Writing", "Letter Writing", "Report Writing"], "hours": 10},
+            {"title": "Unit 5: Speaking and Listening", "topics": ["Pronunciation", "Presentation Skills", "Group Discussion"], "hours": 8}
+          ]}
+        ]},
+        "2": {"name": "Semester 2", "subjects": [
+          {"name": "Mathematics II", "code": "MA102", "credits": 4, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Multivariable Calculus", "topics": ["Partial Derivatives", "Multiple Integrals", "Applications in Engineering"], "hours": 12},
+            {"title": "Unit 2: Series and Sequences", "topics": ["Infinite Series", "Power Series", "Fourier Series"], "hours": 12},
+            {"title": "Unit 3: Vector Analysis", "topics": ["Gradient", "Divergence", "Curl", "Line and Surface Integrals"], "hours": 12},
+            {"title": "Unit 4: Complex Analysis", "topics": ["Complex Numbers", "Complex Functions", "Contour Integration"], "hours": 12},
+            {"title": "Unit 5: Probability and Statistics", "topics": ["Probability Distributions", "Statistical Analysis", "Regression"], "hours": 12}
+          ]}, 
+          {"name": "Physics II", "code": "PH102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Electrostatics", "topics": ["Electric Field", "Electric Potential", "Capacitors", "Dielectrics"], "hours": 12},
+            {"title": "Unit 2: Current Electricity", "topics": ["Ohm's Law", "Kirchhoff's Laws", "Network Analysis", "AC Circuits"], "hours": 12},
+            {"title": "Unit 3: Magnetism", "topics": ["Magnetic Field", "Electromagnetic Induction", "Transformers"], "hours": 12},
+            {"title": "Unit 4: Optics", "topics": ["Geometrical Optics", "Wave Optics", "Interference", "Diffraction"], "hours": 12},
+            {"title": "Unit 5: Quantum Physics", "topics": ["Photoelectric Effect", "Compton Effect", "Wave-Particle Duality"], "hours": 12}
+          ]}, 
+          {"name": "Data Structures", "code": "CS102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Introduction to Data Structures", "topics": ["Abstract Data Types", "Algorithm Complexity", "Big O Notation"], "hours": 10},
+            {"title": "Unit 2: Linear Data Structures", "topics": ["Arrays", "Linked Lists", "Stacks", "Queues"], "hours": 14},
+            {"title": "Unit 3: Trees", "topics": ["Binary Trees", "Binary Search Trees", "AVL Trees", "Tree Traversals"], "hours": 16},
+            {"title": "Unit 4: Graphs", "topics": ["Graph Representation", "BFS and DFS", "Shortest Path Algorithms"], "hours": 12},
+            {"title": "Unit 5: Hashing and Sorting", "topics": ["Hash Tables", "Collision Resolution", "Sorting Algorithms"], "hours": 8}
+          ]}, 
+          {"name": "Digital Logic Design", "code": "CS103", "credits": 3, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Number Systems", "topics": ["Binary", "Octal", "Hexadecimal", "BCD", "Conversions"], "hours": 8},
+            {"title": "Unit 2: Boolean Algebra", "topics": ["Logic Gates", "Boolean Functions", "Karnaugh Maps"], "hours": 10},
+            {"title": "Unit 3: Combinational Circuits", "topics": ["Multiplexers", "Decoders", "Encoders", "Adders"], "hours": 10},
+            {"title": "Unit 4: Sequential Circuits", "topics": ["Flip-Flops", "Counters", "Registers", "State Machines"], "hours": 12}
+          ]}, 
+          {"name": "Environmental Science", "code": "EV101", "credits": 2, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: Environmental Basics", "topics": ["Ecosystem", "Biodiversity", "Environmental Components"], "hours": 6},
+            {"title": "Unit 2: Pollution", "topics": ["Air Pollution", "Water Pollution", "Soil Pollution", "Noise Pollution"], "hours": 8},
+            {"title": "Unit 3: Natural Resources", "topics": ["Water Resources", "Mineral Resources", "Energy Resources"], "hours": 6},
+            {"title": "Unit 4: Sustainable Development", "topics": ["Green Technology", "Climate Change", "Conservation"], "hours": 6}
+          ]}
+        ]},
+        "3": {"name": "Semester 3", "subjects": [
+          {"name": "Discrete Mathematics", "code": "MA201", "credits": 4, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Set Theory and Logic", "topics": ["Sets", "Relations", "Functions", "Propositional Logic"], "hours": 12},
+            {"title": "Unit 2: Combinatorics", "topics": ["Permutations", "Combinations", "Pigeonhole Principle"], "hours": 10},
+            {"title": "Unit 3: Graph Theory", "topics": ["Graph Basics", "Trees", "Planar Graphs", "Graph Coloring"], "hours": 14},
+            {"title": "Unit 4: Number Theory", "topics": ["Modular Arithmetic", "GCD", "Prime Numbers", "RSA Algorithm"], "hours": 12},
+            {"title": "Unit 5: Recurrence Relations", "topics": ["Linear Recurrences", "Generating Functions"], "hours": 12}
+          ]}, 
+          {"name": "Computer Organization", "code": "CS201", "credits": 4, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Computer System Overview", "topics": ["Von Neumann Architecture", "CPU Organization", "Memory Hierarchy"], "hours": 12},
+            {"title": "Unit 2: Instruction Set Architecture", "topics": ["RISC vs CISC", "Instruction Formats", "Addressing Modes"], "hours": 12},
+            {"title": "Unit 3: CPU Design", "topics": ["Datapath Design", "Control Unit", "Pipelining"], "hours": 16},
+            {"title": "Unit 4: Memory Systems", "topics": ["Cache Memory", "Virtual Memory", "Memory Management"], "hours": 12},
+            {"title": "Unit 5: I/O Organization", "topics": ["I/O Interfaces", "DMA", "Interrupt Handling"], "hours": 8}
+          ]}, 
+          {"name": "Object Oriented Programming", "code": "CS202", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: OOP Concepts", "topics": ["Classes", "Objects", "Encapsulation", "Abstraction"], "hours": 12},
+            {"title": "Unit 2: Inheritance", "topics": ["Single Inheritance", "Multiple Inheritance", "Method Overriding"], "hours": 12},
+            {"title": "Unit 3: Polymorphism", "topics": ["Method Overloading", "Runtime Polymorphism", "Virtual Functions"], "hours": 12},
+            {"title": "Unit 4: Advanced OOP", "topics": ["Exception Handling", "Templates", "STL"], "hours": 14},
+            {"title": "Unit 5: Design Patterns", "topics": ["Singleton", "Factory", "Observer", "Strategy Patterns"], "hours": 10}
+          ]}, 
+          {"name": "Database Management Systems", "code": "CS203", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Database Fundamentals", "topics": ["Database Models", "Entity-Relationship Model", "Normalization"], "hours": 12},
+            {"title": "Unit 2: SQL", "topics": ["DDL", "DML", "Joins", "Subqueries", "Views"], "hours": 14},
+            {"title": "Unit 3: Transaction Management", "topics": ["ACID Properties", "Concurrency Control", "Recovery"], "hours": 12},
+            {"title": "Unit 4: Database Design", "topics": ["Schema Design", "Indexing", "Query Optimization"], "hours": 12},
+            {"title": "Unit 5: Advanced Topics", "topics": ["NoSQL", "Distributed Databases", "Data Warehousing"], "hours": 10}
+          ]}, 
+          {"name": "Operating Systems", "code": "CS204", "credits": 4, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: OS Introduction", "topics": ["OS Functions", "System Calls", "OS Structure"], "hours": 10},
+            {"title": "Unit 2: Process Management", "topics": ["Process Scheduling", "Inter-process Communication", "Threads"], "hours": 14},
+            {"title": "Unit 3: Memory Management", "topics": ["Memory Allocation", "Virtual Memory", "Paging"], "hours": 12},
+            {"title": "Unit 4: File Systems", "topics": ["File Operations", "Directory Structure", "File Allocation"], "hours": 12},
+            {"title": "Unit 5: Synchronization", "topics": ["Deadlocks", "Semaphores", "Monitors"], "hours": 12}
+          ]}
+        ]},
+        "4": {"name": "Semester 4", "subjects": [
+          {"name": "Algorithms & Analysis", "code": "CS301", "credits": 4, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Algorithm Analysis", "topics": ["Time Complexity", "Space Complexity", "Asymptotic Notation"], "hours": 10},
+            {"title": "Unit 2: Divide and Conquer", "topics": ["Merge Sort", "Quick Sort", "Binary Search", "Matrix Multiplication"], "hours": 12},
+            {"title": "Unit 3: Dynamic Programming", "topics": ["Optimal Substructure", "Memoization", "Classic DP Problems"], "hours": 14},
+            {"title": "Unit 4: Greedy Algorithms", "topics": ["Activity Selection", "Huffman Coding", "Minimum Spanning Tree"], "hours": 12},
+            {"title": "Unit 5: Graph Algorithms", "topics": ["Shortest Path", "Network Flow", "Graph Traversal"], "hours": 12}
+          ]}, 
+          {"name": "Computer Networks", "code": "CS302", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Network Basics", "topics": ["OSI Model", "TCP/IP", "Network Topologies"], "hours": 12},
+            {"title": "Unit 2: Physical Layer", "topics": ["Transmission Media", "Encoding", "Multiplexing"], "hours": 10},
+            {"title": "Unit 3: Data Link Layer", "topics": ["Error Detection", "Flow Control", "MAC Protocols"], "hours": 12},
+            {"title": "Unit 4: Network Layer", "topics": ["IP Addressing", "Routing Algorithms", "ICMP"], "hours": 12},
+            {"title": "Unit 5: Transport Layer", "topics": ["TCP", "UDP", "Congestion Control"], "hours": 14}
+          ]}, 
+          {"name": "Software Engineering", "code": "CS303", "credits": 3, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Software Process", "topics": ["SDLC", "Waterfall Model", "Agile Methodology"], "hours": 8},
+            {"title": "Unit 2: Requirements Engineering", "topics": ["Requirements Gathering", "Analysis", "Specification"], "hours": 10},
+            {"title": "Unit 3: Design", "topics": ["System Design", "Architectural Patterns", "UML"], "hours": 10},
+            {"title": "Unit 4: Testing", "topics": ["Testing Strategies", "Unit Testing", "Integration Testing"], "hours": 10},
+            {"title": "Unit 5: Maintenance", "topics": ["Version Control", "Configuration Management", "Quality Assurance"], "hours": 7}
+          ]}, 
+          {"name": "Theory of Computation", "code": "CS304", "credits": 3, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Finite Automata", "topics": ["DFA", "NFA", "Regular Expressions"], "hours": 10},
+            {"title": "Unit 2: Context-Free Grammars", "topics": ["CFG", "Parse Trees", "Ambiguity"], "hours": 10},
+            {"title": "Unit 3: Pushdown Automata", "topics": ["PDA", "Context-Free Languages", "Pumping Lemma"], "hours": 10},
+            {"title": "Unit 4: Turing Machines", "topics": ["TM", "Church-Turing Thesis", "Decidability"], "hours": 10},
+            {"title": "Unit 5: Complexity Theory", "topics": ["P vs NP", "NP-Completeness", "Reduction"], "hours": 5}
+          ]}, 
+          {"name": "Web Technologies", "code": "CS305", "credits": 3, "type": "Elective", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: HTML & CSS", "topics": ["HTML5", "CSS3", "Responsive Design", "Bootstrap"], "hours": 10},
+            {"title": "Unit 2: JavaScript", "topics": ["DOM Manipulation", "Events", "AJAX", "ES6 Features"], "hours": 12},
+            {"title": "Unit 3: Frontend Frameworks", "topics": ["React", "Vue", "Angular", "Component Architecture"], "hours": 10},
+            {"title": "Unit 4: Backend Development", "topics": ["Node.js", "Express", "REST APIs", "Database Integration"], "hours": 10},
+            {"title": "Unit 5: Modern Web", "topics": ["Progressive Web Apps", "WebSockets", "Security"], "hours": 3}
+          ]}
+        ]},
+        "5": {"name": "Semester 5", "subjects": [
+          {"name": "Compiler Design", "code": "CS401", "credits": 4, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Introduction to Compilers", "topics": ["Compiler Structure", "Phases of Compilation", "Symbol Tables"], "hours": 10},
+            {"title": "Unit 2: Lexical Analysis", "topics": ["Regular Expressions", "Finite Automata", "Lexical Analyzer"], "hours": 12},
+            {"title": "Unit 3: Syntax Analysis", "topics": ["Parsing", "Top-down Parsing", "Bottom-up Parsing"], "hours": 14},
+            {"title": "Unit 4: Semantic Analysis", "topics": ["Type Checking", "Scope Resolution", "Intermediate Code"], "hours": 12},
+            {"title": "Unit 5: Code Generation", "topics": ["Target Code Generation", "Optimization", "Runtime Environment"], "hours": 12}
+          ]}, 
+          {"name": "Machine Learning", "code": "CS402", "credits": 4, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: ML Fundamentals", "topics": ["Supervised Learning", "Unsupervised Learning", "Model Evaluation"], "hours": 12},
+            {"title": "Unit 2: Regression", "topics": ["Linear Regression", "Polynomial Regression", "Regularization"], "hours": 12},
+            {"title": "Unit 3: Classification", "topics": ["Logistic Regression", "Decision Trees", "SVM", "Naive Bayes"], "hours": 14},
+            {"title": "Unit 4: Clustering", "topics": ["K-Means", "Hierarchical Clustering", "DBSCAN"], "hours": 10},
+            {"title": "Unit 5: Neural Networks", "topics": ["Perceptron", "Backpropagation", "Deep Learning Basics"], "hours": 12}
+          ]}, 
+          {"name": "Computer Graphics", "code": "CS403", "credits": 3, "type": "Elective", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Graphics Basics", "topics": ["Raster Graphics", "Vector Graphics", "Color Models"], "hours": 8},
+            {"title": "Unit 2: 2D Graphics", "topics": ["Line Drawing", "Circle Drawing", "Clipping", "Transformations"], "hours": 10},
+            {"title": "Unit 3: 3D Graphics", "topics": ["3D Transformations", "Projection", "Hidden Surface Removal"], "hours": 10},
+            {"title": "Unit 4: Rendering", "topics": ["Illumination Models", "Shading", "Ray Tracing"], "hours": 10},
+            {"title": "Unit 5: Animation", "topics": ["Keyframe Animation", "Morphing", "Motion Graphics"], "hours": 7}
+          ]}, 
+          {"name": "Cybersecurity", "code": "CS404", "credits": 3, "type": "Elective", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Security Fundamentals", "topics": ["CIA Triad", "Threat Models", "Risk Assessment"], "hours": 8},
+            {"title": "Unit 2: Cryptography", "topics": ["Symmetric Encryption", "Asymmetric Encryption", "Hash Functions"], "hours": 10},
+            {"title": "Unit 3: Network Security", "topics": ["Firewalls", "VPN", "Intrusion Detection", "SSL/TLS"], "hours": 10},
+            {"title": "Unit 4: Web Security", "topics": ["SQL Injection", "XSS", "CSRF", "Authentication"], "hours": 10},
+            {"title": "Unit 5: Security Practices", "topics": ["Penetration Testing", "Incident Response", "Compliance"], "hours": 7}
+          ]}, 
+          {"name": "Mobile App Development", "code": "CS405", "credits": 3, "type": "Elective", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Mobile Platforms", "topics": ["Android", "iOS", "Cross-platform Development"], "hours": 8},
+            {"title": "Unit 2: Android Development", "topics": ["Activities", "Fragments", "Layouts", "Intents"], "hours": 12},
+            {"title": "Unit 3: Data Management", "topics": ["SQLite", "SharedPreferences", "Content Providers"], "hours": 8},
+            {"title": "Unit 4: UI/UX Design", "topics": ["Material Design", "Responsive UI", "Navigation"], "hours": 10},
+            {"title": "Unit 5: Advanced Features", "topics": ["Sensors", "GPS", "Camera", "Push Notifications"], "hours": 7}
+          ]}
+        ]},
+        "6": {"name": "Semester 6", "subjects": [
+          {"name": "Distributed Systems", "code": "CS501", "credits": 4, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Distributed System Basics", "topics": ["System Models", "Distributed Algorithms", "Communication"], "hours": 12},
+            {"title": "Unit 2: Synchronization", "topics": ["Clock Synchronization", "Logical Clocks", "Consensus"], "hours": 12},
+            {"title": "Unit 3: Fault Tolerance", "topics": ["Failure Models", "Replication", "Recovery"], "hours": 12},
+            {"title": "Unit 4: Distributed File Systems", "topics": ["NFS", "GFS", "Distributed Storage"], "hours": 12},
+            {"title": "Unit 5: Distributed Databases", "topics": ["Distributed Transactions", "Consistency Models", "CAP Theorem"], "hours": 12}
+          ]}, 
+          {"name": "Data Mining", "code": "CS502", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Data Mining Introduction", "topics": ["KDD Process", "Data Preprocessing", "Data Quality"], "hours": 12},
+            {"title": "Unit 2: Association Rules", "topics": ["Market Basket Analysis", "Apriori Algorithm", "FP-Growth"], "hours": 12},
+            {"title": "Unit 3: Classification", "topics": ["Decision Trees", "Random Forest", "SVM for Classification"], "hours": 12},
+            {"title": "Unit 4: Clustering Analysis", "topics": ["K-Means", "Hierarchical Clustering", "Density-based Clustering"], "hours": 12},
+            {"title": "Unit 5: Advanced Topics", "topics": ["Text Mining", "Web Mining", "Social Network Analysis"], "hours": 12}
+          ]}, 
+          {"name": "Human Computer Interaction", "code": "CS503", "credits": 3, "type": "Elective", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: HCI Fundamentals", "topics": ["User Interface Design", "Usability Principles", "Design Process"], "hours": 9},
+            {"title": "Unit 2: Interaction Design", "topics": ["Interface Elements", "Navigation Design", "Information Architecture"], "hours": 9},
+            {"title": "Unit 3: User Research", "topics": ["User Studies", "Personas", "Task Analysis"], "hours": 9},
+            {"title": "Unit 4: Prototyping", "topics": ["Wireframing", "Mockups", "Interactive Prototypes"], "hours": 9},
+            {"title": "Unit 5: Evaluation", "topics": ["Usability Testing", "Heuristic Evaluation", "Accessibility"], "hours": 9}
+          ]}, 
+          {"name": "Internet of Things", "code": "CS504", "credits": 3, "type": "Elective", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: IoT Fundamentals", "topics": ["IoT Architecture", "Sensors", "Actuators"], "hours": 9},
+            {"title": "Unit 2: Communication Protocols", "topics": ["WiFi", "Bluetooth", "LoRa", "MQTT"], "hours": 9},
+            {"title": "Unit 3: Embedded Systems", "topics": ["Arduino", "Raspberry Pi", "Microcontrollers"], "hours": 9},
+            {"title": "Unit 4: Data Analytics", "topics": ["IoT Data Processing", "Edge Computing", "Cloud Integration"], "hours": 9},
+            {"title": "Unit 5: Applications", "topics": ["Smart Home", "Industrial IoT", "Healthcare IoT"], "hours": 9}
+          ]}, 
+          {"name": "Blockchain Technology", "code": "CS505", "credits": 3, "type": "Elective", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Blockchain Basics", "topics": ["Distributed Ledger", "Consensus Mechanisms", "Cryptographic Hashing"], "hours": 9},
+            {"title": "Unit 2: Bitcoin", "topics": ["Bitcoin Protocol", "Proof of Work", "Mining"], "hours": 9},
+            {"title": "Unit 3: Ethereum", "topics": ["Smart Contracts", "Ethereum Virtual Machine", "DApps"], "hours": 9},
+            {"title": "Unit 4: Development", "topics": ["Solidity Programming", "Web3", "Deployment"], "hours": 9},
+            {"title": "Unit 5: Applications", "topics": ["DeFi", "NFTs", "Supply Chain", "Healthcare"], "hours": 9}
+          ]}
+        ]},
+        "7": {"name": "Semester 7", "subjects": [
+          {"name": "Project Management", "code": "CS601", "credits": 3, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: Project Basics", "topics": ["Project Life Cycle", "Project Scope", "Stakeholder Management"], "hours": 9},
+            {"title": "Unit 2: Planning", "topics": ["Work Breakdown Structure", "Scheduling", "Resource Allocation"], "hours": 9},
+            {"title": "Unit 3: Execution", "topics": ["Team Management", "Communication", "Quality Control"], "hours": 9},
+            {"title": "Unit 4: Monitoring", "topics": ["Progress Tracking", "Risk Management", "Change Control"], "hours": 9},
+            {"title": "Unit 5: Tools", "topics": ["MS Project", "Gantt Charts", "Agile Project Management"], "hours": 9}
+          ]}, 
+          {"name": "Advanced Algorithms", "code": "CS602", "credits": 4, "type": "Elective", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Advanced Data Structures", "topics": ["B-Trees", "Fibonacci Heaps", "Disjoint Sets"], "hours": 12},
+            {"title": "Unit 2: Network Flow", "topics": ["Max Flow", "Min Cut", "Bipartite Matching"], "hours": 12},
+            {"title": "Unit 3: Linear Programming", "topics": ["Simplex Method", "Duality", "Integer Programming"], "hours": 12},
+            {"title": "Unit 4: Approximation Algorithms", "topics": ["Approximation Ratio", "Greedy Approximation", "PTAS"], "hours": 12},
+            {"title": "Unit 5: Randomized Algorithms", "topics": ["Monte Carlo", "Las Vegas", "Probabilistic Analysis"], "hours": 12}
+          ]}, 
+          {"name": "Cloud Computing", "code": "CS603", "credits": 3, "type": "Elective", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Cloud Fundamentals", "topics": ["Cloud Models", "Service Models", "Deployment Models"], "hours": 9},
+            {"title": "Unit 2: Virtualization", "topics": ["Virtual Machines", "Containers", "Hypervisors"], "hours": 9},
+            {"title": "Unit 3: Cloud Platforms", "topics": ["AWS", "Azure", "Google Cloud", "Cloud Services"], "hours": 9},
+            {"title": "Unit 4: Cloud Architecture", "topics": ["Microservices", "Serverless", "Auto-scaling"], "hours": 9},
+            {"title": "Unit 5: Cloud Security", "topics": ["Identity Management", "Data Protection", "Compliance"], "hours": 9}
+          ]}, 
+          {"name": "Artificial Intelligence", "code": "CS604", "credits": 4, "type": "Elective", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: AI Foundations", "topics": ["Search Algorithms", "Heuristics", "Game Theory"], "hours": 12},
+            {"title": "Unit 2: Knowledge Representation", "topics": ["Logic", "Ontologies", "Semantic Networks"], "hours": 12},
+            {"title": "Unit 3: Machine Learning", "topics": ["Supervised Learning", "Reinforcement Learning", "Neural Networks"], "hours": 12},
+            {"title": "Unit 4: Natural Language Processing", "topics": ["Text Processing", "Language Models", "Sentiment Analysis"], "hours": 12},
+            {"title": "Unit 5: Computer Vision", "topics": ["Image Processing", "Feature Detection", "Object Recognition"], "hours": 12}
+          ]}, 
+          {"name": "Major Project I", "code": "CS605", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Project Planning", "topics": ["Problem Definition", "Literature Survey", "Methodology"], "hours": 15},
+            {"title": "Unit 2: System Design", "topics": ["Architecture Design", "Technology Selection", "Prototyping"], "hours": 15},
+            {"title": "Unit 3: Implementation Phase 1", "topics": ["Core Module Development", "Testing", "Documentation"], "hours": 15},
+            {"title": "Unit 4: Progress Review", "topics": ["Code Review", "Testing Results", "Presentation"], "hours": 15}
+          ]}
+        ]},
+        "8": {"name": "Semester 8", "subjects": [
+          {"name": "Professional Ethics", "code": "CS701", "credits": 2, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: Ethics in Computing", "topics": ["Professional Codes", "Moral Reasoning", "Ethical Dilemmas"], "hours": 6},
+            {"title": "Unit 2: Privacy and Security", "topics": ["Data Privacy", "Cybersecurity Ethics", "Digital Rights"], "hours": 6},
+            {"title": "Unit 3: Social Impact", "topics": ["Technology and Society", "Digital Divide", "Automation Ethics"], "hours": 6},
+            {"title": "Unit 4: Legal Issues", "topics": ["Intellectual Property", "Software Licensing", "Compliance"], "hours": 6}
+          ]}, 
+          {"name": "Quantum Computing", "code": "CS702", "credits": 3, "type": "Elective", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Quantum Mechanics", "topics": ["Quantum States", "Superposition", "Entanglement"], "hours": 9},
+            {"title": "Unit 2: Quantum Gates", "topics": ["Quantum Circuits", "Universal Gates", "Quantum Algorithms"], "hours": 9},
+            {"title": "Unit 3: Quantum Algorithms", "topics": ["Shor's Algorithm", "Grover's Algorithm", "Quantum Search"], "hours": 9},
+            {"title": "Unit 4: Implementation", "topics": ["Quantum Hardware", "Error Correction", "Quantum Programming"], "hours": 9},
+            {"title": "Unit 5: Applications", "topics": ["Cryptography", "Optimization", "Machine Learning"], "hours": 9}
+          ]}, 
+          {"name": "DevOps & Automation", "code": "CS703", "credits": 3, "type": "Elective", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: DevOps Culture", "topics": ["DevOps Principles", "Collaboration", "Continuous Integration"], "hours": 9},
+            {"title": "Unit 2: Version Control", "topics": ["Git", "Branching Strategies", "Code Review"], "hours": 9},
+            {"title": "Unit 3: CI/CD Pipelines", "topics": ["Jenkins", "Build Automation", "Deployment Pipelines"], "hours": 9},
+            {"title": "Unit 4: Containerization", "topics": ["Docker", "Kubernetes", "Container Orchestration"], "hours": 9},
+            {"title": "Unit 5: Monitoring", "topics": ["System Monitoring", "Log Management", "Performance Metrics"], "hours": 9}
+          ]}, 
+          {"name": "Major Project II", "code": "CS704", "credits": 6, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Implementation Phase 2", "topics": ["Advanced Features", "Integration", "User Interface"], "hours": 22},
+            {"title": "Unit 2: Testing & Validation", "topics": ["System Testing", "User Acceptance", "Performance Testing"], "hours": 22},
+            {"title": "Unit 3: Documentation", "topics": ["Technical Documentation", "User Manual", "Deployment Guide"], "hours": 22},
+            {"title": "Unit 4: Final Presentation", "topics": ["Project Defense", "Demo", "Future Enhancements"], "hours": 24}
+          ]}, 
+          {"name": "Industrial Training", "code": "CS705", "credits": 2, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: Industry Exposure", "topics": ["Company Culture", "Work Environment", "Professional Skills"], "hours": 6},
+            {"title": "Unit 2: Technical Skills", "topics": ["Industry Tools", "Best Practices", "Real-world Problems"], "hours": 6},
+            {"title": "Unit 3: Project Work", "topics": ["Industry Project", "Team Collaboration", "Deliverables"], "hours": 6},
+            {"title": "Unit 4: Report Writing", "topics": ["Training Report", "Learning Outcomes", "Presentation"], "hours": 6}
+          ]}
+        ]}
+      }
+    },
+    "electronics--communication": {
+      "name": "Electronics & Communication",
+      "shortName": "ECE",
+      "totalSemesters": 8,
+      "color": "purple",
+      "description": "Electronics and Communication Engineering focuses on electronic devices, communication systems, and signal processing.",
+      "semesters": {
+        "1": {"name": "Semester 1", "subjects": [
+          {"name": "Mathematics I", "code": "MA101", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Differential Calculus", "topics": ["Limits", "Continuity", "Derivatives", "Applications"], "hours": 12},
+            {"title": "Unit 2: Integral Calculus", "topics": ["Integration", "Applications", "Area", "Volume"], "hours": 12},
+            {"title": "Unit 3: Matrices", "topics": ["Matrix Operations", "Determinants", "Linear Systems"], "hours": 12},
+            {"title": "Unit 4: Vector Analysis", "topics": ["Vector Operations", "Scalar Products", "Applications"], "hours": 12},
+            {"title": "Unit 5: Differential Equations", "topics": ["First Order", "Second Order", "Applications"], "hours": 12}
+          ]},
+          {"name": "Physics I", "code": "PH101", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Mechanics", "topics": ["Kinematics", "Dynamics", "Work-Energy", "Momentum"], "hours": 12},
+            {"title": "Unit 2: Properties of Matter", "topics": ["Elasticity", "Surface Tension", "Viscosity"], "hours": 12},
+            {"title": "Unit 3: Thermodynamics", "topics": ["Laws of Thermodynamics", "Heat Engines", "Entropy"], "hours": 12},
+            {"title": "Unit 4: Oscillations", "topics": ["Simple Harmonic Motion", "Damped Oscillations"], "hours": 12},
+            {"title": "Unit 5: Wave Motion", "topics": ["Wave Equation", "Sound Waves", "Doppler Effect"], "hours": 12}
+          ]},
+          {"name": "Basic Electronics", "code": "EC101", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Circuit Elements", "topics": ["Resistors", "Capacitors", "Inductors", "Sources"], "hours": 12},
+            {"title": "Unit 2: Circuit Laws", "topics": ["Ohm's Law", "KCL", "KVL", "Network Theorems"], "hours": 12},
+            {"title": "Unit 3: AC Circuits", "topics": ["Phasor Analysis", "Impedance", "Power"], "hours": 12},
+            {"title": "Unit 4: Semiconductor Devices", "topics": ["Diodes", "BJT", "FET", "Characteristics"], "hours": 12},
+            {"title": "Unit 5: Electronic Circuits", "topics": ["Amplifiers", "Rectifiers", "Filters"], "hours": 12}
+          ]},
+          {"name": "Engineering Graphics", "code": "EG101", "credits": 2, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: Drawing Fundamentals", "topics": ["Lines", "Lettering", "Geometric Constructions"], "hours": 6},
+            {"title": "Unit 2: Orthographic Projections", "topics": ["Multi-view Drawing", "Sectional Views"], "hours": 8},
+            {"title": "Unit 3: Isometric Drawing", "topics": ["Isometric Views", "Dimensioning"], "hours": 8},
+            {"title": "Unit 4: CAD Basics", "topics": ["AutoCAD", "2D Drawing", "3D Modeling"], "hours": 8}
+          ]},
+          {"name": "English Communication", "code": "EN101", "credits": 3, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: Grammar", "topics": ["Tenses", "Voice", "Speech", "Error Correction"], "hours": 9},
+            {"title": "Unit 2: Vocabulary", "topics": ["Word Formation", "Synonyms", "Antonyms"], "hours": 9},
+            {"title": "Unit 3: Reading Skills", "topics": ["Comprehension", "Critical Reading", "Speed Reading"], "hours": 9},
+            {"title": "Unit 4: Writing Skills", "topics": ["Paragraph Writing", "Essay Writing", "Report Writing"], "hours": 9},
+            {"title": "Unit 5: Speaking Skills", "topics": ["Pronunciation", "Presentation", "Group Discussion"], "hours": 9}
+          ]}
+        ]},
+        "2": {"name": "Semester 2", "subjects": [
+          {"name": "Mathematics II", "code": "MA102", "credits": 4, "type": "Core", "difficulty": "Hard", "units": [
+            {"title": "Unit 1: Complex Variables", "topics": ["Complex Numbers", "Functions", "Integration"], "hours": 12},
+            {"title": "Unit 2: Fourier Series", "topics": ["Periodic Functions", "Fourier Coefficients"], "hours": 12},
+            {"title": "Unit 3: Laplace Transform", "topics": ["Transform Properties", "Applications"], "hours": 12},
+            {"title": "Unit 4: Statistics", "topics": ["Probability", "Distributions", "Hypothesis Testing"], "hours": 12},
+            {"title": "Unit 5: Numerical Methods", "topics": ["Root Finding", "Integration", "Interpolation"], "hours": 12}
+          ]},
+          {"name": "Circuit Theory", "code": "EC102", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Network Elements", "topics": ["Passive Elements", "Active Elements", "Controlled Sources"], "hours": 12},
+            {"title": "Unit 2: Network Theorems", "topics": ["Superposition", "Thevenin", "Norton", "Maximum Power Transfer"], "hours": 12},
+            {"title": "Unit 3: AC Analysis", "topics": ["Sinusoidal Response", "Phasor Diagrams", "Power Analysis"], "hours": 12},
+            {"title": "Unit 4: Frequency Response", "topics": ["Bode Plots", "Resonance", "Filters"], "hours": 12},
+            {"title": "Unit 5: Two-Port Networks", "topics": ["Z-Parameters", "Y-Parameters", "ABCD Parameters"], "hours": 12}
+          ]},
+          {"name": "Electronic Devices", "code": "EC103", "credits": 4, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Semiconductor Physics", "topics": ["Crystal Structure", "Energy Bands", "Conductivity"], "hours": 12},
+            {"title": "Unit 2: PN Junction", "topics": ["Formation", "Characteristics", "Applications"], "hours": 12},
+            {"title": "Unit 3: Bipolar Transistors", "topics": ["BJT Structure", "Operating Modes", "Characteristics"], "hours": 12},
+            {"title": "Unit 4: Field Effect Transistors", "topics": ["JFET", "MOSFET", "Characteristics"], "hours": 12},
+            {"title": "Unit 5: Special Devices", "topics": ["Zener Diode", "LED", "Photodiode", "Thyristors"], "hours": 12}
+          ]},
+          {"name": "Digital Electronics", "code": "EC104", "credits": 3, "type": "Core", "difficulty": "Medium", "units": [
+            {"title": "Unit 1: Number Systems", "topics": ["Binary", "Octal", "Hexadecimal", "Conversions"], "hours": 9},
+            {"title": "Unit 2: Boolean Algebra", "topics": ["Logic Gates", "Boolean Laws", "Simplification"], "hours": 9},
+            {"title": "Unit 3: Combinational Circuits", "topics": ["Adders", "Multiplexers", "Decoders"], "hours": 9},
+            {"title": "Unit 4: Sequential Circuits", "topics": ["Flip-Flops", "Counters", "Shift Registers"], "hours": 9},
+            {"title": "Unit 5: Memory Devices", "topics": ["ROM", "RAM", "PLA", "FPGA"], "hours": 9}
+          ]},
+          {"name": "Programming in C", "code": "CS101", "credits": 3, "type": "Core", "difficulty": "Easy", "units": [
+            {"title": "Unit 1: C Basics", "topics": ["Syntax", "Data Types", "Variables", "Operators"], "hours": 9},
+            {"title": "Unit 2: Control Structures", "topics": ["Conditionals", "Loops", "Switch Statement"], "hours": 9},
+            {"title": "Unit 3: Functions", "topics": ["Function Definition", "Parameters", "Recursion"], "hours": 9},
+            {"title": "Unit 4: Arrays and Strings", "topics": ["Array Operations", "String Functions"], "hours": 9},
+            {"title": "Unit 5: Pointers and Files", "topics": ["Pointer Basics", "File Operations"], "hours": 9}
+          ]}
+        ]}
+      }
+    }
+  }
+}

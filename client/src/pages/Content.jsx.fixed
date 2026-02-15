@@ -1,0 +1,450 @@
+import React, { useState, useEffect } from 'react'
+import Contentcard from '../components/Contentcard'
+import educationLevelsData from '../data/educationLevels.json'
+import { motion } from 'framer-motion'
+import { Search, BookOpen, TrendingUp, Star, Graduation, BookOpen as Book, School, GraduationCap } from 'lucide-react'
+
+const Content = () => {
+  const [query, setQuery] = useState('');
+  const [selectedContent, setSelectedContent] = useState(null);
+  const [selectedLevel, setSelectedLevel] = useState('UG'); // Default to UG
+  const [filteredBranches, setFilteredBranches] = useState([]);
+  
+  // Get current education level data
+  const getCurrentLevelData = () => {
+    return educationLevelsData.find(level => level.level === selectedLevel) || { branches: [] };
+  };
+  
+  // Update filtered branches when level changes or when searching
+  useEffect(() => {
+    const currentLevelData = getCurrentLevelData();
+    const filtered = currentLevelData.branches.filter(branch => 
+      branch.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredBranches(filtered);
+  }, [query, selectedLevel]);
+  
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+  
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+  
+  // Helper function to get the appropriate icon for each education level
+  const getLevelIcon = (level) => {
+    switch(level) {
+      case '10th':
+        return <Book className="h-5 w-5" />;
+      case 'Intermediate':
+        return <School className="h-5 w-5" />;
+      case 'UG':
+        return <Graduation className="h-5 w-5" />;
+      case 'PG':
+        return <GraduationCap className="h-5 w-5" />;
+      default:
+        return <BookOpen className="h-5 w-5" />;
+    }
+  };
+
+  return (
+    <div className='min-h-screen bg-gradient-to-b from-gray-900 to-gray-800'>
+      {/* Hero Section */}
+      <motion.div 
+        className='relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-900 to-purple-900 rounded-b-3xl shadow-2xl'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className='max-w-7xl mx-auto'>
+          <motion.div 
+            className='text-center'
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            <h1 className='text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 tracking-tight'>
+              <span className='block'>Explore Academic</span>
+              <span className='block text-blue-200'>Branches & Courses</span>
+            </h1>
+            <p className='max-w-xl mx-auto text-xl text-blue-100 mb-10'>
+              Choose from our comprehensive selection of academic disciplines and start your learning journey today.
+            </p>
+            
+            {/* Search Bar */}
+            <div className='max-w-md mx-auto relative'>
+              <div className='flex items-center bg-white bg-opacity-20 backdrop-blur-lg rounded-full p-1 pl-6 shadow-lg'>
+                <Search className='h-5 w-5 text-white mr-2' />
+                <input 
+                  type='text' 
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder='Search branches...'
+                  className='bg-transparent border-none outline-none text-white placeholder-blue-200 w-full py-2'
+                />
+                <motion.button 
+                  whileHover={{ scale: 1.05 }} 
+                  whileTap={{ scale: 0.95 }}
+                  className='bg-blue-500 hover:bg-blue-600 text-white rounded-full px-5 py-2'
+                >
+                  Search
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+        
+        {/* Decorative elements */}
+        <div className='hidden md:block absolute bottom-0 left-0 -mb-6 ml-6'>
+          <div className='flex space-x-2'>
+            <div className='w-4 h-4 bg-blue-400 rounded-full'></div>
+            <div className='w-4 h-4 bg-purple-400 rounded-full'></div>
+            <div className='w-4 h-4 bg-pink-400 rounded-full'></div>
+          </div>
+        </div>
+      </motion.div>
+      
+      {/* Education Level Selector */}
+      <div className="bg-gray-800 py-6 shadow-inner">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="flex flex-wrap justify-center gap-4"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            {educationLevelsData.map((eduLevel) => (
+              <motion.div
+                key={eduLevel.level}
+                onClick={() => setSelectedLevel(eduLevel.level)}
+                className={`px-8 py-4 rounded-xl cursor-pointer flex items-center gap-2 transition-all duration-300 ${
+                  selectedLevel === eduLevel.level 
+                    ? 'bg-blue-600 shadow-lg scale-105' 
+                    : 'bg-gray-700 hover:bg-gray-600'
+                }`}
+                whileHover={{ scale: selectedLevel === eduLevel.level ? 1.05 : 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className={`${selectedLevel === eduLevel.level ? 'text-white' : 'text-gray-300'}`}>
+                  {getLevelIcon(eduLevel.level)}
+                </div>
+                <span className={`text-lg font-medium ${selectedLevel === eduLevel.level ? 'text-white' : 'text-gray-300'}`}>
+                  {eduLevel.level}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+      
+      {/* Main Content */}
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
+        <motion.div 
+          className='flex flex-col md:flex-row justify-between items-center mb-10'
+          variants={fadeInUp}
+          initial="hidden"
+          animate="visible"
+        >
+          <div className='flex items-center mb-4 md:mb-0'>
+            <BookOpen className='w-8 h-8 text-blue-400 mr-2' />
+            <h2 className='text-3xl font-bold text-white'>{selectedLevel} Branches</h2>
+          </div>
+          
+          <div className='flex space-x-4'>
+            <button className='bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-full flex items-center'>
+              <TrendingUp className='w-4 h-4 mr-2' />
+              Popular
+            </button>
+            <button className='bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-full flex items-center'>
+              <Star className='w-4 h-4 mr-2' />
+              Recommended
+            </button>
+          </div>
+        </motion.div>
+        
+        {/* Education Level Description */}
+        <motion.div
+          className="mb-8 bg-gray-800 rounded-xl p-6 shadow-lg"
+          variants={fadeInUp}
+          initial="hidden"
+          animate="visible"
+        >
+          <h3 className="text-xl text-blue-300 mb-2">About {selectedLevel} Education</h3>
+          <p className="text-gray-300 mb-4">
+            {selectedLevel === '10th' && "10th grade education focuses on fundamental concepts across core subjects, preparing students for higher education choices."}
+            {selectedLevel === 'Intermediate' && "Intermediate education (11th & 12th) allows students to specialize in streams like Science, Commerce, or Arts before entering undergraduate programs."}
+            {selectedLevel === 'UG' && "Undergraduate programs provide specialized knowledge in various engineering and professional fields, typically spanning 3-4 years of study."}
+            {selectedLevel === 'PG' && "Postgraduate studies offer advanced specialization and research opportunities for students who have completed their undergraduate education."}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <span className="bg-blue-900 bg-opacity-50 text-blue-200 px-3 py-1 rounded-full text-sm">
+              {selectedLevel === '10th' && "Class X"}
+              {selectedLevel === 'Intermediate' && "Class XI & XII"}
+              {selectedLevel === 'UG' && "Bachelor's Degree"}
+              {selectedLevel === 'PG' && "Master's Degree"}
+            </span>
+            <span className="bg-purple-900 bg-opacity-50 text-purple-200 px-3 py-1 rounded-full text-sm">
+              {selectedLevel === '10th' && "Board Exams"}
+              {selectedLevel === 'Intermediate' && "College Preparation"}
+              {selectedLevel === 'UG' && "Professional Studies"}
+              {selectedLevel === 'PG' && "Advanced Specialization"}
+            </span>
+          </div>
+        </motion.div>
+        
+        {/* Branches Grid */}
+        <motion.div 
+          className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16'
+          variants={staggerContainer}
+          key={selectedLevel} // Force re-render of animation when level changes
+          initial="hidden"
+          animate="visible"
+        >
+          {  
+            filteredBranches.length > 0 ? (
+              filteredBranches.map((branch, index) => (
+                <motion.div 
+                  key={index}
+                  variants={fadeInUp}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                >
+                  <Contentcard 
+                    title={branch.title}
+                    link={branch.link} 
+                  />
+                </motion.div>
+              ))
+            ) : (
+              <motion.div 
+                variants={fadeInUp}
+                className='col-span-full text-center py-10'
+              >
+                <p className='text-gray-400 text-xl'>
+                  {query ? `No branches found matching "${query}"` : `No branches available for ${selectedLevel}`}
+                </p>
+              </motion.div>
+            )
+          }
+        </motion.div>
+        
+        {/* Featured Courses Section */}
+        <motion.div
+          className="mt-16 mb-12"
+          key={`featured-${selectedLevel}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+        >
+          <h2 className="text-3xl font-bold text-white mb-8 flex items-center">
+            <Star className="w-8 h-8 text-yellow-400 mr-2" />
+            Featured {selectedLevel} Courses
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {(() => {
+              // Dynamic course data based on selected education level
+              const coursesByLevel = {
+                '10th': [
+                  {
+                    title: "10th Mathematics Complete Course",
+                    description: "Master all mathematical concepts for your board exams",
+                    image: "/public/learn.png",
+                    students: "8,320",
+                    rating: 4.9
+                  },
+                  {
+                    title: "Science Made Easy for Class 10",
+                    description: "Simplified approach to Physics, Chemistry and Biology",
+                    image: "/public/images.png",
+                    students: "7,150",
+                    rating: 4.8
+                  },
+                  {
+                    title: "Social Studies Crash Course",
+                    description: "Quick review of History, Geography, Civics and Economics",
+                    image: "/public/digital.png",
+                    students: "5,640",
+                    rating: 4.7
+                  }
+                ],
+                'Intermediate': [
+                  {
+                    title: "JEE Mathematics Preparation",
+                    description: "Comprehensive preparation for competitive exams",
+                    image: "/public/images.png",
+                    students: "12,480",
+                    rating: 4.8
+                  },
+                  {
+                    title: "Intermediate Physics",
+                    description: "Advanced concepts with practical applications",
+                    image: "/public/digital.png",
+                    students: "9,730",
+                    rating: 4.7
+                  },
+                  {
+                    title: "Organic Chemistry Masterclass",
+                    description: "Detailed coverage of reactions and mechanisms",
+                    image: "/public/learn.png",
+                    students: "8,250",
+                    rating: 4.9
+                  }
+                ],
+                'UG': [
+                  {
+                    title: "Introduction to Computer Science",
+                    description: "Learn the fundamentals of programming and computer science concepts",
+                    image: "/public/images.png",
+                    students: "5,240",
+                    rating: 4.8
+                  },
+                  {
+                    title: "Advanced Electronics",
+                    description: "Master circuit design and electronic systems development",
+                    image: "/public/digital.png",
+                    students: "3,890",
+                    rating: 4.7
+                  },
+                  {
+                    title: "Structural Engineering Basics",
+                    description: "Understand the principles of designing strong and durable structures",
+                    image: "/public/learn.png",
+                    students: "2,150",
+                    rating: 4.6
+                  }
+                ],
+                'PG': [
+                  {
+                    title: "Advanced Machine Learning",
+                    description: "Cutting-edge algorithms and techniques in AI",
+                    image: "/public/digital.png",
+                    students: "4,120",
+                    rating: 4.9
+                  },
+                  {
+                    title: "Business Analytics for Managers",
+                    description: "Data-driven decision making for business professionals",
+                    image: "/public/images.png",
+                    students: "3,580",
+                    rating: 4.8
+                  },
+                  {
+                    title: "Research Methodology",
+                    description: "Essential techniques for academic and industry research",
+                    image: "/public/learn.png",
+                    students: "2,950",
+                    rating: 4.7
+                  }
+                ]
+              };
+              
+              return coursesByLevel[selectedLevel].map((course, index) => {
+                return (
+              <motion.div
+                key={index}
+                className="bg-gray-800 rounded-xl overflow-hidden shadow-lg"
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              >
+                <div className="h-40 bg-gray-700 relative overflow-hidden">
+                  <img 
+                    src={course.image} 
+                    alt={course.title} 
+                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs py-1 px-2 rounded-full">
+                    Popular
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2">{course.title}</h3>
+                  <p className="text-gray-400 mb-4">{course.description}</p>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center">
+                      <div className="flex items-center text-yellow-400 mr-2">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} fill={i < Math.floor(course.rating) ? "currentColor" : "none"} className="w-4 h-4" />
+                        ))}
+                      </div>
+                      <span className="text-white">{course.rating}</span>
+                    </div>
+                    <span className="text-gray-400 text-sm">{course.students} students</span>
+                  </div>
+                </div>
+                <div className="px-6 py-4 bg-gray-700 flex justify-between items-center">
+                  <span className="text-blue-300 font-medium">Free</span>
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+                    Enroll Now
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+        
+        {/* Trending Topics Section */}
+        <motion.div
+          className="mt-16 pb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+        >
+          <h2 className="text-3xl font-bold text-white mb-8 flex items-center">
+            <TrendingUp className="w-8 h-8 text-green-400 mr-2" />
+            Trending Topics
+          </h2>
+          
+          <div className="flex flex-wrap gap-4 justify-center">
+            {[
+              "Machine Learning", "Web Development", "Data Structures", 
+              "Artificial Intelligence", "Quantum Computing", "Robotics",
+              "Mobile App Development", "Cyber Security", "Cloud Computing", 
+              "IoT", "Blockchain", "Game Development"
+            ].map((topic, index) => (
+              <motion.div
+                key={index}
+                className="bg-gradient-to-r from-gray-800 to-gray-700 px-4 py-2 rounded-full cursor-pointer"
+                whileHover={{ scale: 1.05, backgroundColor: "#374151" }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="text-gray-200">{topic}</span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+        
+        {/* Stats Section */}
+        <motion.div
+          className="mt-10 py-12 bg-gray-800 rounded-2xl shadow-inner px-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.8 }}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            {[
+              { label: "Active Learners", value: "15,000+", color: "text-blue-400" },
+              { label: "Completed Courses", value: "24,000+", color: "text-green-400" },
+              { label: "Expert Instructors", value: "200+", color: "text-purple-400" },
+              { label: "Satisfaction Rate", value: "98%", color: "text-yellow-400" }
+            ].map((stat, index) => (
+              <div key={index} className="p-4">
+                <h3 className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.value}</h3>
+                <p className="text-gray-400 text-lg">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
+export default Content
+

@@ -1,0 +1,27 @@
+Removed 1 old course_manager accounts.
+
+=== Created 4 Instructor Accounts ===
+  Swarna Raja | o210900@rguktong.ac.in | password: instructor123
+  Aravind | o210193@rguktong.ac.in | password: instructor123
+  Sruthi | o210318@rguktong.ac.in | password: instructor123
+  Anusha | o210377@rgukong.ac.in | password: instructor123
+
+=== Total courses found: 15 ===
+
+  Course 1: "Artificial Intelligence Fundamentals" -> Swarna Raja (o210900@rguktong.ac.in)
+  Course 2: "Blockchain and Cryptocurrency" -> Aravind (o210193@rguktong.ac.in)
+  Course 3: "Cloud Computing with AWS" -> Sruthi (o210318@rguktong.ac.in)
+  Course 4: "Cybersecurity Essentials" -> Anusha (o210377@rgukong.ac.in)
+  Course 5: "Data Structures and Algorithms" -> Swarna Raja (o210900@rguktong.ac.in)
+  Course 6: "DevOps Engineering Bootcamp" -> Aravind (o210193@rguktong.ac.in)
+  Course 7: "Digital Marketing Masterclass" -> Sruthi (o210318@rguktong.ac.in)
+  Course 8: "Full Stack JavaScript Development" -> Anusha (o210377@rgukong.ac.in)
+  Course 9: "Game Development with Unity" -> Swarna Raja (o210900@rguktong.ac.in)
+  Course 10: "Introduction to Computer Science" -> Aravind (o210193@rguktong.ac.in)
+  Course 11: "Machine Learning Fundamentals" -> Sruthi (o210318@rguktong.ac.in)
+  Course 12: "Mobile App Development with Flutter" -> Anusha (o210377@rgukong.ac.in)
+  Course 13: "Python for Data Analytics" -> Swarna Raja (o210900@rguktong.ac.in)
+  Course 14: "UX/UI Design Principles" -> Aravind (o210193@rguktong.ac.in)
+  Course 15: "Web Development Bootcamp" -> Sruthi (o210318@rguktong.ac.in)
+
+=== Assignment complete! ===

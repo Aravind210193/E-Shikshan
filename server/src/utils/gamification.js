@@ -1,0 +1,475 @@
+const { UserGamification, Badge, ActivityLog } = require('../models/Gamification');
+
+// Points configuration
+const POINTS_CONFIG = {
+  VIDEO_WATCHED: 10,
+  VIDEO_COMPLETED: 15,
+  QUIZ_ATTEMPTED: 20,
+  QUIZ_PASSED: 30,
+  QUIZ_PERFECT: 50,
+  ASSIGNMENT_SUBMITTED: 25,
+  ASSIGNMENT_COMPLETED: 40,
+  COURSE_STARTED: 50,
+  COURSE_COMPLETED: 200,
+  DAILY_LOGIN: 5,
+  STREAK_BONUS: 10, // per day
+  BADGE_EARNED: 100,
+  CERTIFICATE_EARNED: 150,
+  FIRST_TRY_SUCCESS: 25
+};
+
+// Level calculation
+const calculateLevel = (totalPoints) => {
+  // Level formula: level = floor(sqrt(totalPoints / 100)) + 1
+  const level = Math.floor(Math.sqrt(totalPoints / 100)) + 1;
+  const currentLevelBase = Math.pow(level - 1, 2) * 100;
+  const nextLevelBase = Math.pow(level, 2) * 100;
+  const levelPoints = totalPoints - currentLevelBase;
+  const nextLevelPoints = nextLevelBase - currentLevelBase;
+  
+  return {
+    level,
+    levelPoints,
+    nextLevelPoints
+  };
+};
+
+// Award points to user
+const awardPoints = async (userId, pointsToAdd, activityType, metadata = {}) => {
+  try {
+    let gamification = await UserGamification.findOne({ userId });
+    
+    if (!gamification) {
+      gamification = new UserGamification({ userId });
+    }
+    
+    // Add points
+    const oldLevel = gamification.level;
+    gamification.totalPoints += pointsToAdd;
+    
+    // Update points breakdown
+    const breakdownKey = {
+      'video_watched': 'videosWatched',
+      'video_completed': 'videosWatched',
+      'quiz_completed': 'quizzesCompleted',
+      'quiz_passed': 'quizzesCompleted',
+      'quiz_perfect': 'quizzesCompleted',
+      'assignment_submitted': 'assignmentsSubmitted',
+      'assignment_completed': 'assignmentsSubmitted',
+      'course_completed': 'coursesCompleted',
+      'login': 'loginStreak',
+      'badge_earned': 'badges'
+    }[activityType];
+    
+    if (breakdownKey && gamification.pointsBreakdown[breakdownKey] !== undefined) {
+      gamification.pointsBreakdown[breakdownKey] += pointsToAdd;
+    }
+    
+    // Recalculate level
+    const levelData = calculateLevel(gamification.totalPoints);
+    gamification.level = levelData.level;
+    gamification.levelPoints = levelData.levelPoints;
+    gamification.nextLevelPoints = levelData.nextLevelPoints;
+    
+    // Check for level up
+    const leveledUp = gamification.level > oldLevel;
+    
+    // Update last activity
+    gamification.lastActivityDate = new Date();
+    gamification.updatedAt = new Date();
+    
+    await gamification.save();
+    
+    // Log activity
+    await ActivityLog.create({
+      userId,
+      activityType,
+      pointsEarned: pointsToAdd,
+      description: metadata.description || `Earned ${pointsToAdd} points`,
+      metadata
+    });
+    
+    // Check if level up occurred
+    if (leveledUp) {
+      await ActivityLog.create({
+        userId,
+        activityType: 'level_up',
+        pointsEarned: 0,
+        description: `Leveled up to Level ${gamification.level}!`,
+        metadata: { level: gamification.level }
+      });
+    }
+    
+    return { gamification, leveledUp, pointsAwarded: pointsToAdd };
+  } catch (error) {
+    console.error('Error awarding points:', error);
+    throw error;
+  }
+};
+
+// Update streak
+const updateStreak = async (userId) => {
+  try {
+    let gamification = await UserGamification.findOne({ userId });
+    
+    if (!gamification) {
+      gamification = new UserGamification({ userId });
+    }
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const lastActivity = gamification.lastActivityDate 
+      ? new Date(gamification.lastActivityDate) 
+      : null;
+    
+    if (lastActivity) {
+      lastActivity.setHours(0, 0, 0, 0);
+      const daysDiff = Math.floor((today - lastActivity) / (1000 * 60 * 60 * 24));
+      
+      if (daysDiff === 0) {
+        // Same day, no change
+        return { streakMaintained: true, currentStreak: gamification.currentStreak };
+      } else if (daysDiff === 1) {
+        // Consecutive day
+        gamification.currentStreak += 1;
+        gamification.streakHistory.push({ date: today, maintained: true });
+        
+        // Award streak bonus
+        const streakBonus = POINTS_CONFIG.STREAK_BONUS * gamification.currentStreak;
+        await awardPoints(userId, streakBonus, 'streak_maintained', {
+          description: `${gamification.currentStreak}-day streak maintained!`
+        });
+        
+        // Update longest streak
+        if (gamification.currentStreak > gamification.longestStreak) {
+          gamification.longestStreak = gamification.currentStreak;
+        }
+      } else {
+        // Streak broken
+        gamification.streakHistory.push({ date: today, maintained: false });
+        gamification.currentStreak = 1;
+      }
+    } else {
+      // First activity
+      gamification.currentStreak = 1;
+      gamification.longestStreak = 1;
+      gamification.streakHistory.push({ date: today, maintained: true });
+    }
+    
+    gamification.lastActivityDate = new Date();
+    await gamification.save();
+    
+    return { 
+      streakMaintained: true, 
+      currentStreak: gamification.currentStreak,
+      longestStreak: gamification.longestStreak
+    };
+  } catch (error) {
+    console.error('Error updating streak:', error);
+    throw error;
+  }
+};
+
+// Track video completion
+const trackVideoWatched = async (userId, videoData) => {
+  try {
+    const gamification = await UserGamification.findOne({ userId });
+    
+    if (gamification) {
+      gamification.achievements.videosWatched += 1;
+      gamification.achievements.totalWatchTime += videoData.duration || 0;
+      await gamification.save();
+    }
+    
+    const points = videoData.completed 
+      ? POINTS_CONFIG.VIDEO_COMPLETED 
+      : POINTS_CONFIG.VIDEO_WATCHED;
+    
+    await awardPoints(userId, points, 'video_watched', {
+      courseId: videoData.courseId,
+      moduleId: videoData.moduleId,
+      duration: videoData.duration,
+      description: `Watched video: ${videoData.title}`
+    });
+    
+    await updateStreak(userId);
+    await checkAndAwardBadges(userId);
+    
+    return { success: true, pointsEarned: points };
+  } catch (error) {
+    console.error('Error tracking video:', error);
+    throw error;
+  }
+};
+
+// Track quiz completion
+const trackQuizCompleted = async (userId, quizData) => {
+  try {
+    const gamification = await UserGamification.findOne({ userId });
+    const score = quizData.score || 0;
+    const passed = score >= (quizData.passingScore || 60);
+    const perfect = score === 100;
+    
+    if (gamification) {
+      gamification.achievements.quizzesCompleted += 1;
+      if (passed) gamification.achievements.quizzesPassed += 1;
+      if (perfect) gamification.achievements.perfectQuizzes += 1;
+      if (quizData.firstAttempt && passed) {
+        gamification.achievements.firstTrySuccess += 1;
+      }
+      
+      // Recalculate average score
+      const totalQuizzes = gamification.achievements.quizzesCompleted;
+      const oldAvg = gamification.achievements.averageQuizScore || 0;
+      gamification.achievements.averageQuizScore = 
+        ((oldAvg * (totalQuizzes - 1)) + score) / totalQuizzes;
+      
+      await gamification.save();
+    }
+    
+    let points = POINTS_CONFIG.QUIZ_ATTEMPTED;
+    if (perfect) {
+      points = POINTS_CONFIG.QUIZ_PERFECT;
+    } else if (passed) {
+      points = POINTS_CONFIG.QUIZ_PASSED;
+    }
+    
+    if (quizData.firstAttempt && passed) {
+      points += POINTS_CONFIG.FIRST_TRY_SUCCESS;
+    }
+    
+    await awardPoints(userId, points, perfect ? 'quiz_perfect' : (passed ? 'quiz_passed' : 'quiz_completed'), {
+      courseId: quizData.courseId,
+      quizId: quizData.quizId,
+      score: score,
+      description: `Completed quiz with ${score}% score`
+    });
+    
+    await updateStreak(userId);
+    await checkAndAwardBadges(userId);
+    
+    return { success: true, pointsEarned: points, passed, perfect };
+  } catch (error) {
+    console.error('Error tracking quiz:', error);
+    throw error;
+  }
+};
+
+// Track assignment submission
+const trackAssignmentSubmitted = async (userId, assignmentData) => {
+  try {
+    const gamification = await UserGamification.findOne({ userId });
+    
+    if (gamification) {
+      gamification.achievements.assignmentsSubmitted += 1;
+      if (assignmentData.onTime) {
+        gamification.achievements.assignmentsOnTime += 1;
+      }
+      await gamification.save();
+    }
+    
+    const points = assignmentData.completed 
+      ? POINTS_CONFIG.ASSIGNMENT_COMPLETED 
+      : POINTS_CONFIG.ASSIGNMENT_SUBMITTED;
+    
+    await awardPoints(userId, points, 'assignment_submitted', {
+      courseId: assignmentData.courseId,
+      description: `Submitted assignment: ${assignmentData.title}`
+    });
+    
+    await updateStreak(userId);
+    await checkAndAwardBadges(userId);
+    
+    return { success: true, pointsEarned: points };
+  } catch (error) {
+    console.error('Error tracking assignment:', error);
+    throw error;
+  }
+};
+
+// Track course progress
+const trackCourseProgress = async (userId, courseData) => {
+  try {
+    const gamification = await UserGamification.findOne({ userId });
+    
+    if (courseData.started && gamification) {
+      gamification.achievements.coursesStarted += 1;
+      await gamification.save();
+      
+      await awardPoints(userId, POINTS_CONFIG.COURSE_STARTED, 'course_started', {
+        courseId: courseData.courseId,
+        description: `Started course: ${courseData.title}`
+      });
+    }
+    
+    if (courseData.completed && gamification) {
+      gamification.achievements.coursesCompleted += 1;
+      await gamification.save();
+      
+      await awardPoints(userId, POINTS_CONFIG.COURSE_COMPLETED, 'course_completed', {
+        courseId: courseData.courseId,
+        description: `Completed course: ${courseData.title}`
+      });
+    }
+    
+    await updateStreak(userId);
+    await checkAndAwardBadges(userId);
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Error tracking course:', error);
+    throw error;
+  }
+};
+
+// Check and award badges
+const checkAndAwardBadges = async (userId) => {
+  try {
+    const gamification = await UserGamification.findOne({ userId }).populate('badges.badgeId');
+    if (!gamification) return;
+    
+    const allBadges = await Badge.find({ isActive: true });
+    const earnedBadgeIds = gamification.badges.map(b => b.badgeId?._id?.toString());
+    
+    for (const badge of allBadges) {
+      if (earnedBadgeIds.includes(badge._id.toString())) continue;
+      
+      let shouldAward = false;
+      
+      switch (badge.criteria.criteriaType) {
+        case 'points':
+          shouldAward = gamification.totalPoints >= badge.criteria.value;
+          break;
+        case 'streak':
+          shouldAward = gamification.currentStreak >= badge.criteria.value;
+          break;
+        case 'courses':
+          shouldAward = gamification.achievements.coursesCompleted >= badge.criteria.value;
+          break;
+        case 'quizzes':
+          shouldAward = gamification.achievements.quizzesCompleted >= badge.criteria.value;
+          break;
+        case 'videos':
+          shouldAward = gamification.achievements.videosWatched >= badge.criteria.value;
+          break;
+        case 'assignments':
+          shouldAward = gamification.achievements.assignmentsSubmitted >= badge.criteria.value;
+          break;
+      }
+      
+      if (shouldAward) {
+        gamification.badges.push({
+          badgeId: badge._id,
+          earnedAt: new Date()
+        });
+        
+        await awardPoints(userId, badge.points || POINTS_CONFIG.BADGE_EARNED, 'badge_earned', {
+          description: `Earned badge: ${badge.name}`
+        });
+        
+        await ActivityLog.create({
+          userId,
+          activityType: 'badge_earned',
+          pointsEarned: badge.points || POINTS_CONFIG.BADGE_EARNED,
+          description: `Earned badge: ${badge.name}`,
+          metadata: { badgeId: badge._id }
+        });
+      }
+    }
+    
+    await gamification.save();
+  } catch (error) {
+    console.error('Error checking badges:', error);
+  }
+};
+
+// Get user gamification data
+const getUserGamification = async (userId) => {
+  try {
+    let gamification = await UserGamification.findOne({ userId })
+      .populate('badges.badgeId');
+    
+    if (!gamification) {
+      gamification = new UserGamification({ userId });
+      await gamification.save();
+    }
+    
+    return gamification;
+  } catch (error) {
+    console.error('Error getting gamification data:', error);
+    throw error;
+  }
+};
+
+// Get leaderboard
+const getLeaderboard = async (filters = {}) => {
+  try {
+    const { limit = 100, category = 'overall' } = filters;
+    
+    const leaderboard = await UserGamification.find()
+      .populate('userId', 'name email profilePicture university department')
+      .sort({ totalPoints: -1 })
+      .limit(limit)
+      .lean();
+    
+    return leaderboard.map((entry, index) => ({
+      rank: index + 1,
+      userId: entry.userId,
+      totalPoints: entry.totalPoints,
+      level: entry.level,
+      badges: entry.badges.length,
+      currentStreak: entry.currentStreak
+    }));
+  } catch (error) {
+    console.error('Error getting leaderboard:', error);
+    throw error;
+  }
+};
+
+// Get user activity log
+const getUserActivity = async (userId, limit = 50) => {
+  try {
+    const activities = await ActivityLog.find({ userId })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean();
+    
+    return activities;
+  } catch (error) {
+    console.error('Error getting user activity:', error);
+    throw error;
+  }
+};
+
+// Daily login reward
+const trackDailyLogin = async (userId) => {
+  try {
+    await awardPoints(userId, POINTS_CONFIG.DAILY_LOGIN, 'login', {
+      description: 'Daily login reward'
+    });
+    
+    await updateStreak(userId);
+    
+    return { success: true, pointsEarned: POINTS_CONFIG.DAILY_LOGIN };
+  } catch (error) {
+    console.error('Error tracking daily login:', error);
+    throw error;
+  }
+};
+
+module.exports = {
+  POINTS_CONFIG,
+  calculateLevel,
+  awardPoints,
+  updateStreak,
+  trackVideoWatched,
+  trackQuizCompleted,
+  trackAssignmentSubmitted,
+  trackCourseProgress,
+  checkAndAwardBadges,
+  getUserGamification,
+  getLeaderboard,
+  getUserActivity,
+  trackDailyLogin
+};

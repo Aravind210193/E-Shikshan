@@ -1,0 +1,39 @@
+ADMIN ACCOUNTS (5):
+  admin | admin@eshikshan.com | System Administrator
+  course_manager | o210900@rguktong.ac.in | Swarna Raja
+  course_manager | o210193@rguktong.ac.in | Aravind
+  course_manager | o210318@rguktong.ac.in | Sruthi
+  course_manager | o210377@rgukong.ac.in | Anusha
+
+COURSE ASSIGNMENTS (15 courses):
+  1. Data Structures and Algorithms
+  2. Machine Learning Fundamentals
+  3. UX/UI Design Principles
+  4. DevOps Engineering Bootcamp
+  5. Game Development with Unity
+  6. Artificial Intelligence Fundamentals
+  7. Cloud Computing with AWS
+  8. Python for Data Analytics
+  9. Introduction to Computer Science
+  10. Web Development Bootcamp
+  11. Cybersecurity Essentials
+  12. Mobile App Development with Flutter
+  13. Digital Marketing Masterclass
+  14. Blockchain and Cryptocurrency
+  15. Full Stack JavaScript Development
+
+  1. INSTR=Swarna Raja EMAIL=o210900@rguktong.ac.in
+  2. INSTR=Sruthi EMAIL=o210318@rguktong.ac.in
+  3. INSTR=Aravind EMAIL=o210193@rguktong.ac.in
+  4. INSTR=Aravind EMAIL=o210193@rguktong.ac.in
+  5. INSTR=Swarna Raja EMAIL=o210900@rguktong.ac.in
+  6. INSTR=Swarna Raja EMAIL=o210900@rguktong.ac.in
+  7. INSTR=Sruthi EMAIL=o210318@rguktong.ac.in
+  8. INSTR=Swarna Raja EMAIL=o210900@rguktong.ac.in
+  9. INSTR=Aravind EMAIL=o210193@rguktong.ac.in
+  10. INSTR=Sruthi EMAIL=o210318@rguktong.ac.in
+  11. INSTR=Anusha EMAIL=o210377@rgukong.ac.in
+  12. INSTR=Anusha EMAIL=o210377@rgukong.ac.in
+  13. INSTR=Sruthi EMAIL=o210318@rguktong.ac.in
+  14. INSTR=Aravind EMAIL=o210193@rguktong.ac.in
+  15. INSTR=Anusha EMAIL=o210377@rgukong.ac.in

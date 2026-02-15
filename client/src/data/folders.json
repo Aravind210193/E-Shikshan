@@ -1,0 +1,28 @@
+{
+    "cs":{
+        "cla":[
+            {
+                "title":"Unit 1",
+                "link":"/public/pdfs/cs/cla/unit1.pdf"
+                
+            },
+            {
+                "title":"Unit 2",
+                "link":""
+            }
+        ],
+    "beee":[
+        {
+            "title":"Unit 1",
+            "link":"/pdfs/unit1"
+        }
+    ],
+    "physics":[
+        {
+        "title":"Module-A",
+        "link":"/pdfs/module-a"
+        }
+    ]
+}
+
+}

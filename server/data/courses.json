@@ -1,0 +1,793 @@
+[
+  {
+    "title": "Introduction to Computer Science",
+    "provider": "MIT",
+    "category": "Computer Science",
+    "level": "Beginner",
+    "duration": "12 weeks",
+    "rating": 4.8,
+    "students": 125000,
+    "price": "₹1",
+    "priceAmount": 1,
+    "thumbnail": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=250&fit=crop",
+    "description": "Learn the basics of computer science and programming",
+    "skills": ["Python", "Algorithms", "Problem Solving"],
+    "instructor": "Dr. John Smith",
+    "instructorBio": "Professor of Computer Science at MIT with 20+ years of experience",
+    "syllabus": [
+      { "week": 1, "title": "Introduction to Programming", "topics": ["Variables", "Data Types", "Control Flow"] },
+      { "week": 2, "title": "Functions and Modules", "topics": ["Function Basics", "Parameters", "Return Values"] },
+      { "week": 3, "title": "Data Structures", "topics": ["Lists", "Dictionaries", "Sets"] },
+      { "week": 4, "title": "Object-Oriented Programming", "topics": ["Classes", "Objects", "Inheritance"] }
+    ],
+    "prerequisites": ["Basic computer skills", "No prior programming experience required"],
+    "whatYoullLearn": [
+      "Core programming concepts and problem-solving techniques",
+      "Python programming language fundamentals",
+      "Algorithm design and analysis",
+      "Software development best practices"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Spanish", "French"],
+    "videoLectures": [
+      { "title": "Course Introduction", "duration": "10:30", "url": "", "free": true, "order": 1 },
+      { "title": "Setting Up Your Environment", "duration": "15:20", "url": "", "free": true, "order": 2 },
+      { "title": "Variables and Data Types", "duration": "22:45", "url": "", "free": true, "order": 3 },
+      { "title": "Control Flow Statements", "duration": "18:30", "url": "", "free": true, "order": 4 },
+      { "title": "Functions Deep Dive", "duration": "25:10", "url": "", "free": true, "order": 5 },
+      { "title": "Working with Lists", "duration": "20:15", "url": "", "free": true, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Hello World Program", "description": "Get familiar with your environment and basic syntax by printing text to the console.", "difficulty": "Easy", "points": 10, "instructions": "Write a program that prints Hello World", "deadline": "1 week" },
+      { "title": "Calculator Application", "description": "Practice functions and control flow by implementing a CLI calculator with basic operations.", "difficulty": "Medium", "points": 20, "instructions": "Build a simple CLI calculator", "deadline": "10 days" },
+      { "title": "Data Analysis Project", "description": "Work with real data to perform cleaning, aggregation, and simple visualization.", "difficulty": "Hard", "points": 30, "instructions": "Analyze a CSV dataset using Python", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "To-Do List App", "description": "Create a CRUD to-do app with local storage", "duration": "2 weeks", "instructions": "Implement add/edit/delete and filters", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Web Scraper", "description": "Scrape data and export to CSV", "duration": "1 week", "instructions": "Use requests and BeautifulSoup", "deadline": "1 week", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Visualization Dashboard", "description": "Interactive charts and insights", "duration": "2 weeks", "instructions": "Use any JS chart lib", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Machine Learning Fundamentals",
+    "provider": "Stanford",
+    "category": "Data Science",
+    "level": "Intermediate",
+    "duration": "8 weeks",
+    "rating": 4.9,
+    "students": 98000,
+    "price": "Paid",
+    "priceAmount": 3999,
+    "thumbnail": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=250&fit=crop",
+    "description": "Master the fundamentals of machine learning and AI",
+    "skills": ["Machine Learning", "Python", "TensorFlow"],
+    "instructor": "Prof. Andrew Ng",
+    "instructorBio": "Co-founder of Coursera, former head of Google Brain and Baidu AI",
+    "syllabus": [
+      { "week": 1, "title": "Introduction to ML", "topics": ["Supervised Learning", "Unsupervised Learning"] },
+      { "week": 2, "title": "Linear Regression", "topics": ["Cost Function", "Gradient Descent"] },
+      { "week": 3, "title": "Neural Networks", "topics": ["Deep Learning Basics", "Backpropagation"] },
+      { "week": 4, "title": "Model Evaluation", "topics": ["Accuracy Metrics", "Cross-Validation"] }
+    ],
+    "prerequisites": ["Basic Python", "Linear Algebra", "Statistics"],
+    "whatYoullLearn": [
+      "Machine learning algorithms and techniques",
+      "Neural networks and deep learning",
+      "Model training and evaluation",
+      "Real-world ML applications"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Chinese", "Spanish"],
+    "videoLectures": [
+      { "title": "Introduction to ML", "duration": "12:00", "url": "", "free": false, "order": 1 },
+      { "title": "Supervised Learning", "duration": "18:45", "url": "", "free": false, "order": 2 },
+      { "title": "Linear Regression Theory", "duration": "25:30", "url": "", "free": false, "order": 3 },
+      { "title": "Gradient Descent", "duration": "20:15", "url": "", "free": false, "order": 4 },
+      { "title": "Neural Networks Basics", "duration": "28:20", "url": "", "free": false, "order": 5 },
+      { "title": "Model Evaluation", "duration": "22:10", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Linear Regression Implementation", "description": "Code linear regression to understand gradient descent and cost functions.", "difficulty": "Medium", "points": 25, "instructions": "Implement linear regression from scratch", "deadline": "1 week" },
+      { "title": "Neural Network from Scratch", "description": "Build and train a simple neural network to internalize backpropagation.", "difficulty": "Hard", "points": 40, "instructions": "Build a multi-layer NN without frameworks", "deadline": "2 weeks" },
+      { "title": "Model Optimization Challenge", "description": "Experiment with learning rates and optimizers to improve validation metrics.", "difficulty": "Hard", "points": 35, "instructions": "Tune models with different optimizers", "deadline": "10 days" }
+    ],
+    "projectsDetails": [
+      { "title": "House Price Prediction", "description": "Regression on housing dataset", "duration": "2 weeks", "instructions": "Compare multiple models", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Image Classification", "description": "CNN for image recognition", "duration": "3 weeks", "instructions": "Use transfer learning", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "NLP Sentiment Analysis", "description": "Classify text sentiment", "duration": "2 weeks", "instructions": "Use embeddings or transformers", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Web Development Bootcamp",
+    "provider": "Harvard",
+    "category": "Web Development",
+    "level": "Beginner",
+    "duration": "16 weeks",
+    "rating": 4.7,
+    "students": 156000,
+    "price": "₹1",
+    "priceAmount": 1,
+    "thumbnail": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=250&fit=crop",
+    "description": "Complete guide to modern web development",
+    "skills": ["HTML", "CSS", "JavaScript", "React"],
+    "instructor": "Sarah Johnson",
+    "instructorBio": "Senior full-stack developer with 12 years of experience",
+    "syllabus": [
+      { "week": 1, "title": "HTML & CSS Basics", "topics": ["HTML structure", "CSS styling", "Flexbox", "Grid"] },
+      { "week": 2, "title": "JavaScript Fundamentals", "topics": ["Variables", "Functions", "Arrays", "Objects"] },
+      { "week": 3, "title": "DOM Manipulation", "topics": ["DOM API", "Events", "Forms"] },
+      { "week": 4, "title": "React Introduction", "topics": ["Components", "Props", "State", "Hooks"] }
+    ],
+    "prerequisites": ["Basic computer skills", "No prior programming experience required", "Willingness to learn"],
+    "whatYoullLearn": [
+      "Build responsive websites with HTML5 and CSS3",
+      "Master JavaScript fundamentals and ES6+ features",
+      "Create dynamic UIs with React and Redux",
+      "Work with APIs and asynchronous JavaScript",
+      "Deploy applications to production",
+      "Best practices for modern web development"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Spanish", "French"],
+    "videoLectures": [
+      { "title": "Introduction to HTML", "duration": "15:30", "url": "", "free": true, "order": 1 },
+      { "title": "CSS Basics & Styling", "duration": "22:45", "url": "", "free": true, "order": 2 },
+      { "title": "Flexbox Layout", "duration": "18:20", "url": "", "free": true, "order": 3 },
+      { "title": "CSS Grid Advanced", "duration": "25:10", "url": "", "free": true, "order": 4 },
+      { "title": "JavaScript Fundamentals", "duration": "20:00", "url": "", "free": true, "order": 5 },
+      { "title": "React Components & Hooks", "duration": "23:45", "url": "", "free": true, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Build a Landing Page", "description": "Apply HTML/CSS fundamentals to craft a responsive landing page.", "difficulty": "Easy", "points": 20, "instructions": "Responsive landing page with sections", "deadline": "5 days" },
+      { "title": "JavaScript Calculator", "description": "Reinforce JS basics with DOM and event handling.", "difficulty": "Medium", "points": 30, "instructions": "Implement basic calculator", "deadline": "1 week" },
+      { "title": "Interactive Todo App", "description": "Manage state and lists with filters and persistence.", "difficulty": "Medium", "points": 35, "instructions": "Add/edit/delete with filters", "deadline": "10 days" }
+    ],
+    "projectsDetails": [
+      { "title": "Portfolio Website", "description": "Responsive personal site", "duration": "1 week", "instructions": "Use semantic HTML/CSS", "deadline": "1 week", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Weather App", "description": "Fetch weather via API", "duration": "2 weeks", "instructions": "Use fetch and geolocation", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "E-commerce Store", "description": "Shopping cart with React", "duration": "4 weeks", "instructions": "Use context and hooks", "deadline": "4 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Data Structures and Algorithms",
+    "provider": "UC Berkeley",
+    "category": "Computer Science",
+    "level": "Intermediate",
+    "duration": "10 weeks",
+    "rating": 4.6,
+    "students": 87000,
+    "price": "Paid",
+    "priceAmount": 2999,
+    "thumbnail": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=250&fit=crop",
+    "description": "Master essential data structures and algorithms",
+    "skills": ["Algorithms", "Data Structures", "Java"],
+    "instructor": "Dr. Emily Chen",
+    "instructorBio": "Professor of Computer Science at UC Berkeley with 15 years of teaching experience",
+    "syllabus": [
+      { "week": 1, "title": "Arrays and Linked Lists", "topics": ["Array operations", "Linked list types", "Memory management"] },
+      { "week": 2, "title": "Stacks and Queues", "topics": ["Stack ADT", "Queue implementations", "Applications"] },
+      { "week": 3, "title": "Trees and Graphs", "topics": ["Binary trees", "Graph representations", "Tree traversals"] },
+      { "week": 4, "title": "Sorting Algorithms", "topics": ["QuickSort", "MergeSort", "HeapSort", "Time complexity"] }
+    ],
+    "prerequisites": ["Basic programming knowledge (Java or Python)", "Understanding of basic math concepts", "Familiarity with object-oriented programming"],
+    "whatYoullLearn": [
+      "Implement fundamental data structures",
+      "Analyze algorithm complexity and performance",
+      "Solve complex coding problems efficiently",
+      "Master sorting and searching algorithms",
+      "Understand graph and tree algorithms",
+      "Prepare for technical interviews"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Mandarin"],
+    "videoLectures": [
+      { "title": "Intro to Data Structures", "duration": "16:45", "url": "", "free": false, "order": 1 },
+      { "title": "Arrays and Dynamic Arrays", "duration": "24:30", "url": "", "free": false, "order": 2 },
+      { "title": "Linked Lists", "duration": "28:15", "url": "", "free": false, "order": 3 },
+      { "title": "Stacks & Queues", "duration": "22:20", "url": "", "free": false, "order": 4 },
+      { "title": "Binary Search Trees", "duration": "32:15", "url": "", "free": false, "order": 5 },
+      { "title": "Graphs Basics", "duration": "30:10", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Dynamic Array", "description": "Practice memory-resizable arrays and amortized analysis.", "difficulty": "Medium", "points": 25, "instructions": "Implement vector-like array", "deadline": "1 week" },
+      { "title": "LinkedList Ops", "description": "Explore pointer manipulation and list operations.", "difficulty": "Medium", "points": 30, "instructions": "Add/remove/reverse", "deadline": "10 days" },
+      { "title": "Tree Traversals", "description": "Implement and compare DFS variants and BFS.", "difficulty": "Hard", "points": 40, "instructions": "Implement DFS/BFS", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Custom HashMap", "description": "Hash table with chaining", "duration": "2 weeks", "instructions": "Support put/get/delete", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Graph Algorithms", "description": "BFS/DFS/Shortest Path", "duration": "3 weeks", "instructions": "Weighted and unweighted", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Sorting Visualizer", "description": "Visualize sorting algorithms", "duration": "2 weeks", "instructions": "Animate comparisons", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Cloud Computing with AWS",
+    "provider": "Amazon",
+    "category": "Cloud Computing",
+    "level": "Advanced",
+    "duration": "6 weeks",
+    "rating": 4.8,
+    "students": 72000,
+    "price": "Paid",
+    "priceAmount": 7999,
+    "thumbnail": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop",
+    "description": "Learn AWS cloud services and architecture",
+    "skills": ["AWS", "Cloud Architecture", "DevOps"],
+    "instructor": "Michael Brown",
+    "instructorBio": "AWS certified Solutions Architect with 8 years at Amazon",
+    "syllabus": [
+      { "week": 1, "title": "AWS Fundamentals", "topics": ["IAM", "VPC", "EC2 basics", "S3 storage"] },
+      { "week": 2, "title": "Compute Services", "topics": ["EC2 advanced", "Lambda", "ECS", "Auto Scaling"] },
+      { "week": 3, "title": "Database Services", "topics": ["RDS", "DynamoDB", "ElastiCache"] },
+      { "week": 4, "title": "DevOps & Deployment", "topics": ["CloudFormation", "CodePipeline", "Monitoring"] }
+    ],
+    "prerequisites": ["Understanding of networking basics", "Experience with Linux command line", "Basic knowledge of web servers and databases"],
+    "whatYoullLearn": [
+      "Design scalable cloud architectures",
+      "Master AWS core services (EC2, S3, RDS, Lambda)",
+      "Implement security best practices",
+      "Automate deployments with CloudFormation",
+      "Monitor and optimize cloud costs",
+      "Prepare for AWS Solutions Architect certification"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Japanese", "German"],
+    "videoLectures": [
+      { "title": "AWS Cloud Overview", "duration": "18:30", "url": "", "free": false, "order": 1 },
+      { "title": "IAM & Security", "duration": "25:45", "url": "", "free": false, "order": 2 },
+      { "title": "EC2 Instance Management", "duration": "30:20", "url": "", "free": false, "order": 3 },
+      { "title": "S3 Storage Solutions", "duration": "22:15", "url": "", "free": false, "order": 4 },
+      { "title": "Lambda Serverless", "duration": "28:40", "url": "", "free": false, "order": 5 },
+      { "title": "VPC Networking", "duration": "26:50", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Deploy Web on EC2", "description": "Provision and harden a Linux instance to host a simple web app.", "difficulty": "Medium", "points": 30, "instructions": "Launch and secure an EC2 web server", "deadline": "1 week" },
+      { "title": "S3 Static Website", "description": "Use S3 and CloudFront to deliver a static site efficiently.", "difficulty": "Easy", "points": 20, "instructions": "Host static site on S3 + CloudFront", "deadline": "1 week" },
+      { "title": "Serverless API", "description": "Design an event-driven API with Lambda, API Gateway, and DynamoDB.", "difficulty": "Hard", "points": 45, "instructions": "API Gateway + Lambda + DynamoDB", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Multi-Tier Web App", "description": "ALB + ASG + RDS", "duration": "2 weeks", "instructions": "Provision with IaC", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Serverless Architecture", "description": "Event-driven system", "duration": "2 weeks", "instructions": "Use Lambda and SQS", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Data Pipeline", "description": "ETL on AWS", "duration": "3 weeks", "instructions": "Glue + Athena + S3", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Digital Marketing Masterclass",
+    "provider": "Google",
+    "category": "Business",
+    "level": "Beginner",
+    "duration": "8 weeks",
+    "rating": 4.5,
+    "students": 110000,
+    "price": "Free",
+    "priceAmount": 0,
+    "thumbnail": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop",
+    "description": "Complete digital marketing strategy course",
+    "skills": ["SEO", "Social Media", "Analytics"],
+    "instructor": "Lisa Anderson",
+    "instructorBio": "Google-certified digital marketing expert with 10 years of experience",
+    "syllabus": [
+      { "week": 1, "title": "Digital Marketing Fundamentals", "topics": ["Marketing basics", "Customer journey", "Digital channels"] },
+      { "week": 2, "title": "SEO & Content Marketing", "topics": ["Keyword research", "On-page SEO", "Link building"] },
+      { "week": 3, "title": "Social Media Marketing", "topics": ["Platform strategies", "Content creation", "Engagement"] },
+      { "week": 4, "title": "Analytics & Optimization", "topics": ["Google Analytics", "A/B testing", "ROI measurement"] }
+    ],
+    "prerequisites": ["Basic internet and social media knowledge", "No marketing experience required"],
+    "whatYoullLearn": [
+      "Create effective digital marketing strategies",
+      "Master SEO and content marketing",
+      "Run successful social media campaigns",
+      "Analyze marketing data and metrics",
+      "Email marketing best practices",
+      "Paid advertising on Google and Facebook"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Spanish"],
+    "videoLectures": [
+      { "title": "Intro to Digital Marketing", "duration": "14:20", "url": "", "free": true, "order": 1 },
+      { "title": "Target Audience", "duration": "18:30", "url": "", "free": true, "order": 2 },
+      { "title": "SEO Fundamentals", "duration": "22:15", "url": "", "free": true, "order": 3 },
+      { "title": "Keyword Research", "duration": "20:45", "url": "", "free": true, "order": 4 },
+      { "title": "Social Media Overview", "duration": "16:30", "url": "", "free": true, "order": 5 },
+      { "title": "Content Creation Tips", "duration": "19:20", "url": "", "free": true, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Marketing Strategy", "description": "Outline goals, audience, and KPIs for a brand.", "difficulty": "Easy", "points": 15, "instructions": "Plan a digital strategy", "deadline": "1 week" },
+      { "title": "SEO Audit", "description": "Identify on-page and technical improvements for a site.", "difficulty": "Medium", "points": 25, "instructions": "Audit a sample site", "deadline": "10 days" },
+      { "title": "Social Campaign", "description": "Create a content plan aligned with campaign goals.", "difficulty": "Medium", "points": 30, "instructions": "Plan content calendar", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Brand Analysis", "description": "Analyze online presence", "duration": "1 week", "instructions": "Use free tools", "deadline": "1 week", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "SEO Content Plan", "description": "Create content roadmap", "duration": "2 weeks", "instructions": "Map keywords to content", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Analytics Report", "description": "Insights from traffic data", "duration": "2 weeks", "instructions": "Present key metrics", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Blockchain and Cryptocurrency",
+    "provider": "MIT",
+    "category": "Blockchain",
+    "level": "Intermediate",
+    "duration": "12 weeks",
+    "rating": 4.7,
+    "students": 65000,
+    "price": "Paid",
+    "priceAmount": 6499,
+    "thumbnail": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=250&fit=crop",
+    "description": "Understanding blockchain technology and crypto",
+    "skills": ["Blockchain", "Solidity", "Smart Contracts"],
+    "instructor": "Prof. David Lee",
+    "instructorBio": "Blockchain researcher at MIT with extensive cryptocurrency development experience",
+    "syllabus": [
+      { "week": 1, "title": "Blockchain Basics", "topics": ["Distributed ledgers", "Consensus algorithms", "Cryptography"] },
+      { "week": 2, "title": "Cryptocurrency Fundamentals", "topics": ["Bitcoin", "Ethereum", "Altcoins", "Wallets"] },
+      { "week": 3, "title": "Smart Contracts", "topics": ["Solidity basics", "Contract deployment", "Testing"] },
+      { "week": 4, "title": "DeFi and NFTs", "topics": ["DeFi protocols", "NFT standards", "Web3 integration"] }
+    ],
+    "prerequisites": ["Basic programming experience", "Understanding of basic cryptography", "Familiarity with JavaScript recommended"],
+    "whatYoullLearn": [
+      "Understand blockchain fundamentals and consensus mechanisms",
+      "Develop smart contracts with Solidity",
+      "Build decentralized applications (DApps)",
+      "Analyze cryptocurrency markets and trading",
+      "Implement blockchain security best practices",
+      "Explore NFTs and DeFi protocols"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Korean", "Portuguese"],
+    "videoLectures": [
+      { "title": "Blockchain Overview", "duration": "20:15", "url": "", "free": false, "order": 1 },
+      { "title": "Bitcoin Deep Dive", "duration": "28:45", "url": "", "free": false, "order": 2 },
+      { "title": "Ethereum & EVM", "duration": "32:20", "url": "", "free": false, "order": 3 },
+      { "title": "Solidity Basics", "duration": "35:30", "url": "", "free": false, "order": 4 },
+      { "title": "Build Your First DApp", "duration": "40:15", "url": "", "free": false, "order": 5 },
+      { "title": "DeFi Protocols", "duration": "25:40", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Simple Blockchain", "description": "Understand blocks, hashes, and consensus by coding a toy chain.", "difficulty": "Medium", "points": 30, "instructions": "Implement basic blockchain", "deadline": "1 week" },
+      { "title": "ERC-20 Token", "description": "Write and deploy a fungible token contract on a testnet.", "difficulty": "Hard", "points": 40, "instructions": "Deploy token on testnet", "deadline": "2 weeks" },
+      { "title": "Smart Contract Audit", "description": "Analyze contracts for common vulnerabilities.", "difficulty": "Hard", "points": 45, "instructions": "Identify vulnerabilities", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Crypto Wallet", "description": "Sign/send transactions", "duration": "2 weeks", "instructions": "Use ethers.js/web3", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "NFT Marketplace", "description": "Mint and trade NFTs", "duration": "4 weeks", "instructions": "Use IPFS for media", "deadline": "4 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "DeFi Lending", "description": "Simple lending protocol", "duration": "4 weeks", "instructions": "Collateralized loans", "deadline": "4 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "UX/UI Design Principles",
+    "provider": "Stanford",
+    "category": "Design",
+    "level": "Beginner",
+    "duration": "6 weeks",
+    "rating": 4.9,
+    "students": 95000,
+    "price": "Paid",
+    "priceAmount": 3999,
+    "thumbnail": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=250&fit=crop",
+    "description": "Create beautiful and intuitive user experiences",
+    "skills": ["Figma", "UI Design", "User Research"],
+    "instructor": "Jessica White",
+    "instructorBio": "Lead UX designer with 9 years of experience creating award-winning digital experiences",
+    "syllabus": [
+      { "week": 1, "title": "Design Fundamentals", "topics": ["Color theory", "Typography", "Layout principles"] },
+      { "week": 2, "title": "User Research", "topics": ["User interviews", "Personas", "Journey mapping"] },
+      { "week": 3, "title": "Wireframing & Prototyping", "topics": ["Figma basics", "Low-fi wireframes", "Interactive prototypes"] },
+      { "week": 4, "title": "Visual Design", "topics": ["UI patterns", "Design systems", "Accessibility"] }
+    ],
+    "prerequisites": ["Basic understanding of design concepts", "No prior design software experience required", "Creative mindset and attention to detail"],
+    "whatYoullLearn": [
+      "Master UI design principles and best practices",
+      "Conduct effective user research and testing",
+      "Create wireframes and prototypes in Figma",
+      "Design responsive and accessible interfaces",
+      "Build design systems and style guides",
+      "Understand user psychology and behavior"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "French", "Italian"],
+    "videoLectures": [
+      { "title": "Intro to UX/UI", "duration": "16:30", "url": "", "free": false, "order": 1 },
+      { "title": "Design Thinking", "duration": "22:15", "url": "", "free": false, "order": 2 },
+      { "title": "Color Theory", "duration": "19:45", "url": "", "free": false, "order": 3 },
+      { "title": "Typography Basics", "duration": "21:30", "url": "", "free": false, "order": 4 },
+      { "title": "User Research Methods", "duration": "25:20", "url": "", "free": false, "order": 5 },
+      { "title": "Figma Interface Tour", "duration": "18:40", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Design System", "description": "Build tokens and components to ensure UI consistency.", "difficulty": "Medium", "points": 30, "instructions": "Create a small design system", "deadline": "1 week" },
+      { "title": "User Research Report", "description": "Collect and synthesize user insights into key findings.", "difficulty": "Easy", "points": 20, "instructions": "Summarize research findings", "deadline": "1 week" },
+      { "title": "Mobile App Redesign", "description": "Improve usability by redesigning a key user flow.", "difficulty": "Hard", "points": 40, "instructions": "Redesign an app flow", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Portfolio Design", "description": "Personal portfolio in Figma", "duration": "2 weeks", "instructions": "Responsive web design", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Banking App", "description": "Mobile banking flows", "duration": "3 weeks", "instructions": "Include onboarding", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Design System", "description": "Tokens and components", "duration": "2 weeks", "instructions": "Document usage", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Cybersecurity Essentials",
+    "provider": "IBM",
+    "category": "Cybersecurity",
+    "level": "Intermediate",
+    "duration": "10 weeks",
+    "rating": 4.6,
+    "students": 58000,
+    "price": "Paid",
+    "priceAmount": 7299,
+    "thumbnail": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=250&fit=crop",
+    "description": "Protect systems and networks from threats",
+    "skills": ["Security", "Networking", "Ethical Hacking"],
+    "instructor": "Robert Martinez",
+    "instructorBio": "Senior cybersecurity consultant at IBM with 12 years of experience",
+    "syllabus": [
+      { "week": 1, "title": "Security Fundamentals", "topics": ["CIA triad", "Threat landscape", "Risk management"] },
+      { "week": 2, "title": "Network Security", "topics": ["Firewalls", "VPNs", "IDS/IPS", "Network monitoring"] },
+      { "week": 3, "title": "Application Security", "topics": ["OWASP Top 10", "SQL injection", "XSS attacks"] },
+      { "week": 4, "title": "Ethical Hacking", "topics": ["Penetration testing", "Vulnerability scanning", "Exploitation"] }
+    ],
+    "prerequisites": ["Basic networking knowledge", "Understanding of operating systems (Linux/Windows)", "Familiarity with command line interfaces"],
+    "whatYoullLearn": [
+      "Understand common cybersecurity threats and vulnerabilities",
+      "Implement network security best practices",
+      "Perform penetration testing and ethical hacking",
+      "Secure web applications and databases",
+      "Respond to security incidents effectively",
+      "Prepare for CompTIA Security+ certification"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "German", "Russian"],
+    "videoLectures": [
+      { "title": "Intro to Cybersecurity", "duration": "17:45", "url": "", "free": false, "order": 1 },
+      { "title": "Threat Landscape", "duration": "23:30", "url": "", "free": false, "order": 2 },
+      { "title": "Network Security", "duration": "26:15", "url": "", "free": false, "order": 3 },
+      { "title": "Firewalls & VPNs", "duration": "28:40", "url": "", "free": false, "order": 4 },
+      { "title": "Web App Security", "duration": "31:20", "url": "", "free": false, "order": 5 },
+      { "title": "Pentesting Tools", "duration": "29:50", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Vulnerability Assessment", "description": "Perform scans and document findings with severity ratings.", "difficulty": "Medium", "points": 30, "instructions": "Scan and report issues", "deadline": "1 week" },
+      { "title": "Web App Audit", "description": "Assess an app against OWASP Top 10 controls.", "difficulty": "Hard", "points": 40, "instructions": "Audit OWASP Top 10", "deadline": "2 weeks" },
+      { "title": "Incident Response Plan", "description": "Draft a practical plan outlining roles and runbooks.", "difficulty": "Medium", "points": 35, "instructions": "Draft IR plan", "deadline": "10 days" }
+    ],
+    "projectsDetails": [
+      { "title": "Network Design", "description": "Secure corporate network", "duration": "2 weeks", "instructions": "Segment and secure", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Pentesting Lab", "description": "Ethical hacking lab", "duration": "3 weeks", "instructions": "Document findings", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "SIEM Setup", "description": "Monitoring & alerts", "duration": "3 weeks", "instructions": "Use open-source tools", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Full Stack JavaScript Development",
+    "provider": "Meta",
+    "category": "Web Development",
+    "level": "Intermediate",
+    "duration": "14 weeks",
+    "rating": 4.8,
+    "students": 142000,
+    "price": "Paid",
+    "priceAmount": 2999,
+    "thumbnail": "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?w=400&h=250&fit=crop",
+    "description": "Master MERN stack and modern JavaScript",
+    "skills": ["MongoDB", "Express", "React", "Node.js"],
+    "instructor": "Alex Turner",
+    "instructorBio": "Senior full-stack developer at Meta with 10 years of experience",
+    "syllabus": [
+      { "week": 1, "title": "JavaScript Advanced Concepts", "topics": ["Async/Await", "Promises", "Closures", "Prototypes"] },
+      { "week": 2, "title": "Node.js & Express", "topics": ["Server setup", "Routing", "Middleware", "REST APIs"] },
+      { "week": 3, "title": "MongoDB & Mongoose", "topics": ["Database design", "CRUD operations", "Relationships"] },
+      { "week": 4, "title": "React & Redux", "topics": ["State management", "Hooks", "Context API", "Redux toolkit"] }
+    ],
+    "prerequisites": ["HTML, CSS, and JavaScript basics", "Understanding of web fundamentals", "Git and version control knowledge"],
+    "whatYoullLearn": [
+      "Build full-stack applications with MERN stack",
+      "Master modern JavaScript ES6+ features",
+      "Create RESTful APIs with Express.js",
+      "Handle authentication and authorization",
+      "Deploy applications to cloud platforms",
+      "Implement real-time features with Socket.io"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Hindi", "Spanish"],
+    "videoLectures": [
+      { "title": "ES6+ Features", "duration": "24:30", "url": "", "free": false, "order": 1 },
+      { "title": "Node Environment", "duration": "18:45", "url": "", "free": false, "order": 2 },
+      { "title": "Building REST APIs", "duration": "32:20", "url": "", "free": false, "order": 3 },
+      { "title": "MongoDB Design", "duration": "28:15", "url": "", "free": false, "order": 4 },
+      { "title": "React Components", "duration": "35:40", "url": "", "free": false, "order": 5 },
+      { "title": "Redux Toolkit", "duration": "30:25", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Build REST API", "description": "Design routes and controllers with robust validations.", "difficulty": "Medium", "points": 30, "instructions": "Users and posts API", "deadline": "1 week" },
+      { "title": "Auth System", "description": "Implement secure login with JWT access and refresh tokens.", "difficulty": "Hard", "points": 40, "instructions": "JWT auth & refresh", "deadline": "2 weeks" },
+      { "title": "Full Stack Blog", "description": "Integrate frontend and backend with CRUD and auth.", "difficulty": "Hard", "points": 45, "instructions": "MERN blog app", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Task Manager", "description": "Auth + CRUD + filters", "duration": "2 weeks", "instructions": "React + Express", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "E-commerce Platform", "description": "Cart + checkout", "duration": "4 weeks", "instructions": "Stripe integration", "deadline": "4 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Real-time Chat", "description": "Socket.io chat", "duration": "2 weeks", "instructions": "Rooms & typing", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Artificial Intelligence Fundamentals",
+    "provider": "DeepLearning.AI",
+    "category": "Data Science",
+    "level": "Advanced",
+    "duration": "10 weeks",
+    "rating": 4.9,
+    "students": 89000,
+    "price": "Paid",
+    "priceAmount": 5999,
+    "thumbnail": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop",
+    "description": "Deep dive into AI and neural networks",
+    "skills": ["Deep Learning", "Neural Networks", "TensorFlow", "PyTorch"],
+    "instructor": "Dr. Andrew Chen",
+    "instructorBio": "AI researcher with PhD from Stanford and 50+ published papers",
+    "syllabus": [
+      { "week": 1, "title": "AI & ML Foundations", "topics": ["AI history", "ML basics", "Neural networks intro"] },
+      { "week": 2, "title": "Deep Learning", "topics": ["CNNs", "RNNs", "LSTMs", "Transformers"] },
+      { "week": 3, "title": "Computer Vision", "topics": ["Image classification", "Object detection", "Segmentation"] },
+      { "week": 4, "title": "NLP & Transformers", "topics": ["BERT", "GPT", "Attention mechanism", "Transfer learning"] }
+    ],
+    "prerequisites": ["Strong Python programming skills", "Linear algebra and calculus", "Machine learning basics", "Understanding of statistics"],
+    "whatYoullLearn": [
+      "Understand neural network architectures",
+      "Implement deep learning models",
+      "Master TensorFlow and PyTorch",
+      "Build computer vision applications",
+      "Create natural language processing models",
+      "Deploy AI models to production"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Hindi", "Mandarin"],
+    "videoLectures": [
+      { "title": "Intro to AI", "duration": "22:30", "url": "", "free": false, "order": 1 },
+      { "title": "Neural Architectures", "duration": "34:45", "url": "", "free": false, "order": 2 },
+      { "title": "Convolutional Networks", "duration": "38:20", "url": "", "free": false, "order": 3 },
+      { "title": "Natural Language Processing", "duration": "42:15", "url": "", "free": false, "order": 4 },
+      { "title": "Transformers", "duration": "36:40", "url": "", "free": false, "order": 5 },
+      { "title": "Model Deployment", "duration": "28:25", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Build CNN", "description": "Implement a convolutional model and assess accuracy and overfitting.", "difficulty": "Hard", "points": 40, "instructions": "Train CNN on image data", "deadline": "2 weeks" },
+      { "title": "NLP Sentiment", "description": "Create a text classifier with embeddings or transformers.", "difficulty": "Hard", "points": 45, "instructions": "Sentiment classifier", "deadline": "2 weeks" },
+      { "title": "Transfer Learning", "description": "Leverage pre-trained models to improve performance on small datasets.", "difficulty": "Hard", "points": 50, "instructions": "Fine-tune pre-trained model", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Vision System", "description": "Image classification app", "duration": "3 weeks", "instructions": "Deploy as API", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Chatbot", "description": "Conversational assistant", "duration": "3 weeks", "instructions": "Use transformer model", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Object Detection", "description": "YOLO-based detector", "duration": "4 weeks", "instructions": "Real-time inference", "deadline": "4 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Mobile App Development with Flutter",
+    "provider": "Google",
+    "category": "Mobile Development",
+    "level": "Beginner",
+    "duration": "8 weeks",
+    "rating": 4.7,
+    "students": 125000,
+    "price": "Free",
+    "priceAmount": 0,
+    "thumbnail": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=250&fit=crop",
+    "description": "Build beautiful cross-platform mobile apps",
+    "skills": ["Flutter", "Dart", "Mobile UI", "Firebase"],
+    "instructor": "Sarah Kim",
+    "instructorBio": "Google Developer Expert for Flutter with 7 years of mobile development experience",
+    "syllabus": [
+      { "week": 1, "title": "Flutter Basics", "topics": ["Dart language", "Widgets", "Layouts", "Navigation"] },
+      { "week": 2, "title": "State Management", "topics": ["Provider", "Riverpod", "Bloc pattern", "GetX"] },
+      { "week": 3, "title": "Firebase Integration", "topics": ["Authentication", "Firestore", "Storage", "Cloud functions"] },
+      { "week": 4, "title": "Advanced Features", "topics": ["Animations", "Platform channels", "Native code", "Publishing"] }
+    ],
+    "prerequisites": ["Basic programming knowledge", "Understanding of mobile UI concepts", "No prior Flutter experience needed"],
+    "whatYoullLearn": [
+      "Master Flutter framework and Dart language",
+      "Create beautiful responsive mobile UIs",
+      "Implement state management solutions",
+      "Integrate Firebase backend services",
+      "Build and deploy iOS and Android apps",
+      "Handle platform-specific features"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Hindi", "Korean"],
+    "videoLectures": [
+      { "title": "Intro to Flutter", "duration": "20:30", "url": "", "free": true, "order": 1 },
+      { "title": "Dart Basics", "duration": "25:45", "url": "", "free": true, "order": 2 },
+      { "title": "Flutter Widgets", "duration": "28:20", "url": "", "free": true, "order": 3 },
+      { "title": "State Management", "duration": "32:15", "url": "", "free": true, "order": 4 },
+      { "title": "Firebase Setup", "duration": "24:40", "url": "", "free": true, "order": 5 },
+      { "title": "Building Layouts", "duration": "30:25", "url": "", "free": true, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Calculator App", "description": "Intro build to learn UI widgets and state.", "difficulty": "Easy", "points": 20, "instructions": "Simple Flutter app", "deadline": "1 week" },
+      { "title": "Todo App with Firebase", "description": "Implement auth and persistence with Firebase.", "difficulty": "Medium", "points": 30, "instructions": "Auth + Firestore", "deadline": "2 weeks" },
+      { "title": "Social App Clone", "description": "Build feeds and interactions for a simple clone.", "difficulty": "Hard", "points": 40, "instructions": "Basic clone with feeds", "deadline": "3 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Weather App", "description": "REST + geolocation", "duration": "1 week", "instructions": "Use OpenWeatherMap", "deadline": "1 week", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Recipe Finder", "description": "Grid + favorites", "duration": "2 weeks", "instructions": "Public API", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "E-commerce Mobile", "description": "Cart + checkout", "duration": "4 weeks", "instructions": "Stripe integration", "deadline": "4 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "DevOps Engineering Bootcamp",
+    "provider": "Linux Foundation",
+    "category": "Cloud Computing",
+    "level": "Intermediate",
+    "duration": "12 weeks",
+    "rating": 4.8,
+    "students": 78000,
+    "price": "Paid",
+    "priceAmount": 6999,
+    "thumbnail": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400&h=250&fit=crop",
+    "description": "Master CI/CD, Docker, Kubernetes, and cloud",
+    "skills": ["Docker", "Kubernetes", "Jenkins", "Terraform"],
+    "instructor": "John Smith",
+    "instructorBio": "DevOps architect with 12 years of experience and certified in AWS, Azure, and Kubernetes",
+    "syllabus": [
+      { "week": 1, "title": "DevOps Fundamentals", "topics": ["DevOps culture", "Linux basics", "Git workflows"] },
+      { "week": 2, "title": "Containerization", "topics": ["Docker", "Docker Compose", "Container registries"] },
+      { "week": 3, "title": "Kubernetes", "topics": ["Pods", "Services", "Deployments", "Helm"] },
+      { "week": 4, "title": "CI/CD & IaC", "topics": ["Jenkins", "GitLab CI", "Terraform", "Ansible"] }
+    ],
+    "prerequisites": ["Basic Linux/Unix knowledge", "Understanding of networking", "Experience with cloud platforms", "Basic scripting skills"],
+    "whatYoullLearn": [
+      "Containerize applications with Docker",
+      "Orchestrate containers with Kubernetes",
+      "Build CI/CD pipelines",
+      "Infrastructure as Code with Terraform",
+      "Monitor and log applications",
+      "Implement security best practices"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Hindi", "German"],
+    "videoLectures": [
+      { "title": "DevOps Intro", "duration": "18:30", "url": "", "free": false, "order": 1 },
+      { "title": "Docker Fundamentals", "duration": "28:45", "url": "", "free": false, "order": 2 },
+      { "title": "Kubernetes Architecture", "duration": "35:20", "url": "", "free": false, "order": 3 },
+      { "title": "CI/CD Pipeline", "duration": "32:15", "url": "", "free": false, "order": 4 },
+      { "title": "Infrastructure as Code", "duration": "38:40", "url": "", "free": false, "order": 5 },
+      { "title": "Monitoring & Logging", "duration": "26:25", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Dockerize App", "description": "Build a reliable container image with best practices.", "difficulty": "Medium", "points": 30, "instructions": "Containerize a service", "deadline": "1 week" },
+      { "title": "Deploy to K8s", "description": "Package and deploy a stateless app to Kubernetes.", "difficulty": "Hard", "points": 40, "instructions": "Create Deployment + Service", "deadline": "2 weeks" },
+      { "title": "CI/CD Pipeline", "description": "Automate build, test, and deployment stages.", "difficulty": "Hard", "points": 45, "instructions": "Build an automated pipeline", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Microservices", "description": "Containerized microservices", "duration": "2 weeks", "instructions": "Docker Compose", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "K8s Cluster", "description": "Deploy app on Kubernetes", "duration": "3 weeks", "instructions": "Helm charts", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Automation", "description": "Terraform infrastructure", "duration": "3 weeks", "instructions": "Cloud provider of choice", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Python for Data Analytics",
+    "provider": "IBM",
+    "category": "Data Science",
+    "level": "Beginner",
+    "duration": "6 weeks",
+    "rating": 4.6,
+    "students": 156000,
+    "price": "Free",
+    "priceAmount": 0,
+    "thumbnail": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop",
+    "description": "Analyze data with Python, Pandas, and NumPy",
+    "skills": ["Python", "Pandas", "NumPy", "Matplotlib"],
+    "instructor": "Maria Rodriguez",
+    "instructorBio": "Data scientist at IBM with 8 years of experience in analytics and business intelligence",
+    "syllabus": [
+      { "week": 1, "title": "Python Basics", "topics": ["Syntax", "Data types", "Control flow", "Functions"] },
+      { "week": 2, "title": "NumPy & Arrays", "topics": ["Arrays", "Broadcasting", "Linear algebra", "Statistics"] },
+      { "week": 3, "title": "Pandas DataFrames", "topics": ["Series", "DataFrames", "Indexing", "Grouping"] },
+      { "week": 4, "title": "Data Visualization", "topics": ["Matplotlib", "Seaborn", "Plots", "Dashboards"] }
+    ],
+    "prerequisites": ["Basic computer skills", "No programming experience required", "Interest in data analysis"],
+    "whatYoullLearn": [
+      "Master Python programming fundamentals",
+      "Data manipulation with Pandas",
+      "Statistical analysis with NumPy",
+      "Data visualization with Matplotlib",
+      "Clean and prepare real-world datasets",
+      "Build data-driven insights and reports"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Hindi", "Spanish"],
+    "videoLectures": [
+      { "title": "Python Intro", "duration": "16:30", "url": "", "free": true, "order": 1 },
+      { "title": "NumPy Basics", "duration": "22:45", "url": "", "free": true, "order": 2 },
+      { "title": "Pandas Basics", "duration": "26:20", "url": "", "free": true, "order": 3 },
+      { "title": "Data Cleaning", "duration": "24:15", "url": "", "free": true, "order": 4 },
+      { "title": "Visualization", "duration": "28:40", "url": "", "free": true, "order": 5 },
+      { "title": "EDA", "duration": "30:25", "url": "", "free": true, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Data Cleaning", "description": "Fix missing, duplicate, and inconsistent values.", "difficulty": "Easy", "points": 20, "instructions": "Clean messy dataset", "deadline": "1 week" },
+      { "title": "Statistics", "description": "Apply descriptive statistics with NumPy.", "difficulty": "Medium", "points": 25, "instructions": "Compute stats with NumPy", "deadline": "10 days" },
+      { "title": "Dashboard", "description": "Visualize findings with clear charts and layouts.", "difficulty": "Medium", "points": 30, "instructions": "Plot insights with Seaborn", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "Sales Analysis", "description": "Retail sales trends", "duration": "2 weeks", "instructions": "GroupBy and viz", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Customer Segmentation", "description": "Cluster customers", "duration": "2 weeks", "instructions": "kMeans with Scikit-Learn", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "Web Scraping", "description": "Collect web data", "duration": "2 weeks", "instructions": "Requests + BS4", "deadline": "2 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  },
+  {
+    "title": "Game Development with Unity",
+    "provider": "Unity Technologies",
+    "category": "Game Development",
+    "level": "Intermediate",
+    "duration": "10 weeks",
+    "rating": 4.8,
+    "students": 94000,
+    "price": "Paid",
+    "priceAmount": 4999,
+    "thumbnail": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400&h=250&fit=crop",
+    "description": "Create 2D and 3D games with Unity engine",
+    "skills": ["Unity", "C#", "Game Design", "3D Modeling"],
+    "instructor": "Chris Johnson",
+    "instructorBio": "Unity certified developer who has shipped 15+ games and worked on AAA titles",
+    "syllabus": [
+      { "week": 1, "title": "Unity Basics", "topics": ["Unity interface", "GameObjects", "Components", "Scenes"] },
+      { "week": 2, "title": "C# Programming", "topics": ["C# syntax", "Scripts", "Events", "Coroutines"] },
+      { "week": 3, "title": "2D Game Development", "topics": ["Sprites", "2D physics", "Animations", "Tilemaps"] },
+      { "week": 4, "title": "3D Game Development", "topics": ["3D models", "Materials", "Lighting", "Particle systems"] }
+    ],
+    "prerequisites": ["Basic programming knowledge", "Understanding of game concepts", "C# or similar language experience helpful"],
+    "whatYoullLearn": [
+      "Master Unity game engine",
+      "Program gameplay with C#",
+      "Create 2D and 3D games",
+      "Implement physics and animations",
+      "Design game mechanics and levels",
+      "Publish games to multiple platforms"
+    ],
+    "certificate": true,
+    "language": "English",
+    "subtitles": ["English", "Hindi", "Japanese"],
+    "videoLectures": [
+      { "title": "Unity Introduction", "duration": "20:30", "url": "", "free": false, "order": 1 },
+      { "title": "C# for Unity", "duration": "28:45", "url": "", "free": false, "order": 2 },
+      { "title": "2D Mechanics", "duration": "32:20", "url": "", "free": false, "order": 3 },
+      { "title": "3D Environments", "duration": "36:15", "url": "", "free": false, "order": 4 },
+      { "title": "Physics & Collisions", "duration": "26:40", "url": "", "free": false, "order": 5 },
+      { "title": "Game Optimization", "duration": "24:25", "url": "", "free": false, "order": 6 }
+    ],
+    "assignments": [
+      { "title": "Platformer Prototype", "description": "Implement core mechanics and character controls.", "difficulty": "Medium", "points": 30, "instructions": "Build basic platformer", "deadline": "1 week" },
+      { "title": "3D Racing", "description": "Create tracks, physics, and basic AI opponents.", "difficulty": "Hard", "points": 40, "instructions": "Create simple racing game", "deadline": "2 weeks" },
+      { "title": "Multiplayer", "description": "Add networking to enable two-player sessions.", "difficulty": "Hard", "points": 45, "instructions": "Add multiplayer mode", "deadline": "2 weeks" }
+    ],
+    "projectsDetails": [
+      { "title": "2D Platformer", "description": "Complete 2D game", "duration": "3 weeks", "instructions": "Include enemies & levels", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "3D FPS", "description": "First-person shooter", "duration": "4 weeks", "instructions": "Basic AI & UI", "deadline": "4 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" },
+      { "title": "VR Demo", "description": "VR experience", "duration": "3 weeks", "instructions": "Interactable objects", "deadline": "3 weeks", "submitUrl": "/submit", "askAdminUrl": "/support" }
+    ],
+    "status": "active"
+  }
+]

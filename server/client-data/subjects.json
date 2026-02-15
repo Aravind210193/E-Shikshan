@@ -1,0 +1,192 @@
+
+{
+    "cs":
+        { 
+        "E1-S1":    [
+            {
+                "title":"C&LA", 
+                "link":"/folders/cs/cla"
+            },
+            {
+                "title":"BEEE",
+                "link":"/folders/cs/beee"
+            }
+        ]
+    },
+    "ece":{
+        "E1-S1":[
+            {
+                "title":"Applied Physics",
+                "link":"/folders/physics"
+            }
+        ]
+    },
+    "mbbs-anatomy": {
+        "Year-1": [
+            {
+                "title": "General Anatomy",
+                "link": "/folders/mbbs-anatomy/general"
+            },
+            {
+                "title": "Upper Limb",
+                "link": "/folders/mbbs-anatomy/upper-limb"
+            },
+            {
+                "title": "Lower Limb",
+                "link": "/folders/mbbs-anatomy/lower-limb"
+            },
+            {
+                "title": "Thorax",
+                "link": "/folders/mbbs-anatomy/thorax"
+            },
+            {
+                "title": "Abdomen & Pelvis",
+                "link": "/folders/mbbs-anatomy/abdomen"
+            },
+            {
+                "title": "Head & Neck",
+                "link": "/folders/mbbs-anatomy/head-neck"
+            },
+            {
+                "title": "Neuroanatomy",
+                "link": "/folders/mbbs-anatomy/neuroanatomy"
+            }
+        ]
+    },
+    "mbbs-physiology": {
+        "Year-1": [
+            {
+                "title": "General Physiology",
+                "link": "/folders/mbbs-physiology/general"
+            },
+            {
+                "title": "Blood & Immunity",
+                "link": "/folders/mbbs-physiology/blood"
+            },
+            {
+                "title": "Cardiovascular System",
+                "link": "/folders/mbbs-physiology/cardiovascular"
+            },
+            {
+                "title": "Respiratory System",
+                "link": "/folders/mbbs-physiology/respiratory"
+            },
+            {
+                "title": "Digestive System",
+                "link": "/folders/mbbs-physiology/digestive"
+            },
+            {
+                "title": "Renal System",
+                "link": "/folders/mbbs-physiology/renal"
+            },
+            {
+                "title": "Nervous System",
+                "link": "/folders/mbbs-physiology/nervous"
+            },
+            {
+                "title": "Endocrine System",
+                "link": "/folders/mbbs-physiology/endocrine"
+            }
+        ]
+    },
+    "mbbs-biochemistry": {
+        "Year-1": [
+            {
+                "title": "Biomolecules",
+                "link": "/folders/mbbs-biochemistry/biomolecules"
+            },
+            {
+                "title": "Proteins & Enzymes",
+                "link": "/folders/mbbs-biochemistry/proteins"
+            },
+            {
+                "title": "Carbohydrate Metabolism",
+                "link": "/folders/mbbs-biochemistry/carbohydrates"
+            },
+            {
+                "title": "Lipid Metabolism",
+                "link": "/folders/mbbs-biochemistry/lipids"
+            },
+            {
+                "title": "Protein Metabolism",
+                "link": "/folders/mbbs-biochemistry/protein-metabolism"
+            },
+            {
+                "title": "Nucleic Acids & DNA",
+                "link": "/folders/mbbs-biochemistry/nucleic-acids"
+            },
+            {
+                "title": "Clinical Biochemistry",
+                "link": "/folders/mbbs-biochemistry/clinical"
+            }
+        ]
+    },
+    "general-medicine": {
+        "Clinical-Years": [
+            {
+                "title": "Cardiology",
+                "link": "/folders/general-medicine/cardiology"
+            },
+            {
+                "title": "Respiratory Medicine",
+                "link": "/folders/general-medicine/respiratory"
+            },
+            {
+                "title": "Gastroenterology",
+                "link": "/folders/general-medicine/gastro"
+            },
+            {
+                "title": "Nephrology",
+                "link": "/folders/general-medicine/nephro"
+            },
+            {
+                "title": "Endocrinology",
+                "link": "/folders/general-medicine/endocrine"
+            },
+            {
+                "title": "Infectious Diseases",
+                "link": "/folders/general-medicine/infectious"
+            },
+            {
+                "title": "Rheumatology",
+                "link": "/folders/general-medicine/rheumatology"
+            },
+            {
+                "title": "Hematology",
+                "link": "/folders/general-medicine/hematology"
+            }
+        ]
+    },
+    "pediatrics": {
+        "Clinical-Years": [
+            {
+                "title": "Growth & Development",
+                "link": "/folders/pediatrics/growth"
+            },
+            {
+                "title": "Neonatology",
+                "link": "/folders/pediatrics/neonatology"
+            },
+            {
+                "title": "Pediatric Infections",
+                "link": "/folders/pediatrics/infections"
+            },
+            {
+                "title": "Pediatric Nutrition",
+                "link": "/folders/pediatrics/nutrition"
+            },
+            {
+                "title": "Pediatric Cardiology",
+                "link": "/folders/pediatrics/cardiology"
+            },
+            {
+                "title": "Pediatric Neurology",
+                "link": "/folders/pediatrics/neurology"
+            },
+            {
+                "title": "Immunization",
+                "link": "/folders/pediatrics/immunization"
+            }
+        ]
+    }
+}

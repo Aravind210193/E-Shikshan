@@ -1,0 +1,822 @@
+{
+  "branches": {
+    "computer-science--engineering": {
+      "name": "Computer Science & Engineering",
+      "shortName": "CSE",
+      "totalSemesters": 8,
+      "color": "blue",
+      "description": "Computer Science and Engineering covers software development, algorithms, computer systems, and emerging technologies.",
+      "semesters": {
+        "1": {
+          "name": "Semester 1",
+          "subjects": [
+            {
+              "name": "Mathematics I",
+              "code": "MA101",
+              "credits": 4,
+              "type": "Core",
+              "description": "Calculus, matrices, and linear algebra for computer science applications.",
+              "topics": ["Calculus", "Matrices", "Linear Algebra"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Physics I",
+              "code": "PH101",
+              "credits": 4,
+              "type": "Core",
+              "description": "Mechanics, waves, and material properties.",
+              "topics": ["Mechanics", "Waves", "Properties of Matter"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Programming in C",
+              "code": "CS101",
+              "credits": 4,
+              "type": "Core",
+              "description": "Introduction to programming using C language.",
+              "topics": ["C Syntax", "Data Types", "Control Structures", "Functions", "Pointers"],
+              "difficulty": "Easy"
+            },
+            {
+              "name": "Engineering Graphics",
+              "code": "EG101",
+              "credits": 2,
+              "type": "Core",
+              "description": "Technical drawing and geometric construction.",
+              "topics": ["Technical Drawing", "Projections", "CAD"],
+              "difficulty": "Easy"
+            },
+            {
+              "name": "English Communication",
+              "code": "EN101",
+              "credits": 3,
+              "type": "Core",
+              "description": "Technical communication and presentation skills.",
+              "topics": ["Technical Writing", "Presentation", "Communication"],
+              "difficulty": "Easy"
+            }
+          ]
+        },
+        "2": {
+          "name": "Semester 2",
+          "subjects": [
+            {
+              "name": "Mathematics II",
+              "code": "MA102",
+              "credits": 4,
+              "type": "Core",
+              "description": "Differential equations and advanced mathematics.",
+              "topics": ["Differential Equations", "Transforms", "Numerical Methods"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Physics II",
+              "code": "PH102",
+              "credits": 4,
+              "type": "Core",
+              "description": "Electricity, magnetism, and electronics.",
+              "topics": ["Electric Fields", "Magnetism", "Circuits"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Data Structures",
+              "code": "CS102",
+              "credits": 4,
+              "type": "Core",
+              "description": "Fundamental data structures and algorithms.",
+              "topics": ["Arrays", "Linked Lists", "Stacks", "Queues", "Trees"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Digital Logic Design",
+              "code": "CS103",
+              "credits": 3,
+              "type": "Core",
+              "description": "Boolean algebra and digital circuits.",
+              "topics": ["Boolean Algebra", "Logic Gates", "Circuits"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Environmental Science",
+              "code": "EV101",
+              "credits": 2,
+              "type": "Core",
+              "description": "Environmental awareness and sustainability.",
+              "topics": ["Ecology", "Pollution", "Sustainability"],
+              "difficulty": "Easy"
+            }
+          ]
+        },
+        "3": {
+          "name": "Semester 3",
+          "subjects": [
+            {
+              "name": "Discrete Mathematics",
+              "code": "MA201",
+              "credits": 4,
+              "type": "Core",
+              "description": "Mathematical logic, sets, and graph theory.",
+              "topics": ["Logic", "Set Theory", "Graph Theory", "Combinatorics"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Computer Organization",
+              "code": "CS201",
+              "credits": 4,
+              "type": "Core",
+              "description": "Computer hardware and system architecture.",
+              "topics": ["CPU Architecture", "Memory Systems", "Assembly Language"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Object Oriented Programming",
+              "code": "CS202",
+              "credits": 4,
+              "type": "Core",
+              "description": "OOP concepts using Java/C++.",
+              "topics": ["Classes", "Inheritance", "Polymorphism", "Encapsulation"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Database Management Systems",
+              "code": "CS203",
+              "credits": 4,
+              "type": "Core",
+              "description": "Database design and SQL programming.",
+              "topics": ["ER Modeling", "SQL", "Normalization", "Transactions"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Operating Systems",
+              "code": "CS204",
+              "credits": 4,
+              "type": "Core",
+              "description": "OS concepts and system programming.",
+              "topics": ["Process Management", "Memory Management", "File Systems"],
+              "difficulty": "Hard"
+            }
+          ]
+        },
+        "4": {
+          "name": "Semester 4",
+          "subjects": [
+            {
+              "name": "Algorithms & Analysis",
+              "code": "CS301",
+              "credits": 4,
+              "type": "Core",
+              "description": "Algorithm design and complexity analysis.",
+              "topics": ["Sorting", "Searching", "Dynamic Programming", "Graph Algorithms"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Computer Networks",
+              "code": "CS302",
+              "credits": 4,
+              "type": "Core",
+              "description": "Network protocols and communication.",
+              "topics": ["OSI Model", "TCP/IP", "Routing", "Network Security"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Software Engineering",
+              "code": "CS303",
+              "credits": 3,
+              "type": "Core",
+              "description": "Software development methodologies.",
+              "topics": ["SDLC", "Requirements", "Design Patterns", "Testing"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Theory of Computation",
+              "code": "CS304",
+              "credits": 3,
+              "type": "Core",
+              "description": "Formal languages and automata theory.",
+              "topics": ["Automata", "Grammars", "Turing Machines", "Complexity"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Web Technologies",
+              "code": "CS305",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Web development technologies.",
+              "topics": ["HTML", "CSS", "JavaScript", "React", "Node.js"],
+              "difficulty": "Medium"
+            }
+          ]
+        },
+        "5": {
+          "name": "Semester 5",
+          "subjects": [
+            {
+              "name": "Compiler Design",
+              "code": "CS401",
+              "credits": 4,
+              "type": "Core",
+              "description": "Compiler construction and language processing.",
+              "topics": ["Lexical Analysis", "Syntax Analysis", "Code Generation"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Machine Learning",
+              "code": "CS402",
+              "credits": 4,
+              "type": "Core",
+              "description": "ML algorithms and AI concepts.",
+              "topics": ["Supervised Learning", "Neural Networks", "Deep Learning"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Computer Graphics",
+              "code": "CS403",
+              "credits": 3,
+              "type": "Elective",
+              "description": "2D and 3D graphics programming.",
+              "topics": ["2D Graphics", "3D Transformations", "OpenGL"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Cybersecurity",
+              "code": "CS404",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Information security and cryptography.",
+              "topics": ["Cryptography", "Network Security", "Ethical Hacking"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Mobile App Development",
+              "code": "CS405",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Android and iOS app development.",
+              "topics": ["Android", "iOS", "React Native", "Flutter"],
+              "difficulty": "Medium"
+            }
+          ]
+        },
+        "6": {
+          "name": "Semester 6",
+          "subjects": [
+            {
+              "name": "Distributed Systems",
+              "code": "CS501",
+              "credits": 4,
+              "type": "Core",
+              "description": "Distributed computing systems.",
+              "topics": ["Distributed Algorithms", "Cloud Computing", "MapReduce"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Data Mining",
+              "code": "CS502",
+              "credits": 4,
+              "type": "Core",
+              "description": "Data mining and big data analytics.",
+              "topics": ["Classification", "Clustering", "Big Data", "Analytics"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Human Computer Interaction",
+              "code": "CS503",
+              "credits": 3,
+              "type": "Elective",
+              "description": "User interface design principles.",
+              "topics": ["UI/UX Design", "Usability", "User Research"],
+              "difficulty": "Easy"
+            },
+            {
+              "name": "Internet of Things",
+              "code": "CS504",
+              "credits": 3,
+              "type": "Elective",
+              "description": "IoT systems and sensor networks.",
+              "topics": ["IoT Architecture", "Sensors", "Edge Computing"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Blockchain Technology",
+              "code": "CS505",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Blockchain and cryptocurrency systems.",
+              "topics": ["Blockchain", "Smart Contracts", "Cryptocurrency"],
+              "difficulty": "Medium"
+            }
+          ]
+        },
+        "7": {
+          "name": "Semester 7",
+          "subjects": [
+            {
+              "name": "Project Management",
+              "code": "CS601",
+              "credits": 3,
+              "type": "Core",
+              "description": "Software project management.",
+              "topics": ["Agile", "Scrum", "Risk Management", "Quality Assurance"],
+              "difficulty": "Easy"
+            },
+            {
+              "name": "Advanced Algorithms",
+              "code": "CS602",
+              "credits": 4,
+              "type": "Elective",
+              "description": "Advanced algorithmic techniques.",
+              "topics": ["Graph Algorithms", "Approximation", "Parallel Algorithms"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Cloud Computing",
+              "code": "CS603",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Cloud platforms and services.",
+              "topics": ["AWS", "Azure", "Docker", "Kubernetes"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Artificial Intelligence",
+              "code": "CS604",
+              "credits": 4,
+              "type": "Elective",
+              "description": "AI techniques and expert systems.",
+              "topics": ["Search Algorithms", "Expert Systems", "Computer Vision"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Major Project I",
+              "code": "CS605",
+              "credits": 4,
+              "type": "Core",
+              "description": "Capstone project development phase 1.",
+              "topics": ["Project Planning", "System Design", "Prototype"],
+              "difficulty": "Medium"
+            }
+          ]
+        },
+        "8": {
+          "name": "Semester 8",
+          "subjects": [
+            {
+              "name": "Professional Ethics",
+              "code": "CS701",
+              "credits": 2,
+              "type": "Core",
+              "description": "Ethics in technology and professional responsibility.",
+              "topics": ["Professional Ethics", "Privacy", "Social Impact"],
+              "difficulty": "Easy"
+            },
+            {
+              "name": "Quantum Computing",
+              "code": "CS702",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Quantum computing principles.",
+              "topics": ["Quantum Bits", "Quantum Gates", "Quantum Algorithms"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "DevOps & Automation",
+              "code": "CS703",
+              "credits": 3,
+              "type": "Elective",
+              "description": "DevOps practices and automation tools.",
+              "topics": ["CI/CD", "Jenkins", "Docker", "Ansible"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Major Project II",
+              "code": "CS704",
+              "credits": 6,
+              "type": "Core",
+              "description": "Final capstone project completion.",
+              "topics": ["Implementation", "Testing", "Documentation", "Presentation"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Industrial Training",
+              "code": "CS705",
+              "credits": 2,
+              "type": "Core",
+              "description": "Internship and industry exposure.",
+              "topics": ["Industry Exposure", "Professional Skills"],
+              "difficulty": "Easy"
+            }
+          ]
+        }
+      }
+    },
+    "electronics--communication": {
+      "name": "Electronics & Communication",
+      "shortName": "ECE",
+      "totalSemesters": 8,
+      "color": "purple",
+      "description": "Electronics and Communication Engineering focuses on electronic devices, communication systems, and signal processing.",
+      "semesters": {
+        "1": {
+          "name": "Semester 1",
+          "subjects": [
+            {
+              "name": "Mathematics I",
+              "code": "MA101",
+              "credits": 4,
+              "type": "Core",
+              "description": "Calculus and analytical geometry.",
+              "topics": ["Calculus", "Matrices", "Differential Equations"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Physics I",
+              "code": "PH101",
+              "credits": 4,
+              "type": "Core",
+              "description": "Mechanics and wave motion.",
+              "topics": ["Mechanics", "Waves", "Oscillations"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Basic Electronics",
+              "code": "EC101",
+              "credits": 4,
+              "type": "Core",
+              "description": "Fundamentals of electronic devices.",
+              "topics": ["Diodes", "Transistors", "Basic Circuits"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Engineering Graphics",
+              "code": "EG101",
+              "credits": 2,
+              "type": "Core",
+              "description": "Technical drawing for engineers.",
+              "topics": ["Technical Drawing", "CAD", "Projections"],
+              "difficulty": "Easy"
+            },
+            {
+              "name": "English Communication",
+              "code": "EN101",
+              "credits": 3,
+              "type": "Core",
+              "description": "Technical communication skills.",
+              "topics": ["Communication", "Technical Writing"],
+              "difficulty": "Easy"
+            }
+          ]
+        },
+        "2": {
+          "name": "Semester 2",
+          "subjects": [
+            {
+              "name": "Mathematics II",
+              "code": "MA102",
+              "credits": 4,
+              "type": "Core",
+              "description": "Advanced calculus and transforms.",
+              "topics": ["Laplace Transforms", "Fourier Series", "Complex Analysis"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Circuit Theory",
+              "code": "EC102",
+              "credits": 4,
+              "type": "Core",
+              "description": "Electric circuit analysis.",
+              "topics": ["Kirchhoff's Laws", "Network Theorems", "AC Circuits"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Electronic Devices",
+              "code": "EC103",
+              "credits": 4,
+              "type": "Core",
+              "description": "Semiconductor devices and applications.",
+              "topics": ["BJT", "MOSFET", "Amplifiers", "Oscillators"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Digital Electronics",
+              "code": "EC104",
+              "credits": 3,
+              "type": "Core",
+              "description": "Digital logic and systems.",
+              "topics": ["Boolean Algebra", "Logic Gates", "Flip-Flops"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Programming in C",
+              "code": "CS101",
+              "credits": 3,
+              "type": "Core",
+              "description": "Programming fundamentals.",
+              "topics": ["C Programming", "Data Structures", "Algorithms"],
+              "difficulty": "Easy"
+            }
+          ]
+        },
+        "3": {
+          "name": "Semester 3",
+          "subjects": [
+            {
+              "name": "Signals & Systems",
+              "code": "EC201",
+              "credits": 4,
+              "type": "Core",
+              "description": "Signal analysis and system theory.",
+              "topics": ["Signal Analysis", "System Response", "Convolution"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Analog Electronics",
+              "code": "EC202",
+              "credits": 4,
+              "type": "Core",
+              "description": "Analog circuit design.",
+              "topics": ["Op-Amps", "Filters", "Oscillators", "Power Amplifiers"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Digital Signal Processing",
+              "code": "EC203",
+              "credits": 4,
+              "type": "Core",
+              "description": "Digital signal processing techniques.",
+              "topics": ["DFT", "FFT", "Digital Filters", "Z-Transform"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Microprocessors",
+              "code": "EC204",
+              "credits": 4,
+              "type": "Core",
+              "description": "Microprocessor architecture and programming.",
+              "topics": ["8086", "Assembly Language", "Interfacing"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Electromagnetic Theory",
+              "code": "EC205",
+              "credits": 3,
+              "type": "Core",
+              "description": "Electromagnetic fields and waves.",
+              "topics": ["Maxwell's Equations", "Wave Propagation", "Antennas"],
+              "difficulty": "Hard"
+            }
+          ]
+        },
+        "4": {
+          "name": "Semester 4",
+          "subjects": [
+            {
+              "name": "Communication Systems",
+              "code": "EC301",
+              "credits": 4,
+              "type": "Core",
+              "description": "Analog and digital communication.",
+              "topics": ["AM", "FM", "Digital Modulation", "Noise Analysis"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Control Systems",
+              "code": "EC302",
+              "credits": 4,
+              "type": "Core",
+              "description": "Automatic control theory.",
+              "topics": ["Transfer Functions", "Stability", "PID Controllers"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "VLSI Design",
+              "code": "EC303",
+              "credits": 3,
+              "type": "Core",
+              "description": "Very Large Scale Integration design.",
+              "topics": ["CMOS Logic", "Layout Design", "Verilog"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Microcontrollers",
+              "code": "EC304",
+              "credits": 3,
+              "type": "Core",
+              "description": "Microcontroller programming and applications.",
+              "topics": ["8051", "ARM", "Embedded Programming", "IoT"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Linear IC Applications",
+              "code": "EC305",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Linear integrated circuit design.",
+              "topics": ["Op-Amp Applications", "Timer Circuits", "Voltage Regulators"],
+              "difficulty": "Medium"
+            }
+          ]
+        },
+        "5": {
+          "name": "Semester 5",
+          "subjects": [
+            {
+              "name": "Digital Communication",
+              "code": "EC401",
+              "credits": 4,
+              "type": "Core",
+              "description": "Digital communication systems.",
+              "topics": ["Digital Modulation", "Error Correction", "Channel Coding"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Antenna & Wave Propagation",
+              "code": "EC402",
+              "credits": 4,
+              "type": "Core",
+              "description": "Antenna design and wave propagation.",
+              "topics": ["Antenna Parameters", "Array Antennas", "Propagation"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Embedded Systems",
+              "code": "EC403",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Embedded system design.",
+              "topics": ["Real-time Systems", "RTOS", "Hardware-Software Co-design"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Optical Communication",
+              "code": "EC404",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Fiber optic communication systems.",
+              "topics": ["Optical Fibers", "Laser Diodes", "Optical Networks"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "RF & Microwave Engineering",
+              "code": "EC405",
+              "credits": 3,
+              "type": "Elective",
+              "description": "High frequency circuit design.",
+              "topics": ["S-Parameters", "Microwave Components", "RF Circuits"],
+              "difficulty": "Hard"
+            }
+          ]
+        },
+        "6": {
+          "name": "Semester 6",
+          "subjects": [
+            {
+              "name": "Wireless Communication",
+              "code": "EC501",
+              "credits": 4,
+              "type": "Core",
+              "description": "Mobile and wireless systems.",
+              "topics": ["Cellular Systems", "5G", "MIMO", "WiFi"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Information Theory & Coding",
+              "code": "EC502",
+              "credits": 4,
+              "type": "Core",
+              "description": "Information theory and error correction.",
+              "topics": ["Entropy", "Channel Capacity", "Error Correction Codes"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Satellite Communication",
+              "code": "EC503",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Satellite communication systems.",
+              "topics": ["Satellite Orbits", "Link Design", "GPS"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Biomedical Electronics",
+              "code": "EC504",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Electronics in healthcare.",
+              "topics": ["Medical Instrumentation", "Biosensors", "Imaging"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Internet of Things",
+              "code": "EC505",
+              "credits": 3,
+              "type": "Elective",
+              "description": "IoT systems and protocols.",
+              "topics": ["IoT Architecture", "Sensor Networks", "Edge Computing"],
+              "difficulty": "Medium"
+            }
+          ]
+        },
+        "7": {
+          "name": "Semester 7",
+          "subjects": [
+            {
+              "name": "Project Management",
+              "code": "EC601",
+              "credits": 3,
+              "type": "Core",
+              "description": "Engineering project management.",
+              "topics": ["Project Planning", "Risk Management", "Quality Control"],
+              "difficulty": "Easy"
+            },
+            {
+              "name": "Advanced Communication Systems",
+              "code": "EC602",
+              "credits": 4,
+              "type": "Elective",
+              "description": "Modern communication technologies.",
+              "topics": ["OFDM", "Cognitive Radio", "Software Defined Radio"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "MEMS & Nanotechnology",
+              "code": "EC603",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Micro and nano scale devices.",
+              "topics": ["MEMS Fabrication", "Nanosensors", "Applications"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Image Processing",
+              "code": "EC604",
+              "credits": 4,
+              "type": "Elective",
+              "description": "Digital image processing techniques.",
+              "topics": ["Image Enhancement", "Feature Extraction", "Computer Vision"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Major Project I",
+              "code": "EC605",
+              "credits": 4,
+              "type": "Core",
+              "description": "Capstone project development.",
+              "topics": ["Project Design", "Implementation", "Testing"],
+              "difficulty": "Medium"
+            }
+          ]
+        },
+        "8": {
+          "name": "Semester 8",
+          "subjects": [
+            {
+              "name": "Professional Ethics",
+              "code": "EC701",
+              "credits": 2,
+              "type": "Core",
+              "description": "Ethics in engineering practice.",
+              "topics": ["Professional Standards", "Ethics", "Social Responsibility"],
+              "difficulty": "Easy"
+            },
+            {
+              "name": "Artificial Intelligence in ECE",
+              "code": "EC702",
+              "credits": 3,
+              "type": "Elective",
+              "description": "AI applications in electronics.",
+              "topics": ["Machine Learning", "Neural Networks", "AI Hardware"],
+              "difficulty": "Hard"
+            },
+            {
+              "name": "Radar Systems",
+              "code": "EC703",
+              "credits": 3,
+              "type": "Elective",
+              "description": "Radar system design and applications.",
+              "topics": ["Radar Principles", "Signal Processing", "Applications"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Major Project II",
+              "code": "EC704",
+              "credits": 6,
+              "type": "Core",
+              "description": "Final project completion.",
+              "topics": ["Final Implementation", "Documentation", "Presentation"],
+              "difficulty": "Medium"
+            },
+            {
+              "name": "Industrial Training",
+              "code": "EC705",
+              "credits": 2,
+              "type": "Core",
+              "description": "Industry internship program.",
+              "topics": ["Industry Exposure", "Practical Skills"],
+              "difficulty": "Easy"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
