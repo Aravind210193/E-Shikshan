@@ -537,11 +537,64 @@ const getDashboardStats = async (req, res) => {
         .limit(10);
     }
 
+    // Instructors for dashboard (only for admin role)
+    let totalInstructors = 0;
+    let recentInstructors = [];
+    let allRegisteredStudents = [];
+
+    if (!isManager) {
+      // Fetch all instructors/course_managers from Admin collection
+      totalInstructors = await Admin.countDocuments({
+        role: { $in: ['course_manager', 'instructor', 'faculty'] }
+      });
+
+      // Fetch recent instructors with their course counts
+      const instructors = await Admin.find({
+        role: { $in: ['course_manager', 'instructor', 'faculty'] }
+      })
+        .select('name email role createdAt')
+        .sort('-createdAt')
+        .limit(10)
+        .lean();
+
+      recentInstructors = await Promise.all(instructors.map(async (instructor) => {
+        const courseCount = await Course.countDocuments({ instructorEmail: instructor.email });
+        return {
+          ...instructor,
+          courseCount
+        };
+      }));
+
+      // Fetch all registered students across all courses
+      const students = await Enrollment.find({ status: { $in: ['active', 'completed'] } })
+        .populate('userId', 'name email role')
+        .populate('courseId', 'title thumbnail')
+        .select('userId courseId enrolledAt progress paymentStatus status')
+        .sort('-enrolledAt')
+        .limit(100) // Limit to prevent excessive data
+        .lean();
+
+      allRegisteredStudents = students.map(enrollment => ({
+        _id: enrollment.userId?._id,
+        name: enrollment.userId?.name,
+        email: enrollment.userId?.email,
+        course: {
+          id: enrollment.courseId?._id,
+          title: enrollment.courseId?.title,
+          thumbnail: enrollment.courseId?.thumbnail
+        },
+        enrolledAt: enrollment.enrolledAt,
+        progress: enrollment.progress,
+        paymentStatus: enrollment.paymentStatus,
+        status: enrollment.status
+      }));
+    }
+
     res.json({
       stats: {
         apiVersion: "v2-students-fixed",
         totalUsers,
-        totalStudents,
+        totalInstructors,
         totalCourses,
         activeCourses,
         draftCourses,
@@ -568,7 +621,9 @@ const getDashboardStats = async (req, res) => {
       contentByType,
       recentDoubts,
       enrollmentTrend,
-      userMonthlyTrend
+      userMonthlyTrend,
+      recentInstructors,
+      allRegisteredStudents
     });
   } catch (error) {
     console.error('Get stats error:', error);

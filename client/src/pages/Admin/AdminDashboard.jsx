@@ -58,6 +58,10 @@ const AdminDashboard = () => {
   const [courseStudents, setCourseStudents] = useState([]);
   const [studentsLoading, setStudentsLoading] = useState(false);
 
+  // Instructor and Student data from backend
+  const [recentInstructors, setRecentInstructors] = useState([]);
+  const [allRegisteredStudents, setAllRegisteredStudents] = useState([]);
+
   useEffect(() => {
     const load = async () => {
       setLoading(true);
@@ -85,6 +89,11 @@ const AdminDashboard = () => {
         setRecentDoubts(Array.isArray(rd) ? rd : []);
         setEnrollmentTrend(Array.isArray(et) ? et.map(d => ({ name: d._id, enrollments: d.enrollments })) : []);
         setUserTrend(Array.isArray(ut) ? ut.map(d => ({ name: d._id, users: d.users })) : []);
+
+        // Set instructors and students data from backend
+        const { recentInstructors: ri, allRegisteredStudents: ars } = res.data || {};
+        setRecentInstructors(Array.isArray(ri) ? ri : []);
+        setAllRegisteredStudents(Array.isArray(ars) ? ars : []);
       } catch (err) {
         console.error('Dashboard load failed', err);
         setError(err?.response?.data?.message || 'Failed to load dashboard');
