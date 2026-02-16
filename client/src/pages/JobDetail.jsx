@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { jobsAPI } from "../services/api";
 import { Clock, Calendar, Briefcase, Award, Users, ChevronRight, Star, MapPin, Banknote, Bookmark, Share2, BadgeCheck, Globe, Loader2, Send, XCircle } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const Section = ({ title, children, icon }) => (
   <section className="mb-8">
