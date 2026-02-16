@@ -7,9 +7,9 @@ const PathItemSchema = new mongoose.Schema(
     description: { type: String, default: '' },
     topics: { type: [String], default: [] },
     resources: { type: [String], default: [] },
-    project: { type: String, default: '' }
-  },
-  { _id: false }
+    project: { type: String, default: '' },
+    projectId: { type: String } // Unique ID for project submission linking
+  }
 );
 
 const RoadmapSchema = new mongoose.Schema(

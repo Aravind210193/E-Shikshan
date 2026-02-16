@@ -178,6 +178,14 @@ const getUserById = async (req, res) => {
           .select('title organizer location status startDate mode');
       }
 
+      // If roadmap instructor, fetch created roadmaps
+      let createdRoadmaps = [];
+      if (admin.role === 'roadmap_instructor') {
+        // Assuming roadmaps also have createdBy field
+        createdRoadmaps = await AdminRoadmap.find({ createdBy: admin._id })
+          .select('title category difficulty status duration');
+      }
+
       const normalized = {
         _id: admin._id,
         name: admin.name,
@@ -188,7 +196,7 @@ const getUserById = async (req, res) => {
         createdAt: admin.createdAt,
         updatedAt: admin.updatedAt,
       };
-      return res.json({ user: normalized, enrollments: [], assignedCourses, postedJobs, postedHackathons });
+      return res.json({ user: normalized, enrollments: [], assignedCourses, postedJobs, postedHackathons, createdRoadmaps });
     }
 
     return res.status(404).json({ message: 'User not found' });
@@ -616,120 +624,167 @@ const deleteEnrollment = async (req, res) => {
 // @desc    Get dashboard stats
 // @route   GET /api/admin/stats
 // @access  Private/Admin
+// @desc    Get dashboard stats
+// @route   GET /api/admin/stats
+// @access  Private/Admin
 const getDashboardStats = async (req, res) => {
   try {
     const adminRole = req.admin?.role?.toLowerCase();
-    const isManager = adminRole === 'course_manager' || adminRole === 'instructor' || adminRole === 'faculty';
-    const courseQuery = isManager ? { instructorEmail: req.admin.email } : {};
+    const isCourseManager = adminRole === 'course_manager' || adminRole === 'instructor' || adminRole === 'faculty';
+    const isJobInstructor = adminRole === 'job_instructor';
+    const isHackathonInstructor = adminRole === 'hackathon_instructor';
+    const isRoadmapInstructor = adminRole === 'roadmap_instructor';
+    const isLimitedAdmin = isCourseManager || isJobInstructor || isHackathonInstructor || isRoadmapInstructor;
+
+    // Queries
+    const courseQuery = isCourseManager ? { instructorEmail: req.admin.email } : {};
+    const jobQuery = isJobInstructor ? { postedBy: req.admin._id } : {};
+    const hackathonQuery = isHackathonInstructor ? { createdBy: req.admin._id } : {};
+    // Roadmap query: If roadmap_instructor, ideally we filter by createdBy. 
+    // Assuming we will add createdBy to Roadmaps or they manage all roadmaps.
+    // For now, if they are roadmap_instructor, they see all roadmaps or their own if schema supports it.
+    // We already checked schema has createdBy.
+    const roadmapQuery = isRoadmapInstructor ? { createdBy: req.admin._id } : {};
 
     // Filter total users/students
-    let totalUsers;
-    let totalStudents;
-    if (isManager) {
+    let totalUsers = 0;
+    let totalStudents = 0;
+
+    if (isCourseManager) {
       const instructorCourses = await Course.find(courseQuery).select('_id');
       const courseIds = instructorCourses.map(c => c._id);
       const uniqueStudentIds = await Enrollment.distinct('userId', { courseId: { $in: courseIds } });
       totalUsers = uniqueStudentIds.length;
-      totalStudents = uniqueStudentIds.length; // For manager, total students equals total unique users they see
+      totalStudents = uniqueStudentIds.length;
+    } else if (isJobInstructor || isHackathonInstructor || isRoadmapInstructor) {
+      // Estimate based on applicants? For now just show 0 or maybe all users is fine?
+      // Let's show all users for now as they might want to see potential pool
+      totalUsers = await User.countDocuments();
+      totalStudents = await User.countDocuments({ role: 'student' });
     } else {
       totalUsers = await User.countDocuments();
       totalStudents = await User.countDocuments({ role: 'student' });
     }
-    console.log(`[DEBUG] Dashboard Stats Request - Role: ${adminRole}, Manager: ${isManager}, Students: ${totalStudents}`);
 
+    console.log(`[DEBUG] Dashboard Stats Request - Role: ${adminRole}, Limited: ${isLimitedAdmin}`);
+
+    // Course Stats
     const totalCourses = await Course.countDocuments(courseQuery);
     const activeCourses = await Course.countDocuments({ ...courseQuery, status: 'active' });
     const draftCourses = await Course.countDocuments({ ...courseQuery, status: 'draft' });
     const archivedCourses = await Course.countDocuments({ ...courseQuery, status: 'archived' });
 
-    // Top courses by enrollment (manager filtered)
-    const topCourses = await Course.find({ ...courseQuery, status: 'active' })
-      .select('title students thumbnail category rating')
-      .sort('-students')
-      .limit(5);
+    // Top courses (only relevant for Course Manager or Admin)
+    let topCourses = [];
+    if (isCourseManager || !isLimitedAdmin) {
+      topCourses = await Course.find({ ...courseQuery, status: 'active' })
+        .select('title students thumbnail category rating')
+        .sort('-students')
+        .limit(5);
+    }
 
-    // Filter enrollments if manager
+    // Enrollment Stats
     let enrollmentQuery = {};
-    if (isManager) {
-      // Get all course IDs owned by this manager
+    if (isCourseManager) {
       const managerCourses = await Course.find(courseQuery).select('_id');
       const courseIds = managerCourses.map(c => c._id);
       enrollmentQuery = { courseId: { $in: courseIds } };
+    } else if (isJobInstructor || isHackathonInstructor) {
+      // They don't have enrollments really, so empty query or null
+      // Force 0 results
+      enrollmentQuery = { _id: null };
     }
 
     const totalEnrollments = await Enrollment.countDocuments(enrollmentQuery);
     const activeEnrollments = await Enrollment.countDocuments({ ...enrollmentQuery, status: 'active' });
     const suspendedEnrollments = await Enrollment.countDocuments({ ...enrollmentQuery, status: 'suspended' });
 
-    // Admin only stats (hide or zero for manager)
-    const totalHackathons = isManager ? 0 : await AdminHackathon.countDocuments();
-    const activeHackathons = isManager ? 0 : await AdminHackathon.countDocuments({ status: 'active' });
-    const totalJobs = isManager ? 0 : await AdminJob.countDocuments();
-    const activeJobs = isManager ? 0 : await AdminJob.countDocuments({ status: 'Active' });
+    // Job Stats
+    const totalJobs = await AdminJob.countDocuments(jobQuery);
+    const activeJobs = await AdminJob.countDocuments({ ...jobQuery, status: 'Active' });
 
-    // Courses by category
-    const coursesByCategory = await Course.aggregate([
-      { $match: { ...courseQuery, status: 'active' } },
-      { $group: { _id: '$category', count: { $sum: 1 }, students: { $sum: '$students' } } },
-      { $sort: { count: -1 } },
-      { $limit: 10 }
-    ]);
+    // Hackathon Stats
+    const totalHackathons = await AdminHackathon.countDocuments(hackathonQuery);
+    const activeHackathons = await AdminHackathon.countDocuments({ ...hackathonQuery, status: 'active' });
 
-    // Recent enrollments (filtered for manager)
-    const recentEnrollments = await Enrollment.find(enrollmentQuery)
-      .populate('userId', 'name email')
-      .populate('courseId', 'title price')
-      .sort('-enrolledAt')
-      .limit(10);
+    // Courses by category (Course Manager or Admin)
+    let coursesByCategory = [];
+    if (isCourseManager || !isLimitedAdmin) {
+      coursesByCategory = await Course.aggregate([
+        { $match: { ...courseQuery, status: 'active' } },
+        { $group: { _id: '$category', count: { $sum: 1 }, students: { $sum: '$students' } } },
+        { $sort: { count: -1 } },
+        { $limit: 10 }
+      ]);
+    }
 
-    // Revenue calculation (only completed payments, filtered for manager)
-    const revenueMatch = {
-      paymentStatus: { $in: ['completed', 'active'] },
-      ...enrollmentQuery
-    };
-    const revenueData = await Enrollment.aggregate([
-      { $match: revenueMatch },
-      { $group: { _id: null, totalRevenue: { $sum: '$amountPaid' } } }
-    ]);
-    const totalRevenue = revenueData[0]?.totalRevenue || 0;
+    // Recent enrollments (filtered)
+    let recentEnrollments = [];
+    if (isCourseManager || !isLimitedAdmin) {
+      recentEnrollments = await Enrollment.find(enrollmentQuery)
+        .populate('userId', 'name email')
+        .populate('courseId', 'title price')
+        .sort('-enrolledAt')
+        .limit(10);
+    }
 
-    // Roadmaps for dashboard
-    const totalRoadmaps = await AdminRoadmap.countDocuments();
-    const activeRoadmaps = await AdminRoadmap.countDocuments({ status: 'active' });
-    const recentRoadmaps = await AdminRoadmap.find({ status: 'active' })
+    // Revenue
+    let totalRevenue = 0;
+    if (isCourseManager || !isLimitedAdmin) {
+      const revenueMatch = {
+        paymentStatus: { $in: ['completed', 'active'] },
+        ...enrollmentQuery
+      };
+      const revenueData = await Enrollment.aggregate([
+        { $match: revenueMatch },
+        { $group: { _id: null, totalRevenue: { $sum: '$amountPaid' } } }
+      ]);
+      totalRevenue = revenueData[0]?.totalRevenue || 0;
+    }
+
+    // Roadmaps
+    const totalRoadmaps = await AdminRoadmap.countDocuments(roadmapQuery);
+    const activeRoadmaps = await AdminRoadmap.countDocuments({ ...roadmapQuery, status: 'active' });
+    const recentRoadmaps = !isLimitedAdmin || isRoadmapInstructor ? await AdminRoadmap.find({ ...roadmapQuery, status: 'active' })
       .select('title category thumbnail level steps')
       .sort('-createdAt')
-      .limit(6);
+      .limit(6) : [];
 
-    // Content for dashboard
+    // Content
     const totalContent = await AdminContent.countDocuments();
     const publishedContent = await AdminContent.countDocuments({ status: 'published' });
+    const recentContent = !isLimitedAdmin ? await AdminContent.find()
+      .select('title type branch subject status createdAt')
+      .sort('-createdAt')
+      .limit(10) : [];
+
+    // Content Types - keep for all?
     const contentByType = await AdminContent.aggregate([
       { $group: { _id: '$type', count: { $sum: 1 } } }
     ]);
-    const recentContent = await AdminContent.find()
-      .select('title type branch subject status createdAt')
-      .sort('-createdAt')
-      .limit(10);
 
-    // Trends Aggregation (Last 6 Months)
+
+    // Trends
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
     sixMonthsAgo.setDate(1);
     sixMonthsAgo.setHours(0, 0, 0, 0);
 
-    const enrollmentTrend = await Enrollment.aggregate([
-      { $match: { ...enrollmentQuery, enrolledAt: { $gte: sixMonthsAgo } } },
-      {
-        $group: {
-          _id: { $dateToString: { format: "%Y-%m", date: "$enrolledAt" } },
-          enrollments: { $sum: 1 }
-        }
-      },
-      { $sort: { _id: 1 } }
-    ]);
+    let enrollmentTrend = [];
+    if (isCourseManager || !isLimitedAdmin) {
+      enrollmentTrend = await Enrollment.aggregate([
+        { $match: { ...enrollmentQuery, enrolledAt: { $gte: sixMonthsAgo } } },
+        {
+          $group: {
+            _id: { $dateToString: { format: "%Y-%m", date: "$enrolledAt" } },
+            enrollments: { $sum: 1 }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ]);
+    }
 
-    const userMonthlyTrend = isManager ? [] : await User.aggregate([
+    const userMonthlyTrend = isLimitedAdmin ? [] : await User.aggregate([
       { $match: { role: 'student', createdAt: { $gte: sixMonthsAgo } } },
       {
         $group: {
@@ -740,10 +795,10 @@ const getDashboardStats = async (req, res) => {
       { $sort: { _id: 1 } }
     ]);
 
-    // Doubts for instructor if applicable
+    // Doubts
     let doubtsStats = { total: 0, pending: 0, resolved: 0 };
     let recentDoubts = [];
-    if (isManager) {
+    if (isCourseManager) {
       const doubtQuery = { instructorEmail: req.admin.email };
       doubtsStats.total = await Doubt.countDocuments(doubtQuery);
       doubtsStats.pending = await Doubt.countDocuments({ ...doubtQuery, status: 'pending' });
@@ -755,22 +810,16 @@ const getDashboardStats = async (req, res) => {
         .limit(10);
     }
 
-    // Generic submissions for instructor
+    // Project Submissions
     let projectStats = { total: 0, pending: 0 };
     let assignmentStats = { total: 0, pending: 0 };
     let recentProjectSubmissions = [];
-    if (isManager) {
+    if (isCourseManager) {
       const baseQuery = { instructorEmail: req.admin.email };
-
-      // Projects
       projectStats.total = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'project' });
       projectStats.pending = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'project', status: 'pending' });
-
-      // Assignments
       assignmentStats.total = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'assignment' });
       assignmentStats.pending = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'assignment', status: 'pending' });
-
-      // Recent (common)
       recentProjectSubmissions = await ProjectSubmission.find({ ...baseQuery, status: 'pending' })
         .populate('student', 'name email')
         .populate('course', 'title')
@@ -778,18 +827,12 @@ const getDashboardStats = async (req, res) => {
         .limit(10);
     }
 
-    // Instructors for dashboard (only for admin role)
-    let totalInstructors = 0;
+    // Admin Lists
     let recentInstructors = [];
     let allRegisteredStudents = [];
 
-    if (!isManager) {
+    if (!isLimitedAdmin) {
       // Fetch all instructors/course_managers from Admin collection
-      totalInstructors = await Admin.countDocuments({
-        role: { $in: ['course_manager', 'instructor', 'faculty'] }
-      });
-
-      // Fetch recent instructors with their course counts
       const instructors = await Admin.find({
         role: { $in: ['course_manager', 'instructor', 'faculty'] }
       })
@@ -806,13 +849,14 @@ const getDashboardStats = async (req, res) => {
         };
       }));
 
-      // Fetch all registered students across all courses
+      // Fetch all registered students
+      // ... (existing large query)
       const students = await Enrollment.find({ status: { $in: ['active', 'completed'] } })
         .populate('userId', 'name email role')
         .populate('courseId', 'title thumbnail')
         .select('userId courseId enrolledAt progress paymentStatus status')
         .sort('-enrolledAt')
-        .limit(100) // Limit to prevent excessive data
+        .limit(50)
         .lean();
 
       allRegisteredStudents = students.map(enrollment => ({
@@ -833,10 +877,11 @@ const getDashboardStats = async (req, res) => {
 
     res.json({
       stats: {
-        apiVersion: "v2-students-fixed",
+        apiVersion: "v2.1-roles-fixed",
+        role: adminRole,
         totalUsers,
         totalStudents,
-        totalInstructors,
+        totalInstructors: !isLimitedAdmin ? await Admin.countDocuments({ role: { $in: ['course_manager', 'instructor', 'faculty'] } }) : 0,
         totalCourses,
         activeCourses,
         draftCourses,

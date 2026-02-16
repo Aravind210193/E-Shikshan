@@ -67,6 +67,7 @@ const AdminSubmissions = () => {
         if (activeQuickFilter === 'pending') matchesQuick = sub.status === 'pending';
         else if (activeQuickFilter === 'project') matchesQuick = sub.workType === 'project';
         else if (activeQuickFilter === 'assignment') matchesQuick = sub.workType === 'assignment';
+        else if (activeQuickFilter === 'roadmap') matchesQuick = sub.workType === 'roadmap_project';
 
         return matchesSearch && matchesStatus && matchesQuick;
     });
@@ -128,6 +129,18 @@ const AdminSubmissions = () => {
                     <div>
                         <p className="text-white font-bold text-lg">{submissions.filter(s => s.workType === 'assignment').length}</p>
                         <p className="text-[#7a7f9a] text-[10px] font-black uppercase tracking-widest">Assignments</p>
+                    </div>
+                </div>
+                <div
+                    onClick={() => setActiveQuickFilter("roadmap")}
+                    className={`bg-[#1a1c2c] border rounded-xl p-4 flex items-center gap-4 cursor-pointer transition-all ${activeQuickFilter === 'roadmap' ? 'border-orange-500 bg-orange-500/5 shadow-orange-500/10 shadow-lg' : 'border-[#2d2f45] hover:border-gray-600'}`}
+                >
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${activeQuickFilter === 'roadmap' ? 'bg-orange-500 text-white' : 'bg-orange-500/10 text-orange-400'}`}>
+                        <BookOpen size={20} />
+                    </div>
+                    <div>
+                        <p className="text-white font-bold text-lg">{submissions.filter(s => s.workType === 'roadmap_project').length}</p>
+                        <p className="text-[#7a7f9a] text-[10px] font-black uppercase tracking-widest">Roadmaps</p>
                     </div>
                 </div>
             </div>
@@ -201,15 +214,15 @@ const AdminSubmissions = () => {
                                                     }`}>
                                                     {sub.status}
                                                 </span>
-                                                <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-tighter ${sub.workType === 'project' ? 'bg-indigo-500/10 text-indigo-400' : 'bg-purple-500/10 text-purple-400'
+                                                <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-tighter ${sub.workType === 'project' ? 'bg-indigo-500/10 text-indigo-400' : sub.workType === 'roadmap_project' ? 'bg-orange-500/10 text-orange-400' : 'bg-purple-500/10 text-purple-400'
                                                     }`}>
-                                                    {sub.workType}
+                                                    {sub.workType === 'roadmap_project' ? 'Roadmap' : sub.workType}
                                                 </span>
                                             </div>
                                             <div className="flex flex-wrap items-center gap-4 text-xs text-[#7a7f9a]">
                                                 <div className="flex items-center gap-1.5">
                                                     <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
-                                                    <span className="font-bold text-white/80">{sub.course?.title}</span>
+                                                    <span className="font-bold text-white/80">{sub.course?.title || sub.roadmap?.title || 'Unknown Context'}</span>
                                                 </div>
                                                 <div className="flex items-center gap-1.5">
                                                     <Award className="w-3.5 h-3.5 text-purple-400" />
@@ -321,7 +334,7 @@ const AdminSubmissions = () => {
                                                 {selectedSubmission.title}
                                             </span>
                                         </div>
-                                        <p className="text-white font-bold text-sm mb-1">{selectedSubmission.course?.title}</p>
+                                        <p className="text-white font-bold text-sm mb-1">{selectedSubmission.course?.title || selectedSubmission.roadmap?.title}</p>
                                         <a href={selectedSubmission.submissionUrl} target="_blank" rel="noreferrer" className="text-cyan-400 text-xs hover:underline flex items-center gap-1">
                                             <ExternalLink className="w-3 h-3" /> View Submission Link
                                         </a>

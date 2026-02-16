@@ -133,7 +133,8 @@ const AdminRoadmaps = () => {
           description: "",
           topics: [],
           resources: [],
-          project: ""
+          project: "",
+          projectId: ""
         }
       ]
     });
@@ -495,6 +496,7 @@ const AdminRoadmaps = () => {
                                         <span className="text-xs font-bold uppercase tracking-tight">Requirement</span>
                                       </div>
                                       <p className="text-gray-300 text-sm leading-relaxed font-medium">{step.project}</p>
+                                      {step.projectId && <span className="block mt-2 text-[10px] bg-blue-500/20 text-blue-300 px-2 py-1 rounded inline-block font-mono">ID: {step.projectId}</span>}
                                     </div>
                                   </div>
                                 )}
@@ -739,6 +741,16 @@ const AdminRoadmaps = () => {
                                       placeholder="Final Deliverable..."
                                     />
                                   </div>
+                                </div>
+                                <div>
+                                  <label className="text-[10px] font-black text-blue-900 uppercase tracking-widest mb-2 block">Project ID (Unique Slug)</label>
+                                  <input
+                                    type="text"
+                                    value={step.projectId || ''}
+                                    onChange={(e) => handleStepChange(idx, 'projectId', e.target.value)}
+                                    className="w-full px-4 py-3 bg-blue-500/5 border border-blue-500/10 rounded-2xl text-blue-300 text-sm font-mono outline-none focus:border-blue-500/30 transition-all shadow-inner"
+                                    placeholder="e.g. basic-calculator-v1"
+                                  />
                                 </div>
                               </div>
                             </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Search, Eye, CheckCircle, XCircle, ShieldCheck, RotateCcw, Trash2, PlusCircle, Braces, Pencil, BookOpen, Users } from "lucide-react";
+import { Search, Eye, CheckCircle, XCircle, ShieldCheck, RotateCcw, Trash2, PlusCircle, Braces, Pencil, BookOpen, Users, Briefcase, Trophy } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { adminAPI, coursesAPI } from "../../services/api";
 import { adminCourseAPI } from "../../services/adminApi";

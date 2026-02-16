@@ -20,6 +20,10 @@ const {
   replyDoubt,
   getPendingDoubtsCount,
 } = require('../controllers/doubtController');
+const {
+  getInstructorSubmissions,
+  updateSubmission
+} = require('../controllers/projectSubmissionController');
 const { adminAuth } = require('../middlewares/adminAuth');
 
 // All routes require authentication and admin privileges
@@ -53,5 +57,9 @@ router.get('/doubts/instructor', getDoubtsForInstructor);
 router.get('/doubts/pending-count', getPendingDoubtsCount);
 router.put('/doubts/:id/reply', replyDoubt);
 router.get('/doubts/all', getAllDoubts);
+
+// Project Submissions
+router.get('/project-submissions/instructor', getInstructorSubmissions);
+router.put('/project-submissions/:id', updateSubmission);
 
 module.exports = router;

@@ -8,23 +8,46 @@ const User = require('../models/User'); // Import User model
 // @access  Private/Student
 exports.submitProject = async (req, res) => {
     try {
-        const { courseId, workId, workType, title, submissionUrl, comments } = req.body;
+        const { courseId, roadmapId, workId, workType, title, submissionUrl, comments } = req.body;
         const userId = req.user._id;
         const studentName = req.user.name || 'Student';
 
-        const course = await Course.findById(courseId);
-        if (!course) {
-            return res.status(404).json({ message: 'Course not found' });
-        }
+        let instructorEmail = '';
+        let contextTitle = '';
+        let notificationType = 'project';
 
-        if (!course.instructorEmail) {
-            return res.status(400).json({ message: 'This course does not have an assigned instructor to receive submissions.' });
+        if (workType === 'roadmap_project') {
+            // Handle Roadmap Submission
+            const Roadmap = require('../models/AdminRoadmap');
+            const roadmap = await Roadmap.findById(roadmapId || courseId); // Frontend might send roadmapId as courseId
+            if (!roadmap) {
+                return res.status(404).json({ message: 'Roadmap not found' });
+            }
+            // For now, all roadmap submissions go to the main roadmap instructor
+            // You can change this email or fetch it from a config/env
+            instructorEmail = 'roadmap@eshikshan.com';
+            contextTitle = roadmap.title;
+            notificationType = 'roadmap';
+        } else {
+            // Handle Course Submission
+            const course = await Course.findById(courseId);
+            if (!course) {
+                return res.status(404).json({ message: 'Course not found' });
+            }
+
+            if (!course.instructorEmail) {
+                return res.status(400).json({ message: 'This course does not have an assigned instructor to receive submissions.' });
+            }
+            instructorEmail = course.instructorEmail;
+            contextTitle = course.title;
+            notificationType = workType === 'project' ? 'Project' : 'Assignment';
         }
 
         const submission = await ProjectSubmission.create({
-            course: courseId,
+            course: workType === 'roadmap_project' ? null : courseId,
+            roadmap: workType === 'roadmap_project' ? (roadmapId || courseId) : null,
             student: userId,
-            instructorEmail: course.instructorEmail,
+            instructorEmail: instructorEmail,
             workId,
             workType,
             title,
@@ -33,12 +56,14 @@ exports.submitProject = async (req, res) => {
         });
 
         // Create notification for instructor
+        // For roadmap, we might need to find the user with that email first if we want to add notification to their feed
+        // Or if 'recipientEmail' works directly in your Notification model logic (it seems it does)
         await Notification.create({
-            recipientEmail: course.instructorEmail.toLowerCase(),
+            recipientEmail: instructorEmail.toLowerCase(),
             sender: userId,
             type: 'general',
-            title: `New ${workType === 'project' ? 'Project' : 'Assignment'} Submission`,
-            message: `${studentName} submitted: ${title} in ${course.title}`,
+            title: `New ${notificationType} Submission`,
+            message: `${studentName} submitted: ${title} in ${contextTitle}`,
             relatedId: submission._id
         });
 
@@ -58,9 +83,19 @@ exports.submitProject = async (req, res) => {
 // @access  Private/Instructor
 exports.getInstructorSubmissions = async (req, res) => {
     try {
-        const submissions = await ProjectSubmission.find({ instructorEmail: req.admin.email })
+        let query = {};
+        if (req.admin.role === 'roadmap_instructor') {
+            // Roadmap instructor sees all roadmap submissions
+            query = { workType: 'roadmap_project' };
+        } else {
+            // Course instructors see their course submissions
+            query = { instructorEmail: req.admin.email };
+        }
+
+        const submissions = await ProjectSubmission.find(query)
             .populate('student', 'name email')
-            .populate('course', 'title')
+            .populate('course', 'title') // Might be null for roadmap
+            .populate('roadmap', 'title') // Populate roadmap title
             .sort('-createdAt');
 
         res.json({

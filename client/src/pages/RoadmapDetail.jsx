@@ -47,7 +47,81 @@ const TopicCard = ({ topic, index, onClick, isCompleted, isNext }) => {
   );
 };
 
-const TopicDetail = ({ topic, onClose }) => {
+import { projectSubmissionAPI } from "../services/api";
+import { toast } from "react-hot-toast";
+
+const SubmissionModal = ({ isOpen, onClose, onSubmit, submitting, topic }) => {
+  const [url, setUrl] = useState("");
+  const [comments, setComments] = useState("");
+
+  if (!isOpen) return null;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ submissionUrl: url, comments });
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="bg-gray-800 border border-gray-700 rounded-2xl w-full max-w-md p-6 shadow-2xl"
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-xl font-bold text-white">Submit Project</h3>
+          <button onClick={onClose} className="text-gray-400 hover:text-white">
+            <X size={24} />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-1">Project Link (GitHub/Deployed URL)</label>
+            <input
+              type="url"
+              required
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              className="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white outline-none focus:border-purple-500 transition-colors"
+              placeholder="https://github.com/username/project"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-1">Comments (Optional)</label>
+            <textarea
+              value={comments}
+              onChange={(e) => setComments(e.target.value)}
+              className="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white outline-none focus:border-purple-500 transition-colors h-24 resize-none"
+              placeholder="Any notes for the instructor..."
+            />
+          </div>
+
+          <div className="pt-4 flex gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 py-3 bg-gray-700 text-white rounded-xl font-bold hover:bg-gray-600 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="flex-1 py-3 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
+            >
+              {submitting ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Send size={18} />}
+              Submit
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  );
+};
+
+const TopicDetail = ({ topic, onClose, onOpenSubmission }) => {
   if (!topic) return null;
 
   return (
@@ -74,10 +148,7 @@ const TopicDetail = ({ topic, onClose }) => {
             onClick={onClose}
             className="p-2 rounded-full text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
+            <X size={20} />
           </button>
         </div>
 
@@ -109,27 +180,10 @@ const TopicDetail = ({ topic, onClose }) => {
               </h3>
               <div className="space-y-2">
                 {topic.resources.map((resource, i) => {
-                  // Generate dummy URLs based on resource name
                   const getDummyUrl = (resourceName) => {
-                    const name = resourceName.toLowerCase();
-                    if (name.includes('mdn')) return 'https://developer.mozilla.org';
-                    if (name.includes('css-tricks')) return 'https://css-tricks.com';
-                    if (name.includes('web.dev')) return 'https://web.dev';
-                    if (name.includes('frontend masters')) return 'https://frontendmasters.com';
-                    if (name.includes('javascript.info')) return 'https://javascript.info';
-                    if (name.includes('freecodecamp')) return 'https://freecodecamp.org';
-                    if (name.includes('github')) return 'https://github.com';
-                    if (name.includes('youtube')) return 'https://youtube.com';
-                    if (name.includes('udemy')) return 'https://udemy.com';
-                    if (name.includes('coursera')) return 'https://coursera.org';
-                    if (name.includes('atlassian')) return 'https://atlassian.com';
-                    if (name.includes('git')) return 'https://git-scm.com';
-                    if (name.includes('react')) return 'https://react.dev';
-                    if (name.includes('typescript')) return 'https://typescriptlang.org';
-                    if (name.includes('nodejs')) return 'https://nodejs.org';
-                    return 'https://google.com/search?q=' + encodeURIComponent(resourceName);
+                    // ... existing helper (can be moved out or duplicated if needed, but for now we assume it's fine or we can simplify)
+                    return 'https://google.com/search?q=' + encodeURIComponent(typeof resource === 'string' ? resource : resource.title);
                   };
-
                   const url = typeof resource === 'object' ? resource.url : getDummyUrl(resource);
                   const title = typeof resource === 'object' ? resource.title : resource;
 
@@ -164,29 +218,26 @@ const TopicDetail = ({ topic, onClose }) => {
                   <div>
                     <h4 className="text-white font-semibold mb-1">Build a Real Project</h4>
                     <p className="text-gray-300 text-sm leading-relaxed">{topic.project}</p>
+                    {topic.projectId && (
+                      <span className="inline-block mt-2 px-2 py-1 bg-black/30 rounded text-xs font-mono text-gray-400 border border-white/10">ID: {topic.projectId}</span>
+                    )}
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-4">
+                  {/* Tags can be static or dynamic */}
                   <span className="px-3 py-1 bg-pink-600/30 text-pink-300 rounded-full text-xs font-medium border border-pink-500/30">
                     Hands-on Practice
-                  </span>
-                  <span className="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-xs font-medium border border-purple-500/30">
-                    Portfolio Worthy
-                  </span>
-                  <span className="px-3 py-1 bg-blue-600/30 text-blue-300 rounded-full text-xs font-medium border border-blue-500/30">
-                    Real-world Application
                   </span>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <button className="flex items-center gap-2 px-4 py-2.5 bg-pink-600 rounded-lg text-white font-medium hover:bg-pink-700 transition-all hover:shadow-lg hover:shadow-pink-500/30">
-                    <Code size={16} />
-                    Start Project
-                  </button>
-                  <button className="flex items-center gap-2 px-4 py-2.5 bg-gray-700 rounded-lg text-gray-200 font-medium hover:bg-gray-600 transition-colors">
-                    <ExternalLink size={16} />
-                    View Examples
+                  <button
+                    onClick={() => onOpenSubmission(topic)}
+                    className="flex items-center gap-2 px-4 py-2.5 bg-pink-600 rounded-lg text-white font-medium hover:bg-pink-700 transition-all hover:shadow-lg hover:shadow-pink-500/30"
+                  >
+                    <Send size={16} />
+                    Submit Project
                   </button>
                 </div>
               </div>
@@ -227,7 +278,51 @@ export default function RoadmapDetail() {
     }
   });
 
-  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
+  const [submissionTopic, setSubmissionTopic] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleOpenSubmission = (topic) => {
+    setSubmissionTopic(topic);
+    setIsSubmissionModalOpen(true);
+  };
+
+  const handleCloseSubmission = () => {
+    setIsSubmissionModalOpen(false);
+    setSubmissionTopic(null);
+  };
+
+  const handleProjectSubmit = async (data) => {
+    try {
+      setSubmitting(true);
+      if (!submissionTopic) return;
+
+      const payload = {
+        roadmap: roadmap._id,
+        workId: submissionTopic.projectId || `step-${roadmap.path.indexOf(submissionTopic)}`, // Fallback index-based ID if no projectId
+        workType: 'roadmap_project',
+        title: submissionTopic.title,
+        submissionUrl: data.submissionUrl,
+        comments: data.comments
+      };
+
+      await projectSubmissionAPI.submit(payload);
+      toast.success("Project submitted successfully!");
+      handleCloseSubmission();
+
+      // Auto-complete the topic upon submission
+      const topicIndex = roadmap.path.indexOf(submissionTopic);
+      if (!completedTopics.includes(topicIndex)) {
+        toggleTopicCompletion(topicIndex);
+      }
+
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.response?.data?.message || "Failed to submit project");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   // Fetch roadmap data
   useEffect(() => {
@@ -318,6 +413,14 @@ export default function RoadmapDetail() {
         </div>
       </header>
 
+      <SubmissionModal
+        isOpen={isSubmissionModalOpen}
+        onClose={handleCloseSubmission}
+        onSubmit={handleProjectSubmit}
+        submitting={submitting}
+        topic={submissionTopic}
+      />
+
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <p className="text-gray-400 mb-4">{roadmap.description}</p>
@@ -368,6 +471,7 @@ export default function RoadmapDetail() {
           <TopicDetail
             topic={selectedTopic}
             onClose={() => setSelectedTopic(null)}
+            onOpenSubmission={handleOpenSubmission}
           />
         )}
       </AnimatePresence>

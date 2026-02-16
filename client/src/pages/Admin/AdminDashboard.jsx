@@ -23,8 +23,13 @@ const AdminDashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const role = sessionStorage.getItem('adminRole')?.toLowerCase();
-  const base = (role === 'course_manager' || role === 'instructor') ? '/instructor' : '/admin';
   const isManager = role === 'course_manager' || role === 'instructor';
+  const isJobInstructor = role === 'job_instructor';
+  const isHackathonInstructor = role === 'hackathon_instructor';
+  const isRoadmapInstructor = role === 'roadmap_instructor';
+  const isLimitedAdmin = isManager || isJobInstructor || isHackathonInstructor || isRoadmapInstructor;
+
+  const base = isManager ? '/instructor' : '/admin';
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [stats, setStats] = useState({
@@ -42,6 +47,8 @@ const AdminDashboard = () => {
     activeHackathons: 0,
     totalJobs: 0,
     activeJobs: 0,
+    totalRoadmaps: 0,
+    activeRoadmaps: 0,
   });
   const [recentEnrollments, setRecentEnrollments] = useState([]);
   const [topCourses, setTopCourses] = useState([]);
@@ -105,16 +112,26 @@ const AdminDashboard = () => {
       }
     };
     load();
-    if (isManager) {
-      fetchInstructorCourses();
+    if (isManager || !isLimitedAdmin) {
+      fetchCoursesForDropdown();
     }
-  }, [location.pathname, isManager]);
+  }, [location.pathname, isManager, isJobInstructor, isHackathonInstructor, isRoadmapInstructor]);
 
-  const fetchInstructorCourses = async () => {
+  const fetchCoursesForDropdown = async () => {
     try {
-      const adminData = JSON.parse(sessionStorage.getItem('adminData') || '{}');
-      const email = adminData.email?.toLowerCase();
-      const params = { instructorEmail: email };
+      let params = {};
+      if (isManager) {
+        const adminData = JSON.parse(sessionStorage.getItem('adminData') || '{}');
+        const email = adminData.email?.toLowerCase();
+        params.instructorEmail = email;
+      }
+
+      // For Admin, we want all courses, but let's increase limit or use a specific dropdown endpoints if exists.
+      // For now, increasing limit to 100 to cover most cases.
+      if (!isManager && !isLimitedAdmin) {
+        params.limit = 100;
+      }
+
       const res = await adminCourseAPI.getAll(params);
       if (res.data.success) {
         setInstructorCourses(res.data.courses || []);
@@ -123,7 +140,7 @@ const AdminDashboard = () => {
         }
       }
     } catch (err) {
-      console.error("Failed to fetch instructor courses", err);
+      console.error("Failed to fetch courses for dropdown", err);
     }
   };
 
@@ -222,12 +239,12 @@ const AdminDashboard = () => {
 
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 text-[#7a7f9a] text-xs font-bold">
-            {!isManager && (
+            {!isLimitedAdmin && (
               <button onClick={() => navigate(`${base}/users`)} className="flex items-center gap-1 hover:text-white transition-colors">
                 <Users className="w-4 h-4 text-indigo-500" /> Users
               </button>
             )}
-            <button onClick={() => navigate(`${base}/courses`)} className="flex items-center gap-1 hover:text-white transition-colors">
+            <button onClick={() => navigate(isManager ? '/instructor/courses' : '/admin/courses')} className="flex items-center gap-1 hover:text-white transition-colors">
               <BookOpen className="w-4 h-4 text-pink-500" /> Courses
             </button>
             <button className="flex items-center gap-1 hover:text-white transition-colors">
@@ -250,28 +267,92 @@ const AdminDashboard = () => {
 
       {/* Row 0: Quick Metrics Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          { label: isManager ? "Total Enrollments" : "Total Students", value: isManager ? (stats.totalEnrollments || 0) : (stats.totalStudents || 0), icon: Users, color: "text-indigo-500", bg: "bg-indigo-500/10" },
-          { label: isManager ? "Your Courses" : "Total Courses", value: stats.totalCourses || 0, icon: BookOpen, color: "text-pink-500", bg: "bg-pink-500/10" },
-          { label: isManager ? "Pending Doubts" : "Enrollments", value: isManager ? (stats.doubtsStats?.pending || 0) : (stats.totalEnrollments || 0), icon: isManager ? MessageSquare : Briefcase, color: isManager ? "text-red-500" : "text-green-500", bg: isManager ? "bg-red-500/10" : "bg-green-500/10" },
-          { label: isManager ? "Unique Students" : "Revenue", value: isManager ? (stats.totalStudents || 0) : `₹${stats.totalRevenue ? stats.totalRevenue.toLocaleString() : 0}`, icon: Activity, color: "text-cyan-500", bg: "bg-cyan-500/10" }
-        ].map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className={`bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-default`}
-          >
-            <div className={`p-3 ${item.bg} rounded-lg group-hover:scale-110 transition-transform`}>
-              <item.icon className={`w-6 h-6 ${item.color}`} />
+        {isJobInstructor ? (
+          <>
+            <div className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-default">
+              <div className="p-3 bg-purple-500/10 rounded-lg">
+                <Briefcase className="w-6 h-6 text-purple-500" />
+              </div>
+              <div>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Posted Jobs</p>
+                <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.totalJobs || 0}</h3>
+              </div>
             </div>
-            <div>
-              <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">{item.label}</p>
-              <h3 className="text-white text-xl font-extrabold mt-0.5">{item.value}</h3>
+            <div className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-default">
+              <div className="p-3 bg-green-500/10 rounded-lg">
+                <ShieldCheck className="w-6 h-6 text-green-500" />
+              </div>
+              <div>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Active Jobs</p>
+                <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.activeJobs || 0}</h3>
+              </div>
             </div>
-          </motion.div>
-        ))}
+          </>
+        ) : isHackathonInstructor ? (
+          <>
+            <div className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-default">
+              <div className="p-3 bg-rose-500/10 rounded-lg">
+                <Trophy className="w-6 h-6 text-rose-500" />
+              </div>
+              <div>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Posted Hackathons</p>
+                <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.totalHackathons || 0}</h3>
+              </div>
+            </div>
+            <div className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-default">
+              <div className="p-3 bg-green-500/10 rounded-lg">
+                <ShieldCheck className="w-6 h-6 text-green-500" />
+              </div>
+              <div>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Active Hackathons</p>
+                <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.activeHackathons || 0}</h3>
+              </div>
+            </div>
+          </>
+        ) : isRoadmapInstructor ? (
+          <>
+            <div className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-default">
+              <div className="p-3 bg-orange-500/10 rounded-lg">
+                <Map className="w-6 h-6 text-orange-500" />
+              </div>
+              <div>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Total Roadmaps</p>
+                <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.totalRoadmaps || 0}</h3>
+              </div>
+            </div>
+            <div className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-default">
+              <div className="p-3 bg-green-500/10 rounded-lg">
+                <ShieldCheck className="w-6 h-6 text-green-500" />
+              </div>
+              <div>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Active Roadmaps</p>
+                <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.activeRoadmaps || 0}</h3>
+              </div>
+            </div>
+          </>
+        ) : (
+          [
+            { label: isManager ? "Total Enrollments" : "Total Students", value: isManager ? (stats.totalEnrollments || 0) : (stats.totalStudents || 0), icon: Users, color: "text-indigo-500", bg: "bg-indigo-500/10" },
+            { label: isManager ? "Your Courses" : "Total Courses", value: stats.totalCourses || 0, icon: BookOpen, color: "text-pink-500", bg: "bg-pink-500/10" },
+            { label: isManager ? "Pending Doubts" : "Enrollments", value: isManager ? (stats.doubtsStats?.pending || 0) : (stats.totalEnrollments || 0), icon: isManager ? MessageSquare : Briefcase, color: isManager ? "text-red-500" : "text-green-500", bg: isManager ? "bg-red-500/10" : "bg-green-500/10" },
+            { label: isManager ? "Unique Students" : "Revenue", value: isManager ? (stats.totalStudents || 0) : `₹${stats.totalRevenue ? stats.totalRevenue.toLocaleString() : 0}`, icon: Activity, color: "text-cyan-500", bg: "bg-cyan-500/10" }
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className={`bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-default`}
+            >
+              <div className={`p-3 ${item.bg} rounded-lg group-hover:scale-110 transition-transform`}>
+                <item.icon className={`w-6 h-6 ${item.color}`} />
+              </div>
+              <div>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">{item.label}</p>
+                <h3 className="text-white text-xl font-extrabold mt-0.5">{item.value}</h3>
+              </div>
+            </motion.div>
+          )))}
       </div>
 
       {isManager && (
@@ -398,7 +479,7 @@ const AdminDashboard = () => {
         </motion.div>
       )}
 
-      {!isManager && (
+      {!isLimitedAdmin && (
         <>
           {/* Row 1: Key Metrics Overview */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -540,142 +621,144 @@ const AdminDashboard = () => {
         </>
       )}
 
-      {/* Registered Students Section Moved Below */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-8 shadow-2xl"
-      >
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-          <div>
-            <h3 className="text-2xl font-black text-white tracking-tight">Registered Students</h3>
-            <p className="text-[#7a7f9a] text-sm mt-1">Manage and monitor students enrolled in your courses.</p>
-          </div>
-          <div className="w-full md:w-auto min-w-[300px]">
-            <label className="text-[10px] text-[#7a7f9a] font-black uppercase tracking-widest mb-2 block">Filter by Course</label>
-            <div className="relative">
-              <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 text-indigo-400 w-5 h-5" />
-              <select
-                value={courseFilter}
-                onChange={(e) => setCourseFilter(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-[#131522] border border-[#2d2f45] rounded-xl text-white appearance-none focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-bold text-sm cursor-pointer"
-              >
-                <option value="">Select a course to view students</option>
-                {instructorCourses.map(course => (
-                  <option key={course._id} value={course._id}>{course.title}</option>
-                ))}
-              </select>
+      {!isJobInstructor && !isHackathonInstructor && !isRoadmapInstructor && (
+        /* Registered Students Section Moved Below */
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-8 shadow-2xl"
+        >
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+            <div>
+              <h3 className="text-2xl font-black text-white tracking-tight">Registered Students</h3>
+              <p className="text-[#7a7f9a] text-sm mt-1">Manage and monitor students enrolled in your courses.</p>
+            </div>
+            <div className="w-full md:w-auto min-w-[300px]">
+              <label className="text-[10px] text-[#7a7f9a] font-black uppercase tracking-widest mb-2 block">Filter by Course</label>
+              <div className="relative">
+                <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 text-indigo-400 w-5 h-5" />
+                <select
+                  value={courseFilter}
+                  onChange={(e) => setCourseFilter(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 bg-[#131522] border border-[#2d2f45] rounded-xl text-white appearance-none focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-bold text-sm cursor-pointer"
+                >
+                  <option value="">Select a course to view students</option>
+                  {instructorCourses.map(course => (
+                    <option key={course._id} value={course._id}>{course.title}</option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
-        </div>
 
-        {courseFilter ? (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="text-left border-b border-[#2d2f45]">
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider pl-4">Student</th>
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider">Enrollment Date</th>
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider">Payment</th>
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider text-center">Status</th>
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider text-right pr-4">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#2d2f45]">
-                {studentsLoading ? (
-                  <tr>
-                    <td colSpan="5" className="py-12 text-center text-[#7a7f9a]">
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-                        <span className="font-bold text-sm">Fetching student roster...</span>
-                      </div>
-                    </td>
+          {courseFilter ? (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="text-left border-b border-[#2d2f45]">
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider pl-4">Student</th>
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider">Enrollment Date</th>
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider">Payment</th>
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider text-center">Status</th>
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider text-right pr-4">Actions</th>
                   </tr>
-                ) : courseStudents.length > 0 ? (
-                  courseStudents.map((enr) => (
-                    <tr key={enr._id} className="group hover:bg-[#2d2f45]/20 transition-all duration-300">
-                      <td className="py-5 pl-4">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-indigo-500/20">
-                            {enr.userId?.name?.charAt(0).toUpperCase() || 'S'}
-                          </div>
-                          <div>
-                            <p className="text-white font-bold text-sm">{enr.userId?.name || 'Unknown Student'}</p>
-                            <p className="text-[#7a7f9a] text-[10px] font-medium">{enr.userId?.email || 'No email'}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-5">
-                        <span className="text-white text-sm font-bold opacity-80">
-                          {enr.enrolledAt ? new Date(enr.enrolledAt).toLocaleDateString() : '-'}
-                        </span>
-                      </td>
-                      <td className="py-5">
-                        <span className={`text-[10px] font-black uppercase px-2 py-1 rounded-md tracking-tighter ${enr.paymentStatus === 'completed' || enr.paymentStatus === 'free' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
-                          }`}>
-                          {enr.paymentStatus}
-                        </span>
-                      </td>
-                      <td className="py-5 text-center">
-                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${enr.status === 'active' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
-                          }`}>
-                          {enr.status === 'active' ? 'Active' : 'Inactive'}
-                        </span>
-                      </td>
-                      <td className="py-5 pr-4">
-                        <div className="flex items-center justify-end gap-2 text-[10px]">
-                          {enr.status === 'active' ? (
-                            <button
-                              onClick={() => handleEnrollmentAction('revoke', enr._id)}
-                              className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
-                              title="Revoke Access"
-                            >
-                              <ShieldCheck className="w-3 h-3" /> Revoke
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => handleEnrollmentAction('restore', enr._id)}
-                              className="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
-                              title="Restore Access"
-                            >
-                              <RotateCcw className="w-3 h-3" /> Restore
-                            </button>
-                          )}
-                          <button
-                            onClick={() => handleEnrollmentAction('delete', enr._id)}
-                            className="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
-                            title="Delete Enrollment"
-                          >
-                            <Trash2 className="w-3 h-3" /> Delete
-                          </button>
+                </thead>
+                <tbody className="divide-y divide-[#2d2f45]">
+                  {studentsLoading ? (
+                    <tr>
+                      <td colSpan="5" className="py-12 text-center text-[#7a7f9a]">
+                        <div className="flex flex-col items-center gap-3">
+                          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+                          <span className="font-bold text-sm">Fetching student roster...</span>
                         </div>
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5" className="py-12 text-center text-[#7a7f9a]">
-                      <div className="flex flex-col items-center gap-2">
-                        <Users className="w-8 h-8 opacity-20" />
-                        <p className="font-bold text-sm">No students registered for this course yet.</p>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="bg-[#131522] border border-[#2d2f45] border-dashed rounded-2xl py-20 text-center">
-            <div className="max-w-xs mx-auto">
-              <UserPlus className="w-12 h-12 text-indigo-500/30 mx-auto mb-4" />
-              <h4 className="text-white font-bold mb-2">Select a Course</h4>
-              <p className="text-[#7a7f9a] text-xs">Choose a course from the dropdown above to manage its registered students and enrollment status.</p>
+                  ) : courseStudents.length > 0 ? (
+                    courseStudents.map((enr) => (
+                      <tr key={enr._id} className="group hover:bg-[#2d2f45]/20 transition-all duration-300">
+                        <td className="py-5 pl-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-indigo-500/20">
+                              {enr.userId?.name?.charAt(0).toUpperCase() || 'S'}
+                            </div>
+                            <div>
+                              <p className="text-white font-bold text-sm">{enr.userId?.name || 'Unknown Student'}</p>
+                              <p className="text-[#7a7f9a] text-[10px] font-medium">{enr.userId?.email || 'No email'}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-5">
+                          <span className="text-white text-sm font-bold opacity-80">
+                            {enr.enrolledAt ? new Date(enr.enrolledAt).toLocaleDateString() : '-'}
+                          </span>
+                        </td>
+                        <td className="py-5">
+                          <span className={`text-[10px] font-black uppercase px-2 py-1 rounded-md tracking-tighter ${enr.paymentStatus === 'completed' || enr.paymentStatus === 'free' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
+                            }`}>
+                            {enr.paymentStatus}
+                          </span>
+                        </td>
+                        <td className="py-5 text-center">
+                          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${enr.status === 'active' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
+                            }`}>
+                            {enr.status === 'active' ? 'Active' : 'Inactive'}
+                          </span>
+                        </td>
+                        <td className="py-5 pr-4">
+                          <div className="flex items-center justify-end gap-2 text-[10px]">
+                            {enr.status === 'active' ? (
+                              <button
+                                onClick={() => handleEnrollmentAction('revoke', enr._id)}
+                                className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
+                                title="Revoke Access"
+                              >
+                                <ShieldCheck className="w-3 h-3" /> Revoke
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => handleEnrollmentAction('restore', enr._id)}
+                                className="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
+                                title="Restore Access"
+                              >
+                                <RotateCcw className="w-3 h-3" /> Restore
+                              </button>
+                            )}
+                            <button
+                              onClick={() => handleEnrollmentAction('delete', enr._id)}
+                              className="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
+                              title="Delete Enrollment"
+                            >
+                              <Trash2 className="w-3 h-3" /> Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="py-12 text-center text-[#7a7f9a]">
+                        <div className="flex flex-col items-center gap-2">
+                          <Users className="w-8 h-8 opacity-20" />
+                          <p className="font-bold text-sm">No students registered for this course yet.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
-          </div>
-        )}
-      </motion.div>
+          ) : (
+            <div className="bg-[#131522] border border-[#2d2f45] border-dashed rounded-2xl py-20 text-center">
+              <div className="max-w-xs mx-auto">
+                <UserPlus className="w-12 h-12 text-indigo-500/30 mx-auto mb-4" />
+                <h4 className="text-white font-bold mb-2">Select a Course</h4>
+                <p className="text-[#7a7f9a] text-xs">Choose a course from the dropdown above to manage its registered students and enrollment status.</p>
+              </div>
+            </div>
+          )}
+        </motion.div>
+      )}
 
     </div>
   );
