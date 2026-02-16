@@ -15,13 +15,14 @@ exports.submitProject = async (req, res) => {
         let instructorEmail = '';
         let contextTitle = '';
         let notificationType = 'project';
+        let rId = null;
 
         if (workType === 'roadmap_project') {
             // Handle Roadmap Submission
             const Roadmap = require('../models/AdminRoadmap');
 
             // Frontend might send 'roadmap' or 'roadmapId'
-            const rId = roadmapId || req.body.roadmap || courseId;
+            rId = roadmapId || req.body.roadmap || courseId;
 
             if (!rId) {
                 return res.status(400).json({ message: 'Roadmap ID is required' });
@@ -122,7 +123,9 @@ exports.submitProject = async (req, res) => {
         });
     } catch (error) {
         console.error('Submit project error:', error);
-        res.status(500).json({ message: 'Server error during submission' });
+        // Safely extract error message
+        const errorMsg = error.message || 'Server error during submission';
+        res.status(500).json({ message: errorMsg, error: error.toString() });
     }
 };
 
