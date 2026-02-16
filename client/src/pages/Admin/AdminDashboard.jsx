@@ -49,6 +49,7 @@ const AdminDashboard = () => {
   const [recentRoadmaps, setRecentRoadmaps] = useState([]);
   const [recentContent, setRecentContent] = useState([]);
   const [recentDoubts, setRecentDoubts] = useState([]);
+  const [recentProjectSubmissions, setRecentProjectSubmissions] = useState([]);
   const [enrollmentTrend, setEnrollmentTrend] = useState([]);
   const [userTrend, setUserTrend] = useState([]);
 
@@ -76,6 +77,7 @@ const AdminDashboard = () => {
           recentRoadmaps: rm,
           recentContent: rc,
           recentDoubts: rd,
+          recentProjectSubmissions: rps,
           enrollmentTrend: et,
           userMonthlyTrend: ut
         } = res.data || {};
@@ -87,6 +89,7 @@ const AdminDashboard = () => {
         setRecentRoadmaps(Array.isArray(rm) ? rm : []);
         setRecentContent(Array.isArray(rc) ? rc : []);
         setRecentDoubts(Array.isArray(rd) ? rd : []);
+        setRecentProjectSubmissions(Array.isArray(rps) ? rps : []);
         setEnrollmentTrend(Array.isArray(et) ? et.map(d => ({ name: d._id, enrollments: d.enrollments })) : []);
         setUserTrend(Array.isArray(ut) ? ut.map(d => ({ name: d._id, users: d.users })) : []);
 
@@ -320,6 +323,73 @@ const AdminDashboard = () => {
                 )) : (
                   <tr>
                     <td colSpan="5" className="text-center py-8 text-[#5a5f7a]">No pending doubts to clarify</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+      )}
+
+      {isManager && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-6 shadow-xl"
+        >
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-[#7a7f9a] font-bold text-sm tracking-wide uppercase">New Project Submissions</h3>
+            <span className="px-3 py-1 bg-green-500/10 text-green-500 text-[10px] font-extrabold rounded-full">
+              {stats.projectStats?.pending || 0} PENDING REVIEW
+            </span>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-[#2d2f45]">
+                  <th className="pb-4 text-[10px] font-extrabold text-[#7a7f9a] uppercase tracking-wider">Student</th>
+                  <th className="pb-4 text-[10px] font-extrabold text-[#7a7f9a] uppercase tracking-wider">Project</th>
+                  <th className="pb-4 text-[10px] font-extrabold text-[#7a7f9a] uppercase tracking-wider">Submitted</th>
+                  <th className="pb-4 text-[10px] font-extrabold text-[#7a7f9a] uppercase tracking-wider">Link</th>
+                  <th className="pb-4 text-[10px] font-extrabold text-[#7a7f9a] uppercase tracking-wider">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#2d2f45]">
+                {recentProjectSubmissions.length > 0 ? recentProjectSubmissions.map((sub, idx) => (
+                  <tr key={sub._id || idx} className="group hover:bg-[#10111a]/50 transition-all text-xs">
+                    <td className="py-4">
+                      <p className="text-white font-bold">{sub.student?.name || 'Student'}</p>
+                      <p className="text-[#5a5f7a] text-[10px]">{sub.student?.email}</p>
+                    </td>
+                    <td className="py-4">
+                      <p className="text-indigo-400 font-bold">{sub.title}</p>
+                      <p className="text-[#5a5f7a] text-[10px]">{sub.course?.title}</p>
+                    </td>
+                    <td className="py-4 text-[#7a7f9a]">
+                      {new Date(sub.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="py-4">
+                      <a
+                        href={sub.submissionUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
+                      >
+                        <LinkIcon className="w-3 h-3" /> View Work
+                      </a>
+                    </td>
+                    <td className="py-4">
+                      <button
+                        onClick={() => navigate(`${base}/submissions`)}
+                        className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold rounded-lg transition-all shadow-lg shadow-emerald-500/20"
+                      >
+                        Grade
+                      </button>
+                    </td>
+                  </tr>
+                )) : (
+                  <tr>
+                    <td colSpan="5" className="text-center py-8 text-[#5a5f7a]">No new project submissions</td>
                   </tr>
                 )}
               </tbody>

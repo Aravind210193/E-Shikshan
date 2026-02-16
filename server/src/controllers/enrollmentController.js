@@ -2,6 +2,53 @@ const Enrollment = require('../models/Enrollment');
 const Course = require('../models/Course');
 const User = require('../models/User');
 const Razorpay = require('razorpay');
+const { trackVideoWatched, trackAssignmentSubmitted } = require('../utils/gamification');
+const sendEmail = require('../utils/sendEmail');
+
+// Helper to send enrollment emails
+const sendEnrollmentEmails = async (course, userDetails) => {
+  try {
+    console.log(`📧 Sending enrollment emails for ${course.title} to ${userDetails.email} and instructor...`);
+
+    // Email to student
+    await sendEmail({
+      to: userDetails.email,
+      subject: `Enrolled: ${course.title} - E-Shikshan`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+          <h2>Welcome to the course!</h2>
+          <p>Hi ${userDetails.fullName},</p>
+          <p>You have successfully enrolled in <b>${course.title}</b>.</p>
+          <p>You can now access all the course content, videos, and assignments on your dashboard.</p>
+          <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}/dashboard" style="background: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Dashboard</a>
+          <br/><br/>
+          <p>Happy learning!<br/>Team E-Shikshan</p>
+        </div>
+      `
+    });
+
+    // Email to instructor
+    if (course.instructorEmail) {
+      await sendEmail({
+        to: course.instructorEmail,
+        subject: `New Student Enrolled: ${course.title}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+            <h2>New Enrollment Alert</h2>
+            <p>Hello,</p>
+            <p>A new student <b>${userDetails.fullName}</b> (${userDetails.email}) has enrolled in your course <b>${course.title}</b>.</p>
+            <p>Keep track of their progress on your instructor dashboard.</p>
+            <br/>
+            <p>Best Regards,<br/>E-Shikshan Platform</p>
+          </div>
+        `
+      });
+      console.log(`✅ Enrollment emails sent successfully`);
+    }
+  } catch (emailErr) {
+    console.error('❌ Error sending enrollment emails:', emailErr);
+  }
+};
 
 // Initialize Razorpay instance
 const razorpay = new Razorpay({
@@ -157,6 +204,10 @@ const enrollInCourse = async (req, res) => {
       console.log('✅ Free course - Access granted immediately');
       console.log('================================\n');
 
+
+      // Send emails
+      await sendEnrollmentEmails(course, userDetails);
+
       return res.status(201).json({
         message: 'Successfully enrolled in the course!',
         enrollment,
@@ -293,9 +344,12 @@ const getMyEnrollments = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    const enrollments = await Enrollment.find({ userId })
+    // Ensure we are querying with ObjectId
+    const enrollments = await Enrollment.find({ userId: userId })
       .populate('courseId')
       .sort('-enrolledAt');
+
+    console.log(`Fetched ${enrollments.length} enrollments for user ${userId}`);
 
     res.json(enrollments);
   } catch (error) {
@@ -400,16 +454,36 @@ const updateProgress = async (req, res) => {
       case 'video':
         if (!enrollment.progress.videosWatched.includes(itemId)) {
           enrollment.progress.videosWatched.push(itemId);
+          // Award XP for video
+          await trackVideoWatched(userId, {
+            courseId: enrollment.courseId,
+            videoId: itemId,
+            completed: true,
+            title: 'Video Lesson'
+          });
         }
         break;
       case 'assignment':
         if (!enrollment.progress.assignmentsCompleted.includes(itemId)) {
           enrollment.progress.assignmentsCompleted.push(itemId);
+          // Award XP for assignment completion
+          await trackAssignmentSubmitted(userId, {
+            courseId: enrollment.courseId,
+            assignmentId: itemId,
+            completed: true,
+            title: 'Assignment'
+          });
         }
         break;
       case 'project':
         if (!enrollment.progress.projectsCompleted.includes(itemId)) {
           enrollment.progress.projectsCompleted.push(itemId);
+          // Award XP for project completion (20XP)
+          const { awardPoints } = require('../utils/gamification');
+          await awardPoints(userId, 20, 'assignment_completed', {
+            courseId: enrollment.courseId,
+            description: `Completed project in course`
+          });
         }
         break;
       case 'quiz':
@@ -680,8 +754,14 @@ const verifyTransactionAndGrantAccess = async (req, res) => {
       console.log(`📈 Student count updated for course: ${course.title} (${course.students})`);
     }
 
+
     console.log('💾 Enrollment updated - Access granted');
     console.log('✅ User can now access course content');
+
+    // Send enrollment emails
+    if (enrollment.courseId && enrollment.userDetails) {
+      await sendEnrollmentEmails(enrollment.courseId, enrollment.userDetails);
+    }
 
     res.json({
       success: true,

@@ -575,6 +575,46 @@ exports.addProject = async (req, res) => {
     course.projects = course.projectsDetails.length;
 
     await course.save();
+
+    // Notify enrolled students
+    const enrollments = await Enrollment.find({ courseId: course._id }).populate('userId');
+    const studentEmails = enrollments
+      .filter(enrollment => enrollment.userId && enrollment.userId.email)
+      .map(enrollment => enrollment.userId.email);
+
+    if (studentEmails.length > 0) {
+      // Create in-app notifications
+      const notifications = enrollments.map(enrollment => ({
+        recipientEmail: enrollment.userId.email,
+        title: 'New Project Added',
+        message: `A new project "${title}" has been added to the course ${course.title}.`,
+        type: 'general',
+        relatedId: course._id
+      }));
+
+      try {
+        await Notification.insertMany(notifications);
+      } catch (error) {
+        console.error('Error creating notifications:', error);
+      }
+
+      // Send emails
+      studentEmails.forEach(email => {
+        sendEmail({
+          to: email,
+          subject: `New Project Added: ${course.title}`,
+          html: `
+                    <div style="font-family: Arial, sans-serif; padding: 20px;">
+                        <h2>New Project Added</h2>
+                        <p>A new project <strong>${title}</strong> has been added to your course <strong>${course.title}</strong>.</p>
+                        <p>Check the course dashboard for details and instructions.</p>
+                        <a href="${process.env.CLIENT_URL}/course/${course._id}" style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View Course</a>
+                    </div>
+                `
+        }).catch(err => console.error('Error sending project email to', email, err));
+      });
+    }
+
     res.status(201).json({ success: true, course });
   } catch (error) {
     console.error('Add project error:', error);

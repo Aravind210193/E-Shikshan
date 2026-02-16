@@ -3,7 +3,20 @@ const Notification = require('../models/Notification');
 // Get notifications for the logged-in admin/instructor
 exports.getNotifications = async (req, res) => {
     try {
-        const email = req.admin.email;
+        let email;
+        if (req.admin && req.admin.email) {
+            email = req.admin.email;
+        } else if (req.user && req.user.email) {
+            email = req.user.email;
+        }
+
+        if (!email) {
+            console.error('Notification Controller: Email missing from request user/admin object.');
+            // If no email identifiers, return empty list or specific error
+            // Returning empty list prevents frontend crash
+            return res.status(200).json([]);
+        }
+
         const notifications = await Notification.find({ recipientEmail: email.toLowerCase() })
             .sort({ createdAt: -1 })
             .limit(50);
@@ -13,6 +26,9 @@ exports.getNotifications = async (req, res) => {
         res.status(500).json({ message: 'Error fetching notifications' });
     }
 };
+
+// Get notifications for students (alias for clarity in routes)
+exports.getStudentNotifications = exports.getNotifications;
 
 // Mark a notification as read
 exports.markAsRead = async (req, res) => {
@@ -29,7 +45,7 @@ exports.markAsRead = async (req, res) => {
 // Mark all notifications as read
 exports.markAllAsRead = async (req, res) => {
     try {
-        const email = req.admin.email;
+        const email = req.admin ? req.admin.email : req.user.email;
         await Notification.updateMany(
             { recipientEmail: email.toLowerCase(), isRead: false },
             { isRead: true }

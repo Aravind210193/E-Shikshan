@@ -71,7 +71,7 @@ After setting the environment variables in Render, test the email functionality:
 
 ### Test 1: Welcome Email (Google OAuth)
 1. Logout from your E-Shikshan account
-2. Visit: https://eshikshan.vercel.app
+2. Visit: https://e-shikshan.vercel.app
 3. Click "Sign in with Google"
 4. Use a NEW Google account (one that hasn't registered before)
 5. Check the email inbox for the welcome email

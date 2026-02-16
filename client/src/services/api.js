@@ -120,6 +120,22 @@ export const doubtsAPI = {
   create: (data) => api.post('/doubts', data),
 };
 
+export const projectSubmissionAPI = {
+  submit: (data) => api.post('/project-submissions', data),
+  getInstructorSubmissions: () => api.get('/project-submissions/instructor'),
+  getMySubmissions: () => api.get('/project-submissions/student'),
+  update: (id, data) => api.put(`/project-submissions/${id}`, data),
+  reply: (id, data) => api.put(`/project-submissions/${id}/reply`, data),
+  delete: (id) => api.delete(`/project-submissions/${id}`),
+};
+
+export const notificationAPI = {
+  getNotifications: () => api.get('/notifications'),
+  markAsRead: (id) => api.patch(`/notifications/${id}/read`),
+  markAllAsRead: () => api.patch('/notifications/read-all'),
+  delete: (id) => api.delete(`/notifications/${id}`),
+};
+
 // Content API
 export const contentAPI = {
   // Branches

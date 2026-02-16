@@ -1,27 +1,38 @@
 const mongoose = require('mongoose');
 
-const StepSchema = new mongoose.Schema(
+// Schema for individual path/topic items
+const PathItemSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, default: '' },
+    topics: { type: [String], default: [] },
     resources: { type: [String], default: [] },
-    order: { type: Number, default: 0 },
+    project: { type: String, default: '' }
   },
   { _id: false }
 );
 
 const RoadmapSchema = new mongoose.Schema(
   {
+    id: { type: String, required: true, unique: true, trim: true },
     title: { type: String, required: true, trim: true },
-    category: { type: String, default: '' },
-    level: { type: String, enum: ['Beginner', 'Intermediate', 'Advanced'], default: 'Beginner' },
-    thumbnail: { type: String, default: '' },
+    category: { type: String, required: true },
+    tagline: { type: String, default: '' },
+    image: { type: String, default: '' },
+    duration: { type: String, default: '' },
+    difficulty: { type: String, default: '' },
+    popularity: { type: String, default: '' },
+    description: { type: String, default: '' },
+    path: { type: [PathItemSchema], default: [] },
+    rating: { type: Number, default: 4.5 },
+    enrolled: { type: Number, default: 0 },
+    isNew: { type: Boolean, default: false },
+    isUpdated: { type: Boolean, default: false },
+    trending: { type: Number, default: 0 },
     status: { type: String, enum: ['active', 'draft', 'archived'], default: 'active' },
-    steps: { type: [StepSchema], default: [] },
-    tags: { type: [String], default: [] },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin' },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin' }
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('AdminRoadmap', RoadmapSchema);
+module.exports = mongoose.model('Roadmap', RoadmapSchema);

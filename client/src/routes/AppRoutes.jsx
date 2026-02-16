@@ -45,6 +45,8 @@ import AdminSubjects from "../pages/Admin/AdminSubjects";
 import AdminPrograms from "../pages/Admin/AdminPrograms";
 import AdminFolders from "../pages/Admin/AdminFolders";
 import AdminContent from "../pages/Admin/AdminContent";
+import AdminRoadmaps from "../pages/Admin/AdminRoadmaps";
+
 
 export default function AppRoutes({ isAdminLoggedIn, setIsAdminLoggedIn }) {
   return (
@@ -70,16 +72,16 @@ export default function AppRoutes({ isAdminLoggedIn, setIsAdminLoggedIn }) {
       <Route path="/profile" element={<Profile />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/resume-builder" element={<ResumeBuilding />} />
-      
+
       {/* 10th Grade Routes */}
       <Route path="/content/10th-grade" element={<TenthGradeTerms />} />
       <Route path="/10th-grade/:semester" element={<TenthGradeSubjects />} />
-      
+
       {/* Intermediate Routes */}
       <Route path="/content/intermediate" element={<IntermediateStreams />} />
       <Route path="/content/intermediate/:stream" element={<IntermediateStreamView />} />
       <Route path="/intermediate/:stream/:semester" element={<IntermediateSubjects />} />
-      
+
       {/* Post Graduate Routes */}
       <Route path="/content/postgraduate" element={<PostGraduatePrograms />} />
       <Route path="/content/postgraduate/:program" element={<PostGraduateProgramView />} />
@@ -101,7 +103,7 @@ export default function AppRoutes({ isAdminLoggedIn, setIsAdminLoggedIn }) {
                 <Route path="courses" element={<AdminCourses />} />
                 <Route path="jobs" element={<AdminJobs />} />
                 <Route path="hackathons" element={<div className="p-6 text-white">Hackathons Management (Coming Soon)</div>} />
-                <Route path="roadmaps" element={<div className="p-6 text-white">Roadmaps Management (Coming Soon)</div>} />
+                <Route path="roadmaps" element={<AdminRoadmaps />} />
                 <Route path="content" element={<AdminContent />} />
                 <Route path="branches" element={<AdminBranches />} />
                 <Route path="education-levels" element={<AdminEducationLevels />} />

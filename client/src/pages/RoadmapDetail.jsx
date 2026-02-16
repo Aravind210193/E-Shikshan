@@ -1,27 +1,25 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
-import roadmaps from "../Roadmap/skills.json";
 import { Check, ExternalLink, ChevronDown, Search, CheckCircle, ArrowRight, Lock, Clock, BookOpen, CheckSquare, Code, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import roadmapAPI from "../services/roadmapApi";
 
 const TopicCard = ({ topic, index, onClick, isCompleted, isNext }) => {
   return (
-    <div 
+    <div
       onClick={() => onClick(topic)}
-      className={`relative group cursor-pointer rounded-lg overflow-hidden border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
-        isCompleted 
-          ? "bg-gray-800/30 border-green-500/30" 
-          : isNext
+      className={`relative group cursor-pointer rounded-lg overflow-hidden border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${isCompleted
+        ? "bg-gray-800/30 border-green-500/30"
+        : isNext
           ? "bg-purple-900/20 border-purple-500/50 shadow-lg shadow-purple-500/10"
           : "bg-gray-800/50 border-gray-700/50 hover:border-purple-500/40"
-      }`}
+        }`}
     >
       <div className="p-5">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-start gap-4">
-            <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-white font-bold text-sm transition-all duration-300 ${
-              isCompleted ? "bg-green-500" : isNext ? "bg-purple-500" : "bg-gray-700"
-            }`}>
+            <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-white font-bold text-sm transition-all duration-300 ${isCompleted ? "bg-green-500" : isNext ? "bg-purple-500" : "bg-gray-700"
+              }`}>
               {isCompleted ? <Check size={20} /> : index + 1}
             </div>
             <div>
@@ -29,9 +27,8 @@ const TopicCard = ({ topic, index, onClick, isCompleted, isNext }) => {
               <p className="text-gray-400 text-sm mt-1 line-clamp-2">{topic.description}</p>
             </div>
           </div>
-          <div className={`rounded-full p-1 transition-all duration-300 ${
-            isCompleted ? "text-green-400" : isNext ? "text-purple-300" : "text-gray-500 group-hover:text-purple-400 group-hover:translate-x-0.5"
-          }`}>
+          <div className={`rounded-full p-1 transition-all duration-300 ${isCompleted ? "text-green-400" : isNext ? "text-purple-300" : "text-gray-500 group-hover:text-purple-400 group-hover:translate-x-0.5"
+            }`}>
             <ArrowRight size={18} />
           </div>
         </div>
@@ -61,7 +58,7 @@ const TopicDetail = ({ topic, onClose }) => {
       className="fixed inset-0 flex items-center justify-center p-4 z-50 bg-black/70 backdrop-blur-sm"
       onClick={onClose}
     >
-      <motion.div 
+      <motion.div
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 50, opacity: 0 }}
@@ -73,7 +70,7 @@ const TopicDetail = ({ topic, onClose }) => {
           <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
             {topic.title}
           </h2>
-          <button 
+          <button
             onClick={onClose}
             className="p-2 rounded-full text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
           >
@@ -137,8 +134,8 @@ const TopicDetail = ({ topic, onClose }) => {
                   const title = typeof resource === 'object' ? resource.title : resource;
 
                   return (
-                    <a 
-                      key={i} 
+                    <a
+                      key={i}
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -169,7 +166,7 @@ const TopicDetail = ({ topic, onClose }) => {
                     <p className="text-gray-300 text-sm leading-relaxed">{topic.project}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex flex-wrap gap-2 mb-4">
                   <span className="px-3 py-1 bg-pink-600/30 text-pink-300 rounded-full text-xs font-medium border border-pink-500/30">
                     Hands-on Practice
@@ -205,7 +202,7 @@ const ProgressBar = ({ current, total }) => {
   const percent = total > 0 ? (current / total) * 100 : 0;
   return (
     <div className="w-full bg-gray-700 rounded-full h-2.5">
-      <motion.div 
+      <motion.div
         className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
         initial={{ width: 0 }}
         animate={{ width: `${percent}%` }}
@@ -217,8 +214,10 @@ const ProgressBar = ({ current, total }) => {
 
 export default function RoadmapDetail() {
   const { id } = useParams();
-  const roadmap = useMemo(() => roadmaps.find((r) => r.id === id), [id]);
-  
+  const [roadmap, setRoadmap] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [completedTopics, setCompletedTopics] = useState(() => {
     try {
       const saved = localStorage.getItem(`roadmap-progress-${id}`);
@@ -229,6 +228,28 @@ export default function RoadmapDetail() {
   });
 
   const [selectedTopic, setSelectedTopic] = useState(null);
+
+  // Fetch roadmap data
+  useEffect(() => {
+    const fetchRoadmap = async () => {
+      try {
+        setLoading(true);
+        const response = await roadmapAPI.getById(id);
+        if (response.success) {
+          setRoadmap(response.data);
+        } else {
+          setError('Roadmap not found');
+        }
+      } catch (err) {
+        console.error('Failed to fetch roadmap:', err);
+        setError('Failed to load roadmap. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoadmap();
+  }, [id]);
 
   useEffect(() => {
     localStorage.setItem(`roadmap-progress-${id}`, JSON.stringify(completedTopics));
@@ -251,11 +272,22 @@ export default function RoadmapDetail() {
     return roadmap.path.findIndex((_, index) => !completedTopics.includes(index));
   }, [completedTopics, roadmap]);
 
-  if (!roadmap) {
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center text-center p-4">
+        <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500 mb-4"></div>
+        <p className="text-gray-400 text-lg">Loading roadmap...</p>
+      </div>
+    );
+  }
+
+  // Error or not found state
+  if (error || !roadmap) {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center text-center p-4">
         <h1 className="text-4xl font-bold mb-4">Roadmap Not Found</h1>
-        <p className="text-gray-400 mb-8">We couldn't find the roadmap you were looking for.</p>
+        <p className="text-gray-400 mb-8">{error || "We couldn't find the roadmap you were looking for."}</p>
         <Link to="/roadmap" className="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">
           Back to All Roadmaps
         </Link>
@@ -285,7 +317,7 @@ export default function RoadmapDetail() {
           </div>
         </div>
       </header>
-      
+
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <p className="text-gray-400 mb-4">{roadmap.description}</p>
@@ -294,30 +326,29 @@ export default function RoadmapDetail() {
 
         <div className="relative">
           <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-700"></div>
-          
+
           <div className="space-y-4">
             {roadmap.path.map((topic, index) => {
               const isCompleted = completedTopics.includes(index);
               const isNext = index === nextTopicIndex;
-              
+
               return (
                 <div key={index} className="flex items-center gap-6">
                   <div className="relative z-10">
-                    <button 
+                    <button
                       onClick={() => toggleTopicCompletion(index)}
-                      className={`w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
-                        isCompleted 
-                          ? "bg-green-500 border-green-400 text-white" 
-                          : isNext
+                      className={`w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${isCompleted
+                        ? "bg-green-500 border-green-400 text-white"
+                        : isNext
                           ? "bg-purple-500 border-purple-400 text-white"
                           : "bg-gray-800 border-gray-600 text-gray-500 hover:border-purple-500"
-                      }`}
+                        }`}
                     >
                       {isCompleted ? <Check size={16} /> : <div className="w-2 h-2 bg-gray-500 rounded-full"></div>}
                     </button>
                   </div>
                   <div className="flex-1">
-                    <TopicCard 
+                    <TopicCard
                       topic={topic}
                       index={index}
                       isCompleted={isCompleted}
@@ -334,9 +365,9 @@ export default function RoadmapDetail() {
 
       <AnimatePresence>
         {selectedTopic && (
-          <TopicDetail 
-            topic={selectedTopic} 
-            onClose={() => setSelectedTopic(null)} 
+          <TopicDetail
+            topic={selectedTopic}
+            onClose={() => setSelectedTopic(null)}
           />
         )}
       </AnimatePresence>

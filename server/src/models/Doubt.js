@@ -9,7 +9,12 @@ const DoubtSchema = new mongoose.Schema({
     itemTitle: { type: String }, // Title of the assignment or project for display
     question: { type: String, required: true },
     status: { type: String, enum: ['pending', 'resolved'], default: 'pending' },
-    reply: { type: String }, // Optional reply associated with the doubt
+    reply: { type: String }, // Optional reply associated with the doubt (Legacy/Latest Instructor Reply)
+    discussion: [{
+        sender: { type: String, enum: ['student', 'instructor'], required: true },
+        message: { type: String, required: true },
+        timestamp: { type: Date, default: Date.now }
+    }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Doubt', DoubtSchema);

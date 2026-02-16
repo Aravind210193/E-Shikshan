@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import roadmaps from "../Roadmap/skills.json";
 import { Search, Tag, ArrowRight, Star, Users, BookOpen, TrendingUp, Clock, Sparkles, ChevronDown, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import roadmapAPI from "../services/roadmapApi";
 
 const RoadmapCard = ({ roadmap, index }) => {
   const isNew = roadmap.isNew || false;
@@ -86,11 +86,10 @@ const RoadmapCard = ({ roadmap, index }) => {
             {/* Footer */}
             <div className="flex items-center justify-between pt-4 border-t border-gray-700/50">
               <div className="flex items-center gap-2 text-sm">
-                <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                  roadmap.difficulty?.includes('Beginner') ? 'bg-green-500/20 text-green-400' :
+                <span className={`px-3 py-1 rounded-full text-xs font-medium ${roadmap.difficulty?.includes('Beginner') ? 'bg-green-500/20 text-green-400' :
                   roadmap.difficulty?.includes('Advanced') ? 'bg-red-500/20 text-red-400' :
-                  'bg-yellow-500/20 text-yellow-400'
-                }`}>
+                    'bg-yellow-500/20 text-yellow-400'
+                  }`}>
                   {roadmap.difficulty || 'Intermediate'}
                 </span>
               </div>
@@ -110,8 +109,33 @@ export default function Roadmap() {
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState('popular');
+  const [roadmaps, setRoadmaps] = useState([]);
+  const [categories, setCategories] = useState(["All"]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const categories = useMemo(() => ["All", ...new Set(roadmaps.map((r) => r.category))], []);
+  // Fetch roadmaps on component mount
+  useEffect(() => {
+    const fetchRoadmaps = async () => {
+      try {
+        setLoading(true);
+        const response = await roadmapAPI.getAll();
+        if (response.success) {
+          setRoadmaps(response.data);
+          // Extract unique categories
+          const uniqueCategories = [...new Set(response.data.map(r => r.category))];
+          setCategories(["All", ...uniqueCategories]);
+        }
+      } catch (err) {
+        console.error('Failed to fetch roadmaps:', err);
+        setError('Failed to load roadmaps. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoadmaps();
+  }, []);
 
   const derivedRoadmaps = useMemo(() => roadmaps.map((r, idx) => {
     const diff = (r.difficulty || '').toLowerCase();
@@ -128,7 +152,7 @@ export default function Roadmap() {
       createdDate,
       trending
     };
-  }), []);
+  }), [roadmaps]);
 
   const filteredRoadmaps = useMemo(() => {
     let list = derivedRoadmaps.filter((roadmap) => {
@@ -163,171 +187,204 @@ export default function Roadmap() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-black text-white py-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
       <div className="max-w-7xl mx-auto w-full">
-        
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent px-4">
-              Developer Roadmaps
-            </h1>
-            <p className="max-w-3xl mx-auto text-gray-300 text-base sm:text-lg md:text-xl leading-relaxed px-4">
-              Step-by-step guides and paths to learn different tools or technologies. 
-              <br className="hidden sm:block" />
-              Choose your path and start your learning journey today.
-            </p>
-            <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-400">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span>{roadmaps.length} Roadmaps Available</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                <span>Updated Weekly</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
 
-        {/* Filter Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-12 sticky top-4 z-30 bg-gradient-to-br from-gray-800/95 via-gray-800/90 to-gray-900/95 backdrop-blur-xl p-6 rounded-3xl border border-purple-500/20 shadow-2xl"
-        >
-          <div className="flex flex-col lg:flex-row gap-4 items-stretch">
-            {/* Search Input */}
-            <motion.div 
-              className="relative flex-grow"
-              whileHover={{ scale: 1.01 }}
-              transition={{ duration: 0.2 }}
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+              <p className="text-gray-400 text-lg">Loading roadmaps...</p>
+            </div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && !loading && (
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="text-center max-w-md">
+              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-8 mb-6">
+                <p className="text-red-400 text-lg font-medium">{error}</p>
+              </div>
+              <button
+                onClick={() => window.location.reload()}
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors font-medium"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Content - Only show when not loading and no error */}
+        {!loading && !error && (
+          <>
+
+            {/* Hero Section */}
+            <div className="text-center mb-16">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent px-4">
+                  Developer Roadmaps
+                </h1>
+                <p className="max-w-3xl mx-auto text-gray-300 text-base sm:text-lg md:text-xl leading-relaxed px-4">
+                  Step-by-step guides and paths to learn different tools or technologies.
+                  <br className="hidden sm:block" />
+                  Choose your path and start your learning journey today.
+                </p>
+                <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-400">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span>{roadmaps.length} Roadmaps Available</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                    <span>Updated Weekly</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Filter Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="mb-12 sticky top-4 z-30 bg-gradient-to-br from-gray-800/95 via-gray-800/90 to-gray-900/95 backdrop-blur-xl p-6 rounded-3xl border border-purple-500/20 shadow-2xl"
             >
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-400" size={20} />
-              <input
-                type="text"
-                placeholder="Search roadmaps by title, category, or tags..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full bg-gray-700/50 border-2 border-gray-600/50 rounded-2xl pl-14 pr-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500/50 transition-all hover:border-gray-500 font-medium"
-              />
-              {query && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setQuery('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+              <div className="flex flex-col lg:flex-row gap-4 items-stretch">
+                {/* Search Input */}
+                <motion.div
+                  className="relative flex-grow"
+                  whileHover={{ scale: 1.01 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  <X size={18} />
-                </motion.button>
+                  <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-400" size={20} />
+                  <input
+                    type="text"
+                    placeholder="Search roadmaps by title, category, or tags..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    className="w-full bg-gray-700/50 border-2 border-gray-600/50 rounded-2xl pl-14 pr-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500/50 transition-all hover:border-gray-500 font-medium"
+                  />
+                  {query && (
+                    <motion.button
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setQuery('')}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                    >
+                      <X size={18} />
+                    </motion.button>
+                  )}
+                </motion.div>
+
+                {/* Filters */}
+                <div className="flex gap-3">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="relative"
+                  >
+                    <select
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      className="appearance-none bg-gradient-to-br from-blue-600/80 to-blue-700/80 border-2 border-blue-500/30 rounded-2xl pl-5 pr-12 py-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all cursor-pointer font-semibold shadow-lg hover:shadow-blue-500/30 min-w-[140px]"
+                    >
+                      {categories.map((cat) => (
+                        <option key={cat} value={cat} className="bg-gray-800">
+                          {cat}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none" size={20} />
+                  </motion.div>
+
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="relative"
+                  >
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="appearance-none bg-gradient-to-br from-purple-600/80 to-purple-700/80 border-2 border-purple-500/30 rounded-2xl pl-5 pr-12 py-4 text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all cursor-pointer font-semibold shadow-lg hover:shadow-purple-500/30 min-w-[140px]"
+                    >
+                      <option value="popular" className="bg-gray-800">Most Popular</option>
+                      <option value="newest" className="bg-gray-800">Newest</option>
+                      <option value="top-rated" className="bg-gray-800">Top Rated</option>
+                      <option value="trending" className="bg-gray-800">Trending</option>
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none" size={20} />
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Active Filters Count */}
+              {(selectedCategory !== 'All' || query) && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 pt-4 border-t border-gray-700/50 flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2 text-sm text-gray-300">
+                    <span className="px-3 py-1 bg-blue-500/20 rounded-full border border-blue-500/30 font-medium">
+                      {filteredRoadmaps.length} {filteredRoadmaps.length === 1 ? 'result' : 'results'}
+                    </span>
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => { setQuery(''); setSelectedCategory('All'); }}
+                    className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1"
+                  >
+                    <X size={16} />
+                    Clear filters
+                  </motion.button>
+                </motion.div>
               )}
             </motion.div>
 
-            {/* Filters */}
-            <div className="flex gap-3">
+            {/* Roadmaps Grid */}
+            <AnimatePresence mode="wait">
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative"
+                key={`${selectedCategory}-${sortBy}-${query}`}
+                layout
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="appearance-none bg-gradient-to-br from-blue-600/80 to-blue-700/80 border-2 border-blue-500/30 rounded-2xl pl-5 pr-12 py-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all cursor-pointer font-semibold shadow-lg hover:shadow-blue-500/30 min-w-[140px]"
-                >
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat} className="bg-gray-800">
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none" size={20} />
+                {filteredRoadmaps.map((roadmap, index) => (
+                  <RoadmapCard key={roadmap.id} roadmap={roadmap} index={index} />
+                ))}
               </motion.div>
+            </AnimatePresence>
 
+            {/* Empty State */}
+            {filteredRoadmaps.length === 0 && (
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center py-20"
               >
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="appearance-none bg-gradient-to-br from-purple-600/80 to-purple-700/80 border-2 border-purple-500/30 rounded-2xl pl-5 pr-12 py-4 text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all cursor-pointer font-semibold shadow-lg hover:shadow-purple-500/30 min-w-[140px]"
+                <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-800 rounded-full mb-6">
+                  <Search size={40} className="text-gray-600" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3 text-gray-300">No Roadmaps Found</h3>
+                <p className="text-gray-400 mb-6">Try adjusting your search or filter criteria.</p>
+                <button
+                  onClick={() => {
+                    setQuery("");
+                    setSelectedCategory("All");
+                    setSortBy("popular");
+                  }}
+                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors font-medium"
                 >
-                  <option value="popular" className="bg-gray-800">Most Popular</option>
-                  <option value="newest" className="bg-gray-800">Newest</option>
-                  <option value="top-rated" className="bg-gray-800">Top Rated</option>
-                  <option value="trending" className="bg-gray-800">Trending</option>
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none" size={20} />
+                  Reset Filters
+                </button>
               </motion.div>
-            </div>
-          </div>
-
-          {/* Active Filters Count */}
-          {(selectedCategory !== 'All' || query) && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-4 pt-4 border-t border-gray-700/50 flex items-center justify-between"
-            >
-              <div className="flex items-center gap-2 text-sm text-gray-300">
-                <span className="px-3 py-1 bg-blue-500/20 rounded-full border border-blue-500/30 font-medium">
-                  {filteredRoadmaps.length} {filteredRoadmaps.length === 1 ? 'result' : 'results'}
-                </span>
-              </div>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => { setQuery(''); setSelectedCategory('All'); }}
-                className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1"
-              >
-                <X size={16} />
-                Clear filters
-              </motion.button>
-            </motion.div>
-          )}
-        </motion.div>
-
-        {/* Roadmaps Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`${selectedCategory}-${sortBy}-${query}`}
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {filteredRoadmaps.map((roadmap, index) => (
-              <RoadmapCard key={roadmap.id} roadmap={roadmap} index={index} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Empty State */}
-        {filteredRoadmaps.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-20"
-          >
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-800 rounded-full mb-6">
-              <Search size={40} className="text-gray-600" />
-            </div>
-            <h3 className="text-2xl font-bold mb-3 text-gray-300">No Roadmaps Found</h3>
-            <p className="text-gray-400 mb-6">Try adjusting your search or filter criteria.</p>
-            <button
-              onClick={() => {
-                setQuery("");
-                setSelectedCategory("All");
-                setSortBy("popular");
-              }}
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors font-medium"
-            >
-              Reset Filters
-            </button>
-          </motion.div>
+            )}
+          </>
         )}
       </div>
     </div>

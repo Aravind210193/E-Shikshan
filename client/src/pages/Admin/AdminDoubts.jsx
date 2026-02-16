@@ -12,6 +12,7 @@ const AdminDoubts = () => {
     const [selectedDoubt, setSelectedDoubt] = useState(null);
     const [replyText, setReplyText] = useState("");
     const [submitting, setSubmitting] = useState(false);
+    const [markResolved, setMarkResolved] = useState(false);
 
     useEffect(() => {
         fetchDoubts();
@@ -36,9 +37,10 @@ const AdminDoubts = () => {
 
         try {
             setSubmitting(true);
-            await adminDoubtAPI.reply(selectedDoubt._id, replyText);
+            await adminDoubtAPI.reply(selectedDoubt._id, replyText, markResolved ? 'resolved' : 'pending');
             toast.success("Reply sent successfully");
             setReplyText("");
+            setMarkResolved(false);
             setSelectedDoubt(null);
             fetchDoubts();
         } catch (error) {
@@ -227,6 +229,18 @@ const AdminDoubts = () => {
                                         className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                                         placeholder="Type your explanation here..."
                                     />
+                                </div>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        id="markResolved"
+                                        checked={markResolved}
+                                        onChange={(e) => setMarkResolved(e.target.checked)}
+                                        className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+                                    />
+                                    <label htmlFor="markResolved" className="text-sm text-gray-300">
+                                        Mark as Resolved?
+                                    </label>
                                 </div>
                                 <div className="flex gap-3 pt-2">
                                     <button

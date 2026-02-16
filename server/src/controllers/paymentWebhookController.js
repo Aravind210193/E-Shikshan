@@ -39,9 +39,9 @@ const handlePaymentWebhook = async (req, res) => {
     // STEP 1: Validate required fields
     if (!transactionId || !orderId || !amount || !status) {
       console.log('❌ Missing required webhook fields');
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Missing required fields: transactionId, orderId, amount, status' 
+        message: 'Missing required fields: transactionId, orderId, amount, status'
       });
     }
 
@@ -49,9 +49,9 @@ const handlePaymentWebhook = async (req, res) => {
     const isSignatureValid = verifyWebhookSignature(req.body, signature);
     if (!isSignatureValid) {
       console.log('❌ Invalid webhook signature');
-      return res.status(401).json({ 
+      return res.status(401).json({
         success: false,
-        message: 'Invalid signature - webhook authentication failed' 
+        message: 'Invalid signature - webhook authentication failed'
       });
     }
     console.log('✅ Webhook signature verified');
@@ -60,9 +60,9 @@ const handlePaymentWebhook = async (req, res) => {
     const enrollment = await Enrollment.findById(orderId);
     if (!enrollment) {
       console.log('❌ Enrollment not found for orderId:', orderId);
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        message: 'Enrollment not found' 
+        message: 'Enrollment not found'
       });
     }
     console.log('✅ Enrollment found:', enrollment._id);
@@ -70,7 +70,7 @@ const handlePaymentWebhook = async (req, res) => {
     // STEP 4: Check if payment already processed
     if (enrollment.paymentStatus === 'completed') {
       console.log('⚠️ Payment already processed for this enrollment');
-      return res.status(200).json({ 
+      return res.status(200).json({
         success: true,
         message: 'Payment already processed',
         alreadyProcessed: true
@@ -81,15 +81,15 @@ const handlePaymentWebhook = async (req, res) => {
     const course = await Course.findById(enrollment.courseId);
     if (!course) {
       console.log('❌ Course not found:', enrollment.courseId);
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        message: 'Course not found' 
+        message: 'Course not found'
       });
     }
 
     const expectedAmount = parseFloat(course.priceAmount);
     const receivedAmount = parseFloat(amount);
-    
+
     if (Math.abs(expectedAmount - receivedAmount) > 0.01) {
       console.log('❌ Amount mismatch! Expected:', expectedAmount, 'Received:', receivedAmount);
       // Mark as failed and log for investigation
@@ -102,10 +102,10 @@ const handlePaymentWebhook = async (req, res) => {
         failedAt: new Date()
       };
       await enrollment.save();
-      
-      return res.status(400).json({ 
+
+      return res.status(400).json({
         success: false,
-        message: 'Payment amount mismatch' 
+        message: 'Payment amount mismatch'
       });
     }
     console.log('✅ Amount verified:', receivedAmount);
@@ -129,7 +129,7 @@ const handlePaymentWebhook = async (req, res) => {
       enrollment.paymentDate = new Date(timestamp) || new Date();
       enrollment.status = 'active'; // Grant course access
       enrollment.amountPaid = receivedAmount;
-      
+
       // Store comprehensive payment details
       enrollment.paymentDetails = {
         // Basic transaction info
@@ -138,21 +138,21 @@ const handlePaymentWebhook = async (req, res) => {
         orderId: orderId,
         amount: receivedAmount,
         method: (paymentMethod || 'upi').toLowerCase(),
-        
+
         // Payment app details
         paymentApp: paymentApp || 'Unknown', // PhonePe, GooglePay, Paytm, BHIM, etc.
         paymentSource: paymentApp ? `Paid via ${paymentApp}` : 'UPI Payment',
-        
+
         // Bank and UPI details
         bankReferenceNumber: bankReferenceNumber || null, // Bank RRN
         vpa: vpa || payerVPA || null, // UPI ID used for payment
         payerVPA: payerVPA || null,   // Customer's UPI ID
         payeeVPA: payeeVPA || '9391774388@paytm', // Merchant UPI ID
-        
+
         // Customer details
         customerPhone: customerPhone,
         customerEmail: customerEmail,
-        
+
         // Status and timestamps
         gatewayStatus: status,
         verifiedAt: new Date(),
@@ -176,7 +176,7 @@ const handlePaymentWebhook = async (req, res) => {
         const alreadyInArray = user.enrolledCourses.some(
           ec => ec.courseId.toString() === enrollment.courseId.toString()
         );
-        
+
         if (!alreadyInArray) {
           user.enrolledCourses.push({
             courseId: enrollment.courseId,
@@ -202,9 +202,52 @@ const handlePaymentWebhook = async (req, res) => {
       console.log('✓ Course added to user profile');
       console.log('✓ User can now access course content');
 
+      // Send emails
+      try {
+        const sendEmail = require('../utils/sendEmail');
+
+        // Email to student
+        await sendEmail({
+          to: customerEmail || enrollment.userDetails?.email,
+          subject: `Payment Successful: ${course.title} - E-Shikshan`,
+          html: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+              <h2>Payment Received!</h2>
+              <p>Hi ${enrollment.userDetails?.fullName || 'Student'},</p>
+              <p>Your payment for <b>${course.title}</b> was successful.</p>
+              <p>Transaction ID: ${transactionId}</p>
+              <p>You can now access your course content on the dashboard.</p>
+              <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}/dashboard" style="background: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Go to Dashboard</a>
+              <br/><br/>
+              <p>Happy learning!<br/>Team E-Shikshan</p>
+            </div>
+          `
+        });
+
+        // Email to instructor
+        if (course.instructorEmail) {
+          await sendEmail({
+            to: course.instructorEmail,
+            subject: `New Student Enrolled (Paid): ${course.title}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+                <h2>New Enrollment Alert</h2>
+                <p>Hello,</p>
+                <p>A new student <b>${enrollment.userDetails?.fullName}</b> has enrolled in your course <b>${course.title}</b> after successful payment.</p>
+                <p>Keep track of their progress on your instructor dashboard.</p>
+                <br/>
+                <p>Best Regards,<br/>E-Shikshan Platform</p>
+              </div>
+            `
+          });
+        }
+      } catch (emailErr) {
+        console.error('Error sending enrollment emails from webhook:', emailErr);
+      }
+
       console.log('═══════════════════════════════════════\n');
-      
-      return res.status(200).json({ 
+
+      return res.status(200).json({
         success: true,
         message: 'Payment verified and enrollment activated',
         enrollmentId: enrollment._id,
@@ -216,7 +259,7 @@ const handlePaymentWebhook = async (req, res) => {
 
     } else if (status === 'FAILED' || status === 'failed') {
       console.log('❌ Payment failed');
-      
+
       enrollment.paymentStatus = 'failed';
       enrollment.transactionId = transactionId; // Store even for failed transactions
       enrollment.paymentDetails = {
@@ -232,7 +275,7 @@ const handlePaymentWebhook = async (req, res) => {
       };
       await enrollment.save();
 
-      return res.status(200).json({ 
+      return res.status(200).json({
         success: true,
         message: 'Payment failure recorded',
         enrollmentId: enrollment._id,
@@ -241,7 +284,7 @@ const handlePaymentWebhook = async (req, res) => {
 
     } else if (status === 'PENDING' || status === 'pending') {
       console.log('⏳ Payment pending');
-      
+
       enrollment.paymentStatus = 'pending';
       enrollment.transactionId = transactionId; // Store even for pending transactions
       enrollment.paymentDetails = {
@@ -262,7 +305,7 @@ const handlePaymentWebhook = async (req, res) => {
       };
       await enrollment.save();
 
-      return res.status(200).json({ 
+      return res.status(200).json({
         success: true,
         message: 'Payment failure recorded',
         enrollmentId: enrollment._id
@@ -270,7 +313,7 @@ const handlePaymentWebhook = async (req, res) => {
 
     } else if (status === 'PENDING' || status === 'pending') {
       console.log('⏳ Payment pending');
-      
+
       enrollment.paymentStatus = 'pending';
       enrollment.paymentDetails = {
         transactionId,
@@ -280,7 +323,7 @@ const handlePaymentWebhook = async (req, res) => {
       };
       await enrollment.save();
 
-      return res.status(200).json({ 
+      return res.status(200).json({
         success: true,
         message: 'Payment pending',
         enrollmentId: enrollment._id
@@ -288,18 +331,18 @@ const handlePaymentWebhook = async (req, res) => {
 
     } else {
       console.log('⚠️ Unknown payment status:', status);
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Unknown payment status' 
+        message: 'Unknown payment status'
       });
     }
 
   } catch (error) {
     console.error('❌ Webhook processing error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       success: false,
       message: 'Webhook processing failed',
-      error: error.message 
+      error: error.message
     });
   }
 };
@@ -325,7 +368,7 @@ const verifyWebhookSignature = (payload, receivedSignature) => {
     // Create signature from payload
     // Format: transactionId|orderId|amount|status|timestamp
     const signatureString = `${payload.transactionId}|${payload.orderId}|${payload.amount}|${payload.status}|${payload.timestamp}`;
-    
+
     // Generate HMAC SHA256 signature
     const expectedSignature = crypto
       .createHmac('sha256', webhookSecret)
@@ -359,17 +402,17 @@ const getPaymentStatus = async (req, res) => {
 
     const enrollment = await Enrollment.findById(orderId);
     if (!enrollment) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        message: 'Enrollment not found' 
+        message: 'Enrollment not found'
       });
     }
 
     // Verify enrollment belongs to user
     if (enrollment.userId.toString() !== userId.toString()) {
-      return res.status(403).json({ 
+      return res.status(403).json({
         success: false,
-        message: 'Unauthorized access' 
+        message: 'Unauthorized access'
       });
     }
 
@@ -383,10 +426,10 @@ const getPaymentStatus = async (req, res) => {
     });
   } catch (error) {
     console.error('Get payment status error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       message: 'Failed to fetch payment status',
-      error: error.message 
+      error: error.message
     });
   }
 };

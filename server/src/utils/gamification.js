@@ -2,20 +2,22 @@ const { UserGamification, Badge, ActivityLog } = require('../models/Gamification
 
 // Points configuration
 const POINTS_CONFIG = {
-  VIDEO_WATCHED: 10,
-  VIDEO_COMPLETED: 15,
+  VIDEO_WATCHED: 20,
+  VIDEO_COMPLETED: 20,
   QUIZ_ATTEMPTED: 20,
   QUIZ_PASSED: 30,
   QUIZ_PERFECT: 50,
-  ASSIGNMENT_SUBMITTED: 25,
-  ASSIGNMENT_COMPLETED: 40,
+  ASSIGNMENT_SUBMITTED: 10,
+  ASSIGNMENT_COMPLETED: 20,
   COURSE_STARTED: 50,
   COURSE_COMPLETED: 200,
   DAILY_LOGIN: 5,
   STREAK_BONUS: 10, // per day
   BADGE_EARNED: 100,
   CERTIFICATE_EARNED: 150,
-  FIRST_TRY_SUCCESS: 25
+  FIRST_TRY_SUCCESS: 25,
+  DOUBT_RESOLVED: 20,
+  SUBMISSION_GRADED: 50
 };
 
 // Level calculation
@@ -26,7 +28,7 @@ const calculateLevel = (totalPoints) => {
   const nextLevelBase = Math.pow(level, 2) * 100;
   const levelPoints = totalPoints - currentLevelBase;
   const nextLevelPoints = nextLevelBase - currentLevelBase;
-  
+
   return {
     level,
     levelPoints,
@@ -38,15 +40,15 @@ const calculateLevel = (totalPoints) => {
 const awardPoints = async (userId, pointsToAdd, activityType, metadata = {}) => {
   try {
     let gamification = await UserGamification.findOne({ userId });
-    
+
     if (!gamification) {
       gamification = new UserGamification({ userId });
     }
-    
+
     // Add points
     const oldLevel = gamification.level;
     gamification.totalPoints += pointsToAdd;
-    
+
     // Update points breakdown
     const breakdownKey = {
       'video_watched': 'videosWatched',
@@ -60,26 +62,39 @@ const awardPoints = async (userId, pointsToAdd, activityType, metadata = {}) => 
       'login': 'loginStreak',
       'badge_earned': 'badges'
     }[activityType];
-    
+
     if (breakdownKey && gamification.pointsBreakdown[breakdownKey] !== undefined) {
       gamification.pointsBreakdown[breakdownKey] += pointsToAdd;
     }
-    
+
     // Recalculate level
     const levelData = calculateLevel(gamification.totalPoints);
     gamification.level = levelData.level;
     gamification.levelPoints = levelData.levelPoints;
     gamification.nextLevelPoints = levelData.nextLevelPoints;
-    
+
     // Check for level up
     const leveledUp = gamification.level > oldLevel;
-    
+
     // Update last activity
     gamification.lastActivityDate = new Date();
     gamification.updatedAt = new Date();
-    
+
     await gamification.save();
-    
+
+    // Also update points in Enrollment if courseId is present
+    if (metadata.courseId) {
+      try {
+        const Enrollment = require('../models/Enrollment');
+        await Enrollment.findOneAndUpdate(
+          { userId, courseId: metadata.courseId },
+          { $inc: { 'progress.points': pointsToAdd } }
+        );
+      } catch (enrollErr) {
+        console.error('Error updating enrollment points:', enrollErr);
+      }
+    }
+
     // Log activity
     await ActivityLog.create({
       userId,
@@ -88,7 +103,7 @@ const awardPoints = async (userId, pointsToAdd, activityType, metadata = {}) => 
       description: metadata.description || `Earned ${pointsToAdd} points`,
       metadata
     });
-    
+
     // Check if level up occurred
     if (leveledUp) {
       await ActivityLog.create({
@@ -99,7 +114,7 @@ const awardPoints = async (userId, pointsToAdd, activityType, metadata = {}) => 
         metadata: { level: gamification.level }
       });
     }
-    
+
     return { gamification, leveledUp, pointsAwarded: pointsToAdd };
   } catch (error) {
     console.error('Error awarding points:', error);
@@ -111,22 +126,22 @@ const awardPoints = async (userId, pointsToAdd, activityType, metadata = {}) => 
 const updateStreak = async (userId) => {
   try {
     let gamification = await UserGamification.findOne({ userId });
-    
+
     if (!gamification) {
       gamification = new UserGamification({ userId });
     }
-    
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
-    const lastActivity = gamification.lastActivityDate 
-      ? new Date(gamification.lastActivityDate) 
+
+    const lastActivity = gamification.lastActivityDate
+      ? new Date(gamification.lastActivityDate)
       : null;
-    
+
     if (lastActivity) {
       lastActivity.setHours(0, 0, 0, 0);
       const daysDiff = Math.floor((today - lastActivity) / (1000 * 60 * 60 * 24));
-      
+
       if (daysDiff === 0) {
         // Same day, no change
         return { streakMaintained: true, currentStreak: gamification.currentStreak };
@@ -134,13 +149,13 @@ const updateStreak = async (userId) => {
         // Consecutive day
         gamification.currentStreak += 1;
         gamification.streakHistory.push({ date: today, maintained: true });
-        
+
         // Award streak bonus
         const streakBonus = POINTS_CONFIG.STREAK_BONUS * gamification.currentStreak;
         await awardPoints(userId, streakBonus, 'streak_maintained', {
           description: `${gamification.currentStreak}-day streak maintained!`
         });
-        
+
         // Update longest streak
         if (gamification.currentStreak > gamification.longestStreak) {
           gamification.longestStreak = gamification.currentStreak;
@@ -156,12 +171,12 @@ const updateStreak = async (userId) => {
       gamification.longestStreak = 1;
       gamification.streakHistory.push({ date: today, maintained: true });
     }
-    
+
     gamification.lastActivityDate = new Date();
     await gamification.save();
-    
-    return { 
-      streakMaintained: true, 
+
+    return {
+      streakMaintained: true,
       currentStreak: gamification.currentStreak,
       longestStreak: gamification.longestStreak
     };
@@ -175,27 +190,27 @@ const updateStreak = async (userId) => {
 const trackVideoWatched = async (userId, videoData) => {
   try {
     const gamification = await UserGamification.findOne({ userId });
-    
+
     if (gamification) {
       gamification.achievements.videosWatched += 1;
       gamification.achievements.totalWatchTime += videoData.duration || 0;
       await gamification.save();
     }
-    
-    const points = videoData.completed 
-      ? POINTS_CONFIG.VIDEO_COMPLETED 
+
+    const points = videoData.completed
+      ? POINTS_CONFIG.VIDEO_COMPLETED
       : POINTS_CONFIG.VIDEO_WATCHED;
-    
+
     await awardPoints(userId, points, 'video_watched', {
       courseId: videoData.courseId,
       moduleId: videoData.moduleId,
       duration: videoData.duration,
       description: `Watched video: ${videoData.title}`
     });
-    
+
     await updateStreak(userId);
     await checkAndAwardBadges(userId);
-    
+
     return { success: true, pointsEarned: points };
   } catch (error) {
     console.error('Error tracking video:', error);
@@ -210,7 +225,7 @@ const trackQuizCompleted = async (userId, quizData) => {
     const score = quizData.score || 0;
     const passed = score >= (quizData.passingScore || 60);
     const perfect = score === 100;
-    
+
     if (gamification) {
       gamification.achievements.quizzesCompleted += 1;
       if (passed) gamification.achievements.quizzesPassed += 1;
@@ -218,37 +233,37 @@ const trackQuizCompleted = async (userId, quizData) => {
       if (quizData.firstAttempt && passed) {
         gamification.achievements.firstTrySuccess += 1;
       }
-      
+
       // Recalculate average score
       const totalQuizzes = gamification.achievements.quizzesCompleted;
       const oldAvg = gamification.achievements.averageQuizScore || 0;
-      gamification.achievements.averageQuizScore = 
+      gamification.achievements.averageQuizScore =
         ((oldAvg * (totalQuizzes - 1)) + score) / totalQuizzes;
-      
+
       await gamification.save();
     }
-    
+
     let points = POINTS_CONFIG.QUIZ_ATTEMPTED;
     if (perfect) {
       points = POINTS_CONFIG.QUIZ_PERFECT;
     } else if (passed) {
       points = POINTS_CONFIG.QUIZ_PASSED;
     }
-    
+
     if (quizData.firstAttempt && passed) {
       points += POINTS_CONFIG.FIRST_TRY_SUCCESS;
     }
-    
+
     await awardPoints(userId, points, perfect ? 'quiz_perfect' : (passed ? 'quiz_passed' : 'quiz_completed'), {
       courseId: quizData.courseId,
       quizId: quizData.quizId,
       score: score,
       description: `Completed quiz with ${score}% score`
     });
-    
+
     await updateStreak(userId);
     await checkAndAwardBadges(userId);
-    
+
     return { success: true, pointsEarned: points, passed, perfect };
   } catch (error) {
     console.error('Error tracking quiz:', error);
@@ -260,7 +275,7 @@ const trackQuizCompleted = async (userId, quizData) => {
 const trackAssignmentSubmitted = async (userId, assignmentData) => {
   try {
     const gamification = await UserGamification.findOne({ userId });
-    
+
     if (gamification) {
       gamification.achievements.assignmentsSubmitted += 1;
       if (assignmentData.onTime) {
@@ -268,19 +283,19 @@ const trackAssignmentSubmitted = async (userId, assignmentData) => {
       }
       await gamification.save();
     }
-    
-    const points = assignmentData.completed 
-      ? POINTS_CONFIG.ASSIGNMENT_COMPLETED 
+
+    const points = assignmentData.completed
+      ? POINTS_CONFIG.ASSIGNMENT_COMPLETED
       : POINTS_CONFIG.ASSIGNMENT_SUBMITTED;
-    
+
     await awardPoints(userId, points, 'assignment_submitted', {
       courseId: assignmentData.courseId,
       description: `Submitted assignment: ${assignmentData.title}`
     });
-    
+
     await updateStreak(userId);
     await checkAndAwardBadges(userId);
-    
+
     return { success: true, pointsEarned: points };
   } catch (error) {
     console.error('Error tracking assignment:', error);
@@ -292,30 +307,30 @@ const trackAssignmentSubmitted = async (userId, assignmentData) => {
 const trackCourseProgress = async (userId, courseData) => {
   try {
     const gamification = await UserGamification.findOne({ userId });
-    
+
     if (courseData.started && gamification) {
       gamification.achievements.coursesStarted += 1;
       await gamification.save();
-      
+
       await awardPoints(userId, POINTS_CONFIG.COURSE_STARTED, 'course_started', {
         courseId: courseData.courseId,
         description: `Started course: ${courseData.title}`
       });
     }
-    
+
     if (courseData.completed && gamification) {
       gamification.achievements.coursesCompleted += 1;
       await gamification.save();
-      
+
       await awardPoints(userId, POINTS_CONFIG.COURSE_COMPLETED, 'course_completed', {
         courseId: courseData.courseId,
         description: `Completed course: ${courseData.title}`
       });
     }
-    
+
     await updateStreak(userId);
     await checkAndAwardBadges(userId);
-    
+
     return { success: true };
   } catch (error) {
     console.error('Error tracking course:', error);
@@ -328,15 +343,15 @@ const checkAndAwardBadges = async (userId) => {
   try {
     const gamification = await UserGamification.findOne({ userId }).populate('badges.badgeId');
     if (!gamification) return;
-    
+
     const allBadges = await Badge.find({ isActive: true });
     const earnedBadgeIds = gamification.badges.map(b => b.badgeId?._id?.toString());
-    
+
     for (const badge of allBadges) {
       if (earnedBadgeIds.includes(badge._id.toString())) continue;
-      
+
       let shouldAward = false;
-      
+
       switch (badge.criteria.criteriaType) {
         case 'points':
           shouldAward = gamification.totalPoints >= badge.criteria.value;
@@ -357,17 +372,17 @@ const checkAndAwardBadges = async (userId) => {
           shouldAward = gamification.achievements.assignmentsSubmitted >= badge.criteria.value;
           break;
       }
-      
+
       if (shouldAward) {
         gamification.badges.push({
           badgeId: badge._id,
           earnedAt: new Date()
         });
-        
+
         await awardPoints(userId, badge.points || POINTS_CONFIG.BADGE_EARNED, 'badge_earned', {
           description: `Earned badge: ${badge.name}`
         });
-        
+
         await ActivityLog.create({
           userId,
           activityType: 'badge_earned',
@@ -377,7 +392,7 @@ const checkAndAwardBadges = async (userId) => {
         });
       }
     }
-    
+
     await gamification.save();
   } catch (error) {
     console.error('Error checking badges:', error);
@@ -389,12 +404,12 @@ const getUserGamification = async (userId) => {
   try {
     let gamification = await UserGamification.findOne({ userId })
       .populate('badges.badgeId');
-    
+
     if (!gamification) {
       gamification = new UserGamification({ userId });
       await gamification.save();
     }
-    
+
     return gamification;
   } catch (error) {
     console.error('Error getting gamification data:', error);
@@ -406,13 +421,13 @@ const getUserGamification = async (userId) => {
 const getLeaderboard = async (filters = {}) => {
   try {
     const { limit = 100, category = 'overall' } = filters;
-    
+
     const leaderboard = await UserGamification.find()
       .populate('userId', 'name email profilePicture university department')
       .sort({ totalPoints: -1 })
       .limit(limit)
       .lean();
-    
+
     return leaderboard.map((entry, index) => ({
       rank: index + 1,
       userId: entry.userId,
@@ -434,7 +449,7 @@ const getUserActivity = async (userId, limit = 50) => {
       .sort({ createdAt: -1 })
       .limit(limit)
       .lean();
-    
+
     return activities;
   } catch (error) {
     console.error('Error getting user activity:', error);
@@ -448,12 +463,41 @@ const trackDailyLogin = async (userId) => {
     await awardPoints(userId, POINTS_CONFIG.DAILY_LOGIN, 'login', {
       description: 'Daily login reward'
     });
-    
+
     await updateStreak(userId);
-    
+
     return { success: true, pointsEarned: POINTS_CONFIG.DAILY_LOGIN };
   } catch (error) {
     console.error('Error tracking daily login:', error);
+    throw error;
+  }
+};
+
+const trackSubmissionGraded = async (userId, submissionData) => {
+  try {
+    await awardPoints(userId, POINTS_CONFIG.SUBMISSION_GRADED, 'submission_graded', {
+      courseId: submissionData.courseId,
+      submissionId: submissionData.submissionId,
+      description: `Submission graded: ${submissionData.title}`
+    });
+    return { success: true, pointsEarned: POINTS_CONFIG.SUBMISSION_GRADED };
+  } catch (error) {
+    console.error('Error tracking submission graded:', error);
+    throw error;
+  }
+};
+
+// Track doubt resolution
+const trackDoubtResolved = async (userId, doubtData) => {
+  try {
+    await awardPoints(userId, POINTS_CONFIG.DOUBT_RESOLVED, 'doubt_resolved', {
+      courseId: doubtData.courseId,
+      doubtId: doubtData.doubtId,
+      description: `Doubt resolved: ${doubtData.question.substring(0, 30)}...`
+    });
+    return { success: true, pointsEarned: POINTS_CONFIG.DOUBT_RESOLVED };
+  } catch (error) {
+    console.error('Error tracking doubt resolution:', error);
     throw error;
   }
 };
@@ -471,5 +515,7 @@ module.exports = {
   getUserGamification,
   getLeaderboard,
   getUserActivity,
-  trackDailyLogin
+  trackDailyLogin,
+  trackSubmissionGraded,
+  trackDoubtResolved
 };

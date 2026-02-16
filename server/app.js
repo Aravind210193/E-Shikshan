@@ -102,6 +102,10 @@ app.use('/api/hackathon-registrations', hackathonRegistrationRoutes);
 app.use('/api/webhooks', webhookRoutes);
 app.use('/api/gamification', gamificationRoutes);
 
+// Public Roadmap routes
+const roadmapRoutes = require('./src/routes/roadmapRoutes');
+app.use('/api/roadmaps', roadmapRoutes);
+
 // Content routes  
 app.use('/api/branches', branchRoutes);
 app.use('/api/education-levels', educationLevelRoutes);
@@ -109,9 +113,17 @@ app.use('/api/subjects', subjectRoutes);
 app.use('/api/programs', semesterDataRoutes);
 app.use('/api/folders', folderRoutes);
 
+// Notification routes
+const notificationRoutes = require('./src/routes/notificationRoutes');
+app.use('/api/notifications', notificationRoutes);
+
 // Doubt routes
 const doubtRoutes = require('./src/routes/doubtRoutes');
 app.use('/api/doubts', doubtRoutes);
+
+// Project Submission routes
+const projectSubmissionRoutes = require('./src/routes/projectSubmissionRoutes');
+app.use('/api/project-submissions', projectSubmissionRoutes);
 
 // Admin routes - IMPORTANT: More specific routes must come FIRST!
 app.use('/api/admin/auth', adminAuthRoutes);
@@ -121,6 +133,7 @@ app.use('/api/admin/hackathons', adminHackathonRoutes);
 app.use('/api/admin/roadmaps', adminRoadmapRoutes);
 app.use('/api/admin/content', adminContentRoutes);
 app.use('/api/admin/resumes', adminResumeRoutes);
+app.use('/api/admin/project-submissions', projectSubmissionRoutes);
 // Note: Legacy admin user routes are disabled to avoid route conflicts with new admin users endpoints
 // const adminUserRoutes = require('./src/routes/adminUserRoutes');
 // app.use('/api/admin/users', adminUserRoutes);

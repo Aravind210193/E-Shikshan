@@ -51,7 +51,11 @@ import AdminContent from './pages/Admin/AdminContent'
 import AdminResumes from './pages/Admin/AdminResumes'
 import AdminStudents from './pages/Admin/AdminStudents'
 import AdminDoubts from './pages/Admin/AdminDoubts'
+import AdminSubmissions from './pages/Admin/AdminSubmissions'
 import InstructorStudents from './pages/Admin/InstructorStudents'
+import StudentDashboard from './pages/StudentDashboard'
+import StudentDoubts from './pages/StudentDoubts'
+import StudentSidebar from './components/StudentSidebar'
 
 const App = () => {
   const location = useLocation();
@@ -75,7 +79,10 @@ const App = () => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  const hideLayout = ["/login", "/signup"].includes(location.pathname) || location.pathname.startsWith('/admin') || location.pathname.startsWith('/instructor');
+  const hideLayout = ["/login", "/signup"].includes(location.pathname) ||
+    location.pathname.startsWith('/admin') ||
+    location.pathname.startsWith('/instructor') ||
+    location.pathname.startsWith('/dashboard');
   return (
     <>
       <Toaster
@@ -160,6 +167,25 @@ const App = () => {
             <Profile />
           </ProtectedRoute>
         } />
+
+        {/* Student Portal Routes */}
+        <Route path='/dashboard/*' element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <div className="flex bg-[#0f111a] min-h-screen">
+              <aside className="hidden lg:block">
+                <StudentSidebar />
+              </aside>
+              <main className="flex-1 overflow-y-auto">
+                <Routes>
+                  <Route path="/" element={<StudentDashboard />} />
+                  <Route path="doubts" element={<StudentDoubts />} />
+                  {/* Add more student tracks here */}
+                </Routes>
+              </main>
+            </div>
+          </ProtectedRoute>
+        } />
+
         <Route path='/settings' element={
           <ProtectedRoute isLoggedIn={isLoggedIn}>
             <Settings />
@@ -192,6 +218,7 @@ const App = () => {
                   <Route path='students' element={<AdminStudents />} />
                   <Route path='courses' element={<AdminCourses />} />
                   <Route path='doubts' element={<AdminDoubts />} />
+                  <Route path='submissions' element={<AdminSubmissions />} />
                   <Route path='jobs' element={<AdminJobs />} />
                   <Route path='hackathons' element={<AdminHackathons />} />
                   <Route path='roadmaps' element={<AdminRoadmaps />} />
@@ -218,6 +245,7 @@ const App = () => {
                   <Route path='courses' element={<AdminCourses />} />
                   <Route path='students' element={<InstructorStudents />} />
                   <Route path='doubts' element={<AdminDoubts />} />
+                  <Route path='submissions' element={<AdminSubmissions />} />
                   <Route path='settings' element={<AdminSettings />} />
                   <Route path='*' element={<Navigate to='/instructor/dashboard' replace />} />
                 </Routes>

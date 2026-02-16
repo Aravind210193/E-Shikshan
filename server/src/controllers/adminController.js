@@ -8,6 +8,9 @@ const AdminRoadmap = require('../models/AdminRoadmap');
 const AdminContent = require('../models/AdminContent');
 const AdminCourse = require('../models/AdminCourse');
 const Doubt = require('../models/Doubt');
+const ProjectSubmission = require('../models/ProjectSubmission');
+const sendEmail = require('../utils/sendEmail');
+const Notification = require('../models/Notification');
 
 // @desc    Get all users with their enrollments
 // @route   GET /api/admin/users
@@ -259,8 +262,46 @@ const grantCourseAccess = async (req, res) => {
       enrollment.paymentMethod = 'admin_granted';
       enrollment.amountPaid = 0;
       enrollment.paymentDate = new Date();
+      enrollment.enrolledAt = new Date(); // Update timestamp to show as recent
 
       await enrollment.save();
+
+      // Send emails (for update case)
+      try {
+        await sendEmail({
+          to: userDetails?.email || user.email,
+          subject: `Course Access Granted: ${course.title} - E-Shikshan`,
+          html: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+              <h2>Course Access Granted</h2>
+              <p>Hi ${userDetails?.fullName || user.name},</p>
+              <p>You have been granted access to <b>${course.title}</b> by the administrator.</p>
+              <p>You can now access all the course content on your dashboard.</p>
+              <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}/dashboard" style="background: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Dashboard</a>
+              <br/><br/>
+              <p>Happy learning!<br/>Team E-Shikshan</p>
+            </div>
+          `
+        });
+
+        if (course.instructorEmail) {
+          await sendEmail({
+            to: course.instructorEmail,
+            subject: `New Student Enrolled (Admin Grant): ${course.title}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+                <h2>New Student Enrolled</h2>
+                <p>Hello,</p>
+                <p>Administrator has granted <b>${userDetails?.fullName || user.name}</b> (${userDetails?.email || user.email}) access to your course <b>${course.title}</b>.</p>
+                <br/>
+                <p>Best Regards,<br/>E-Shikshan Platform</p>
+              </div>
+            `
+          });
+        }
+      } catch (emailErr) {
+        console.error('Error sending grant (update) emails:', emailErr);
+      }
 
       return res.json({
         message: 'Course access updated successfully',
@@ -291,6 +332,50 @@ const grantCourseAccess = async (req, res) => {
     course.students += 1;
     await course.save();
 
+    // Send emails
+    try {
+      // Email to student
+      const studentEmail = userDetails?.email || user.email;
+      const studentName = userDetails?.fullName || user.name;
+
+      if (studentEmail) {
+        await sendEmail({
+          to: studentEmail,
+          subject: `Course Access Granted: ${course.title} - E-Shikshan`,
+          html: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+                <h2>Course Access Granted</h2>
+                <p>Hi ${studentName},</p>
+                <p>You have been granted access to <b>${course.title}</b> by the administrator.</p>
+                <p>You can now access all the course content on your dashboard.</p>
+                <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}/dashboard" style="background: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Dashboard</a>
+                <br/><br/>
+                <p>Happy learning!<br/>Team E-Shikshan</p>
+            </div>
+            `
+        });
+      }
+
+      // Email to instructor
+      if (course.instructorEmail) {
+        await sendEmail({
+          to: course.instructorEmail,
+          subject: `New Student Enrolled (Admin Grant): ${course.title}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+              <h2>New Student Enrolled</h2>
+              <p>Hello,</p>
+              <p>Administrator has granted <b>${studentName}</b> (${studentEmail}) access to your course <b>${course.title}</b>.</p>
+              <br/>
+              <p>Best Regards,<br/>E-Shikshan Platform</p>
+            </div>
+          `
+        });
+      }
+    } catch (emailErr) {
+      console.error('Error sending grant access emails:', emailErr);
+    }
+
     res.status(201).json({
       message: 'Course access granted successfully',
       enrollment
@@ -307,11 +392,17 @@ const grantCourseAccess = async (req, res) => {
 // @desc    Revoke course access from user
 // @route   PUT /api/admin/enrollments/:id/revoke
 // @access  Private/Admin
+// @desc    Revoke course access from user
+// @route   PUT /api/admin/enrollments/:id/revoke
+// @access  Private/Admin
 const revokeCourseAccess = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const enrollment = await Enrollment.findById(id);
+    const enrollment = await Enrollment.findById(id)
+      .populate('userId', 'name email')
+      .populate('courseId', 'title instructorEmail');
+
     if (!enrollment) {
       return res.status(404).json({ message: 'Enrollment not found' });
     }
@@ -319,6 +410,58 @@ const revokeCourseAccess = async (req, res) => {
     // Update enrollment status to suspended
     enrollment.status = 'suspended';
     await enrollment.save();
+
+    const courseTitle = enrollment.courseId ? enrollment.courseId.title : 'Course';
+    const courseId = enrollment.courseId ? enrollment.courseId._id : null;
+
+    // Notify Student
+    if (enrollment.userId && enrollment.userId.email && enrollment.courseId) {
+      // Email
+      await sendEmail({
+        to: enrollment.userId.email,
+        subject: `Course Access Revoked: ${courseTitle}`,
+        html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <h2>Access Revoked</h2>
+                    <p>Your access to the course <strong>${courseTitle}</strong> has been revoked/suspended by the administrator.</p>
+                    <p>If you believe this is an error, please contact support.</p>
+                </div>
+            `
+      }).catch(err => console.error('Failed to email student on revoke:', err));
+
+      // Notification
+      await Notification.create({
+        recipientEmail: enrollment.userId.email,
+        title: 'Course Access Revoked',
+        message: `Your access to ${courseTitle} has been revoked.`,
+        type: 'general',
+        relatedId: courseId
+      });
+    }
+
+    // Notify Instructor
+    if (enrollment.courseId && enrollment.courseId.instructorEmail && enrollment.userId) {
+      // Email
+      await sendEmail({
+        to: enrollment.courseId.instructorEmail,
+        subject: `Student Removed: ${courseTitle}`,
+        html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <h2>Student Removed</h2>
+                    <p>The student <strong>${enrollment.userId.name}</strong> (${enrollment.userId.email}) has been removed/suspended from your course <strong>${courseTitle}</strong>.</p>
+                </div>
+            `
+      }).catch(err => console.error('Failed to email instructor on revoke:', err));
+
+      // Notification
+      await Notification.create({
+        recipientEmail: enrollment.courseId.instructorEmail,
+        title: 'Student Removed',
+        message: `${enrollment.userId.name} was removed from ${courseTitle}.`,
+        type: 'general',
+        relatedId: courseId
+      });
+    }
 
     res.json({
       message: 'Course access revoked successfully',
@@ -369,16 +512,76 @@ const deleteEnrollment = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const enrollment = await Enrollment.findById(id);
+    const enrollment = await Enrollment.findById(id)
+      .populate('userId', 'name email')
+      .populate('courseId', 'title instructorEmail');
+
     if (!enrollment) {
       return res.status(404).json({ message: 'Enrollment not found' });
     }
 
-    // Decrement student count
-    const course = await Course.findById(enrollment.courseId);
-    if (course && course.students > 0) {
-      course.students -= 1;
-      await course.save();
+    // Decrement student count (only if course exists)
+    if (enrollment.courseId) {
+      try {
+        const course = await Course.findById(enrollment.courseId._id);
+        if (course && course.students > 0) {
+          course.students -= 1;
+          await course.save();
+        }
+      } catch (err) {
+        console.error('Error updating course student count:', err);
+      }
+    }
+
+    const courseTitle = enrollment.courseId ? enrollment.courseId.title : 'Course';
+    const courseId = enrollment.courseId ? enrollment.courseId._id : null;
+
+    // Notify Student
+    if (enrollment.userId && enrollment.userId.email && enrollment.courseId) {
+      // Email
+      await sendEmail({
+        to: enrollment.userId.email,
+        subject: `Enrollment Cancelled: ${courseTitle}`,
+        html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <h2>Enrollment Cancelled</h2>
+                    <p>Your enrollment in the course <strong>${courseTitle}</strong> has been cancelled/removed by the administrator.</p>
+                </div>
+            `
+      }).catch(err => console.error('Failed to email student on delete:', err));
+
+      // Notification
+      await Notification.create({
+        recipientEmail: enrollment.userId.email,
+        title: 'Enrollment Cancelled',
+        message: `Your enrollment in ${courseTitle} has been cancelled.`,
+        type: 'general',
+        relatedId: courseId
+      });
+    }
+
+    // Notify Instructor
+    if (enrollment.courseId && enrollment.courseId.instructorEmail && enrollment.userId) {
+      // Email
+      await sendEmail({
+        to: enrollment.courseId.instructorEmail,
+        subject: `Student Unenrolled: ${courseTitle}`,
+        html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <h2>Student Unenrolled</h2>
+                    <p>The student <strong>${enrollment.userId.name}</strong> (${enrollment.userId.email}) has been unenrolled from your course <strong>${courseTitle}</strong>.</p>
+                </div>
+            `
+      }).catch(err => console.error('Failed to email instructor on delete:', err));
+
+      // Notification
+      await Notification.create({
+        recipientEmail: enrollment.courseId.instructorEmail,
+        title: 'Student Unenrolled',
+        message: `${enrollment.userId.name} was unenrolled from ${courseTitle}.`,
+        type: 'general',
+        relatedId: courseId
+      });
     }
 
     await Enrollment.findByIdAndDelete(id);
@@ -537,6 +740,29 @@ const getDashboardStats = async (req, res) => {
         .limit(10);
     }
 
+    // Generic submissions for instructor
+    let projectStats = { total: 0, pending: 0 };
+    let assignmentStats = { total: 0, pending: 0 };
+    let recentProjectSubmissions = [];
+    if (isManager) {
+      const baseQuery = { instructorEmail: req.admin.email };
+
+      // Projects
+      projectStats.total = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'project' });
+      projectStats.pending = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'project', status: 'pending' });
+
+      // Assignments
+      assignmentStats.total = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'assignment' });
+      assignmentStats.pending = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'assignment', status: 'pending' });
+
+      // Recent (common)
+      recentProjectSubmissions = await ProjectSubmission.find({ ...baseQuery, status: 'pending' })
+        .populate('student', 'name email')
+        .populate('course', 'title')
+        .sort('-createdAt')
+        .limit(10);
+    }
+
     // Instructors for dashboard (only for admin role)
     let totalInstructors = 0;
     let recentInstructors = [];
@@ -594,6 +820,7 @@ const getDashboardStats = async (req, res) => {
       stats: {
         apiVersion: "v2-students-fixed",
         totalUsers,
+        totalStudents,
         totalInstructors,
         totalCourses,
         activeCourses,
@@ -611,7 +838,9 @@ const getDashboardStats = async (req, res) => {
         activeRoadmaps,
         totalContent,
         publishedContent,
-        doubtsStats
+        doubtsStats,
+        projectStats,
+        assignmentStats
       },
       topCourses,
       coursesByCategory,
@@ -620,6 +849,7 @@ const getDashboardStats = async (req, res) => {
       recentContent,
       contentByType,
       recentDoubts,
+      recentProjectSubmissions,
       enrollmentTrend,
       userMonthlyTrend,
       recentInstructors,

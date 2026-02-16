@@ -40,7 +40,13 @@ export const adminAuthAPI = {
 export const adminDoubtAPI = {
   getInstructorDoubts: () => adminAPI.get('/doubts/instructor'),
   getPendingCount: () => adminAPI.get('/doubts/pending-count'),
-  reply: (id, reply) => adminAPI.put(`/doubts/${id}/reply`, { reply }),
+  reply: (id, reply, status) => adminAPI.put(`/doubts/${id}/reply`, { reply, status }),
+};
+
+// Project Submission Management APIs
+export const adminProjectSubmissionAPI = {
+  getInstructorSubmissions: () => adminAPI.get('/project-submissions/instructor'),
+  update: (id, data) => adminAPI.put(`/project-submissions/${id}`, data),
 };
 
 // Notification APIs

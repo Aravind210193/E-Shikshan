@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import {
   LayoutDashboard, Users, BookOpen, Briefcase, Trophy, Map,
   FileText, Settings, LogOut, Menu, X, GraduationCap, Folder,
-  School, BookMarked, FolderOpen, MessageSquare
+  School, BookMarked, FolderOpen, MessageSquare, FileCheck
 } from "lucide-react";
 
 import NotificationDropdown from "../../components/Admin/NotificationDropdown";
@@ -33,6 +33,7 @@ const AdminLayout = ({ setIsAdminLoggedIn, children }) => {
         { path: `${base}/courses`, label: "Courses", icon: BookOpen },
         { path: `${base}/students`, label: "Students", icon: GraduationCap },
         { path: `${base}/doubts`, label: "Doubts", icon: MessageSquare },
+        { path: `${base}/submissions`, label: "Submissions", icon: FileCheck },
         { path: `${base}/settings`, label: "Settings", icon: Settings }
       ]
       : [
@@ -41,6 +42,7 @@ const AdminLayout = ({ setIsAdminLoggedIn, children }) => {
         { path: `${base}/students`, label: "Students", icon: GraduationCap },
         { path: `${base}/courses`, label: "Courses", icon: BookOpen },
         { path: `${base}/doubts`, label: "Doubts", icon: MessageSquare },
+        { path: `${base}/submissions`, label: "Submissions", icon: FileCheck },
         { path: `${base}/jobs`, label: "Jobs", icon: Briefcase },
         { path: `${base}/hackathons`, label: "Hackathons", icon: Trophy },
         { path: `${base}/roadmaps`, label: "Roadmaps", icon: Map },

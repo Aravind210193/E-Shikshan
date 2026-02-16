@@ -3,9 +3,10 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft, Star, Users, Clock, Award, BookOpen, CheckCircle,
-  Video, FileText, X, Calendar, Globe, Lock, Play, ExternalLink
+  Video, FileText, X, Calendar, Globe, Lock, Play, ExternalLink, Activity
 } from 'lucide-react';
-import { coursesAPI, enrollmentAPI, doubtsAPI } from '../services/api';
+import { coursesAPI, enrollmentAPI, doubtsAPI, projectSubmissionAPI } from '../services/api';
+import { Share2, MessageCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const CourseDetail = () => {
@@ -34,6 +35,15 @@ const CourseDetail = () => {
   const [commentText, setCommentText] = useState({});
   const [activeProjectCommentBox, setActiveProjectCommentBox] = useState(null);
   const [projectCommentText, setProjectCommentText] = useState({});
+  const [showWorkModal, setShowWorkModal] = useState(false);
+  const [selectedWork, setSelectedWork] = useState(null); // Can be project or assignment
+  const [workType, setWorkType] = useState('project');
+  const [submittingWork, setSubmittingWork] = useState(false);
+  const [submissions, setSubmissions] = useState([]);
+  const [fetchingSubmissions, setFetchingSubmissions] = useState(false);
+  const [replyText, setReplyText] = useState({});
+  const [isReplying, setIsReplying] = useState({});
+  const [submissionData, setSubmissionData] = useState({ submissionUrl: '', comments: '' });
 
   const hasAccess = !!(enrollmentStatus?.hasAccess);
   const isEnrolled = !!(enrollmentStatus?.enrolled);
@@ -55,8 +65,28 @@ const CourseDetail = () => {
 
     if (id) {
       fetchCourse();
+      fetchSubmissions();
     }
   }, [id, navigate]);
+
+  const fetchSubmissions = async () => {
+    try {
+      setFetchingSubmissions(true);
+      const res = await projectSubmissionAPI.getMySubmissions();
+      // Handle response structure { success: true, data: [...] }
+      const submissionsList = Array.isArray(res.data) ? res.data : (res.data.data || []);
+
+      // Filter submissions for this course
+      setSubmissions(submissionsList.filter(s => {
+        const courseId = s.course?._id || s.course || s.courseId?._id || s.courseId;
+        return courseId === id;
+      }));
+    } catch (error) {
+      console.error('Error fetching submissions:', error);
+    } finally {
+      setFetchingSubmissions(false);
+    }
+  };
 
   const checkEnrollment = async () => {
     const token = localStorage.getItem('token');
@@ -207,6 +237,32 @@ const CourseDetail = () => {
       toast.error(errorMessage);
     } finally {
       setIsProcessingPayment(false);
+    }
+  };
+
+  const handleWorkSubmit = async (e) => {
+    e.preventDefault();
+    if (!submissionData.submissionUrl) return toast.error('Please enter a submission URL');
+
+    setSubmittingWork(true);
+    try {
+      await projectSubmissionAPI.submit({
+        courseId: course._id,
+        workId: selectedWork._id,
+        workType,
+        title: selectedWork.title,
+        submissionUrl: submissionData.submissionUrl,
+        comments: submissionData.comments
+      });
+      toast.success(`${workType.charAt(0).toUpperCase() + workType.slice(1)} submitted successfully!`);
+      setShowWorkModal(false);
+      setSubmissionData({ submissionUrl: '', comments: '' });
+      fetchSubmissions(); // Refresh submissions
+    } catch (error) {
+      console.error(error);
+      toast.error(`Failed to submit ${workType}`);
+    } finally {
+      setSubmittingWork(false);
     }
   };
 
@@ -444,7 +500,7 @@ const CourseDetail = () => {
                 </h2>
                 <div className="space-y-4">
                   {course.assignments.map((assignment, index) => {
-                    const isLocked = course.price !== 'Free' && !hasAccess;
+                    const isLocked = !hasAccess;
                     const showCommentBox = activeCommentBox === assignment._id;
                     const comment = commentText[assignment._id] || '';
 
@@ -509,9 +565,9 @@ const CourseDetail = () => {
                                 </button>
                                 <button
                                   onClick={() => {
-                                    if (assignment.submitUrl) {
-                                      window.open(assignment.submitUrl, '_blank');
-                                    }
+                                    setSelectedWork(assignment);
+                                    setWorkType('assignment');
+                                    setShowWorkModal(true);
                                   }}
                                   className="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-xs font-semibold transition-colors"
                                 >
@@ -591,7 +647,7 @@ const CourseDetail = () => {
                 </h2>
                 <div className="space-y-3">
                   {course.projectsDetails.map((project, index) => {
-                    const isLocked = course.price !== 'Free' && !hasAccess;
+                    const isLocked = !hasAccess;
                     const isCommentOpen = activeProjectCommentBox === project._id;
                     const currentComment = projectCommentText[project._id] || '';
 
@@ -653,9 +709,9 @@ const CourseDetail = () => {
                                   </button>
                                   <button
                                     onClick={() => {
-                                      if (project.submitUrl) {
-                                        window.open(project.submitUrl, '_blank');
-                                      }
+                                      setSelectedWork(project);
+                                      setWorkType('project');
+                                      setShowWorkModal(true);
                                     }}
                                     className="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-xs font-semibold transition-colors"
                                   >
@@ -764,6 +820,162 @@ const CourseDetail = () => {
                       </ul>
                     </div>
                   ))}
+                </div>
+              </section>
+            )}
+
+            {/* My Submissions Section */}
+            {hasAccess && (
+              <section className="bg-slate-800 rounded-xl p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Activity className="text-emerald-400" size={24} />
+                    My Submissions & Feedback
+                  </h2>
+                  <button
+                    onClick={fetchSubmissions}
+                    className="text-xs text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-1"
+                  >
+                    Refresh <Clock size={12} />
+                  </button>
+                </div>
+
+                <div className="space-y-6">
+                  {submissions.length > 0 ? (
+                    submissions.map((sub) => (
+                      <div key={sub._id} className="bg-slate-700/30 border border-slate-700 rounded-2xl overflow-hidden">
+                        <div className="p-5">
+                          <div className="flex justify-between items-start mb-4">
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${sub.workType === 'project' ? 'bg-purple-500/20 text-purple-400' : 'bg-emerald-500/20 text-emerald-400'
+                                  }`}>
+                                  {sub.workType}
+                                </span>
+                                <span className="text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+                                  Submitted on {new Date(sub.createdAt).toLocaleDateString()}
+                                </span>
+                              </div>
+                              <h3 className="text-lg font-bold">{sub.title}</h3>
+                            </div>
+                            <div className="flex flex-col items-end gap-2">
+                              <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${sub.status === 'approved' ? 'bg-green-500/10 text-green-500' :
+                                sub.status === 'rejected' ? 'bg-red-500/10 text-red-500' :
+                                  'bg-amber-500/10 text-amber-500'
+                                }`}>
+                                {sub.status}
+                              </span>
+                              {sub.status === 'pending' && (
+                                <button
+                                  onClick={async () => {
+                                    if (window.confirm('Are you sure you want to delete this submission?')) {
+                                      try {
+                                        await projectSubmissionAPI.delete(sub._id);
+                                        toast.success('Submission deleted');
+                                        fetchSubmissions();
+                                      } catch (err) {
+                                        toast.error('Failed to delete submission');
+                                      }
+                                    }
+                                  }}
+                                  className="text-[10px] text-red-400 hover:text-red-300 underline font-bold"
+                                >
+                                  Delete
+                                </button>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="bg-slate-900/50 rounded-xl p-4 mb-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Your Work</span>
+                              <a href={sub.submissionUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 text-xs font-bold flex items-center gap-1">
+                                View Link <ExternalLink size={12} />
+                              </a>
+                            </div>
+                            <p className="text-sm text-slate-300 italic">"{sub.comments || 'No comments provided'}"</p>
+                          </div>
+
+                          {/* Replies/Feedback Section */}
+                          {(sub.feedback || sub.replies?.length > 0) && (
+                            <div className="space-y-4 pt-4 border-t border-slate-700/50">
+                              <h4 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em]">Feedback & History</h4>
+
+                              {sub.feedback && (
+                                <div className="bg-indigo-500/5 border border-indigo-500/20 rounded-xl p-4">
+                                  <p className="text-xs font-bold text-indigo-400 uppercase mb-2">Instructor Feedback</p>
+                                  <p className="text-sm text-slate-200 leading-relaxed font-medium">{sub.feedback}</p>
+                                  {sub.grade && (
+                                    <div className="mt-2 text-indigo-400 font-black text-sm">
+                                      Grade: {sub.grade}
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+
+                              {sub.replies?.map((reply, i) => (
+                                <div key={i} className={`flex ${reply.sender === enrollmentStatus.enrollment.studentId ? 'justify-end' : 'justify-start'}`}>
+                                  <div className={`max-w-[80%] rounded-2xl p-3 text-sm ${reply.sender === enrollmentStatus.enrollment.studentId
+                                    ? 'bg-indigo-600 text-white rounded-tr-none'
+                                    : 'bg-slate-800 text-slate-200 rounded-tl-none border border-slate-700'
+                                    }`}>
+                                    <p>{reply.text}</p>
+                                    <p className="text-[10px] opacity-50 mt-1">
+                                      {new Date(reply.timestamp).toLocaleString()}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
+
+                              {/* Student Reply Form */}
+                              <div className="mt-4">
+                                <form onSubmit={async (e) => {
+                                  e.preventDefault();
+                                  const text = replyText[sub._id];
+                                  if (!text) return;
+
+                                  try {
+                                    setIsReplying({ ...isReplying, [sub._id]: true });
+                                    await projectSubmissionAPI.reply(sub._id, { text });
+                                    setReplyText({ ...replyText, [sub._id]: '' });
+                                    toast.success('Reply sent');
+                                    fetchSubmissions();
+                                  } catch (err) {
+                                    toast.error('Failed to send reply');
+                                  } finally {
+                                    setIsReplying({ ...isReplying, [sub._id]: false });
+                                  }
+                                }}>
+                                  <div className="relative">
+                                    <input
+                                      type="text"
+                                      placeholder="Reply to feedback..."
+                                      className="w-full bg-slate-900 border border-slate-700 rounded-full py-2 px-4 pr-12 text-sm focus:border-indigo-500 focus:outline-none"
+                                      value={replyText[sub._id] || ''}
+                                      onChange={(e) => setReplyText({ ...replyText, [sub._id]: e.target.value })}
+                                    />
+                                    <button
+                                      type="submit"
+                                      disabled={isReplying[sub._id]}
+                                      className="absolute right-2 top-1 bottom-1 px-3 bg-indigo-600 text-white rounded-full text-xs font-bold hover:bg-indigo-700 transition-all disabled:opacity-50"
+                                    >
+                                      {isReplying[sub._id] ? '...' : 'Send'}
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="py-12 text-center bg-slate-700/20 rounded-2xl border border-dashed border-slate-700">
+                      <FileText className="mx-auto text-slate-600 mb-4" size={40} />
+                      <p className="text-slate-400 font-medium">No submissions for this course yet.</p>
+                      <p className="text-slate-500 text-xs mt-1">Complete assignments or projects to see them here.</p>
+                    </div>
+                  )}
                 </div>
               </section>
             )}
@@ -1188,6 +1400,74 @@ const CourseDetail = () => {
               <br />
               💡 Open browser console (F12) to see the transaction ID after verification.
             </p>
+          </motion.div>
+        </div>
+      )}
+      {/* Work Submission Modal */}
+      {showWorkModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-slate-800 border border-slate-700 rounded-2xl p-6 w-full max-w-lg shadow-2xl relative"
+          >
+            <button
+              onClick={() => setShowWorkModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+            >
+              <X size={24} />
+            </button>
+
+            <h2 className="text-2xl font-bold mb-2">Submit {workType.charAt(0).toUpperCase() + workType.slice(1)}</h2>
+            <p className="text-slate-400 mb-6">{selectedWork?.title}</p>
+
+            <form onSubmit={handleWorkSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1">
+                  Submission Link (GitHub, Drive, etc.)
+                </label>
+                <input
+                  type="url"
+                  required
+                  placeholder="https://github.com/yourusername/work"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  value={submissionData.submissionUrl}
+                  onChange={(e) => setSubmissionData({ ...submissionData, submissionUrl: e.target.value })}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1">
+                  Comments (Optional)
+                </label>
+                <textarea
+                  rows="4"
+                  placeholder="Tell the instructor about your work..."
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-none"
+                  value={submissionData.comments}
+                  onChange={(e) => setSubmissionData({ ...submissionData, comments: e.target.value })}
+                />
+              </div>
+
+              <div className="pt-2 flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowWorkModal(false)}
+                  className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submittingWork}
+                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-600/50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                >
+                  {submittingWork ? (
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : `Submit ${workType.charAt(0).toUpperCase() + workType.slice(1)}`}
+                </button>
+              </div>
+            </form>
           </motion.div>
         </div>
       )}
