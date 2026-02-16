@@ -211,9 +211,24 @@ exports.deleteSubmission = async (req, res) => {
             return res.status(404).json({ message: 'Submission not found' });
         }
 
-        // Allow deletion by the student who submitted it or the instructor
-        // (Simplified check: handle instructor auth in routes)
-        await ProjectSubmission.findByIdAndDelete(req.params.id);
+        // Allow deletion by the student who submitted it or the instructor/admin
+        if (req.admin) {
+            // Admin can delete any submission
+            await ProjectSubmission.findByIdAndDelete(req.params.id);
+        } else if (req.user) {
+            // Student can only delete if it's their own AND it's still pending
+            if (submission.student.toString() !== req.user.id.toString()) {
+                return res.status(403).json({ message: 'You can only delete your own submissions' });
+            }
+
+            if (submission.status !== 'pending') {
+                return res.status(400).json({ message: 'Cannot delete a submission that has already been reviewed' });
+            }
+
+            await ProjectSubmission.findByIdAndDelete(req.params.id);
+        } else {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
 
         res.json({
             success: true,

@@ -8,6 +8,7 @@ import {
 import { coursesAPI, enrollmentAPI, doubtsAPI, projectSubmissionAPI } from '../services/api';
 import { Share2, MessageCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import ConfirmModal from '../components/ConfirmModal';
 
 const CourseDetail = () => {
   const { id } = useParams();
@@ -44,6 +45,16 @@ const CourseDetail = () => {
   const [replyText, setReplyText] = useState({});
   const [isReplying, setIsReplying] = useState({});
   const [submissionData, setSubmissionData] = useState({ submissionUrl: '', comments: '' });
+
+  // Confirm Modal State
+  const [confirmConfig, setConfirmConfig] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: () => { },
+    type: 'danger',
+    confirmText: 'Delete'
+  });
 
   const hasAccess = !!(enrollmentStatus?.hasAccess);
   const isEnrolled = !!(enrollmentStatus?.enrolled);
@@ -867,16 +878,26 @@ const CourseDetail = () => {
                               </span>
                               {sub.status === 'pending' && (
                                 <button
-                                  onClick={async () => {
-                                    if (window.confirm('Are you sure you want to delete this submission?')) {
-                                      try {
-                                        await projectSubmissionAPI.delete(sub._id);
-                                        toast.success('Submission deleted');
-                                        fetchSubmissions();
-                                      } catch (err) {
-                                        toast.error('Failed to delete submission');
+                                  onClick={() => {
+                                    setConfirmConfig({
+                                      isOpen: true,
+                                      title: 'Delete Submission',
+                                      message: 'Are you sure you want to delete this submission? You can resubmit it later.',
+                                      confirmText: 'Delete Submission',
+                                      type: 'danger',
+                                      onConfirm: async () => {
+                                        try {
+                                          setConfirmConfig(prev => ({ ...prev, isLoading: true }));
+                                          await projectSubmissionAPI.delete(sub._id);
+                                          toast.success('Submission deleted');
+                                          fetchSubmissions();
+                                        } catch (err) {
+                                          toast.error(err.response?.data?.message || 'Failed to delete submission');
+                                        } finally {
+                                          setConfirmConfig(prev => ({ ...prev, isOpen: false, isLoading: false }));
+                                        }
                                       }
-                                    }
+                                    });
                                   }}
                                   className="text-[10px] text-red-400 hover:text-red-300 underline font-bold"
                                 >
@@ -1471,6 +1492,18 @@ const CourseDetail = () => {
           </motion.div>
         </div>
       )}
+
+      {/* Global Confirmation Modal */}
+      <ConfirmModal
+        isOpen={confirmConfig.isOpen}
+        onClose={() => setConfirmConfig(prev => ({ ...prev, isOpen: false }))}
+        onConfirm={confirmConfig.onConfirm}
+        title={confirmConfig.title}
+        message={confirmConfig.message}
+        confirmText={confirmConfig.confirmText}
+        type={confirmConfig.type}
+        isLoading={confirmConfig.isLoading}
+      />
     </div>
   );
 };

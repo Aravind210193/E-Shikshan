@@ -52,6 +52,25 @@ exports.getAllJobs = async (req, res) => {
       requirements: j.requirements,
       responsibilities: j.responsibilities,
       createdAt: j.createdAt,
+      // New fields mapping
+      logo: j.logo,
+      category: j.category,
+      skills: j.skills,
+      duration: j.duration,
+      startDate: j.startDate,
+      timePerWeek: j.timePerWeek,
+      mode: j.mode,
+      credential: j.credential,
+      about: j.about,
+      experienceLevel: j.experienceLevel,
+      openings: j.openings,
+      companyWebsite: j.companyWebsite,
+      applyUrl: j.applyUrl,
+      salaryMin: j.salaryMin,
+      salaryMax: j.salaryMax,
+      currency: j.currency,
+      benefits: j.benefits,
+      howto: j.howto,
     }));
 
     const normalizedPublic = publicJobs.map((j) => ({
@@ -66,9 +85,28 @@ exports.getAllJobs = async (req, res) => {
       status: 'Active',
       posted: j.createdAt,
       description: j.description,
-      requirements: j.curriculum, // best-effort mapping
-      responsibilities: j.responsibilities,
+      requirements: j.curriculum || [],
+      responsibilities: j.responsibilities || [],
       createdAt: j.createdAt,
+      // New fields mapping
+      logo: j.logo,
+      category: j.category,
+      skills: j.skills,
+      duration: j.duration,
+      startDate: j.startDate,
+      timePerWeek: j.timePerWeek,
+      mode: j.mode,
+      credential: j.credential,
+      about: j.about,
+      experienceLevel: j.experienceLevel,
+      openings: j.openings,
+      companyWebsite: j.companyWebsite,
+      applyUrl: j.applyUrl,
+      salaryMin: j.salaryMin,
+      salaryMax: j.salaryMax,
+      currency: j.currency,
+      benefits: j.benefits,
+      howto: j.howto,
     }));
 
     // Combine, sort, paginate
@@ -97,10 +135,14 @@ exports.getAllJobs = async (req, res) => {
 // @access  Private
 exports.getJobById = async (req, res) => {
   try {
-    const job = await AdminJob.findById(req.params.id);
-    
+    let job = await AdminJob.findById(req.params.id);
+
     if (!job) {
-      return res.status(404).json({ message: 'Job not found' });
+      // Check in public Job table if not found in Admin
+      job = await Job.findById(req.params.id);
+      if (!job) {
+        return res.status(404).json({ message: 'Job not found' });
+      }
     }
 
     res.json({ success: true, job });
@@ -115,20 +157,7 @@ exports.getJobById = async (req, res) => {
 // @access  Private
 exports.createJob = async (req, res) => {
   try {
-    const { title, company, location, type, salary, status, description, requirements, responsibilities } = req.body;
-
-    const job = await AdminJob.create({
-      title,
-      company,
-      location,
-      type,
-      salary,
-      status: status || 'Pending',
-      description,
-      requirements,
-      responsibilities,
-    });
-
+    const job = await AdminJob.create(req.body);
     res.status(201).json({ success: true, job });
   } catch (error) {
     console.error('Create job error:', error);
@@ -141,25 +170,15 @@ exports.createJob = async (req, res) => {
 // @access  Private
 exports.updateJob = async (req, res) => {
   try {
-    const { title, company, location, type, salary, status, description, requirements, responsibilities } = req.body;
+    const job = await AdminJob.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true, runValidators: true }
+    );
 
-    const job = await AdminJob.findById(req.params.id);
-    
     if (!job) {
-      return res.status(404).json({ message: 'Job not found' });
+      return res.status(404).json({ message: 'Job not found or not an admin job' });
     }
-
-    job.title = title || job.title;
-    job.company = company || job.company;
-    job.location = location || job.location;
-    job.type = type || job.type;
-    job.salary = salary || job.salary;
-    job.status = status || job.status;
-    job.description = description || job.description;
-    job.requirements = requirements || job.requirements;
-    job.responsibilities = responsibilities || job.responsibilities;
-
-    await job.save();
 
     res.json({ success: true, job });
   } catch (error) {
@@ -174,7 +193,7 @@ exports.updateJob = async (req, res) => {
 exports.deleteJob = async (req, res) => {
   try {
     const job = await AdminJob.findById(req.params.id);
-    
+
     if (!job) {
       return res.status(404).json({ message: 'Job not found' });
     }
@@ -204,12 +223,12 @@ exports.getJobStats = async (req, res) => {
 
     res.json({
       success: true,
-      stats: { 
-        total, 
-        active, 
-        pending, 
+      stats: {
+        total,
+        active,
+        pending,
         closed,
-        totalApplicants: totalApplicants[0]?.total || 0 
+        totalApplicants: totalApplicants[0]?.total || 0
       },
     });
   } catch (error) {

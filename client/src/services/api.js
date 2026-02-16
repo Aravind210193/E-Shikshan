@@ -125,7 +125,7 @@ export const projectSubmissionAPI = {
   getInstructorSubmissions: () => api.get('/project-submissions/instructor'),
   getMySubmissions: () => api.get('/project-submissions/student'),
   update: (id, data) => api.put(`/project-submissions/${id}`, data),
-  reply: (id, data) => api.put(`/project-submissions/${id}/reply`, data),
+  reply: (id, data) => api.post(`/project-submissions/${id}/reply`, data),
   delete: (id) => api.delete(`/project-submissions/${id}`),
 };
 

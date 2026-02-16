@@ -8,7 +8,7 @@ const {
     deleteSubmission,
     getStudentSubmissions
 } = require('../controllers/projectSubmissionController');
-const { protect } = require('../middlewares/authMiddleware');
+const { protect, protectOrAdmin } = require('../middlewares/authMiddleware');
 const { adminAuth } = require('../middlewares/adminAuth');
 
 // Student route
@@ -19,6 +19,6 @@ router.get('/student', protect, getStudentSubmissions);
 router.get('/instructor', adminAuth, getInstructorSubmissions);
 router.put('/:id', adminAuth, updateSubmission);
 router.post('/:id/reply', adminAuth, replyToSubmission);
-router.delete('/:id', adminAuth, deleteSubmission);
+router.delete('/:id', protectOrAdmin, deleteSubmission);
 
 module.exports = router;
