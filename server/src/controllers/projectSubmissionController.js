@@ -19,8 +19,15 @@ exports.submitProject = async (req, res) => {
         if (workType === 'roadmap_project') {
             // Handle Roadmap Submission
             const Roadmap = require('../models/AdminRoadmap');
-            const Admin = require('../models/Admin');
-            const roadmap = await Roadmap.findById(roadmapId || courseId).populate('createdBy');
+
+            // Frontend might send 'roadmap' or 'roadmapId'
+            const rId = roadmapId || req.body.roadmap || courseId;
+
+            if (!rId) {
+                return res.status(400).json({ message: 'Roadmap ID is required' });
+            }
+
+            const roadmap = await Roadmap.findById(rId).populate('createdBy');
             if (!roadmap) {
                 return res.status(404).json({ message: 'Roadmap not found' });
             }
@@ -29,11 +36,14 @@ exports.submitProject = async (req, res) => {
             if (roadmap.createdBy && roadmap.createdBy.email) {
                 instructorEmail = roadmap.createdBy.email;
             } else {
-                instructorEmail = 'roadmap@eshikshan.com'; // Fallback
+                // Try to find the default roadmap instructor if not explicit creator
+                const Admin = require('../models/Admin');
+                const defaultInstructor = await Admin.findOne({ role: 'roadmap_instructor' });
+                instructorEmail = defaultInstructor ? defaultInstructor.email : 'roadmap@eshikshan.com';
             }
 
             contextTitle = roadmap.title;
-            notificationType = 'roadmap';
+            notificationType = 'Roadmap Project';
         } else {
             // Handle Course Submission
             const course = await Course.findById(courseId);
@@ -51,7 +61,7 @@ exports.submitProject = async (req, res) => {
 
         const submission = await ProjectSubmission.create({
             course: workType === 'roadmap_project' ? null : courseId,
-            roadmap: workType === 'roadmap_project' ? (roadmapId || courseId) : null,
+            roadmap: workType === 'roadmap_project' ? (roadmap._id || req.body.roadmap) : null,
             student: userId,
             instructorEmail: instructorEmail,
             workId,
@@ -72,6 +82,29 @@ exports.submitProject = async (req, res) => {
             message: `${studentName} submitted: ${title} in ${contextTitle}`,
             relatedId: submission._id
         });
+
+        // Send Email to Instructor
+        try {
+            const sendEmail = require('../utils/sendEmail');
+            await sendEmail({
+                to: instructorEmail,
+                subject: `New ${notificationType} Submission: ${title}`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+                        <h2>New Submission Received</h2>
+                        <p><strong>Student:</strong> ${studentName}</p>
+                        <p><strong>Work:</strong> ${title}</p>
+                        <p><strong>Context:</strong> ${contextTitle}</p>
+                        <p><strong>Link:</strong> <a href="${submissionUrl}">${submissionUrl}</a></p>
+                        <br/>
+                        <p>Please log in to your dashboard to review this submission.</p>
+                        <p><a href="${process.env.FRONTEND_URL || 'https://e-shikshan.vercel.app'}/instructor" style="background: #7c3aed; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Dashboard</a></p>
+                    </div>
+                `
+            });
+        } catch (emailErr) {
+            console.error('Failed to send submission email:', emailErr);
+        }
 
         res.status(201).json({
             success: true,
