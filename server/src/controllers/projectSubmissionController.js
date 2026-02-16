@@ -67,7 +67,7 @@ exports.submitProject = async (req, res) => {
 
         const submission = await ProjectSubmission.create({
             course: workType === 'roadmap_project' ? null : courseId,
-            roadmap: workType === 'roadmap_project' ? (roadmap._id || req.body.roadmap) : null,
+            roadmap: workType === 'roadmap_project' ? rId : null,
             student: userId,
             instructorEmail: instructorEmail,
             workId,
