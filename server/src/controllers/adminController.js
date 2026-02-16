@@ -11,6 +11,7 @@ const Doubt = require('../models/Doubt');
 const ProjectSubmission = require('../models/ProjectSubmission');
 const sendEmail = require('../utils/sendEmail');
 const Notification = require('../models/Notification');
+const bcrypt = require('bcryptjs');
 
 // @desc    Get all users with their enrollments
 // @route   GET /api/admin/users
@@ -901,6 +902,43 @@ module.exports = {
         return res.status(400).json({ message: 'Name, email and password are required' });
       }
 
+      // Determine which collection to use based on role
+      const adminRoles = ['admin', 'course_manager', 'job_instructor', 'hackathon_instructor'];
+      const isSystemAdmin = adminRoles.includes(role);
+
+      if (isSystemAdmin) {
+        const existingAdmin = await Admin.findOne({ email });
+        if (existingAdmin) {
+          return res.status(400).json({ message: 'An admin/instructor with this email already exists' });
+        }
+
+        // Determine permissions based on role
+        let permissions = [];
+        if (role === 'admin') permissions = ['all'];
+        else if (role === 'course_manager') permissions = ['courses', 'content'];
+        else if (role === 'job_instructor') permissions = ['jobs'];
+        else if (role === 'hackathon_instructor') permissions = ['hackathons'];
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const admin = new Admin({
+          name,
+          email,
+          password: hashedPassword,
+          role,
+          permissions,
+          isActive: true
+        });
+
+        await admin.save();
+
+        const sanitized = admin.toObject();
+        delete sanitized.password;
+        return res.status(201).json({ message: 'Admin user created successfully', user: sanitized });
+      }
+
+      // Regular User Creation
       const existing = await User.findOne({ email });
       if (existing) {
         return res.status(400).json({ message: 'A user with this email already exists' });
@@ -933,35 +971,70 @@ module.exports = {
       const { id } = req.params;
       const updates = req.body || {};
 
-      const user = await User.findById(id);
+      // Try searching in User first
+      let user = await User.findById(id);
+      let isSystemAdmin = false;
+
+      // If not found, try Admin
+      if (!user) {
+        user = await Admin.findById(id);
+        isSystemAdmin = true;
+      }
+
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      // If email changes, ensure uniqueness
-      if (updates.email && updates.email !== user.email) {
-        const emailExists = await User.findOne({ email: updates.email });
-        if (emailExists) {
-          return res.status(400).json({ message: 'Email already in use' });
+      if (isSystemAdmin) {
+        // Handle Admin updates
+        if (updates.email && updates.email !== user.email) {
+          const emailExists = await Admin.findOne({ email: updates.email });
+          if (emailExists) return res.status(400).json({ message: 'Email already in use' });
+          user.email = updates.email;
         }
-        user.email = updates.email;
+
+        if (typeof updates.name === 'string') user.name = updates.name;
+        if (typeof updates.role === 'string') {
+          user.role = updates.role;
+          // Update permissions if role changes
+          if (updates.role === 'admin') user.permissions = ['all'];
+          else if (updates.role === 'course_manager') user.permissions = ['courses', 'content'];
+          else if (updates.role === 'job_instructor') user.permissions = ['jobs'];
+          else if (updates.role === 'hackathon_instructor') user.permissions = ['hackathons'];
+        }
+
+        if (updates.password) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(updates.password, salt);
+        }
+
+        await user.save();
+      } else {
+        // Handle regular User updates
+        if (updates.email && updates.email !== user.email) {
+          const emailExists = await User.findOne({ email: updates.email });
+          if (emailExists) {
+            return res.status(400).json({ message: 'Email already in use' });
+          }
+          user.email = updates.email;
+        }
+
+        // Basic fields
+        if (typeof updates.name === 'string') user.name = updates.name;
+        if (typeof updates.phone === 'string') user.phone = updates.phone;
+        if (typeof updates.university === 'string') user.university = updates.university;
+        if (typeof updates.department === 'string') user.department = updates.department;
+        if (typeof updates.semester === 'string') user.semester = updates.semester;
+        if (typeof updates.role === 'string') user.role = updates.role;
+        if (typeof updates.isAdmin === 'boolean') user.isAdmin = updates.isAdmin;
+
+        // Password (will trigger pre-save hashing)
+        if (updates.password) {
+          user.password = updates.password;
+        }
+
+        await user.save();
       }
-
-      // Basic fields
-      if (typeof updates.name === 'string') user.name = updates.name;
-      if (typeof updates.phone === 'string') user.phone = updates.phone;
-      if (typeof updates.university === 'string') user.university = updates.university;
-      if (typeof updates.department === 'string') user.department = updates.department;
-      if (typeof updates.semester === 'string') user.semester = updates.semester;
-      if (typeof updates.role === 'string') user.role = updates.role;
-      if (typeof updates.isAdmin === 'boolean') user.isAdmin = updates.isAdmin;
-
-      // Password (will trigger pre-save hashing)
-      if (updates.password) {
-        user.password = updates.password;
-      }
-
-      await user.save();
 
       const sanitized = user.toObject();
       delete sanitized.password;
@@ -975,24 +1048,43 @@ module.exports = {
   async deleteUser(req, res) {
     try {
       const { id } = req.params;
+
+      // Try finding in User collection
       const user = await User.findById(id);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
 
-      // Clean up enrollments and decrement course student counts
-      const userEnrollments = await Enrollment.find({ userId: id });
-      for (const enr of userEnrollments) {
-        const course = await Course.findById(enr.courseId);
-        if (course && course.students > 0) {
-          course.students -= 1;
-          await course.save();
+      if (user) {
+        // Clean up enrollments and decrement course student counts
+        const userEnrollments = await Enrollment.find({ userId: id });
+        for (const enr of userEnrollments) {
+          try {
+            const course = await Course.findById(enr.courseId);
+            if (course && course.students > 0) {
+              course.students -= 1;
+              await course.save();
+            }
+          } catch (err) {
+            console.error('Error updating course count on delete:', err);
+          }
+          await Enrollment.findByIdAndDelete(enr._id);
         }
-        await Enrollment.findByIdAndDelete(enr._id);
+        await user.deleteOne();
+        return res.json({ message: 'User deleted successfully' });
       }
 
-      await user.deleteOne();
-      res.json({ message: 'User deleted successfully' });
+      // If not user, try finding in Admin collection
+      const admin = await Admin.findById(id);
+      if (admin) {
+        // Check if this is the last super admin before deleting? 
+        // For now, allow deletion. 
+        // Optionally: clean up courses assigned to this instructor
+        if (admin.role === 'course_manager') {
+          await Course.updateMany({ instructorEmail: admin.email }, { instructorEmail: '', instructor: '' });
+        }
+        await admin.deleteOne();
+        return res.json({ message: 'Admin user deleted successfully' });
+      }
+
+      return res.status(404).json({ message: 'User not found' });
     } catch (error) {
       console.error('Delete user error:', error);
       res.status(500).json({ message: 'Failed to delete user', error: error.message });
