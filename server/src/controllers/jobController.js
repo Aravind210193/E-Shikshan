@@ -52,6 +52,9 @@ exports.getAll = async (req, res) => {
       curriculum: j.requirements || [],
       startDate: (j.posted || j.createdAt) ? new Date(j.posted || j.createdAt).toISOString().split('T')[0] : '',
       createdAt: j.createdAt,
+      logo: j.logo,
+      mode: j.mode,
+      experienceLevel: j.experienceLevel,
     }));
 
     // Combine both arrays
@@ -130,9 +133,9 @@ exports.getById = async (req, res) => {
           salaryMin: adminJob.salaryMin,
           salaryMax: adminJob.salaryMax,
           currency: adminJob.currency,
-          benefits: adminJob.benefits,
-          howto: adminJob.howto,
-          skills: adminJob.skills,
+          benefits: adminJob.benefits || [],
+          howto: adminJob.howto || [],
+          skills: adminJob.skills || [],
         };
       }
     }

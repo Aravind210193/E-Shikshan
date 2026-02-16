@@ -301,7 +301,7 @@ export default function JobDetail() {
                 Required Skills
               </h2>
               <div className="flex flex-wrap gap-3">
-                {job.skills.map((skill, index) => (
+                {(job.skills || []).map((skill, index) => (
                   <span key={index} className="bg-purple-600/30 border border-purple-500/40 px-4 py-2 rounded-full text-sm font-medium text-gray-200 transition-all duration-300 hover:bg-purple-600/40 hover:shadow-md">
                     {skill}
                   </span>
