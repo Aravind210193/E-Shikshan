@@ -20,7 +20,7 @@ const jobApplicationSchema = new mongoose.Schema({
     instructor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Admin',
-        required: true
+        required: false
     },
     resumeUrl: String,
     coverLetter: String,

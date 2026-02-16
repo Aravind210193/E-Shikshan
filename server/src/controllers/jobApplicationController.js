@@ -55,57 +55,60 @@ exports.applyToJob = async (req, res) => {
             const student = await User.findById(studentId);
             const instructor = await Admin.findById(instructorId);
 
-            // Platform Notification
-            await Notification.create({
-                recipient: instructorId,
-                recipientType: 'Admin',
-                title: 'New Job Application',
-                message: `${student.name} has applied for the position: ${job.title}`,
-                data: {
-                    applicationId: application._id,
-                    jobId: job._id,
-                    studentDetails: {
-                        name: student.name,
-                        email: student.email
-                    }
-                },
-                type: 'job_application'
-            });
+            if (student && instructor) {
+                // Platform Notification
+                await Notification.create({
+                    recipient: instructorId,
+                    recipientType: 'Admin',
+                    title: 'New Job Application',
+                    message: `${student.name} has applied for the position: ${job.title}`,
+                    data: {
+                        applicationId: application._id,
+                        jobId: job._id,
+                        studentDetails: {
+                            name: student.name,
+                            email: student.email
+                        }
+                    },
+                    type: 'job_application'
+                });
 
-            // Email Notification
-            if (instructor && instructor.email) {
-                try {
-                    await sendEmail({
-                        to: instructor.email,
-                        subject: `New Job Application: ${job.title}`,
-                        html: `
-                            <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; background-color: #f9f9f9;">
-                                <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                    <div style="background: #a855f7; padding: 20px; text-align: center;">
-                                        <h1 style="color: white; margin: 0;">New Job Application</h1>
-                                    </div>
-                                    <div style="padding: 20px;">
-                                        <p>Hello <b>${instructor.name}</b>,</p>
-                                        <p>A student has applied for your job posting: <b>${job.title}</b> at <b>${job.company || 'E-Shikshan Partner'}</b>.</p>
-                                        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
-                                        <h3>Applicant Details:</h3>
-                                        <ul>
-                                            <li><b>Student:</b> ${student.name}</li>
-                                            <li><b>Email:</b> ${student.email}</li>
-                                            <li><b>Applied On:</b> ${new Date().toLocaleDateString()}</li>
-                                        </ul>
-                                        <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                                            <p style="margin: 0; font-size: 14px;"><b>Cover Letter Preview:</b></p>
-                                            <p style="margin: 5px 0 0; font-size: 13px; color: #666;">${coverLetter ? coverLetter.substring(0, 150) + (coverLetter.length > 150 ? '...' : '') : 'No cover letter provided.'}</p>
+                // Email Notification
+                if (instructor.email) {
+                    try {
+                        const companyName = job.company || job.organization || 'E-Shikshan Partner';
+                        await sendEmail({
+                            to: instructor.email,
+                            subject: `New Job Application: ${job.title}`,
+                            html: `
+                                <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; background-color: #f9f9f9;">
+                                    <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                        <div style="background: #a855f7; padding: 20px; text-align: center;">
+                                            <h1 style="color: white; margin: 0;">New Job Application</h1>
                                         </div>
-                                        <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}/job-instructor/applications" style="display: block; width: 200px; margin: 30px auto; padding: 12px; background: #a855f7; color: white; text-align: center; text-decoration: none; border-radius: 5px; font-weight: bold;">View Application</a>
+                                        <div style="padding: 20px;">
+                                            <p>Hello <b>${instructor.name}</b>,</p>
+                                            <p>A student has applied for your job posting: <b>${job.title}</b> at <b>${companyName}</b>.</p>
+                                            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
+                                            <h3>Applicant Details:</h3>
+                                            <ul>
+                                                <li><b>Student:</b> ${student.name}</li>
+                                                <li><b>Email:</b> ${student.email}</li>
+                                                <li><b>Applied On:</b> ${new Date().toLocaleDateString()}</li>
+                                            </ul>
+                                            <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                                                <p style="margin: 0; font-size: 14px;"><b>Cover Letter Preview:</b></p>
+                                                <p style="margin: 5px 0 0; font-size: 13px; color: #666;">${coverLetter ? coverLetter.substring(0, 150) + (coverLetter.length > 150 ? '...' : '') : 'No cover letter provided.'}</p>
+                                            </div>
+                                            <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}/job-instructor/applications" style="display: block; width: 200px; margin: 30px auto; padding: 12px; background: #a855f7; color: white; text-align: center; text-decoration: none; border-radius: 5px; font-weight: bold;">View Application</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        `
-                    });
-                } catch (emailErr) {
-                    console.error('Failed to send job application email:', emailErr);
+                            `
+                        });
+                    } catch (emailErr) {
+                        console.error('Failed to send job application email:', emailErr);
+                    }
                 }
             }
         }

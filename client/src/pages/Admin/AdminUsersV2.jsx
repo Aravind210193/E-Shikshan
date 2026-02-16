@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Search, Eye, CheckCircle, XCircle, ShieldCheck, RotateCcw, Trash2, PlusCircle, Braces, Pencil, BookOpen, Users, Briefcase, Trophy } from "lucide-react";
+import { Search, Eye, CheckCircle, XCircle, ShieldCheck, RotateCcw, Trash2, PlusCircle, Braces, Pencil, BookOpen, Users, Briefcase, Trophy, Map } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { adminAPI, coursesAPI } from "../../services/api";
 import { adminCourseAPI } from "../../services/adminApi";
@@ -700,6 +700,51 @@ const AdminUsers = () => {
                                 onClick={() => window.open(`/admin/hackathons?edit=${hack._id}`, '_blank')}
                                 className="p-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg transition-colors border border-blue-500/20"
                                 title="Edit Hackathon"
+                              >
+                                <Pencil className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+              {detailsModal.data.user.role === 'roadmap_instructor' && (
+                <div className="mt-8 border-t border-gray-700 pt-6">
+                  <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                    <Map className="w-5 h-5 text-orange-400" />
+                    Published Roadmaps ({detailsModal.data.createdRoadmaps?.length || 0})
+                  </h3>
+                  {detailsModal.data.createdRoadmaps?.length === 0 ? (
+                    <div className="p-4 bg-gray-700/20 border border-dashed border-gray-600 rounded-xl text-gray-400 text-center">
+                      No roadmaps published by this instructor.
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-3">
+                      {(detailsModal.data.createdRoadmaps || []).map((roadmap, idx) => (
+                        <div key={idx} className="p-4 bg-orange-500/5 border border-orange-500/20 rounded-xl flex items-center justify-between hover:bg-orange-500/10 transition-colors">
+                          <div className="flex items-center gap-4">
+                            <div className="p-2 bg-orange-500/20 rounded-lg">
+                              <Map className="w-4 h-4 text-orange-400" />
+                            </div>
+                            <div>
+                              <p className="text-white font-semibold">{roadmap.title}</p>
+                              <p className="text-gray-400 text-xs mt-0.5">{roadmap.category} • {roadmap.difficulty}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4 text-right">
+                            <div>
+                              <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-bold ${roadmap.status === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                                {roadmap.status}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => window.open(`/admin/roadmaps?edit=${roadmap._id}`, '_blank')}
+                                className="p-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg transition-colors border border-blue-500/20"
+                                title="Edit Roadmap"
                               >
                                 <Pencil className="w-4 h-4" />
                               </button>

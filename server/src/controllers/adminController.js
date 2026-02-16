@@ -82,6 +82,12 @@ const getAllUsers = async (req, res) => {
         let assignedCount = 0;
         if (admin.role === 'course_manager') {
           assignedCount = await Course.countDocuments({ instructorEmail: admin.email });
+        } else if (admin.role === 'job_instructor') {
+          assignedCount = await AdminJob.countDocuments({ postedBy: admin._id });
+        } else if (admin.role === 'hackathon_instructor') {
+          assignedCount = await AdminHackathon.countDocuments({ createdBy: admin._id });
+        } else if (admin.role === 'roadmap_instructor') {
+          assignedCount = await AdminRoadmap.countDocuments({ createdBy: admin._id });
         }
 
         return {
@@ -96,7 +102,7 @@ const getAllUsers = async (req, res) => {
           university: undefined,
           department: undefined,
           semester: undefined,
-          enrollmentCount: assignedCount, // Use this for course count in table
+          enrollmentCount: assignedCount, // Use this for count in table
           enrollments: [],
           createdAt: admin.createdAt,
           updatedAt: admin.updatedAt,
@@ -746,7 +752,7 @@ const getDashboardStats = async (req, res) => {
     const totalRoadmaps = await AdminRoadmap.countDocuments(roadmapQuery);
     const activeRoadmaps = await AdminRoadmap.countDocuments({ ...roadmapQuery, status: 'active' });
     const recentRoadmaps = !isLimitedAdmin || isRoadmapInstructor ? await AdminRoadmap.find({ ...roadmapQuery, status: 'active' })
-      .select('title category thumbnail level steps')
+      .select('title category image difficulty path')
       .sort('-createdAt')
       .limit(6) : [];
 

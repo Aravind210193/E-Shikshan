@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Check, ExternalLink, ChevronDown, Search, CheckCircle, ArrowRight, Lock, Clock, BookOpen, CheckSquare, Code, Zap } from "lucide-react";
+import { Check, ExternalLink, ChevronDown, Search, CheckCircle, ArrowRight, Lock, Clock, BookOpen, CheckSquare, Code, Zap, X, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import roadmapAPI from "../services/roadmapApi";
+import { projectSubmissionAPI } from "../services/api";
+import { toast } from "react-hot-toast";
 
 const TopicCard = ({ topic, index, onClick, isCompleted, isNext }) => {
   return (
@@ -281,6 +283,7 @@ export default function RoadmapDetail() {
   const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
   const [submissionTopic, setSubmissionTopic] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState(null);
 
   const handleOpenSubmission = (topic) => {
     setSubmissionTopic(topic);
