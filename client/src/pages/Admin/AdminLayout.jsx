@@ -58,6 +58,7 @@ const AdminLayout = ({ setIsAdminLoggedIn, children }) => {
             ? [
               { path: `${base}/dashboard`, label: "Dashboard", icon: LayoutDashboard },
               { path: `${base}/roadmaps`, label: "Roadmaps", icon: Map },
+              { path: `${base}/submissions`, label: "Submissions", icon: FileCheck },
               { path: `${base}/settings`, label: "Settings", icon: Settings }
             ]
             : [

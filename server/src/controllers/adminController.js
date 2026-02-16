@@ -814,15 +814,33 @@ const getDashboardStats = async (req, res) => {
     let projectStats = { total: 0, pending: 0 };
     let assignmentStats = { total: 0, pending: 0 };
     let recentProjectSubmissions = [];
-    if (isCourseManager) {
-      const baseQuery = { instructorEmail: req.admin.email };
-      projectStats.total = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'project' });
-      projectStats.pending = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'project', status: 'pending' });
-      assignmentStats.total = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'assignment' });
-      assignmentStats.pending = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'assignment', status: 'pending' });
+
+    if (isCourseManager || isRoadmapInstructor) {
+      let baseQuery = {};
+      if (isCourseManager) {
+        baseQuery = { instructorEmail: req.admin.email };
+      } else if (isRoadmapInstructor) {
+        const Roadmap = require('../models/AdminRoadmap');
+        const myRoadmaps = await Roadmap.find({ createdBy: req.admin._id }).select('_id');
+        const roadmapIds = myRoadmaps.map(r => r._id);
+        baseQuery = {
+          workType: 'roadmap_project',
+          roadmap: { $in: roadmapIds }
+        };
+      }
+
+      projectStats.total = await ProjectSubmission.countDocuments({ ...baseQuery, workType: isRoadmapInstructor ? 'roadmap_project' : 'project' });
+      projectStats.pending = await ProjectSubmission.countDocuments({ ...baseQuery, workType: isRoadmapInstructor ? 'roadmap_project' : 'project', status: 'pending' });
+
+      if (!isRoadmapInstructor) {
+        assignmentStats.total = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'assignment' });
+        assignmentStats.pending = await ProjectSubmission.countDocuments({ ...baseQuery, workType: 'assignment', status: 'pending' });
+      }
+
       recentProjectSubmissions = await ProjectSubmission.find({ ...baseQuery, status: 'pending' })
         .populate('student', 'name email')
         .populate('course', 'title')
+        .populate('roadmap', 'title')
         .sort('-createdAt')
         .limit(10);
     }

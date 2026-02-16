@@ -310,6 +310,7 @@ const App = () => {
                 <Routes>
                   <Route path='dashboard' element={<AdminDashboard />} />
                   <Route path='roadmaps' element={<AdminRoadmaps />} />
+                  <Route path='submissions' element={<AdminSubmissions />} />
                   <Route path='settings' element={<AdminSettings />} />
                   <Route path='*' element={<Navigate to='/roadmap-instructor/dashboard' replace />} />
                 </Routes>

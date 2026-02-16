@@ -19,13 +19,19 @@ exports.submitProject = async (req, res) => {
         if (workType === 'roadmap_project') {
             // Handle Roadmap Submission
             const Roadmap = require('../models/AdminRoadmap');
-            const roadmap = await Roadmap.findById(roadmapId || courseId); // Frontend might send roadmapId as courseId
+            const Admin = require('../models/Admin');
+            const roadmap = await Roadmap.findById(roadmapId || courseId).populate('createdBy');
             if (!roadmap) {
                 return res.status(404).json({ message: 'Roadmap not found' });
             }
-            // For now, all roadmap submissions go to the main roadmap instructor
-            // You can change this email or fetch it from a config/env
-            instructorEmail = 'roadmap@eshikshan.com';
+
+            // Fetch instructor email from the creator of the roadmap
+            if (roadmap.createdBy && roadmap.createdBy.email) {
+                instructorEmail = roadmap.createdBy.email;
+            } else {
+                instructorEmail = 'roadmap@eshikshan.com'; // Fallback
+            }
+
             contextTitle = roadmap.title;
             notificationType = 'roadmap';
         } else {
@@ -85,8 +91,19 @@ exports.getInstructorSubmissions = async (req, res) => {
     try {
         let query = {};
         if (req.admin.role === 'roadmap_instructor') {
-            // Roadmap instructor sees all roadmap submissions
-            query = { workType: 'roadmap_project' };
+            // Find roadmaps created by this instructor
+            const Roadmap = require('../models/AdminRoadmap');
+            const myRoadmaps = await Roadmap.find({ createdBy: req.admin._id }).select('_id');
+            const roadmapIds = myRoadmaps.map(r => r._id);
+
+            // Filter submissions by these roadmaps
+            query = {
+                workType: 'roadmap_project',
+                roadmap: { $in: roadmapIds }
+            };
+        } else if (req.admin.role === 'admin') {
+            // Global admin sees everything
+            query = {};
         } else {
             // Course instructors see their course submissions
             query = { instructorEmail: req.admin.email };

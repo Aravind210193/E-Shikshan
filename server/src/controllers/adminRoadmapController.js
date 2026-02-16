@@ -23,7 +23,7 @@ exports.getAll = async (req, res) => {
     }
 
     const [items, total] = await Promise.all([
-      Roadmap.find(query).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(parseInt(limit)),
+      Roadmap.find(query).populate('createdBy', 'name email').sort({ createdAt: -1 }).skip((page - 1) * limit).limit(parseInt(limit)),
       Roadmap.countDocuments(query),
     ]);
 

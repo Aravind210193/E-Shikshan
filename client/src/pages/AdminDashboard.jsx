@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Users, BookOpen, TrendingUp, DollarSign, 
+import {
+  Users, BookOpen, TrendingUp, DollarSign,
   UserCheck, UserX, Shield, Search, Filter,
-  CheckCircle, XCircle, Clock, Award
+  CheckCircle, XCircle, Clock, Award, Map, FileCheck
 } from 'lucide-react';
 import { adminAPI, authAPI } from '../services/api';
 import { toast } from 'react-toastify';
@@ -28,8 +28,12 @@ const AdminDashboard = () => {
     try {
       const response = await authAPI.getProfile();
       setCurrentUser(response.data);
-      
-      if (!response.data.isAdmin && response.data.role !== 'admin') {
+
+      const role = response.data.role;
+      const isAdmin = response.data.isAdmin;
+      const restrictedRoles = ['course_manager', 'job_instructor', 'hackathon_instructor', 'roadmap_instructor'];
+
+      if (!isAdmin && role !== 'admin' && !restrictedRoles.includes(role)) {
         toast.error('Access denied. Admin privileges required.');
         window.location.href = '/';
       }
@@ -85,7 +89,7 @@ const AdminDashboard = () => {
     if (!window.confirm('Are you sure you want to revoke access to this course?')) {
       return;
     }
-    
+
     try {
       await adminAPI.revokeCourseAccess(enrollmentId);
       toast.success('Course access revoked successfully');
@@ -117,7 +121,7 @@ const AdminDashboard = () => {
     if (!window.confirm('Are you sure you want to delete this enrollment? This action cannot be undone.')) {
       return;
     }
-    
+
     try {
       await adminAPI.deleteEnrollment(enrollmentId);
       toast.success('Enrollment deleted successfully');
@@ -161,7 +165,11 @@ const AdminDashboard = () => {
     }
   };
 
-  if (!currentUser?.isAdmin && currentUser?.role !== 'admin') {
+  const role = sessionStorage.getItem('adminRole');
+  const isRoadmapInstructor = role === 'roadmap_instructor';
+  const isLimitedAdmin = ['course_manager', 'job_instructor', 'hackathon_instructor', 'roadmap_instructor'].includes(role);
+
+  if (!currentUser?.isAdmin && currentUser?.role !== 'admin' && !isLimitedAdmin) {
     return null;
   }
 
@@ -175,10 +183,18 @@ const AdminDashboard = () => {
           className="mb-8"
         >
           <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-3">
-            <Shield className="w-10 h-10 text-purple-400" />
-            Admin Dashboard
+            {isRoadmapInstructor ? (
+              <Map className="w-10 h-10 text-purple-400" />
+            ) : (
+              <Shield className="w-10 h-10 text-purple-400" />
+            )}
+            {isRoadmapInstructor ? 'Roadmap Instructor Dashboard' : 'Admin Dashboard'}
           </h1>
-          <p className="text-slate-300">Manage users, enrollments, and system access</p>
+          <p className="text-slate-300">
+            {isRoadmapInstructor
+              ? 'Oversee your learning paths and track student submissions'
+              : 'Manage users, enrollments, and system access'}
+          </p>
         </motion.div>
 
         {/* Stats Grid */}
@@ -207,10 +223,12 @@ const AdminDashboard = () => {
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-300 text-sm">Total Courses</p>
-                  <p className="text-3xl font-bold text-white mt-1">{stats.stats.totalCourses}</p>
+                  <p className="text-slate-300 text-sm">{isRoadmapInstructor ? 'Total Roadmaps' : 'Total Courses'}</p>
+                  <p className="text-3xl font-bold text-white mt-1">
+                    {isRoadmapInstructor ? stats.stats.totalRoadmaps : stats.stats.totalCourses}
+                  </p>
                 </div>
-                <BookOpen className="w-12 h-12 text-purple-400" />
+                {isRoadmapInstructor ? <Map className="w-12 h-12 text-purple-400" /> : <BookOpen className="w-12 h-12 text-purple-400" />}
               </div>
             </motion.div>
 
@@ -222,9 +240,11 @@ const AdminDashboard = () => {
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-300 text-sm">Active Enrollments</p>
-                  <p className="text-3xl font-bold text-white mt-1">{stats.stats.activeEnrollments}</p>
-                  <p className="text-xs text-red-400 mt-1">Suspended: {stats.stats.suspendedEnrollments}</p>
+                  <p className="text-slate-300 text-sm">{isRoadmapInstructor ? 'Pending Projects' : 'Active Enrollments'}</p>
+                  <p className="text-3xl font-bold text-white mt-1">
+                    {isRoadmapInstructor ? (stats.stats.projectStats?.pending || 0) : stats.stats.activeEnrollments}
+                  </p>
+                  {!isRoadmapInstructor && <p className="text-xs text-red-400 mt-1">Suspended: {stats.stats.suspendedEnrollments}</p>}
                 </div>
                 <TrendingUp className="w-12 h-12 text-green-400" />
               </div>
@@ -238,10 +258,12 @@ const AdminDashboard = () => {
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-300 text-sm">Total Revenue</p>
-                  <p className="text-3xl font-bold text-white mt-1">₹{stats.stats.totalRevenue}</p>
+                  <p className="text-slate-300 text-sm">{isRoadmapInstructor ? 'Total Submissions' : 'Total Revenue'}</p>
+                  <p className="text-3xl font-bold text-white mt-1">
+                    {isRoadmapInstructor ? (stats.stats.projectStats?.total || 0) : `₹${stats.stats.totalRevenue}`}
+                  </p>
                 </div>
-                <DollarSign className="w-12 h-12 text-yellow-400" />
+                {isRoadmapInstructor ? <FileCheck className="w-12 h-12 text-yellow-400" /> : <DollarSign className="w-12 h-12 text-yellow-400" />}
               </div>
             </motion.div>
           </div>
@@ -282,114 +304,115 @@ const AdminDashboard = () => {
         </motion.div>
 
         {/* Users List */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="bg-white/10 backdrop-blur-lg rounded-xl border border-white/20 overflow-hidden"
-        >
-          <div className="p-6 border-b border-white/20">
-            <h2 className="text-2xl font-bold text-white">User Management</h2>
-          </div>
-          
-          {isLoading ? (
-            <div className="p-12 text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto"></div>
-              <p className="text-slate-300 mt-4">Loading users...</p>
+        {!isLimitedAdmin && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="bg-white/10 backdrop-blur-lg rounded-xl border border-white/20 overflow-hidden"
+          >
+            <div className="p-6 border-b border-white/20">
+              <h2 className="text-2xl font-bold text-white">User Management</h2>
             </div>
-          ) : users.length === 0 ? (
-            <div className="p-12 text-center">
-              <Users className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <p className="text-slate-300">No users found</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-white/5">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">User</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Role</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Enrollments</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Admin</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/10">
-                  {users.map((user) => (
-                    <tr key={user._id} className="hover:bg-white/5 transition-colors">
-                      <td className="px-6 py-4">
-                        <div>
-                          <p className="text-white font-medium">{user.name}</p>
-                          <p className="text-slate-400 text-sm">{user.email}</p>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-purple-500/20 text-purple-300">
-                          {user.role}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="text-white font-medium">{user.enrollmentCount}</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        {user.isAdmin ? (
-                          <CheckCircle className="w-5 h-5 text-green-400" />
-                        ) : (
-                          <XCircle className="w-5 h-5 text-slate-600" />
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => viewUserDetails(user._id)}
-                            className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm transition-colors"
-                          >
-                            View Details
-                          </button>
-                          {currentUser?._id !== user._id && (
+
+            {isLoading ? (
+              <div className="p-12 text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto"></div>
+                <p className="text-slate-300 mt-4">Loading users...</p>
+              </div>
+            ) : users.length === 0 ? (
+              <div className="p-12 text-center">
+                <Users className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                <p className="text-slate-300">No users found</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-white/5">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">User</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Role</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Enrollments</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Admin</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10">
+                    {users.map((user) => (
+                      <tr key={user._id} className="hover:bg-white/5 transition-colors">
+                        <td className="px-6 py-4">
+                          <div>
+                            <p className="text-white font-medium">{user.name}</p>
+                            <p className="text-slate-400 text-sm">{user.email}</p>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="px-3 py-1 rounded-full text-sm font-medium bg-purple-500/20 text-purple-300">
+                            {user.role}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-white font-medium">{user.enrollmentCount}</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          {user.isAdmin ? (
+                            <CheckCircle className="w-5 h-5 text-green-400" />
+                          ) : (
+                            <XCircle className="w-5 h-5 text-slate-600" />
+                          )}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex gap-2">
                             <button
-                              onClick={() => handleToggleAdmin(user._id, user.isAdmin)}
-                              className={`px-3 py-1 rounded-lg text-sm transition-colors ${
-                                user.isAdmin
+                              onClick={() => viewUserDetails(user._id)}
+                              className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm transition-colors"
+                            >
+                              View Details
+                            </button>
+                            {currentUser?._id !== user._id && (
+                              <button
+                                onClick={() => handleToggleAdmin(user._id, user.isAdmin)}
+                                className={`px-3 py-1 rounded-lg text-sm transition-colors ${user.isAdmin
                                   ? 'bg-red-500 hover:bg-red-600 text-white'
                                   : 'bg-green-500 hover:bg-green-600 text-white'
-                              }`}
-                            >
-                              {user.isAdmin ? 'Revoke Admin' : 'Make Admin'}
-                            </button>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                                  }`}
+                              >
+                                {user.isAdmin ? 'Revoke Admin' : 'Make Admin'}
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
 
-          {/* Pagination */}
-          {pagination.pages > 1 && (
-            <div className="p-6 border-t border-white/20 flex justify-center gap-2">
-              <button
-                onClick={() => setPagination(prev => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
-                disabled={pagination.page === 1}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
-              >
-                Previous
-              </button>
-              <span className="px-4 py-2 text-white">
-                Page {pagination.page} of {pagination.pages}
-              </span>
-              <button
-                onClick={() => setPagination(prev => ({ ...prev, page: Math.min(prev.pages, prev.page + 1) }))}
-                disabled={pagination.page === pagination.pages}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
-              >
-                Next
-              </button>
-            </div>
-          )}
-        </motion.div>
+            {/* Pagination */}
+            {pagination.pages > 1 && (
+              <div className="p-6 border-t border-white/20 flex justify-center gap-2">
+                <button
+                  onClick={() => setPagination(prev => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
+                  disabled={pagination.page === 1}
+                  className="px-4 py-2 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+                >
+                  Previous
+                </button>
+                <span className="px-4 py-2 text-white">
+                  Page {pagination.page} of {pagination.pages}
+                </span>
+                <button
+                  onClick={() => setPagination(prev => ({ ...prev, page: Math.min(prev.pages, prev.page + 1) }))}
+                  disabled={pagination.page === pagination.pages}
+                  className="px-4 py-2 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </motion.div>
+        )}
 
         {/* User Details Modal */}
         {selectedUser && (

@@ -11,6 +11,8 @@ const AdminRoadmaps = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState("add");
   const [selectedRoadmap, setSelectedRoadmap] = useState(null);
+  const adminRole = sessionStorage.getItem('adminRole');
+  const isAdmin = adminRole === 'admin';
 
   const emptyForm = {
     id: "",
@@ -325,7 +327,14 @@ const AdminRoadmaps = () => {
                 <div className="p-5 flex-1 space-y-4">
                   <div>
                     <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors line-clamp-1">{roadmap.title}</h3>
-                    <p className="text-gray-500 text-[10px] font-mono mt-1 tracking-tighter uppercase">{roadmap.id}</p>
+                    <div className="flex justify-between items-center mt-1">
+                      <p className="text-gray-500 text-[10px] font-mono tracking-tighter uppercase">{roadmap.id}</p>
+                      {isAdmin && roadmap.createdBy && (
+                        <p className="text-purple-400 text-[10px] font-bold uppercase tracking-widest bg-purple-500/10 px-2 py-0.5 rounded">
+                          {roadmap.createdBy.name}
+                        </p>
+                      )}
+                    </div>
                   </div>
 
                   <p className="text-gray-400 text-sm line-clamp-2 min-h-[40px] italic">
