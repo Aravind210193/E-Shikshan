@@ -90,7 +90,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+// Public & User Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/quizzes', quizRoutes);
@@ -102,9 +102,16 @@ app.use('/api/hackathon-registrations', hackathonRegistrationRoutes);
 app.use('/api/webhooks', webhookRoutes);
 app.use('/api/gamification', gamificationRoutes);
 
-// Public Roadmap routes
+// New Feature Routes
 const roadmapRoutes = require('./src/routes/roadmapRoutes');
+const notificationRoutes = require('./src/routes/notificationRoutes');
+const doubtRoutes = require('./src/routes/doubtRoutes');
+const projectSubmissionRoutes = require('./src/routes/projectSubmissionRoutes');
+
 app.use('/api/roadmaps', roadmapRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/doubts', doubtRoutes);
+app.use('/api/project-submissions', projectSubmissionRoutes);
 
 // Content routes  
 app.use('/api/branches', branchRoutes);
@@ -113,19 +120,7 @@ app.use('/api/subjects', subjectRoutes);
 app.use('/api/programs', semesterDataRoutes);
 app.use('/api/folders', folderRoutes);
 
-// Notification routes
-const notificationRoutes = require('./src/routes/notificationRoutes');
-app.use('/api/notifications', notificationRoutes);
-
-// Doubt routes
-const doubtRoutes = require('./src/routes/doubtRoutes');
-app.use('/api/doubts', doubtRoutes);
-
-// Project Submission routes
-const projectSubmissionRoutes = require('./src/routes/projectSubmissionRoutes');
-app.use('/api/project-submissions', projectSubmissionRoutes);
-
-// Admin routes - IMPORTANT: More specific routes must come FIRST!
+// Admin Routes (Specific ones first)
 app.use('/api/admin/auth', adminAuthRoutes);
 app.use('/api/admin/courses', adminCourseRoutes);
 app.use('/api/admin/jobs', adminJobRoutes);
@@ -133,13 +128,9 @@ app.use('/api/admin/hackathons', adminHackathonRoutes);
 app.use('/api/admin/roadmaps', adminRoadmapRoutes);
 app.use('/api/admin/content', adminContentRoutes);
 app.use('/api/admin/resumes', adminResumeRoutes);
-app.use('/api/admin/project-submissions', projectSubmissionRoutes);
-// Note: Legacy admin user routes are disabled to avoid route conflicts with new admin users endpoints
-// const adminUserRoutes = require('./src/routes/adminUserRoutes');
-// app.use('/api/admin/users', adminUserRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Admin content management routes
+// Admin content management
 app.use('/api/admin/branches', adminBranchRoutes);
 app.use('/api/admin/education-levels', adminEducationLevelRoutes);
 app.use('/api/admin/subjects', adminSubjectRoutes);
@@ -152,6 +143,27 @@ app.use(errorHandler);
 // Health check route
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
+});
+
+// Route for debugging registered endpoints
+app.get('/api/debug-routes', (req, res) => {
+  const routes = [];
+  app._router.stack.forEach((middleware) => {
+    if (middleware.route) {
+      routes.push(`${Object.keys(middleware.route.methods).join(',').toUpperCase()} ${middleware.route.path}`);
+    } else if (middleware.name === 'router') {
+      middleware.handle.stack.forEach((handler) => {
+        if (handler.route) {
+          const path = middleware.regexp.source
+            .replace('\\/?(?=\\/|$)', '')
+            .replace('^\\', '')
+            .replace('\\', '');
+          routes.push(`${Object.keys(handler.route.methods).join(',').toUpperCase()} ${path}${handler.route.path}`);
+        }
+      });
+    }
+  });
+  res.json({ routes });
 });
 
 module.exports = app;
