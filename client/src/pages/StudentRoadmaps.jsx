@@ -16,9 +16,22 @@ const StudentRoadmaps = () => {
 
     const fetchSubmissions = async () => {
         try {
-            const res = await projectSubmissionAPI.getMySubmissions();
+            const response = await projectSubmissionAPI.getMySubmissions();
+            // Check if response.data is the array directly or inside a 'data' property
+            // Sometimes APIs return { data: [...] } and axios wraps it in another data object { data: { data: [...] } }
+            // Or sometimes it returns { success: true, data: [...] }
+            let submissionsData = [];
+
+            if (Array.isArray(response.data)) {
+                submissionsData = response.data;
+            } else if (response.data && Array.isArray(response.data.data)) {
+                submissionsData = response.data.data;
+            } else if (response.data && response.data.submissions && Array.isArray(response.data.submissions)) {
+                submissionsData = response.data.submissions;
+            }
+
             // Filter only roadmap projects
-            const roadmapSubs = res.data.filter(sub => sub.workType === 'roadmap_project');
+            const roadmapSubs = submissionsData.filter(sub => sub.workType === 'roadmap_project');
             setSubmissions(roadmapSubs);
         } catch (err) {
             console.error('Error fetching roadmap submissions:', err);
@@ -109,8 +122,8 @@ const StudentRoadmaps = () => {
 
                                 <div className="flex flex-col items-end gap-2">
                                     <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 ${sub.status === 'graded' ? 'bg-emerald-500/10 text-emerald-500' :
-                                            sub.status === 'reviewed' ? 'bg-blue-500/10 text-blue-500' :
-                                                'bg-amber-500/10 text-amber-500'
+                                        sub.status === 'reviewed' ? 'bg-blue-500/10 text-blue-500' :
+                                            'bg-amber-500/10 text-amber-500'
                                         }`}>
                                         {sub.status === 'graded' ? <CheckCircle size={12} /> :
                                             sub.status === 'reviewed' ? <CheckCircle size={12} /> :
