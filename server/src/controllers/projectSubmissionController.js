@@ -27,6 +27,12 @@ exports.submitProject = async (req, res) => {
                 return res.status(400).json({ message: 'Roadmap ID is required' });
             }
 
+            // Verify if rId is a valid ObjectId
+            const mongoose = require('mongoose');
+            if (!mongoose.Types.ObjectId.isValid(rId)) {
+                return res.status(400).json({ message: 'Invalid Roadmap ID format' });
+            }
+
             const roadmap = await Roadmap.findById(rId).populate('createdBy');
             if (!roadmap) {
                 return res.status(404).json({ message: 'Roadmap not found' });
@@ -84,26 +90,29 @@ exports.submitProject = async (req, res) => {
         });
 
         // Send Email to Instructor
-        try {
-            const sendEmail = require('../utils/sendEmail');
-            await sendEmail({
-                to: instructorEmail,
-                subject: `New ${notificationType} Submission: ${title}`,
-                html: `
-                    <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-                        <h2>New Submission Received</h2>
-                        <p><strong>Student:</strong> ${studentName}</p>
-                        <p><strong>Work:</strong> ${title}</p>
-                        <p><strong>Context:</strong> ${contextTitle}</p>
-                        <p><strong>Link:</strong> <a href="${submissionUrl}">${submissionUrl}</a></p>
-                        <br/>
-                        <p>Please log in to your dashboard to review this submission.</p>
-                        <p><a href="${process.env.FRONTEND_URL || 'https://e-shikshan.vercel.app'}/instructor" style="background: #7c3aed; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Dashboard</a></p>
-                    </div>
-                `
-            });
-        } catch (emailErr) {
-            console.error('Failed to send submission email:', emailErr);
+        // Send Email to Instructor
+        if (instructorEmail) {
+            try {
+                const sendEmail = require('../utils/sendEmail');
+                await sendEmail({
+                    to: instructorEmail,
+                    subject: `New ${notificationType} Submission: ${title}`,
+                    html: `
+                        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+                            <h2>New Submission Received</h2>
+                            <p><strong>Student:</strong> ${studentName}</p>
+                            <p><strong>Work:</strong> ${title}</p>
+                            <p><strong>Context:</strong> ${contextTitle}</p>
+                            <p><strong>Link:</strong> <a href="${submissionUrl}">${submissionUrl}</a></p>
+                            <br/>
+                            <p>Please log in to your dashboard to review this submission.</p>
+                            <p><a href="${process.env.FRONTEND_URL || 'https://e-shikshan.vercel.app'}/instructor" style="background: #7c3aed; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Dashboard</a></p>
+                        </div>
+                    `
+                }).catch(err => console.error('Email send promise rejected:', err));
+            } catch (emailErr) {
+                console.error('Failed to init/send submission email:', emailErr);
+            }
         }
 
         res.status(201).json({
