@@ -49,9 +49,6 @@ const TopicCard = ({ topic, index, onClick, isCompleted, isNext }) => {
   );
 };
 
-import { projectSubmissionAPI } from "../services/api";
-import { toast } from "react-hot-toast";
-
 const SubmissionModal = ({ isOpen, onClose, onSubmit, submitting, topic }) => {
   const [url, setUrl] = useState("");
   const [comments, setComments] = useState("");
