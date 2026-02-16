@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { jobsAPI } from "../services/api";
-import { Clock, Calendar, Briefcase, Award, Users, ChevronRight, Star, MapPin, Banknote, Bookmark, Share2, BadgeCheck, Globe, Loader2, Send } from "lucide-react";
+import { Clock, Calendar, Briefcase, Award, Users, ChevronRight, Star, MapPin, Banknote, Bookmark, Share2, BadgeCheck, Globe, Loader2, Send, XCircle } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 const Section = ({ title, children, icon }) => (

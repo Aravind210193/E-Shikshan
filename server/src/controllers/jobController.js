@@ -50,7 +50,7 @@ exports.getAll = async (req, res) => {
       description: j.description || '',
       responsibilities: j.responsibilities || [],
       curriculum: j.requirements || [],
-      startDate: j.posted || j.createdAt,
+      startDate: (j.posted || j.createdAt) ? new Date(j.posted || j.createdAt).toISOString().split('T')[0] : '',
       createdAt: j.createdAt,
     }));
 
@@ -95,8 +95,50 @@ exports.getAll = async (req, res) => {
 // GET /api/jobs/:id
 exports.getById = async (req, res) => {
   try {
-    const job = await Job.findById(req.params.id);
+    let job = await Job.findById(req.params.id).lean();
+
+    if (!job) {
+      // Check AdminJob if not found in public Job collection
+      const adminJob = await AdminJob.findById(req.params.id).lean();
+
+      if (adminJob) {
+        // Normalize admin job to match public structure
+        job = {
+          _id: adminJob._id,
+          title: adminJob.title || '',
+          organization: adminJob.company || '',
+          location: adminJob.location || '',
+          salary: adminJob.salary || '',
+          tag: adminJob.type || 'Full-time',
+          category: adminJob.category || 'General',
+          description: adminJob.description || '',
+          responsibilities: adminJob.responsibilities || [],
+          curriculum: adminJob.requirements || [],
+          startDate: (adminJob.posted || adminJob.createdAt) ? new Date(adminJob.posted || adminJob.createdAt).toISOString().split('T')[0] : '',
+          createdAt: adminJob.createdAt,
+          // Map additional fields
+          logo: adminJob.logo,
+          duration: adminJob.duration,
+          timePerWeek: adminJob.timePerWeek,
+          mode: adminJob.mode,
+          credential: adminJob.credential,
+          about: adminJob.about,
+          experienceLevel: adminJob.experienceLevel,
+          openings: adminJob.openings,
+          companyWebsite: adminJob.companyWebsite,
+          applyUrl: adminJob.applyUrl,
+          salaryMin: adminJob.salaryMin,
+          salaryMax: adminJob.salaryMax,
+          currency: adminJob.currency,
+          benefits: adminJob.benefits,
+          howto: adminJob.howto,
+          skills: adminJob.skills,
+        };
+      }
+    }
+
     if (!job) return res.status(404).json({ message: 'Job not found' });
+
     res.json({ success: true, job });
   } catch (err) {
     console.error('Get job by id error:', err);
