@@ -22,5 +22,6 @@ router.delete('/:hackathonId/cancel', ctrl.cancelRegistration);
 const { adminAuth } = require('../middlewares/adminAuth');
 router.get('/admin/registrations', adminAuth, ctrl.getInstructorRegistrations);
 router.put('/admin/:id/status', adminAuth, ctrl.updateRegistrationStatus);
+router.delete('/admin/:id', adminAuth, ctrl.deleteRegistration);
 
 module.exports = router;

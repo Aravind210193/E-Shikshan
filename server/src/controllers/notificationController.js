@@ -3,21 +3,24 @@ const Notification = require('../models/Notification');
 // Get notifications for the logged-in admin/instructor
 exports.getNotifications = async (req, res) => {
     try {
-        let email;
-        if (req.admin && req.admin.email) {
+        let email, id;
+        if (req.admin) {
             email = req.admin.email;
-        } else if (req.user && req.user.email) {
+            id = req.admin.id || req.admin._id;
+        } else if (req.user) {
             email = req.user.email;
+            id = req.user.id || req.user._id;
         }
 
-        if (!email) {
-            console.error('Notification Controller: Email missing from request user/admin object.');
-            // If no email identifiers, return empty list or specific error
-            // Returning empty list prevents frontend crash
+        const query = { $or: [] };
+        if (email) query.$or.push({ recipientEmail: email.toLowerCase() });
+        if (id) query.$or.push({ recipient: id });
+
+        if (query.$or.length === 0) {
             return res.status(200).json([]);
         }
 
-        const notifications = await Notification.find({ recipientEmail: email.toLowerCase() })
+        const notifications = await Notification.find(query)
             .sort({ createdAt: -1 })
             .limit(50);
         res.status(200).json(notifications);
@@ -45,11 +48,24 @@ exports.markAsRead = async (req, res) => {
 // Mark all notifications as read
 exports.markAllAsRead = async (req, res) => {
     try {
-        const email = req.admin ? req.admin.email : req.user.email;
-        await Notification.updateMany(
-            { recipientEmail: email.toLowerCase(), isRead: false },
-            { isRead: true }
-        );
+        let email, id;
+        if (req.admin) {
+            email = req.admin.email;
+            id = req.admin.id || req.admin._id;
+        } else if (req.user) {
+            email = req.user.email;
+            id = req.user.id || req.user._id;
+        }
+
+        const query = { isRead: false, $or: [] };
+        if (email) query.$or.push({ recipientEmail: email.toLowerCase() });
+        if (id) query.$or.push({ recipient: id });
+
+        if (query.$or.length === 0) {
+            return res.status(200).json({ message: 'No recipient identified' });
+        }
+
+        await Notification.updateMany(query, { isRead: true });
         res.status(200).json({ message: 'All notifications marked as read' });
     } catch (error) {
         console.error('Error marking all notifications as read:', error);

@@ -14,7 +14,7 @@ exports.getAll = async (req, res) => {
     }
     if (status) query.status = status;
     if (req.admin.role === 'hackathon_instructor') {
-      query.createdBy = req.admin.id;
+      query.createdBy = req.admin._id;
     }
 
     const [items, total] = await Promise.all([
@@ -43,7 +43,7 @@ exports.getById = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const item = await AdminHackathon.create({ ...req.body, createdBy: req.admin?.id });
+    const item = await AdminHackathon.create({ ...req.body, createdBy: req.admin?._id });
     res.status(201).json({ success: true, data: item });
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
@@ -74,7 +74,7 @@ exports.stats = async (req, res) => {
   try {
     const query = {};
     if (req.admin.role === 'hackathon_instructor') {
-      query.createdBy = req.admin.id;
+      query.createdBy = req.admin._id;
     }
     const total = await AdminHackathon.countDocuments(query);
     const upcoming = await AdminHackathon.countDocuments({ ...query, status: 'upcoming' });

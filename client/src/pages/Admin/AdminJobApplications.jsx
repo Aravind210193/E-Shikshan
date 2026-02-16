@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Loader, FileCheck, X, Send, User, Briefcase, Mail, FileText, ExternalLink, Clock, Building2, MapPin } from "lucide-react";
+import { Search, Loader, FileCheck, X, Send, User, Briefcase, Mail, FileText, ExternalLink, Clock, Building2, MapPin, Trash2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { jobsAPI } from "../../services/api";
 
@@ -44,6 +44,22 @@ const AdminJobApplications = () => {
         } catch (error) {
             console.error("Status update error:", error);
             toast.error(error?.response?.data?.message || "Failed to update status");
+        } finally {
+            setUpdating(false);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this application? An email will be sent to the candidate.")) return;
+
+        try {
+            setUpdating(true);
+            await jobsAPI.deleteApplication(id);
+            toast.success("Application deleted successfully");
+            fetchApplications();
+        } catch (error) {
+            console.error("Delete application error:", error);
+            toast.error("Failed to delete application");
         } finally {
             setUpdating(false);
         }
@@ -139,8 +155,8 @@ const AdminJobApplications = () => {
                         className="px-4 py-3 bg-[#0f1117] border border-gray-800 rounded-xl text-white outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer min-w-[160px]"
                     >
                         <option value="all">All Status</option>
-                        {['pending', 'reviewed', 'shortlisted', 'interview', 'accepted', 'rejected'].map(s => (
-                            <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+                        {['pending', 'reviewed', 'shortlisted', 'further_round', 'interview', 'accepted', 'rejected'].map(s => (
+                            <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1).replace('_', ' ')}</option>
                         ))}
                     </select>
                 </div>
@@ -196,12 +212,13 @@ const AdminJobApplications = () => {
                                         </td>
                                         <td className="px-6 py-5">
                                             <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${app.status === 'accepted' ? 'bg-green-500/10 text-green-400' :
-                                                    app.status === 'rejected' ? 'bg-red-500/10 text-red-400' :
-                                                        app.status === 'interview' ? 'bg-purple-500/10 text-purple-400' :
-                                                            app.status === 'shortlisted' ? 'bg-blue-500/10 text-blue-400' :
+                                                app.status === 'rejected' ? 'bg-red-500/10 text-red-400' :
+                                                    app.status === 'interview' ? 'bg-purple-500/10 text-purple-400' :
+                                                        app.status === 'shortlisted' ? 'bg-blue-500/10 text-blue-400' :
+                                                            app.status === 'further_round' ? 'bg-cyan-500/10 text-cyan-400' :
                                                                 'bg-amber-500/10 text-amber-400'
                                                 }`}>
-                                                {app.status}
+                                                {app.status.replace('_', ' ')}
                                             </span>
                                         </td>
                                         <td className="px-6 py-5 text-right">
@@ -210,6 +227,13 @@ const AdminJobApplications = () => {
                                                 className="bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all border border-gray-700 hover:border-blue-500"
                                             >
                                                 Review
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(app._id)}
+                                                className="p-2 ml-2 bg-gray-800 hover:bg-blue-600/20 text-gray-500 hover:text-blue-500 rounded-lg transition-all border border-gray-700 hover:border-blue-500"
+                                                title="Delete Application"
+                                            >
+                                                <Trash2 size={14} />
                                             </button>
                                         </td>
                                     </motion.tr>
@@ -288,23 +312,36 @@ const AdminJobApplications = () => {
 
                                 {/* Right: Action Center */}
                                 <div className="lg:col-span-2 p-8 bg-[#1a1e2b]/30">
-                                    <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                                        <FileCheck className="text-blue-500" />
-                                        Process Application
-                                    </h3>
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                                            <FileCheck className="text-blue-500" />
+                                            Process Application
+                                        </h3>
+                                        <button
+                                            onClick={() => {
+                                                const id = selectedApp._id;
+                                                setSelectedApp(null);
+                                                handleDelete(id);
+                                            }}
+                                            className="p-2 text-gray-500 hover:text-blue-500 transition-colors"
+                                            title="Permanently Delete Application"
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    </div>
 
                                     <form onSubmit={handleStatusUpdate} className="space-y-6">
                                         <div>
                                             <label className="text-xs font-black text-gray-500 uppercase tracking-widest mb-2 block">Application Status</label>
                                             <div className="grid grid-cols-2 gap-2">
-                                                {['reviewed', 'shortlisted', 'interview', 'accepted', 'rejected'].map((s) => (
+                                                {['reviewed', 'shortlisted', 'further_round', 'interview', 'accepted', 'rejected'].map((s) => (
                                                     <button
                                                         key={s}
                                                         type="button"
                                                         onClick={() => setUpdateForm({ ...updateForm, status: s })}
                                                         className={`py-2 px-3 rounded-xl border text-[10px] font-black uppercase tracking-wider transition-all ${updateForm.status === s
-                                                                ? 'border-blue-500 bg-blue-500 text-white shadow-lg shadow-blue-500/20'
-                                                                : 'border-gray-800 bg-[#0f1117] text-gray-500 hover:border-gray-700'
+                                                            ? 'border-blue-500 bg-blue-500 text-white shadow-lg shadow-blue-500/20'
+                                                            : 'border-gray-800 bg-[#0f1117] text-gray-500 hover:border-gray-700'
                                                             }`}
                                                     >
                                                         {s}

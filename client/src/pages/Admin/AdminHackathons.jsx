@@ -33,6 +33,7 @@ const AdminHackathons = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [stats, setStats] = useState({ total: 0, upcoming: 0, active: 0, closed: 0 });
 
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState("add");
@@ -45,11 +46,17 @@ const AdminHackathons = () => {
       const params = { page: p, limit: 12 };
       if (searchQuery) params.search = searchQuery;
       if (statusFilter !== "all") params.status = statusFilter;
-      const res = await adminHackathonAPI.getAll(params);
+      const [res, statsRes] = await Promise.all([
+        adminHackathonAPI.getAll(params),
+        adminHackathonAPI.getStats()
+      ]);
       if (res.data.success) {
         setItems(res.data.data);
         setPage(res.data.page);
         setPages(res.data.pages);
+      }
+      if (statsRes.data.success) {
+        setStats(statsRes.data.data);
       }
     } catch (e) {
       toast.error(e.response?.data?.message || "Failed to fetch hackathons");
@@ -139,6 +146,32 @@ const AdminHackathons = () => {
         >
           <Plus className="w-5 h-5" /> Add Hackathon
         </motion.button>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { label: "Total Hackathons", value: stats.total, color: "bg-blue-500/10 text-blue-500", icon: Trophy },
+          { label: "Active", value: stats.active, color: "bg-green-500/10 text-green-500", icon: Eye },
+          { label: "Upcoming", value: stats.upcoming, color: "bg-amber-500/10 text-amber-500", icon: Calendar },
+          { label: "Closed", value: stats.closed, color: "bg-rose-500/10 text-rose-500", icon: X },
+        ].map((stat, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+            className="bg-gray-800 p-6 rounded-2xl border border-gray-700 flex items-center justify-between shadow-lg"
+          >
+            <div>
+              <p className="text-gray-400 text-sm font-medium">{stat.label}</p>
+              <p className="text-2xl font-bold text-white mt-1">{stat.value}</p>
+            </div>
+            <div className={`p-3 rounded-xl ${stat.color}`}>
+              <stat.icon className="w-6 h-6" />
+            </div>
+          </motion.div>
+        ))}
       </div>
 
       <div className="bg-gray-800 rounded-2xl p-4 border border-gray-700">

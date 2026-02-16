@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Loader, FileCheck, X, Send, User, Award, Trophy, Users, Mail, Phone, Github, Globe, ExternalLink, Clock } from "lucide-react";
+import { Search, Loader, FileCheck, X, Send, User, Award, Trophy, Users, Mail, Phone, Github, Globe, ExternalLink, Clock, Trash2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { hackathonRegistrationAPI } from "../../services/api";
 
@@ -44,6 +44,22 @@ const AdminHackathonRegistrations = () => {
         } catch (error) {
             console.error("Status update error:", error);
             toast.error(error?.response?.data?.message || "Failed to update status");
+        } finally {
+            setUpdating(false);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this registration? An email will be sent to the student.")) return;
+
+        try {
+            setUpdating(true);
+            await hackathonRegistrationAPI.deleteRegistration(id);
+            toast.success("Registration deleted successfully");
+            fetchRegistrations();
+        } catch (error) {
+            console.error("Delete registration error:", error);
+            toast.error("Failed to delete registration");
         } finally {
             setUpdating(false);
         }
@@ -245,6 +261,13 @@ const AdminHackathonRegistrations = () => {
                                             >
                                                 Review
                                             </button>
+                                            <button
+                                                onClick={() => handleDelete(reg._id)}
+                                                className="p-2 bg-gray-800 hover:bg-rose-600/20 text-gray-500 hover:text-rose-500 rounded-lg transition-all border border-gray-700 hover:border-rose-500 active:scale-95"
+                                                title="Delete Registration"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
                                         </td>
                                     </motion.tr>
                                 ))}
@@ -354,10 +377,23 @@ const AdminHackathonRegistrations = () => {
 
                                 {/* Right Side: Actions */}
                                 <div className="lg:col-span-2 p-8 bg-[#1a1e2b]/30">
-                                    <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                                        <FileCheck className="text-rose-500" />
-                                        Update Status
-                                    </h3>
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                                            <FileCheck className="text-rose-500" />
+                                            Update Status
+                                        </h3>
+                                        <button
+                                            onClick={() => {
+                                                const id = selectedReg._id;
+                                                setSelectedReg(null);
+                                                handleDelete(id);
+                                            }}
+                                            className="p-2 text-gray-500 hover:text-rose-500 transition-colors"
+                                            title="Permanently Delete Registration"
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    </div>
 
                                     <form onSubmit={handleStatusUpdate} className="space-y-6">
                                         <div>
@@ -369,8 +405,8 @@ const AdminHackathonRegistrations = () => {
                                                         type="button"
                                                         onClick={() => setUpdateForm({ ...updateForm, status: s })}
                                                         className={`py-2 px-3 rounded-xl border text-[10px] font-black uppercase tracking-wider transition-all ${updateForm.status === s
-                                                                ? 'border-rose-500 bg-rose-500 text-white shadow-lg shadow-rose-500/20'
-                                                                : 'border-gray-800 bg-[#0f1117] text-gray-500 hover:border-gray-700'
+                                                            ? 'border-rose-500 bg-rose-500 text-white shadow-lg shadow-rose-500/20'
+                                                            : 'border-gray-800 bg-[#0f1117] text-gray-500 hover:border-gray-700'
                                                             }`}
                                                     >
                                                         {s.replace('_', ' ')}

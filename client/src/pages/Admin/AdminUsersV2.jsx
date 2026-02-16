@@ -678,7 +678,7 @@ const AdminUsers = () => {
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 gap-3">
-                      {detailsModal.data.postedHackathons.map((hack, idx) => (
+                      {(detailsModal.data.postedHackathons || []).map((hack, idx) => (
                         <div key={idx} className="p-4 bg-rose-500/5 border border-rose-500/20 rounded-xl flex items-center justify-between hover:bg-rose-500/10 transition-colors">
                           <div className="flex items-center gap-4">
                             <div className="p-2 bg-rose-500/20 rounded-lg">

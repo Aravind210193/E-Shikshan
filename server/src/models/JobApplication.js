@@ -26,7 +26,7 @@ const jobApplicationSchema = new mongoose.Schema({
     coverLetter: String,
     status: {
         type: String,
-        enum: ['pending', 'reviewed', 'shortlisted', 'interview', 'rejected', 'accepted'],
+        enum: ['pending', 'reviewed', 'shortlisted', 'interview', 'rejected', 'accepted', 'further_round'],
         default: 'pending'
     },
     appliedAt: {

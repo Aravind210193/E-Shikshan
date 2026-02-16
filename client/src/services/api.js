@@ -13,7 +13,11 @@ api.interceptors.request.use(
   (config) => {
     const finalURL = `${config.baseURL}${config.url}`;
     console.log(`API Request: ${config.method.toUpperCase()} ${finalURL}`);
-    const isAdminEndpoint = typeof config.url === 'string' && config.url.startsWith('/admin');
+
+    // Check if it's an admin/instructor endpoint (either starts with /admin or contains /admin/)
+    const isAdminEndpoint = typeof config.url === 'string' &&
+      (config.url.startsWith('/admin') || config.url.includes('/admin/'));
+
     const adminToken = sessionStorage.getItem('adminToken');
     const userToken = localStorage.getItem('token');
 
@@ -42,11 +46,15 @@ api.interceptors.response.use(
       console.error(`Status: ${error.response.status}, Data:`, error.response.data);
       const reqUrl = error.config?.url || '';
       if (error.response.status === 401) {
-        const isAdminEndpoint = typeof reqUrl === 'string' && reqUrl.startsWith('/admin');
+        // Same logic for identifying admin endpoints on response
+        const isAdminEndpoint = typeof reqUrl === 'string' &&
+          (reqUrl.startsWith('/admin') || reqUrl.includes('/admin/'));
+
         if (isAdminEndpoint) {
           console.log('Admin unauthorized, redirecting to admin login');
           sessionStorage.removeItem('adminToken');
           sessionStorage.removeItem('adminRole');
+          sessionStorage.removeItem('adminData');
           window.location.href = '/admin';
         } else {
           console.log('User unauthorized, redirecting to login');
@@ -107,6 +115,7 @@ export const jobsAPI = {
   // Admin/Instructor APIs
   getInstructorApplications: () => api.get('/job-applications/admin/applications'),
   updateApplicationStatus: (id, data) => api.put(`/job-applications/admin/${id}/status`, data),
+  deleteApplication: (id) => api.delete(`/job-applications/admin/${id}`),
 };
 
 export const hackathonsAPI = {
@@ -122,6 +131,7 @@ export const hackathonRegistrationAPI = {
   getInstructorRegistrations: () => api.get('/hackathon-registrations/admin/registrations'),
   // Admin/Instructor APIs
   updateRegistrationStatus: (id, data) => api.put(`/hackathon-registrations/admin/${id}/status`, data),
+  deleteRegistration: (id) => api.delete(`/hackathon-registrations/admin/${id}`),
 };
 
 export const doubtsAPI = {

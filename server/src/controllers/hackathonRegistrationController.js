@@ -297,3 +297,61 @@ exports.updateRegistrationStatus = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// Delete registration by instructor/admin
+exports.deleteRegistration = async (req, res) => {
+  try {
+    const registrationId = req.params.id;
+
+    const registration = await HackathonRegistration.findById(registrationId)
+      .populate('hackathonId', 'title')
+      .populate('userId', 'name email');
+
+    if (!registration) {
+      return res.status(404).json({ message: 'Registration not found' });
+    }
+
+    // Email Notification to Student before deletion
+    try {
+      if (registration.userId && registration.userId.email) {
+        await sendEmail({
+          to: registration.userId.email,
+          subject: `Registration Cancelled: ${registration.hackathonId.title}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; background-color: #fff1f2;">
+              <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div style="background: #e11d48; padding: 25px; text-align: center;">
+                  <h1 style="color: white; margin: 0; font-size: 24px;">Registration Update</h1>
+                </div>
+                <div style="padding: 30px;">
+                  <p style="font-size: 16px;">Hi <b>${registration.userId.name}</b>,</p>
+                  <p style="font-size: 15px; line-height: 1.6;">Your registration for the hackathon <b>${registration.hackathonId.title}</b> has been removed by the organizer or administrator.</p>
+                  
+                  <div style="margin: 25px 0; padding: 20px; background: #fff1f2; border-left: 4px solid #e11d48; border-radius: 4px;">
+                    <p style="margin: 0; font-size: 14px; color: #9f1239; font-weight: bold;">Status: REMOVED / CANCELLED</p>
+                    <p style="margin: 10px 0 0; font-size: 13px; color: #4b5563;">If you believe this is a mistake, please contact support or the hackathon organizer.</p>
+                  </div>
+
+                  <p style="font-size: 14px; color: #64748b;">You can browse other hackathons and register for upcoming events on our platform.</p>
+                  
+                  <div style="text-align: center; margin-top: 30px;">
+                    <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}/hackathons" style="display: inline-block; padding: 12px 30px; background: #e11d48; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">Browse Events</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `
+        });
+      }
+    } catch (emailErr) {
+      console.error('Failed to send hackathon deletion email:', emailErr);
+    }
+
+    await HackathonRegistration.findByIdAndDelete(registrationId);
+
+    res.json({ success: true, message: 'Registration deleted successfully' });
+  } catch (err) {
+    console.error('Delete hackathon registration error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};

@@ -6,7 +6,8 @@ const {
     applyToJob,
     getMyApplications,
     getInstructorApplications,
-    updateApplicationStatus
+    updateApplicationStatus,
+    deleteApplication
 } = require('../controllers/jobApplicationController');
 
 // Student routes
@@ -16,5 +17,6 @@ router.get('/my-applications', protect, getMyApplications);
 // Admin/Instructor routes
 router.get('/admin/applications', adminAuth, getInstructorApplications);
 router.put('/admin/:id/status', adminAuth, updateApplicationStatus);
+router.delete('/admin/:id', adminAuth, deleteApplication);
 
 module.exports = router;

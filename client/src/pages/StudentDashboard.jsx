@@ -15,7 +15,8 @@ import {
     Briefcase,
     Layout,
     Trophy,
-    Home
+    Home,
+    Bell
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -26,6 +27,8 @@ const StudentDashboard = () => {
     const [user, setUser] = useState(null);
     const [courses, setCourses] = useState([]);
     const [hackathons, setHackathons] = useState([]);
+    const [jobs, setJobs] = useState([]);
+    const [notifications, setNotifications] = useState([]);
     const [gamification, setGamification] = useState(null);
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -40,10 +43,16 @@ const StudentDashboard = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-            const [profileRes, enrollmentsRes, hackathonsRes, gamiRes, activityRes] = await Promise.all([
+            const [profileRes, enrollmentsRes, hackathonsRes, jobsRes, notifyRes, gamiRes, activityRes] = await Promise.all([
                 authAPI.getProfile(),
                 enrollmentAPI.getMyCourses(),
                 hackathonRegistrationAPI.getMyRegistrations(),
+                axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/job-applications/my-applications`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                }),
+                axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/notifications`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                }),
                 axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/gamification/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 }),
@@ -53,10 +62,12 @@ const StudentDashboard = () => {
             ]);
 
             setUser(profileRes.data.user);
-            setCourses(enrollmentsRes.data); // Fixed access to enrollments array
+            setCourses(enrollmentsRes.data);
             setHackathons(hackathonsRes.data.registrations || []);
-            setGamification(gamiRes.data.data); // Fixed access to gamification data
-            setActivities(activityRes.data.data || []); // Fixed access to activity log
+            setJobs(jobsRes.data.applications || []);
+            setNotifications(notifyRes.data || []);
+            setGamification(gamiRes.data.data);
+            setActivities(activityRes.data.data || []);
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
             toast.error('Failed to load dashboard data');
@@ -78,9 +89,9 @@ const StudentDashboard = () => {
 
     const stats = [
         { id: 'courses', label: 'Active Courses', value: courses.length, icon: BookOpen, color: 'indigo' },
-        { id: 'certificates', label: 'Certificates', value: user?.certificatesAndBadges?.filter(c => c.type === 'certificate').length || 0, icon: Award, color: 'emerald' },
-        { id: 'xp', label: 'XP Points', value: gamification?.totalPoints || 0, icon: Zap, color: 'amber' },
-        { id: 'hackathons', label: 'Hackathons', value: hackathons.length, icon: Code, color: 'purple' }
+        { id: 'jobs', label: 'Applied Jobs', value: jobs.length, icon: Briefcase, color: 'blue' },
+        { id: 'hackathons', label: 'Hackathons', value: hackathons.length, icon: Code, color: 'purple' },
+        { id: 'xp', label: 'XP Points', value: gamification?.totalPoints || 0, icon: Zap, color: 'amber' }
     ];
 
     const containerVariants = {
@@ -136,6 +147,55 @@ const StudentDashboard = () => {
                                     </div>
                                 </div>
                             ))}
+                        </div>
+                    </motion.div>
+                );
+            case 'jobs':
+                return (
+                    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-2xl font-bold flex items-center gap-2">
+                                <Briefcase className="text-blue-500" />
+                                Job Applications
+                            </h2>
+                            <button onClick={() => setSelectedDetail(null)} className="text-sm text-gray-400 hover:text-white underline">Back to Overview</button>
+                        </div>
+                        <div className="space-y-4">
+                            {jobs.map((app, idx) => (
+                                <div key={idx} className="bg-[#1a1c2e] border border-white/5 rounded-3xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-[#20223a] transition-all group overflow-hidden relative">
+                                    <div className="flex items-center gap-6 relative z-10">
+                                        <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500">
+                                            <Briefcase size={30} />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-black mb-1 group-hover:text-blue-400 transition-colors">{app.job?.title}</h3>
+                                            <p className="text-sm text-gray-500 font-bold mb-2">{app.job?.company || 'E-Shikshan Partner'}</p>
+                                            <div className="flex items-center gap-4">
+                                                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${app.status === 'accepted' ? 'bg-green-500/10 text-green-400' :
+                                                        app.status === 'rejected' ? 'bg-red-500/10 text-red-400' :
+                                                            'bg-blue-500/10 text-blue-400'
+                                                    }`}>
+                                                    {app.status.replace('_', ' ')}
+                                                </span>
+                                                <div className="flex items-center gap-1.5 text-gray-500 text-[10px] font-bold">
+                                                    <Clock size={12} />
+                                                    Applied {new Date(app.appliedAt || app.createdAt).toLocaleDateString()}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col gap-2 relative z-10">
+                                        <button className="px-6 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all">View Details</button>
+                                    </div>
+                                </div>
+                            ))}
+                            {jobs.length === 0 && (
+                                <div className="py-20 text-center bg-[#1a1c2e] rounded-3xl border border-dashed border-gray-800">
+                                    <Briefcase size={48} className="mx-auto text-gray-600 mb-4 opacity-20" />
+                                    <p className="text-gray-500 font-bold mb-6">No applications found.</p>
+                                    <button onClick={() => navigate('/jobs')} className="px-8 py-3 bg-blue-600 rounded-2xl text-xs font-black uppercase tracking-widest">Explore Jobs</button>
+                                </div>
+                            )}
                         </div>
                     </motion.div>
                 );
@@ -407,19 +467,31 @@ const StudentDashboard = () => {
                                         Activity Feed
                                     </h3>
                                     <div className="bg-[#1a1c2e]/30 border border-white/5 rounded-3xl p-6 space-y-6">
-                                        {activities.slice(0, 5).map((act, idx) => (
-                                            <div key={idx} className="flex gap-4 relative">
-                                                {idx !== 4 && <div className="absolute top-10 left-5 bottom-0 w-[1px] bg-gray-800" />}
-                                                <div className={`w-10 h-10 rounded-xl bg-gray-800 flex-shrink-0 flex items-center justify-center font-bold text-sm ${idx === 0 ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' : 'text-gray-500'}`}>
-                                                    <Zap size={16} fill={idx === 0 ? 'currentColor' : 'none'} />
+                                        {notifications.length > 0 ? (
+                                            notifications.slice(0, 5).map((note, idx) => (
+                                                <div key={idx} className="group relative pr-4">
+                                                    <div className="flex gap-4">
+                                                        <div className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center font-bold text-sm ${!note.isRead ? 'bg-indigo-500/20 text-indigo-400' : 'bg-gray-800 text-gray-500'}`}>
+                                                            <Bell size={16} fill={!note.isRead ? 'currentColor' : 'none'} />
+                                                        </div>
+                                                        <div className="py-1 flex-1">
+                                                            <div className="flex justify-between items-start mb-1">
+                                                                <p className={`text-xs font-bold leading-tight ${!note.isRead ? 'text-white' : 'text-gray-400'}`}>{note.title}</p>
+                                                                {!note.isRead && <div className="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />}
+                                                            </div>
+                                                            <p className="text-[10px] text-gray-500 line-clamp-2 leading-relaxed">{note.message}</p>
+                                                            <p className="text-[9px] text-gray-600 mt-2 font-bold uppercase tracking-widest">{new Date(note.createdAt).toLocaleDateString()}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="py-1">
-                                                    <p className="text-xs font-bold text-gray-200">{act.description}</p>
-                                                    <p className="text-[10px] text-gray-500 mt-1 font-medium">{new Date(act.createdAt).toLocaleDateString()}</p>
-                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="text-center py-10 opacity-30">
+                                                <Bell size={32} className="mx-auto mb-3" />
+                                                <p className="text-[10px] font-black uppercase tracking-widest">No new notifications</p>
                                             </div>
-                                        ))}
-                                        <button onClick={() => setSelectedDetail('xp')} className="w-full py-3 bg-gray-800/50 hover:bg-gray-800 text-[10px] font-black uppercase tracking-widest text-gray-400 transition-all rounded-2xl">View History</button>
+                                        )}
+                                        <button onClick={() => navigate('/notifications')} className="w-full py-3 bg-indigo-600/10 hover:bg-indigo-600/20 text-[10px] font-black uppercase tracking-widest text-indigo-400 transition-all rounded-2xl border border-indigo-500/20">View All Notifications</button>
                                     </div>
                                 </div>
                             </div>

@@ -28,6 +28,7 @@ const AdminLayout = ({ setIsAdminLoggedIn, children }) => {
   if (role === 'course_manager') base = '/instructor';
   if (role === 'job_instructor') base = '/job-instructor';
   if (role === 'hackathon_instructor') base = '/hackathon-instructor';
+  if (role === 'roadmap_instructor') base = '/roadmap-instructor';
 
   const menuItems =
     role === 'course_manager'
@@ -53,19 +54,25 @@ const AdminLayout = ({ setIsAdminLoggedIn, children }) => {
             { path: `${base}/applications`, label: "Registrations", icon: FileCheck },
             { path: `${base}/settings`, label: "Settings", icon: Settings }
           ]
-          : [
-            { path: `${base}/dashboard`, label: "Dashboard", icon: LayoutDashboard },
-            { path: `${base}/users`, label: "Users", icon: Users },
-            { path: `${base}/students`, label: "Students", icon: GraduationCap },
-            { path: `${base}/courses`, label: "Courses", icon: BookOpen },
-            { path: `${base}/doubts`, label: "Doubts", icon: MessageSquare },
-            { path: `${base}/submissions`, label: "Submissions", icon: FileCheck },
-            { path: `${base}/jobs`, label: "Jobs", icon: Briefcase },
-            { path: `${base}/hackathons`, label: "Hackathons", icon: Trophy },
-            { path: `${base}/roadmaps`, label: "Roadmaps", icon: Map },
-            { path: `${base}/resumes`, label: "Resumes", icon: FileText },
-            { path: `${base}/settings`, label: "Settings", icon: Settings }
-          ];
+          : role === 'roadmap_instructor'
+            ? [
+              { path: `${base}/dashboard`, label: "Dashboard", icon: LayoutDashboard },
+              { path: `${base}/roadmaps`, label: "Roadmaps", icon: Map },
+              { path: `${base}/settings`, label: "Settings", icon: Settings }
+            ]
+            : [
+              { path: `${base}/dashboard`, label: "Dashboard", icon: LayoutDashboard },
+              { path: `${base}/users`, label: "Users", icon: Users },
+              { path: `${base}/students`, label: "Students", icon: GraduationCap },
+              { path: `${base}/courses`, label: "Courses", icon: BookOpen },
+              { path: `${base}/doubts`, label: "Doubts", icon: MessageSquare },
+              { path: `${base}/submissions`, label: "Submissions", icon: FileCheck },
+              { path: `${base}/jobs`, label: "Jobs", icon: Briefcase },
+              { path: `${base}/hackathons`, label: "Hackathons", icon: Trophy },
+              { path: `${base}/roadmaps`, label: "Roadmaps", icon: Map },
+              { path: `${base}/resumes`, label: "Resumes", icon: FileText },
+              { path: `${base}/settings`, label: "Settings", icon: Settings }
+            ];
 
   // Get admin data from localStorage
   const adminData = React.useMemo(() => {
@@ -79,8 +86,8 @@ const AdminLayout = ({ setIsAdminLoggedIn, children }) => {
 
   const adminName = adminData?.name || 'Admin';
   const adminInitial = adminName.charAt(0).toUpperCase();
-  const displayRole = adminData?.role === 'admin' ? 'Administrator' : adminData?.role === 'job_instructor' ? 'Job Partner' : adminData?.role === 'hackathon_instructor' ? 'Hackathon Lead' : 'Instructor';
-  const roleColor = adminData?.role === 'admin' ? 'bg-red-600' : adminData?.role === 'job_instructor' ? 'bg-purple-600' : adminData?.role === 'hackathon_instructor' ? 'bg-rose-600' : 'bg-blue-600';
+  const displayRole = adminData?.role === 'admin' ? 'Administrator' : adminData?.role === 'job_instructor' ? 'Job Partner' : adminData?.role === 'hackathon_instructor' ? 'Hackathon Lead' : adminData?.role === 'roadmap_instructor' ? 'Roadmap Special' : 'Instructor';
+  const roleColor = adminData?.role === 'admin' ? 'bg-red-600' : adminData?.role === 'job_instructor' ? 'bg-purple-600' : adminData?.role === 'hackathon_instructor' ? 'bg-rose-600' : adminData?.role === 'roadmap_instructor' ? 'bg-amber-600' : 'bg-blue-600';
   const isActive = (path) => location.pathname === path;
 
   return (

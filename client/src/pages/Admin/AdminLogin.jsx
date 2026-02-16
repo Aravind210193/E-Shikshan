@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, Lock, Eye, EyeOff, Shield, GraduationCap, Users, BookOpen, ArrowRight, BarChart, Briefcase, Trophy } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Shield, GraduationCap, Users, BookOpen, ArrowRight, BarChart, Briefcase, Trophy, Map } from "lucide-react";
 import { toast } from 'react-hot-toast';
 import { adminAuthAPI } from '../../services/adminApi';
 
@@ -20,6 +20,8 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
         navigate('/job-instructor/dashboard');
       } else if (role === 'hackathon_instructor') {
         navigate('/hackathon-instructor/dashboard');
+      } else if (role === 'roadmap_instructor') {
+        navigate('/roadmap-instructor/dashboard');
       }
     }
   }, [navigate]);
@@ -27,7 +29,8 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [loginRole, setLoginRole] = useState("admin"); // 'admin' or 'course_manager'
+  const [loginRole, setLoginRole] = useState("admin"); // 'admin' or 'instructor'
+  const instructorRoles = ['course_manager', 'job_instructor', 'hackathon_instructor', 'roadmap_instructor'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,10 +48,10 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
         const { token, admin } = response.data;
 
         // Check if role matches selected login role
-        if (loginRole === 'course_manager' && admin.role === 'admin') {
-          toast.error('You are logging in as Instructor but have Admin privileges. Redirecting to Dashboard.');
-        } else if (loginRole === 'admin' && admin.role === 'course_manager') {
-          toast.error('You are logging in as Admin but only have Instructor privileges. Redirecting to Courses.');
+        if (loginRole === 'instructor' && admin.role === 'admin') {
+          toast.error('You are logging in as Instructor but have Admin privileges. Redirecting to Admin Dashboard.');
+        } else if (loginRole === 'admin' && instructorRoles.includes(admin.role)) {
+          toast.error(`You are logging in as Admin but only have ${admin.role.replace('_', ' ').toUpperCase()} privileges.`);
         }
 
         // Store token and role
@@ -68,6 +71,8 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
           navigate('/job-instructor/dashboard');
         } else if (admin.role === 'hackathon_instructor') {
           navigate('/hackathon-instructor/dashboard');
+        } else if (admin.role === 'roadmap_instructor') {
+          navigate('/roadmap-instructor/dashboard');
         }
       }
     } catch (error) {
@@ -180,9 +185,10 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
                 { icon: BookOpen, text: "Oversee All Courses" },
                 { icon: BarChart, text: "View Analytics & Reports" }
               ] : [
-                { icon: BookOpen, text: "Manage Your Courses" },
-                { icon: Users, text: "Track Student Progress" },
-                { icon: GraduationCap, text: "Answer Student Doubts" }
+                { icon: BookOpen, text: "Manage Courses & Content" },
+                { icon: Briefcase, text: "Post Jobs & Track Applicants" },
+                { icon: Trophy, text: "Organize Hackathons" },
+                { icon: Map, text: "Build Learning Roadmaps" }
               ]).map((item, index) => (
                 <motion.div
                   key={index}
@@ -215,50 +221,28 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
             </div>
 
             {/* Role Toggle */}
-            <div className="flex bg-gray-800/50 rounded-xl p-1 mb-6 gap-1">
+            <div className="flex bg-gray-800/50 rounded-xl p-1 mb-6 gap-2">
               <button
                 type="button"
                 onClick={() => setLoginRole('admin')}
-                className={`flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1 ${loginRole === 'admin'
-                  ? 'bg-slate-700 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white'
+                className={`flex-1 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${loginRole === 'admin'
+                  ? 'bg-slate-700 text-white shadow-xl scale-[1.02]'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
               >
-                <Shield className="w-4 h-4" />
+                <Shield className="w-5 h-5" />
                 Admin
               </button>
               <button
                 type="button"
-                onClick={() => setLoginRole('course_manager')}
-                className={`flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1 ${loginRole === 'course_manager'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white'
+                onClick={() => setLoginRole('instructor')}
+                className={`flex-1 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${loginRole === 'instructor'
+                  ? 'bg-blue-600 text-white shadow-xl scale-[1.02]'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
               >
-                <GraduationCap className="w-4 h-4" />
-                Course Mgr
-              </button>
-              <button
-                type="button"
-                onClick={() => setLoginRole('job_instructor')}
-                className={`flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1 ${loginRole === 'job_instructor'
-                  ? 'bg-purple-600 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white'
-                  }`}
-              >
-                <Briefcase className="w-4 h-4" />
-                Job Inst
-              </button>
-              <button
-                type="button"
-                onClick={() => setLoginRole('hackathon_instructor')}
-                className={`flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1 ${loginRole === 'hackathon_instructor'
-                  ? 'bg-rose-600 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white'
-                  }`}
-              >
-                <Trophy className="w-4 h-4" />
-                Hack Inst
+                <GraduationCap className="w-5 h-5" />
+                Instructor
               </button>
             </div>
 

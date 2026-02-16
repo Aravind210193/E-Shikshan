@@ -85,6 +85,9 @@ const App = () => {
   const hideLayout = ["/login", "/signup"].includes(location.pathname) ||
     location.pathname.startsWith('/admin') ||
     location.pathname.startsWith('/instructor') ||
+    location.pathname.startsWith('/job-instructor') ||
+    location.pathname.startsWith('/hackathon-instructor') ||
+    location.pathname.startsWith('/roadmap-instructor') ||
     location.pathname.startsWith('/dashboard');
   return (
     <>
@@ -291,6 +294,24 @@ const App = () => {
                   <Route path='applications' element={<AdminHackathonRegistrations />} />
                   <Route path='settings' element={<AdminSettings />} />
                   <Route path='*' element={<Navigate to='/hackathon-instructor/dashboard' replace />} />
+                </Routes>
+              </AdminLayout>
+            ) : (
+              <Navigate to='/admin' replace />
+            )
+          }
+        />
+        {/* Roadmap Instructor Routes */}
+        <Route
+          path='/roadmap-instructor/*'
+          element={
+            isAdminLoggedIn && sessionStorage.getItem('adminRole') === 'roadmap_instructor' ? (
+              <AdminLayout setIsAdminLoggedIn={setIsAdminLoggedIn}>
+                <Routes>
+                  <Route path='dashboard' element={<AdminDashboard />} />
+                  <Route path='roadmaps' element={<AdminRoadmaps />} />
+                  <Route path='settings' element={<AdminSettings />} />
+                  <Route path='*' element={<Navigate to='/roadmap-instructor/dashboard' replace />} />
                 </Routes>
               </AdminLayout>
             ) : (

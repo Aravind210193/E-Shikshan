@@ -1,0 +1,20 @@
+{
+  "admins": [
+    {
+      "_id": "6992f063b3fb26f12ddd9ba1",
+      "name": "Dev Jam Omega",
+      "email": "omega@eshikshan.com",
+      "password": "$2b$10$hojfZGroA2TkG7XTMiySMeFGklgW/cNBzuw9/OLIEJGN9aXp5JoiS",
+      "role": "hackathon_instructor",
+      "permissions": [
+        "hackathons"
+      ],
+      "isActive": true,
+      "createdAt": "2026-02-16T10:24:35.751Z",
+      "updatedAt": "2026-02-16T16:28:11.822Z",
+      "__v": 1,
+      "lastLogin": "2026-02-16T16:28:11.820Z"
+    }
+  ],
+  "hackathons": []
+}

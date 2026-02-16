@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, MapPin, Clock, CheckCircle, XCircle, Loader2, ExternalLink } from 'lucide-react';
-import { jobsAPI } from '../../services/api';
+import { jobsAPI } from '../services/api';
 import { toast } from 'react-hot-toast';
 
 const JobApplications = () => {
