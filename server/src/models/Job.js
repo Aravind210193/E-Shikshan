@@ -30,6 +30,10 @@ const jobSchema = new mongoose.Schema(
 		currency: String,
 		benefits: [{ type: String }],
 		howto: [{ type: String }],
+		postedBy: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Admin'
+		},
 	},
 	{ timestamps: true }
 );

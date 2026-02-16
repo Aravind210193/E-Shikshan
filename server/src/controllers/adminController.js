@@ -41,8 +41,8 @@ const getAllUsers = async (req, res) => {
       ];
     }
     if (role) {
-      // Only include admins if filtering by 'admin' or 'course_manager'
-      if (role === 'admin' || role === 'course_manager') {
+      // Only include admins if filtering by 'admin', 'course_manager', 'job_instructor', or 'hackathon_instructor'
+      if (role === 'admin' || role === 'course_manager' || role === 'job_instructor' || role === 'hackathon_instructor') {
         adminQuery.role = role;
       } else {
         // Exclude admin records for non-admin/instructor role filters
@@ -163,6 +163,20 @@ const getUserById = async (req, res) => {
         assignedCourses = [...normalAssigned, ...adminAssigned];
       }
 
+      // If job instructor, fetch posted jobs
+      let postedJobs = [];
+      if (admin.role === 'job_instructor') {
+        postedJobs = await AdminJob.find({ postedBy: admin._id })
+          .select('title company location status posted type');
+      }
+
+      // If hackathon instructor, fetch posted hackathons
+      let postedHackathons = [];
+      if (admin.role === 'hackathon_instructor') {
+        postedHackathons = await AdminHackathon.find({ createdBy: admin._id })
+          .select('title organizer location status startDate mode');
+      }
+
       const normalized = {
         _id: admin._id,
         name: admin.name,
@@ -173,7 +187,7 @@ const getUserById = async (req, res) => {
         createdAt: admin.createdAt,
         updatedAt: admin.updatedAt,
       };
-      return res.json({ user: normalized, enrollments: [], assignedCourses });
+      return res.json({ user: normalized, enrollments: [], assignedCourses, postedJobs, postedHackathons });
     }
 
     return res.status(404).json({ message: 'User not found' });

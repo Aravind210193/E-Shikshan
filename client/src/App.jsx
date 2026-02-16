@@ -46,6 +46,8 @@ import AdminCourses from './pages/Admin/AdminCourses'
 import AdminJobs from './pages/Admin/AdminJobs'
 import AdminSettings from './pages/Admin/AdminSettings'
 import AdminHackathons from './pages/Admin/AdminHackathons'
+import AdminHackathonRegistrations from './pages/Admin/AdminHackathonRegistrations'
+import AdminJobApplications from './pages/Admin/AdminJobApplications';
 import AdminRoadmaps from './pages/Admin/AdminRoadmaps'
 import AdminContent from './pages/Admin/AdminContent'
 import AdminResumes from './pages/Admin/AdminResumes'
@@ -55,6 +57,7 @@ import AdminSubmissions from './pages/Admin/AdminSubmissions'
 import InstructorStudents from './pages/Admin/InstructorStudents'
 import StudentDashboard from './pages/StudentDashboard'
 import StudentDoubts from './pages/StudentDoubts'
+import JobApplications from './pages/JobApplications'
 import StudentSidebar from './components/StudentSidebar'
 
 const App = () => {
@@ -179,7 +182,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<StudentDashboard />} />
                   <Route path="doubts" element={<StudentDoubts />} />
-                  {/* Add more student tracks here */}
+                  <Route path="job-applications" element={<JobApplications />} />
                 </Routes>
               </main>
             </div>
@@ -248,6 +251,46 @@ const App = () => {
                   <Route path='submissions' element={<AdminSubmissions />} />
                   <Route path='settings' element={<AdminSettings />} />
                   <Route path='*' element={<Navigate to='/instructor/dashboard' replace />} />
+                </Routes>
+              </AdminLayout>
+            ) : (
+              <Navigate to='/admin' replace />
+            )
+          }
+        />
+
+        {/* Job Instructor Routes */}
+        <Route
+          path='/job-instructor/*'
+          element={
+            isAdminLoggedIn && sessionStorage.getItem('adminRole') === 'job_instructor' ? (
+              <AdminLayout setIsAdminLoggedIn={setIsAdminLoggedIn}>
+                <Routes>
+                  <Route path='dashboard' element={<AdminDashboard />} />
+                  <Route path='jobs' element={<AdminJobs />} />
+                  <Route path='applications' element={<AdminJobApplications />} />
+                  <Route path='settings' element={<AdminSettings />} />
+                  <Route path='*' element={<Navigate to='/job-instructor/dashboard' replace />} />
+                </Routes>
+              </AdminLayout>
+            ) : (
+              <Navigate to='/admin' replace />
+            )
+          }
+        />
+
+        {/* Hackathon Instructor Routes */}
+        <Route
+          path='/hackathon-instructor/*'
+          element={
+            isAdminLoggedIn && sessionStorage.getItem('adminRole') === 'hackathon_instructor' ? (
+              <AdminLayout setIsAdminLoggedIn={setIsAdminLoggedIn}>
+                <Routes>
+                  <Route path='dashboard' element={<AdminDashboard />} />
+                  <Route path='hackathons' element={<AdminHackathons />} />
+                  <Route path='applications' element={<AdminHackathonRegistrations />} />
+                  <Route path='settings' element={<AdminSettings />} />
+                  <Route path='*' element={<Navigate to='/hackathon-instructor/dashboard' replace />} />
                 </Routes>
               </AdminLayout>
             ) : (

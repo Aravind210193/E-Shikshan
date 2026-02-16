@@ -284,6 +284,8 @@ const AdminUsers = () => {
             <option value="student">Student</option>
             <option value="faculty">Faculty</option>
             <option value="course_manager">Instructor</option>
+            <option value="job_instructor">Job Partner</option>
+            <option value="hackathon_instructor">Hackathon Lead</option>
             <option value="admin">Admin</option>
           </select>
           <button
@@ -356,9 +358,11 @@ const AdminUsers = () => {
                     <td className="px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${user.role === 'admin' ? 'bg-red-500/20 text-red-400' :
                         user.role === 'course_manager' ? 'bg-indigo-500/20 text-indigo-400' :
-                          'bg-blue-500/20 text-blue-400'
+                          user.role === 'job_instructor' ? 'bg-purple-500/20 text-purple-400' :
+                            user.role === 'hackathon_instructor' ? 'bg-rose-500/20 text-rose-400' :
+                              'bg-blue-500/20 text-blue-400'
                         }`}>
-                        {user.role === 'course_manager' ? 'Instructor' : user.role}
+                        {user.role === 'course_manager' ? 'Instructor' : user.role === 'job_instructor' ? 'Job Partner' : user.role === 'hackathon_instructor' ? 'Hackathon Lead' : user.role}
                       </span>
                     </td>
                     <td className="px-6 py-4">
@@ -615,110 +619,208 @@ const AdminUsers = () => {
                   )}
                 </div>
               )}
-            </div>
-          </div>
-        </div>
-      )}
 
-      {/* JSON Modal */}
-      {jsonModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-2xl border border-gray-700 max-w-5xl w-full max-h-[90vh] overflow-hidden">
-            <div className="sticky top-0 bg-gray-800 border-b border-gray-700 p-4 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-white">Users JSON (page {page} of {pages}, total {total})</h3>
-              <button
-                onClick={() => setJsonModal(false)}
-                className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-lg text-white"
-              >
-                Close
-              </button>
-            </div>
-            <div className="p-4 overflow-auto">
-              <pre className="text-sm text-gray-200 whitespace-pre-wrap">
-                {JSON.stringify({ users, pagination: { page, pages, total, limit } }, null, 2)}
-              </pre>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Add/Edit User Modal */}
-      {userModal.open && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-2xl border border-gray-700 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-gray-800 border-b border-gray-700 p-4 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-white">{userModal.mode === 'add' ? 'Add User' : 'Edit User'}</h3>
-              <button
-                onClick={() => setUserModal({ open: false, mode: 'add' })}
-                className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-lg text-white"
-              >
-                Close
-              </button>
-            </div>
-            <div className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm text-gray-400">Name</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.name} onChange={(e) => setUserForm({ ...userForm, name: e.target.value })} />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-400">Email</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.email} onChange={(e) => setUserForm({ ...userForm, email: e.target.value })} />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-400">Password {userModal.mode === 'edit' && <span className="text-gray-400">(leave blank to keep)</span>}</label>
-                  <input type="password" className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.password} onChange={(e) => setUserForm({ ...userForm, password: e.target.value })} />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-400">Role</label>
-                  <select className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.role} onChange={(e) => setUserForm({ ...userForm, role: e.target.value })}>
-                    <option value="student">Student</option>
-                    <option value="faculty">Faculty</option>
-                    <option value="course_manager">Instructor</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
-                <div className="flex items-center gap-2">
-                  <input id="isAdmin" type="checkbox" checked={!!userForm.isAdmin} onChange={(e) => setUserForm({ ...userForm, isAdmin: e.target.checked })} />
-                  <label htmlFor="isAdmin" className="text-sm text-gray-300">Is Admin</label>
-                </div>
-                <div>
-                  <label className="text-sm text-gray-400">Phone</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.phone} onChange={(e) => setUserForm({ ...userForm, phone: e.target.value })} />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-400">University</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.university} onChange={(e) => setUserForm({ ...userForm, university: e.target.value })} />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-400">Department</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.department} onChange={(e) => setUserForm({ ...userForm, department: e.target.value })} />
-                </div>
-                <div>
-                  <label className="text-sm text-gray-400">Semester</label>
-                  <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.semester} onChange={(e) => setUserForm({ ...userForm, semester: e.target.value })} />
-                </div>
-              </div>
-              <div className="mt-6 flex justify-end gap-2">
-                <button onClick={() => setUserModal({ open: false, mode: 'add' })} className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">Cancel</button>
-                <button disabled={savingUser} onClick={saveUser} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg disabled:opacity-50">{savingUser ? 'Saving...' : 'Save'}</button>
-              </div>
-
-              {userModal.mode === 'edit' && userForm.role === 'course_manager' && (
+              {detailsModal.data.user.role === 'job_instructor' && (
                 <div className="mt-8 border-t border-gray-700 pt-6">
-                  <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-indigo-400" />
-                    Assigned Courses
-                  </h4>
-                  {/* We need to get assignedCourses from detailsModal data if available or just inform user to view details */}
-                  <p className="text-gray-400 text-sm mb-4">View assigned courses in the "View Details" (eye icon) modal for a full course breakdown.</p>
+                  <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                    <Briefcase className="w-5 h-5 text-purple-400" />
+                    Posted Jobs ({detailsModal.data.postedJobs?.length || 0})
+                  </h3>
+                  {detailsModal.data.postedJobs?.length === 0 ? (
+                    <div className="p-4 bg-gray-700/20 border border-dashed border-gray-600 rounded-xl text-gray-400 text-center">
+                      No jobs posted by this instructor.
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-3">
+                      {detailsModal.data.postedJobs.map((job, idx) => (
+                        <div key={idx} className="p-4 bg-purple-500/5 border border-purple-500/20 rounded-xl flex items-center justify-between hover:bg-purple-500/10 transition-colors">
+                          <div className="flex items-center gap-4">
+                            <div className="p-2 bg-purple-500/20 rounded-lg">
+                              <Briefcase className="w-4 h-4 text-purple-400" />
+                            </div>
+                            <div>
+                              <p className="text-white font-semibold">{job.title}</p>
+                              <p className="text-gray-400 text-xs mt-0.5">{job.company || job.organization} • {job.location} • {job.type}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4 text-right">
+                            <div>
+                              <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-bold ${job.status === 'Active' || job.status === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                                {job.status}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => window.open(`/admin/jobs?edit=${job._id}`, '_blank')}
+                                className="p-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg transition-colors border border-blue-500/20"
+                                title="Edit Job"
+                              >
+                                <Pencil className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {detailsModal.data.user.role === 'hackathon_instructor' && (
+                <div className="mt-8 border-t border-gray-700 pt-6">
+                  <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                    <Trophy className="w-5 h-5 text-rose-400" />
+                    Posted Hackathons ({detailsModal.data.postedHackathons?.length || 0})
+                  </h3>
+                  {detailsModal.data.postedHackathons?.length === 0 ? (
+                    <div className="p-4 bg-gray-700/20 border border-dashed border-gray-600 rounded-xl text-gray-400 text-center">
+                      No hackathons posted by this lead.
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-3">
+                      {detailsModal.data.postedHackathons.map((hack, idx) => (
+                        <div key={idx} className="p-4 bg-rose-500/5 border border-rose-500/20 rounded-xl flex items-center justify-between hover:bg-rose-500/10 transition-colors">
+                          <div className="flex items-center gap-4">
+                            <div className="p-2 bg-rose-500/20 rounded-lg">
+                              <Trophy className="w-4 h-4 text-rose-400" />
+                            </div>
+                            <div>
+                              <p className="text-white font-semibold">{hack.title}</p>
+                              <p className="text-gray-400 text-xs mt-0.5">{hack.organizer} • {hack.location} • {hack.mode}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4 text-right">
+                            <div>
+                              <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-bold ${hack.status === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                                {hack.status}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => window.open(`/admin/hackathons?edit=${hack._id}`, '_blank')}
+                                className="p-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg transition-colors border border-blue-500/20"
+                                title="Edit Hackathon"
+                              >
+                                <Pencil className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           </div>
         </div>
       )}
-    </div>
+
+      {/* JSON Modal */}
+      {
+        jsonModal && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-800 rounded-2xl border border-gray-700 max-w-5xl w-full max-h-[90vh] overflow-hidden">
+              <div className="sticky top-0 bg-gray-800 border-b border-gray-700 p-4 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-white">Users JSON (page {page} of {pages}, total {total})</h3>
+                <button
+                  onClick={() => setJsonModal(false)}
+                  className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-lg text-white"
+                >
+                  Close
+                </button>
+              </div>
+              <div className="p-4 overflow-auto">
+                <pre className="text-sm text-gray-200 whitespace-pre-wrap">
+                  {JSON.stringify({ users, pagination: { page, pages, total, limit } }, null, 2)}
+                </pre>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      {/* Add/Edit User Modal */}
+      {
+        userModal.open && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-800 rounded-2xl border border-gray-700 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-gray-800 border-b border-gray-700 p-4 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-white">{userModal.mode === 'add' ? 'Add User' : 'Edit User'}</h3>
+                <button
+                  onClick={() => setUserModal({ open: false, mode: 'add' })}
+                  className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-lg text-white"
+                >
+                  Close
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm text-gray-400">Name</label>
+                    <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.name} onChange={(e) => setUserForm({ ...userForm, name: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-400">Email</label>
+                    <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.email} onChange={(e) => setUserForm({ ...userForm, email: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-400">Password {userModal.mode === 'edit' && <span className="text-gray-400">(leave blank to keep)</span>}</label>
+                    <input type="password" className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.password} onChange={(e) => setUserForm({ ...userForm, password: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-400">Role</label>
+                    <select className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.role} onChange={(e) => setUserForm({ ...userForm, role: e.target.value })}>
+                      <option value="student">Student</option>
+                      <option value="faculty">Faculty</option>
+                      <option value="course_manager">Instructor</option>
+                      <option value="job_instructor">Job Partner</option>
+                      <option value="hackathon_instructor">Hackathon Lead</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input id="isAdmin" type="checkbox" checked={!!userForm.isAdmin} onChange={(e) => setUserForm({ ...userForm, isAdmin: e.target.checked })} />
+                    <label htmlFor="isAdmin" className="text-sm text-gray-300">Is Admin</label>
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-400">Phone</label>
+                    <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.phone} onChange={(e) => setUserForm({ ...userForm, phone: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-400">University</label>
+                    <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.university} onChange={(e) => setUserForm({ ...userForm, university: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-400">Department</label>
+                    <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.department} onChange={(e) => setUserForm({ ...userForm, department: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-400">Semester</label>
+                    <input className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" value={userForm.semester} onChange={(e) => setUserForm({ ...userForm, semester: e.target.value })} />
+                  </div>
+                </div>
+                <div className="mt-6 flex justify-end gap-2">
+                  <button onClick={() => setUserModal({ open: false, mode: 'add' })} className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">Cancel</button>
+                  <button disabled={savingUser} onClick={saveUser} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg disabled:opacity-50">{savingUser ? 'Saving...' : 'Save'}</button>
+                </div>
+
+                {userModal.mode === 'edit' && userForm.role === 'course_manager' && (
+                  <div className="mt-8 border-t border-gray-700 pt-6">
+                    <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
+                      <BookOpen className="w-5 h-5 text-indigo-400" />
+                      Assigned Courses
+                    </h4>
+                    {/* We need to get assignedCourses from detailsModal data if available or just inform user to view details */}
+                    <p className="text-gray-400 text-sm mb-4">View assigned courses in the "View Details" (eye icon) modal for a full course breakdown.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </div >
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, Lock, Eye, EyeOff, Shield, GraduationCap, Users, BookOpen, ArrowRight, BarChart } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Shield, GraduationCap, Users, BookOpen, ArrowRight, BarChart, Briefcase, Trophy } from "lucide-react";
 import { toast } from 'react-hot-toast';
 import { adminAuthAPI } from '../../services/adminApi';
 
@@ -16,6 +16,10 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
         navigate('/admin/dashboard');
       } else if (role === 'course_manager') {
         navigate('/instructor/dashboard');
+      } else if (role === 'job_instructor') {
+        navigate('/job-instructor/dashboard');
+      } else if (role === 'hackathon_instructor') {
+        navigate('/hackathon-instructor/dashboard');
       }
     }
   }, [navigate]);
@@ -60,6 +64,10 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
           navigate('/admin/dashboard');
         } else if (admin.role === 'course_manager') {
           navigate('/instructor/dashboard');
+        } else if (admin.role === 'job_instructor') {
+          navigate('/job-instructor/dashboard');
+        } else if (admin.role === 'hackathon_instructor') {
+          navigate('/hackathon-instructor/dashboard');
         }
       }
     } catch (error) {
@@ -207,11 +215,11 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
             </div>
 
             {/* Role Toggle */}
-            <div className="flex bg-gray-800/50 rounded-xl p-1 mb-6">
+            <div className="flex bg-gray-800/50 rounded-xl p-1 mb-6 gap-1">
               <button
                 type="button"
                 onClick={() => setLoginRole('admin')}
-                className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${loginRole === 'admin'
+                className={`flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1 ${loginRole === 'admin'
                   ? 'bg-slate-700 text-white shadow-lg'
                   : 'text-gray-400 hover:text-white'
                   }`}
@@ -222,13 +230,35 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
               <button
                 type="button"
                 onClick={() => setLoginRole('course_manager')}
-                className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${loginRole === 'course_manager'
+                className={`flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1 ${loginRole === 'course_manager'
                   ? 'bg-blue-600 text-white shadow-lg'
                   : 'text-gray-400 hover:text-white'
                   }`}
               >
                 <GraduationCap className="w-4 h-4" />
-                Instructor
+                Course Mgr
+              </button>
+              <button
+                type="button"
+                onClick={() => setLoginRole('job_instructor')}
+                className={`flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1 ${loginRole === 'job_instructor'
+                  ? 'bg-purple-600 text-white shadow-lg'
+                  : 'text-gray-400 hover:text-white'
+                  }`}
+              >
+                <Briefcase className="w-4 h-4" />
+                Job Inst
+              </button>
+              <button
+                type="button"
+                onClick={() => setLoginRole('hackathon_instructor')}
+                className={`flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1 ${loginRole === 'hackathon_instructor'
+                  ? 'bg-rose-600 text-white shadow-lg'
+                  : 'text-gray-400 hover:text-white'
+                  }`}
+              >
+                <Trophy className="w-4 h-4" />
+                Hack Inst
               </button>
             </div>
 

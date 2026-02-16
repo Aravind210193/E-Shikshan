@@ -12,6 +12,10 @@ const HackathonRegistrationSchema = new mongoose.Schema(
       ref: 'AdminHackathon',
       required: true,
     },
+    instructor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Admin',
+    },
     // User details at registration
     userDetails: {
       name: { type: String, required: true },
@@ -40,7 +44,7 @@ const HackathonRegistrationSchema = new mongoose.Schema(
     // Status
     status: {
       type: String,
-      enum: ['pending', 'approved', 'rejected', 'waitlisted'],
+      enum: ['pending', 'approved', 'rejected', 'waitlisted', 'shortlisted', 'further_round'],
       default: 'pending',
     },
     submittedAt: { type: Date, default: Date.now },

@@ -13,6 +13,9 @@ exports.getAll = async (req, res) => {
       ];
     }
     if (status) query.status = status;
+    if (req.admin.role === 'hackathon_instructor') {
+      query.createdBy = req.admin.id;
+    }
 
     const [items, total] = await Promise.all([
       AdminHackathon.find(query)
@@ -69,10 +72,14 @@ exports.remove = async (req, res) => {
 
 exports.stats = async (req, res) => {
   try {
-    const total = await AdminHackathon.countDocuments();
-    const upcoming = await AdminHackathon.countDocuments({ status: 'upcoming' });
-    const active = await AdminHackathon.countDocuments({ status: 'active' });
-    const closed = await AdminHackathon.countDocuments({ status: 'closed' });
+    const query = {};
+    if (req.admin.role === 'hackathon_instructor') {
+      query.createdBy = req.admin.id;
+    }
+    const total = await AdminHackathon.countDocuments(query);
+    const upcoming = await AdminHackathon.countDocuments({ ...query, status: 'upcoming' });
+    const active = await AdminHackathon.countDocuments({ ...query, status: 'active' });
+    const closed = await AdminHackathon.countDocuments({ ...query, status: 'closed' });
     res.json({ success: true, data: { total, upcoming, active, closed } });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });

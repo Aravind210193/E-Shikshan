@@ -63,6 +63,11 @@ const adminJobSchema = new mongoose.Schema({
   benefits: [{ type: String }],
   howto: [{ type: String }],
   skills: [{ type: String }],
+  postedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin',
+    required: true,
+  },
 }, {
   timestamps: true,
 });

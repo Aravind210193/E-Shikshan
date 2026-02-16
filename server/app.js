@@ -107,11 +107,13 @@ const roadmapRoutes = require('./src/routes/roadmapRoutes');
 const notificationRoutes = require('./src/routes/notificationRoutes');
 const doubtRoutes = require('./src/routes/doubtRoutes');
 const projectSubmissionRoutes = require('./src/routes/projectSubmissionRoutes');
+const jobApplicationRoutes = require('./src/routes/jobApplicationRoutes');
 
 app.use('/api/roadmaps', roadmapRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/doubts', doubtRoutes);
 app.use('/api/project-submissions', projectSubmissionRoutes);
+app.use('/api/job-applications', jobApplicationRoutes);
 
 // Content routes  
 app.use('/api/branches', branchRoutes);

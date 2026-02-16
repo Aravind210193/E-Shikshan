@@ -102,6 +102,11 @@ export const achievementsAPI = {
 export const jobsAPI = {
   getAll: (params) => api.get('/jobs', { params }),
   getById: (id) => api.get(`/jobs/${id}`),
+  apply: (id, data) => api.post(`/job-applications/${id}/apply`, data),
+  getMyApplications: () => api.get('/job-applications/my-applications'),
+  // Admin/Instructor APIs
+  getInstructorApplications: () => api.get('/job-applications/admin/applications'),
+  updateApplicationStatus: (id, data) => api.put(`/job-applications/admin/${id}/status`, data),
 };
 
 export const hackathonsAPI = {
@@ -114,6 +119,9 @@ export const hackathonRegistrationAPI = {
   getMyRegistrations: () => api.get('/hackathon-registrations/my-registrations'),
   checkRegistration: (hackathonId) => api.get(`/hackathon-registrations/${hackathonId}/check`),
   cancelRegistration: (hackathonId) => api.delete(`/hackathon-registrations/${hackathonId}/cancel`),
+  getInstructorRegistrations: () => api.get('/hackathon-registrations/admin/registrations'),
+  // Admin/Instructor APIs
+  updateRegistrationStatus: (id, data) => api.put(`/hackathon-registrations/admin/${id}/status`, data),
 };
 
 export const doubtsAPI = {

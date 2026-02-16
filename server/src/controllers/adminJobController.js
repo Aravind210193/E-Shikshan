@@ -19,6 +19,11 @@ exports.getAllJobs = async (req, res) => {
     if (type && type !== 'all') adminQuery.type = type;
     if (status && status !== 'all') adminQuery.status = status;
 
+    // Instructor filtering
+    if (req.admin.role === 'job_instructor') {
+      adminQuery.postedBy = req.admin.id;
+    }
+
     // Build filters for public Job (map fields accordingly)
     const publicQuery = {};
     if (search) {
@@ -28,8 +33,9 @@ exports.getAllJobs = async (req, res) => {
       ];
     }
     if (type && type !== 'all') publicQuery.tag = type; // map tag to type
-    // status filter: only include public jobs when status is 'all' or 'Active'
-    const includePublic = !status || status === 'all' || status === 'Active';
+    // status filter: only include public jobs when status is 'all' or 'Active', AND not an instructor
+    const isInstructor = req.admin.role === 'job_instructor';
+    const includePublic = !isInstructor && (!status || status === 'all' || status === 'Active');
 
     const [adminJobs, publicJobs] = await Promise.all([
       AdminJob.find(adminQuery).sort({ createdAt: -1 }),
@@ -212,12 +218,18 @@ exports.deleteJob = async (req, res) => {
 // @access  Private
 exports.getJobStats = async (req, res) => {
   try {
-    const total = await AdminJob.countDocuments();
-    const active = await AdminJob.countDocuments({ status: 'Active' });
-    const pending = await AdminJob.countDocuments({ status: 'Pending' });
-    const closed = await AdminJob.countDocuments({ status: 'Closed' });
+    const query = {};
+    if (req.admin.role === 'job_instructor') {
+      query.postedBy = req.admin.id;
+    }
+
+    const total = await AdminJob.countDocuments(query);
+    const active = await AdminJob.countDocuments({ ...query, status: 'Active' });
+    const pending = await AdminJob.countDocuments({ ...query, status: 'Pending' });
+    const closed = await AdminJob.countDocuments({ ...query, status: 'Closed' });
 
     const totalApplicants = await AdminJob.aggregate([
+      { $match: query },
       { $group: { _id: null, total: { $sum: '$applicants' } } }
     ]);
 

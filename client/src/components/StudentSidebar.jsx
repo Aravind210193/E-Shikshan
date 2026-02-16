@@ -9,7 +9,8 @@ import {
     LogOut,
     User,
     Trophy,
-    Home
+    Home,
+    Briefcase
 } from 'lucide-react';
 
 const StudentSidebar = () => {
@@ -18,6 +19,7 @@ const StudentSidebar = () => {
         { path: '/dashboard', icon: Layout, label: 'Overview', exact: true },
 
         { path: '/dashboard/doubts', icon: MessageSquare, label: 'Doubts' },
+        { path: '/dashboard/job-applications', icon: Briefcase, label: 'Job Applications' },
         { path: '/dashboard/achievements', icon: Trophy, label: 'Achievements' },
         { path: '/profile', icon: User, label: 'Profile' },
         { path: '/settings', icon: Settings, label: 'Settings' },
