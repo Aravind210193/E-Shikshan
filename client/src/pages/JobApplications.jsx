@@ -11,8 +11,10 @@ const JobApplications = () => {
     const fetchApplications = async () => {
         try {
             setLoading(true);
-            const { data } = await jobsAPI.getMyApplications();
-            setApplications(data?.applications || []);
+            const response = await jobsAPI.getMyApplications();
+            // Check if response.data is the array directly or inside a property
+            const apps = Array.isArray(response.data) ? response.data : (response.data?.applications || []);
+            setApplications(apps);
         } catch (error) {
             console.error('Fetch applications error:', error);
             toast.error('Failed to load applications');

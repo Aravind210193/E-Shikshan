@@ -345,6 +345,7 @@ exports.getStudentSubmissions = async (req, res) => {
 
         const submissions = await ProjectSubmission.find({ student: studentId })
             .populate('course', 'title instructor')
+            .populate('roadmap', 'title')
             .sort('-createdAt');
 
         res.json({

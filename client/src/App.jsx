@@ -57,6 +57,7 @@ import AdminSubmissions from './pages/Admin/AdminSubmissions'
 import InstructorStudents from './pages/Admin/InstructorStudents'
 import StudentDashboard from './pages/StudentDashboard'
 import StudentDoubts from './pages/StudentDoubts'
+import StudentRoadmaps from './pages/StudentRoadmaps'
 import JobApplications from './pages/JobApplications'
 import StudentSidebar from './components/StudentSidebar'
 
@@ -174,17 +175,18 @@ const App = () => {
           </ProtectedRoute>
         } />
 
-        {/* Student Portal Routes */}
+
         <Route path='/dashboard/*' element={
           <ProtectedRoute isLoggedIn={isLoggedIn}>
             <div className="flex bg-[#0f111a] min-h-screen">
-              <aside className="hidden lg:block">
+              <aside className="block lg:block">
                 <StudentSidebar />
               </aside>
               <main className="flex-1 overflow-y-auto">
                 <Routes>
                   <Route path="/" element={<StudentDashboard />} />
                   <Route path="doubts" element={<StudentDoubts />} />
+                  <Route path="roadmaps" element={<StudentRoadmaps />} />
                   <Route path="job-applications" element={<JobApplications />} />
                 </Routes>
               </main>
