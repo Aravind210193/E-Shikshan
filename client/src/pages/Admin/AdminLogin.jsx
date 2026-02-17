@@ -22,6 +22,8 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
         navigate('/hackathon-instructor/dashboard');
       } else if (role === 'roadmap_instructor') {
         navigate('/roadmap-instructor/dashboard');
+      } else if (role === 'resume_instructor') {
+        navigate('/resume-instructor/dashboard');
       }
     }
   }, [navigate]);
@@ -30,7 +32,7 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loginRole, setLoginRole] = useState("admin"); // 'admin' or 'instructor'
-  const instructorRoles = ['course_manager', 'job_instructor', 'hackathon_instructor', 'roadmap_instructor'];
+  const instructorRoles = ['course_manager', 'job_instructor', 'hackathon_instructor', 'roadmap_instructor', 'resume_instructor'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,6 +75,8 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
           navigate('/hackathon-instructor/dashboard');
         } else if (admin.role === 'roadmap_instructor') {
           navigate('/roadmap-instructor/dashboard');
+        } else if (admin.role === 'resume_instructor') {
+          navigate('/resume-instructor/dashboard');
         }
       }
     } catch (error) {

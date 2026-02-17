@@ -17,12 +17,12 @@ const adminSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'course_manager', 'job_instructor', 'hackathon_instructor', 'roadmap_instructor'],
+    enum: ['admin', 'course_manager', 'job_instructor', 'hackathon_instructor', 'roadmap_instructor', 'resume_instructor'],
     default: 'job_instructor',
   },
   permissions: [{
     type: String,
-    enum: ['all', 'users', 'courses', 'jobs', 'hackathons', 'roadmaps', 'content', 'resumes', 'settings'],
+    enum: ['all', 'users', 'courses', 'jobs', 'hackathons', 'roadmaps', 'content', 'resumes', 'settings', 'admin_users'],
   }],
   isActive: {
     type: Boolean,

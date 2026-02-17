@@ -19,6 +19,21 @@ const ResumeTemplateSchema = new mongoose.Schema(
     sections: { type: [SectionSchema], default: [] },
     tags: { type: [String], default: [] },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin' },
+    // New fields to match frontend
+    category: { type: String }, // e.g. 'faang', 'student'
+    color: { type: String }, // e.g. 'rose', 'sky'
+    preview: { type: String }, // e.g. '⭐'
+    recommended: { type: Boolean, default: false },
+    subTemplates: {
+      type: [{
+        id: String,
+        name: String,
+        description: String,
+        colorScheme: String,
+        features: [String]
+      }],
+      default: []
+    }
   },
   { timestamps: true }
 );

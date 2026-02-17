@@ -27,13 +27,15 @@ const AdminDashboard = () => {
   const isJobInstructor = role === 'job_instructor';
   const isHackathonInstructor = role === 'hackathon_instructor';
   const isRoadmapInstructor = role === 'roadmap_instructor';
-  const isLimitedAdmin = isManager || isJobInstructor || isHackathonInstructor || isRoadmapInstructor;
+  const isResumeInstructor = role === 'resume_instructor';
+  const isLimitedAdmin = isManager || isJobInstructor || isHackathonInstructor || isRoadmapInstructor || isResumeInstructor;
 
   let base = '/admin';
   if (isManager) base = '/instructor';
   else if (isJobInstructor) base = '/job-instructor';
   else if (isHackathonInstructor) base = '/hackathon-instructor';
   else if (isRoadmapInstructor) base = '/roadmap-instructor';
+  else if (isResumeInstructor) base = '/resume-instructor';
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -388,6 +390,33 @@ const AdminDashboard = () => {
               <div>
                 <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Project Submissions</p>
                 <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.projectStats?.total || 0}</h3>
+              </div>
+            </div>
+          </>
+        ) : isResumeInstructor ? (
+          <>
+            <div
+              onClick={() => navigate(`${base}/resumes`)}
+              className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-pointer"
+            >
+              <div className="p-3 bg-indigo-500/10 rounded-lg group-hover:scale-110 transition-transform">
+                <FileText className="w-6 h-6 text-indigo-500" />
+              </div>
+              <div>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Total Templates</p>
+                <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.total || 0}</h3>
+              </div>
+            </div>
+            <div
+              onClick={() => navigate(`${base}/resumes`)}
+              className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-5 shadow-lg flex items-center gap-4 group hover:border-indigo-500/50 transition-all cursor-pointer"
+            >
+              <div className="p-3 bg-green-500/10 rounded-lg group-hover:scale-110 transition-transform">
+                <ShieldCheck className="w-6 h-6 text-green-500" />
+              </div>
+              <div>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Active Templates</p>
+                <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.active || 0}</h3>
               </div>
             </div>
           </>

@@ -187,9 +187,18 @@ const getUserById = async (req, res) => {
       // If roadmap instructor, fetch created roadmaps
       let createdRoadmaps = [];
       if (admin.role === 'roadmap_instructor') {
-        // Assuming roadmaps also have createdBy field
+        const AdminRoadmap = require('../models/AdminRoadmap');
         createdRoadmaps = await AdminRoadmap.find({ createdBy: admin._id })
           .select('title category difficulty status duration');
+      }
+
+      // If resume instructor, fetch created templates
+      let createdTemplates = [];
+      if (admin.role === 'resume_instructor') {
+        const AdminResume = require('../models/AdminResume');
+        // Fetch ALL templates as "Managed Templates" for the resume instructor
+        createdTemplates = await AdminResume.find({})
+          .select('name category isActive tags preview');
       }
 
       const normalized = {
@@ -202,7 +211,7 @@ const getUserById = async (req, res) => {
         createdAt: admin.createdAt,
         updatedAt: admin.updatedAt,
       };
-      return res.json({ user: normalized, enrollments: [], assignedCourses, postedJobs, postedHackathons, createdRoadmaps });
+      return res.json({ user: normalized, enrollments: [], assignedCourses, postedJobs, postedHackathons, createdRoadmaps, createdTemplates });
     }
 
     return res.status(404).json({ message: 'User not found' });
@@ -640,13 +649,15 @@ const getDashboardStats = async (req, res) => {
     const isJobInstructor = adminRole === 'job_instructor';
     const isHackathonInstructor = adminRole === 'hackathon_instructor';
     const isRoadmapInstructor = adminRole === 'roadmap_instructor';
-    const isLimitedAdmin = isCourseManager || isJobInstructor || isHackathonInstructor || isRoadmapInstructor;
+    const isResumeInstructor = adminRole === 'resume_instructor';
+    const isLimitedAdmin = isCourseManager || isJobInstructor || isHackathonInstructor || isRoadmapInstructor || isResumeInstructor;
 
     // Queries
     const courseQuery = isCourseManager ? { instructorEmail: req.admin.email } : {};
     const jobQuery = isJobInstructor ? { postedBy: req.admin._id } : {};
     const hackathonQuery = isHackathonInstructor ? { createdBy: req.admin._id } : {};
-    // Roadmap query: If roadmap_instructor, ideally we filter by createdBy. 
+    const resumeQuery = isResumeInstructor ? { createdBy: req.admin._id } : {};
+    // Roadmap query: If roadmap_instructor, ideally we filter by createdBy.
     // Assuming we will add createdBy to Roadmaps or they manage all roadmaps.
     // For now, if they are roadmap_instructor, they see all roadmaps or their own if schema supports it.
     // We already checked schema has createdBy.
@@ -662,7 +673,7 @@ const getDashboardStats = async (req, res) => {
       const uniqueStudentIds = await Enrollment.distinct('userId', { courseId: { $in: courseIds } });
       totalUsers = uniqueStudentIds.length;
       totalStudents = uniqueStudentIds.length;
-    } else if (isJobInstructor || isHackathonInstructor || isRoadmapInstructor) {
+    } else if (isJobInstructor || isHackathonInstructor || isRoadmapInstructor || isResumeInstructor) {
       // Estimate based on applicants? For now just show 0 or maybe all users is fine?
       // Let's show all users for now as they might want to see potential pool
       totalUsers = await User.countDocuments();
@@ -899,6 +910,14 @@ const getDashboardStats = async (req, res) => {
       }));
     }
 
+    // Resume Templates - Show ALL for everyone (instructor manages their own but sees all)
+    let resumeStats = { total: 0, active: 0 };
+    const AdminResume = require('../models/AdminResume');
+
+    // Simple global stats
+    resumeStats.total = await AdminResume.countDocuments({});
+    resumeStats.active = await AdminResume.countDocuments({ isActive: true });
+
     res.json({
       stats: {
         apiVersion: "v2.1-roles-fixed",
@@ -924,7 +943,9 @@ const getDashboardStats = async (req, res) => {
         publishedContent,
         doubtsStats,
         projectStats,
-        assignmentStats
+        assignmentStats,
+        total: resumeStats.total,
+        active: resumeStats.active
       },
       topCourses,
       coursesByCategory,
@@ -972,7 +993,7 @@ module.exports = {
       }
 
       // Determine which collection to use based on role
-      const adminRoles = ['admin', 'course_manager', 'job_instructor', 'hackathon_instructor'];
+      const adminRoles = ['admin', 'course_manager', 'job_instructor', 'hackathon_instructor', 'roadmap_instructor', 'resume_instructor'];
       const isSystemAdmin = adminRoles.includes(role);
 
       if (isSystemAdmin) {
@@ -987,6 +1008,8 @@ module.exports = {
         else if (role === 'course_manager') permissions = ['courses', 'content'];
         else if (role === 'job_instructor') permissions = ['jobs'];
         else if (role === 'hackathon_instructor') permissions = ['hackathons'];
+        else if (role === 'roadmap_instructor') permissions = ['roadmaps'];
+        else if (role === 'resume_instructor') permissions = ['resumes'];
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -1070,6 +1093,8 @@ module.exports = {
           else if (updates.role === 'course_manager') user.permissions = ['courses', 'content'];
           else if (updates.role === 'job_instructor') user.permissions = ['jobs'];
           else if (updates.role === 'hackathon_instructor') user.permissions = ['hackathons'];
+          else if (updates.role === 'roadmap_instructor') user.permissions = ['roadmaps'];
+          else if (updates.role === 'resume_instructor') user.permissions = ['resumes'];
         }
 
         if (updates.password) {

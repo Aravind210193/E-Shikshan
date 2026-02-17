@@ -25,7 +25,13 @@ const adminAuth = async (req, res, next) => {
 
 const checkPermission = (requiredPermission) => {
   return (req, res, next) => {
+    // Super admin or full permission
     if (req.admin.role === 'admin' || req.admin.permissions.includes('all')) {
+      return next();
+    }
+
+    // Explicit role checks mapping
+    if (requiredPermission === 'resumes' && req.admin.role === 'resume_instructor') {
       return next();
     }
 

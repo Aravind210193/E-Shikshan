@@ -101,6 +101,7 @@ app.use('/api/hackathons', hackathonRoutes);
 app.use('/api/hackathon-registrations', hackathonRegistrationRoutes);
 app.use('/api/webhooks', webhookRoutes);
 app.use('/api/gamification', gamificationRoutes);
+app.use('/api/resume-templates', require('./src/routes/resumeTemplateRoutes'));
 
 // New Feature Routes
 const roadmapRoutes = require('./src/routes/roadmapRoutes');

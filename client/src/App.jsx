@@ -89,6 +89,7 @@ const App = () => {
     location.pathname.startsWith('/job-instructor') ||
     location.pathname.startsWith('/hackathon-instructor') ||
     location.pathname.startsWith('/roadmap-instructor') ||
+    location.pathname.startsWith('/resume-instructor') ||
     location.pathname.startsWith('/dashboard');
   return (
     <>
@@ -315,6 +316,24 @@ const App = () => {
                   <Route path='submissions' element={<AdminSubmissions />} />
                   <Route path='settings' element={<AdminSettings />} />
                   <Route path='*' element={<Navigate to='/roadmap-instructor/dashboard' replace />} />
+                </Routes>
+              </AdminLayout>
+            ) : (
+              <Navigate to='/admin' replace />
+            )
+          }
+        />
+        {/* Resume Instructor Routes */}
+        <Route
+          path='/resume-instructor/*'
+          element={
+            isAdminLoggedIn && sessionStorage.getItem('adminRole') === 'resume_instructor' ? (
+              <AdminLayout setIsAdminLoggedIn={setIsAdminLoggedIn}>
+                <Routes>
+                  <Route path='dashboard' element={<AdminDashboard />} />
+                  <Route path='resumes' element={<AdminResumes />} />
+                  <Route path='settings' element={<AdminSettings />} />
+                  <Route path='*' element={<Navigate to='/resume-instructor/dashboard' replace />} />
                 </Routes>
               </AdminLayout>
             ) : (

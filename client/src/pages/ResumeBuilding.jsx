@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  User, Mail, Phone, MapPin, Briefcase, GraduationCap, Award, 
+import {
+  User, Mail, Phone, MapPin, Briefcase, GraduationCap, Award,
   Code, Languages, Plus, Trash2, Download, Eye, EyeOff, FileText,
   Linkedin, Github, Globe, Calendar, Building, X, Check, Upload,
   ArrowRight, ArrowLeft, CheckCircle, Layout, Palette, Sparkles, Save
 } from 'lucide-react';
-import { authAPI } from '../services/api';
+import { authAPI, resumeTemplateAPI } from '../services/api';
 import toast from 'react-hot-toast';
 
 const ResumeBuilding = () => {
@@ -122,7 +122,7 @@ const ResumeBuilding = () => {
       setPersonalInfo({ ...personalInfo, summary: randomSummary });
     } else if (type === 'experienceDescription' && field !== null) {
       const randomDesc = aiSuggestions.experienceDescriptions[Math.floor(Math.random() * aiSuggestions.experienceDescriptions.length)];
-      const updatedExperience = experience.map(exp => 
+      const updatedExperience = experience.map(exp =>
         exp.id === field ? { ...exp, description: randomDesc } : exp
       );
       setExperience(updatedExperience);
@@ -132,7 +132,7 @@ const ResumeBuilding = () => {
       setSkills({ ...skills, [field]: randomSkills });
     } else if (type === 'projectDescription' && field !== null) {
       const randomDesc = aiSuggestions.projectDescriptions[Math.floor(Math.random() * aiSuggestions.projectDescriptions.length)];
-      const updatedProjects = projects.map(proj => 
+      const updatedProjects = projects.map(proj =>
         proj.id === field ? { ...proj, description: randomDesc } : proj
       );
       setProjects(updatedProjects);
@@ -149,199 +149,24 @@ const ResumeBuilding = () => {
   ];
 
   // Templates with sub-templates
-  const templates = [
-    { 
-      id: 'faang', 
-      name: 'FAANG Optimized', 
-      color: 'rose',
-      description: '⭐ ATS-friendly templates accepted by Google, Microsoft, Amazon, Meta & top tech companies',
-      preview: '⭐',
-      recommended: true,
-      subTemplates: [
-        { 
-          id: 'faang-1', 
-          name: 'Google Standard', 
-          description: 'ATS-optimized, clean layout preferred by Google recruiters. Single-column, quantified achievements.', 
-          colorScheme: 'rose',
-          features: ['ATS-Friendly', 'Quantifiable Metrics', 'Achievement-Focused', 'Simple Format']
-        },
-        { 
-          id: 'faang-2', 
-          name: 'Microsoft Professional', 
-          description: 'Classic format with emphasis on technical skills and impact metrics.', 
-          colorScheme: 'blue',
-          features: ['Clean Design', 'Skills Matrix', 'Impact-Driven', 'Tech-Focused']
-        },
-        { 
-          id: 'faang-3', 
-          name: 'Meta Modern', 
-          description: 'Contemporary layout highlighting innovation and product impact.', 
-          colorScheme: 'indigo',
-          features: ['Modern Layout', 'Product-Focused', 'Innovation Highlights', 'Results-Oriented']
-        },
-        { 
-          id: 'faang-4', 
-          name: 'Amazon Leadership', 
-          description: 'Leadership principles focused with STAR method accomplishments.', 
-          colorScheme: 'amber',
-          features: ['Leadership Principles', 'STAR Format', 'Metrics-Heavy', 'Action-Focused']
+  const [templates, setTemplates] = useState([]);
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const response = await resumeTemplateAPI.getAll();
+        if (response.data.success) {
+          setTemplates(response.data.data);
         }
-      ]
-    },
-    { 
-      id: 'student', 
-      name: 'Student Classic', 
-      color: 'sky',
-      description: '🎓 Perfect for students, freshers, and entry-level positions. Clean, professional, and easy to fill.',
-      preview: '🎓',
-      recommended: true,
-      subTemplates: [
-        { 
-          id: 'student-1', 
-          name: 'College Classic', 
-          description: 'Clean and simple layout perfect for students and recent graduates. Emphasizes education and projects.', 
-          colorScheme: 'sky',
-          features: ['Education-Focused', 'Projects Highlighted', 'Clean Layout', 'Easy to Read']
-        },
-        { 
-          id: 'student-2', 
-          name: 'Internship Ready', 
-          description: 'Professional format ideal for internship applications. Highlights coursework and skills.', 
-          colorScheme: 'blue',
-          features: ['Internship-Friendly', 'Skills Showcase', 'Coursework Section', 'Modern Design']
-        },
-        { 
-          id: 'student-3', 
-          name: 'Fresher Professional', 
-          description: 'Entry-level friendly template with emphasis on academic achievements and certifications.', 
-          colorScheme: 'indigo',
-          features: ['Beginner-Friendly', 'Academic Focus', 'Certifications', 'Professional Look']
-        },
-        { 
-          id: 'student-4', 
-          name: 'Campus Placement', 
-          description: 'Optimized for campus recruitment drives. Clear sections for education, skills, and extracurriculars.', 
-          colorScheme: 'teal',
-          features: ['Campus-Optimized', 'Extracurriculars', 'Clear Sections', 'Professional Format']
-        }
-      ]
-    },
-    { 
-      id: 'modern', 
-      name: 'Modern Professional', 
-      color: 'blue',
-      description: 'Clean and modern designs with contemporary styling',
-      preview: '🔷',
-      subTemplates: [
-        { id: 'modern-1', name: 'Modern Classic', description: 'Two-column layout with blue accents', colorScheme: 'blue' },
-        { id: 'modern-2', name: 'Modern Elegant', description: 'Single column with gradient header', colorScheme: 'indigo' },
-        { id: 'modern-3', name: 'Modern Bold', description: 'Bold typography with sidebar', colorScheme: 'sky' },
-        { id: 'modern-4', name: 'Modern Minimal', description: 'Clean lines with plenty of white space', colorScheme: 'slate' }
-      ]
-    },
-    { 
-      id: 'professional', 
-      name: 'Classic Professional', 
-      color: 'slate',
-      description: 'Traditional formats perfect for corporate roles',
-      preview: '⬛',
-      subTemplates: [
-        { id: 'professional-1', name: 'Executive', description: 'Traditional single-column layout', colorScheme: 'slate' },
-        { id: 'professional-2', name: 'Corporate', description: 'Two-column with experience focus', colorScheme: 'gray' },
-        { id: 'professional-3', name: 'Business', description: 'Timeline-based layout', colorScheme: 'zinc' },
-        { id: 'professional-4', name: 'Formal', description: 'Classic academic style', colorScheme: 'neutral' }
-      ]
-    },
-    { 
-      id: 'creative', 
-      name: 'Creative Designer', 
-      color: 'purple',
-      description: 'Stand out with bold and creative styling',
-      preview: '🟣',
-      subTemplates: [
-        { id: 'creative-1', name: 'Designer Pro', description: 'Portfolio-style with visual elements', colorScheme: 'purple' },
-        { id: 'creative-2', name: 'Artistic', description: 'Unique layout with color blocks', colorScheme: 'violet' },
-        { id: 'creative-3', name: 'Vibrant', description: 'Eye-catching with bold colors', colorScheme: 'fuchsia' },
-        { id: 'creative-4', name: 'Innovative', description: 'Non-traditional structure', colorScheme: 'pink' }
-      ]
-    },
-    { 
-      id: 'minimal', 
-      name: 'Minimalist', 
-      color: 'gray',
-      description: 'Simple and elegant minimal designs',
-      preview: '⚪',
-      subTemplates: [
-        { id: 'minimal-1', name: 'Simple Clean', description: 'Ultra-minimal with focus on content', colorScheme: 'gray' },
-        { id: 'minimal-2', name: 'Elegant Lines', description: 'Minimal with subtle borders', colorScheme: 'stone' },
-        { id: 'minimal-3', name: 'Pure White', description: 'Maximum white space, minimal text', colorScheme: 'slate' },
-        { id: 'minimal-4', name: 'Refined', description: 'Sophisticated minimalism', colorScheme: 'zinc' }
-      ]
-    },
-    { 
-      id: 'executive', 
-      name: 'Executive', 
-      color: 'emerald',
-      description: 'Sophisticated designs for senior positions',
-      preview: '🟢',
-      subTemplates: [
-        { id: 'executive-1', name: 'Senior Leader', description: 'Professional with emphasis on achievements', colorScheme: 'emerald' },
-        { id: 'executive-2', name: 'C-Level', description: 'Executive summary focused', colorScheme: 'green' },
-        { id: 'executive-3', name: 'Director', description: 'Leadership-oriented layout', colorScheme: 'teal' },
-        { id: 'executive-4', name: 'VP Style', description: 'Strategic accomplishments focus', colorScheme: 'cyan' }
-      ]
-    },
-    { 
-      id: 'tech', 
-      name: 'Tech Specialist', 
-      color: 'cyan',
-      description: 'Perfect for developers and tech professionals',
-      preview: '🔵',
-      subTemplates: [
-        { id: 'tech-1', name: 'Developer', description: 'Code-like styling with monospace fonts', colorScheme: 'cyan' },
-        { id: 'tech-2', name: 'Engineer', description: 'Technical skills highlighted', colorScheme: 'blue' },
-        { id: 'tech-3', name: 'Data Scientist', description: 'Analytics and projects focus', colorScheme: 'indigo' },
-        { id: 'tech-4', name: 'Tech Lead', description: 'Technical leadership emphasis', colorScheme: 'sky' }
-      ]
-    },
-    { 
-      id: 'academic', 
-      name: 'Academic & Research', 
-      color: 'indigo',
-      description: 'Professional templates for academic positions, research roles, and scholarly applications',
-      preview: '📚',
-      subTemplates: [
-        { 
-          id: 'academic-1', 
-          name: 'Research Scholar', 
-          description: 'LaTeX-style academic CV with publications, conferences, and research focus', 
-          colorScheme: 'indigo',
-          features: ['Publications Section', 'Conference Presentations', 'Research Experience', 'Academic Format']
-        },
-        { 
-          id: 'academic-2', 
-          name: 'PhD Candidate', 
-          description: 'Comprehensive CV format for doctoral students with emphasis on research and teaching', 
-          colorScheme: 'violet',
-          features: ['Research Projects', 'Teaching Experience', 'Academic Achievements', 'Grant Applications']
-        },
-        { 
-          id: 'academic-3', 
-          name: 'Faculty Position', 
-          description: 'Professional academic CV for faculty applications with detailed publication list', 
-          colorScheme: 'purple',
-          features: ['Publications List', 'Grants & Funding', 'Committee Work', 'Service Activities']
-        },
-        { 
-          id: 'academic-4', 
-          name: 'Post-Doc Researcher', 
-          description: 'Research-focused CV highlighting publications, collaborations, and technical expertise', 
-          colorScheme: 'blue',
-          features: ['Research Impact', 'Collaborations', 'Technical Skills', 'Lab Experience']
-        }
-      ]
-    }
-  ];
+      } catch (error) {
+        console.error('Error loading templates:', error);
+        // Only show error if not already loaded (to avoid noise)
+        if (templates.length === 0) toast.error('Failed to load resume templates');
+      }
+    };
+
+    fetchTemplates();
+  }, []);
 
   const steps = [
     { number: 1, title: 'Upload/Create', icon: Upload },
@@ -490,7 +315,7 @@ const ResumeBuilding = () => {
   };
 
   const updateExperience = (id, field, value) => {
-    setExperience(experience.map(exp => 
+    setExperience(experience.map(exp =>
       exp.id === id ? { ...exp, [field]: value } : exp
     ));
   };
@@ -514,7 +339,7 @@ const ResumeBuilding = () => {
   };
 
   const updateEducation = (id, field, value) => {
-    setEducation(education.map(edu => 
+    setEducation(education.map(edu =>
       edu.id === id ? { ...edu, [field]: value } : edu
     ));
   };
@@ -552,7 +377,7 @@ const ResumeBuilding = () => {
   };
 
   const updateProject = (id, field, value) => {
-    setProjects(projects.map(proj => 
+    setProjects(projects.map(proj =>
       proj.id === id ? { ...proj, [field]: value } : proj
     ));
   };
@@ -572,7 +397,7 @@ const ResumeBuilding = () => {
   };
 
   const updateCertification = (id, field, value) => {
-    setCertifications(certifications.map(cert => 
+    setCertifications(certifications.map(cert =>
       cert.id === id ? { ...cert, [field]: value } : cert
     ));
   };
@@ -612,32 +437,32 @@ const ResumeBuilding = () => {
       const response = await authAPI.getResume();
       if (response.data.resume) {
         const savedResume = response.data.resume;
-        
+
         if (savedResume.personalInfo) setPersonalInfo(savedResume.personalInfo);
-        
+
         if (savedResume.experience && savedResume.experience.length > 0) {
           setExperience(savedResume.experience.map((exp, idx) => ({ ...exp, id: idx + 1 })));
         }
-        
+
         if (savedResume.education && savedResume.education.length > 0) {
           setEducation(savedResume.education.map((edu, idx) => ({ ...edu, id: idx + 1 })));
         }
-        
+
         if (savedResume.skills) setSkills(savedResume.skills);
-        
+
         if (savedResume.projects && savedResume.projects.length > 0) {
           setProjects(savedResume.projects.map((proj, idx) => ({ ...proj, id: idx + 1 })));
         }
-        
+
         if (savedResume.certifications && savedResume.certifications.length > 0) {
           setCertifications(savedResume.certifications.map((cert, idx) => ({ ...cert, id: idx + 1 })));
         }
-        
+
         if (savedResume.template) {
           setSelectedTemplate(savedResume.template.selectedTemplate);
           setSelectedSubTemplate(savedResume.template.selectedSubTemplate);
         }
-        
+
         toast.success('Loaded your saved resume!');
         setResumeLoaded(true);
       }
@@ -668,13 +493,13 @@ const ResumeBuilding = () => {
   // Resume Preview Component
   const ResumePreview = () => {
     const isAcademicTemplate = selectedTemplate === 'academic';
-    
+
     const getTemplateColors = () => {
       // Find the selected sub-template to get its color scheme
       const mainTemplate = templates.find(t => t.id === selectedTemplate);
       const subTemplate = mainTemplate?.subTemplates.find(st => st.id === selectedSubTemplate);
       const colorScheme = subTemplate?.colorScheme || 'blue';
-      
+
       // Color map for all possible color schemes
       const colorMap = {
         rose: { primary: 'bg-rose-600', secondary: 'bg-rose-50', text: 'text-rose-600', border: 'border-rose-200' },
@@ -696,7 +521,7 @@ const ResumeBuilding = () => {
         teal: { primary: 'bg-teal-600', secondary: 'bg-teal-50', text: 'text-teal-600', border: 'border-teal-200' },
         cyan: { primary: 'bg-cyan-600', secondary: 'bg-cyan-50', text: 'text-cyan-600', border: 'border-cyan-200' }
       };
-      
+
       return colorMap[colorScheme] || colorMap.blue;
     };
 
@@ -1781,25 +1606,22 @@ const ResumeBuilding = () => {
             const Icon = step.icon;
             const isActive = currentStep === step.number;
             const isCompleted = currentStep > step.number;
-            
+
             return (
               <React.Fragment key={step.number}>
                 <div className="flex flex-col items-center flex-1">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
-                    isCompleted ? 'bg-green-600' : isActive ? 'bg-blue-600' : 'bg-slate-700'
-                  }`}>
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${isCompleted ? 'bg-green-600' : isActive ? 'bg-blue-600' : 'bg-slate-700'
+                    }`}>
                     {isCompleted ? <CheckCircle size={24} /> : <Icon size={24} />}
                   </div>
-                  <p className={`text-sm mt-2 font-semibold ${
-                    isActive ? 'text-blue-400' : isCompleted ? 'text-green-400' : 'text-slate-400'
-                  }`}>
+                  <p className={`text-sm mt-2 font-semibold ${isActive ? 'text-blue-400' : isCompleted ? 'text-green-400' : 'text-slate-400'
+                    }`}>
                     {step.title}
                   </p>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className={`flex-1 h-1 mx-4 mt-[-20px] transition-all ${
-                    currentStep > step.number ? 'bg-green-600' : 'bg-slate-700'
-                  }`} />
+                  <div className={`flex-1 h-1 mx-4 mt-[-20px] transition-all ${currentStep > step.number ? 'bg-green-600' : 'bg-slate-700'
+                    }`} />
                 )}
               </React.Fragment>
             );
@@ -1832,9 +1654,8 @@ const ResumeBuilding = () => {
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`bg-slate-700 rounded-lg p-8 cursor-pointer border-2 transition-all ${
-                      uploadMethod === 'upload' ? 'border-blue-500 ring-4 ring-blue-500/30' : 'border-transparent hover:border-slate-600'
-                    }`}
+                    className={`bg-slate-700 rounded-lg p-8 cursor-pointer border-2 transition-all ${uploadMethod === 'upload' ? 'border-blue-500 ring-4 ring-blue-500/30' : 'border-transparent hover:border-slate-600'
+                      }`}
                     onClick={() => {
                       setUploadMethod('upload');
                       fileInputRef.current?.click();
@@ -1858,9 +1679,8 @@ const ResumeBuilding = () => {
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`bg-slate-700 rounded-lg p-8 cursor-pointer border-2 transition-all ${
-                      uploadMethod === 'create' ? 'border-blue-500 ring-4 ring-blue-500/30' : 'border-transparent hover:border-slate-600'
-                    }`}
+                    className={`bg-slate-700 rounded-lg p-8 cursor-pointer border-2 transition-all ${uploadMethod === 'create' ? 'border-blue-500 ring-4 ring-blue-500/30' : 'border-transparent hover:border-slate-600'
+                      }`}
                     onClick={() => {
                       setUploadMethod('create');
                       setCurrentStep(2);
@@ -1922,9 +1742,8 @@ const ResumeBuilding = () => {
                       key={template.id}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`bg-slate-700 rounded-lg p-6 cursor-pointer border-2 transition-all relative ${
-                        selectedTemplate === template.id ? 'border-blue-500 ring-4 ring-blue-500/30' : 'border-transparent hover:border-slate-600'
-                      } ${template.recommended ? 'ring-2 ring-rose-500/50' : ''}`}
+                      className={`bg-slate-700 rounded-lg p-6 cursor-pointer border-2 transition-all relative ${selectedTemplate === template.id ? 'border-blue-500 ring-4 ring-blue-500/30' : 'border-transparent hover:border-slate-600'
+                        } ${template.recommended ? 'ring-2 ring-rose-500/50' : ''}`}
                       onClick={() => {
                         setSelectedTemplate(template.id);
                       }}
@@ -2002,19 +1821,19 @@ const ResumeBuilding = () => {
                         >
                           {/* Mini Template Preview */}
                           <TemplatePreview template={{ id: subTemplate.id, ...subTemplate }} />
-                          
+
                           {/* Template Info */}
                           <div className="mt-4 text-center">
                             <h3 className="text-base font-bold mb-1">{subTemplate.name}</h3>
                             <p className="text-slate-400 text-xs mb-3">
                               {subTemplate.description}
                             </p>
-                            
+
                             {/* Features badges (if FAANG template) */}
                             {subTemplate.features && subTemplate.features.length > 0 && (
                               <div className="flex flex-wrap gap-1 justify-center mb-3">
                                 {subTemplate.features.slice(0, 3).map((feature, idx) => (
-                                  <span 
+                                  <span
                                     key={idx}
                                     className="text-[10px] px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30"
                                   >
@@ -2028,7 +1847,7 @@ const ResumeBuilding = () => {
                                 )}
                               </div>
                             )}
-                            
+
                             <div className="text-xs text-blue-400">
                               Click to select
                             </div>
@@ -2086,11 +1905,10 @@ const ResumeBuilding = () => {
                     <button
                       key={section.id}
                       onClick={() => setActiveSection(section.id)}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors flex-1 min-w-[140px] justify-center ${
-                        activeSection === section.id
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                      }`}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors flex-1 min-w-[140px] justify-center ${activeSection === section.id
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                        }`}
                     >
                       <Icon size={18} />
                       <span className="text-sm font-semibold">{section.label}</span>
@@ -2184,7 +2002,7 @@ const ResumeBuilding = () => {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="bg-white rounded-lg shadow-2xl overflow-auto" style={{ maxHeight: 'calc(100vh - 300px)' }}>
                     <ResumePreview />
                   </div>

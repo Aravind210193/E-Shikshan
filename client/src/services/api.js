@@ -201,4 +201,8 @@ export const adminAPI = {
   deleteEnrollment: (id) => api.delete(`/admin/enrollments/${id}`)
 };
 
+export const resumeTemplateAPI = {
+  getAll: () => api.get('/resume-templates')
+};
+
 export default api;
