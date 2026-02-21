@@ -44,7 +44,7 @@ const badges = [
     points: 500,
     color: '#f59e0b'
   },
-  
+
   // Quiz Badges
   {
     name: 'Quiz Beginner',
@@ -86,7 +86,7 @@ const badges = [
     points: 600,
     color: '#f59e0b'
   },
-  
+
   // Course Completion Badges
   {
     name: 'Course Starter',
@@ -128,7 +128,7 @@ const badges = [
     points: 1500,
     color: '#ef4444'
   },
-  
+
   // Streak Badges
   {
     name: 'Day Streak',
@@ -170,7 +170,7 @@ const badges = [
     points: 1000,
     color: '#ef4444'
   },
-  
+
   // Milestone Badges
   {
     name: 'Points Pioneer',
@@ -222,7 +222,7 @@ const badges = [
     points: 1000,
     color: '#ef4444'
   },
-  
+
   // Assignment Badges
   {
     name: 'Assignment Starter',
@@ -254,7 +254,7 @@ const badges = [
     points: 500,
     color: '#8b5cf6'
   },
-  
+
   // Special Badges
   {
     name: 'Early Bird',
@@ -295,44 +295,96 @@ const badges = [
     rarity: 'rare',
     points: 200,
     color: '#f59e0b'
+  },
+
+  // Hackathon Badges
+  {
+    name: 'Hackathon Rookie',
+    description: 'Join your first hackathon',
+    icon: '💻',
+    category: 'hackathon',
+    criteria: { criteriaType: 'hackathons', value: 1 },
+    rarity: 'common',
+    points: 150,
+    color: '#ec4899' // Pinkish
+  },
+  {
+    name: 'Sprint Runner',
+    description: 'Join 5 hackathons',
+    icon: '🏃',
+    category: 'hackathon',
+    criteria: { criteriaType: 'hackathons', value: 5 },
+    rarity: 'rare',
+    points: 500,
+    color: '#db2777'
+  },
+  {
+    name: 'Selection Star',
+    description: 'Get selected for a hackathon',
+    icon: '⭐',
+    category: 'hackathon',
+    criteria: { criteriaType: 'custom', value: 1 }, // Handled via points/trigger
+    rarity: 'rare',
+    points: 300,
+    color: '#fbbf24'
+  },
+  {
+    name: 'Round Advancer',
+    description: 'Clear a further round in any hackathon',
+    icon: '🎯',
+    category: 'hackathon',
+    criteria: { criteriaType: 'hackathon_round', value: 1 },
+    rarity: 'rare',
+    points: 400,
+    color: '#8b5cf6'
+  },
+  {
+    name: 'Elite Hacker',
+    description: 'Clear 5 rounds across hackathons',
+    icon: '🎖️',
+    category: 'hackathon',
+    criteria: { criteriaType: 'hackathon_round', value: 5 },
+    rarity: 'epic',
+    points: 1000,
+    color: '#f59e0b'
   }
 ];
 
 const seedBadges = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    
+
     console.log('Connected to MongoDB');
-    
+
     // Clear existing badges
     await Badge.deleteMany({});
     console.log('Cleared existing badges');
-    
+
     // Insert new badges
     await Badge.insertMany(badges);
     console.log(`✅ Successfully seeded ${badges.length} badges!`);
-    
+
     // Display summary
     const summary = badges.reduce((acc, badge) => {
       acc[badge.category] = (acc[badge.category] || 0) + 1;
       return acc;
     }, {});
-    
+
     console.log('\n📊 Badges by Category:');
     Object.entries(summary).forEach(([category, count]) => {
       console.log(`  ${category}: ${count} badges`);
     });
-    
+
     const raritySummary = badges.reduce((acc, badge) => {
       acc[badge.rarity] = (acc[badge.rarity] || 0) + 1;
       return acc;
     }, {});
-    
+
     console.log('\n🎯 Badges by Rarity:');
     Object.entries(raritySummary).forEach(([rarity, count]) => {
       console.log(`  ${rarity}: ${count} badges`);
     });
-    
+
     mongoose.connection.close();
     console.log('\n✅ Badge seeding complete!');
   } catch (error) {

@@ -17,6 +17,14 @@ const login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
+      // Award daily login points
+      try {
+        const { trackDailyLogin } = require('../utils/gamification');
+        await trackDailyLogin(user._id);
+      } catch (gamifyErr) {
+        console.error('Daily login tracking failed:', gamifyErr);
+      }
+
       res.json({
         _id: user._id,
         name: user.name,
@@ -49,18 +57,18 @@ const register = async (req, res) => {
     // Validate email domain - only allow real email providers
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ 
-        message: 'Please enter a valid email address' 
+      return res.status(400).json({
+        message: 'Please enter a valid email address'
       });
     }
 
     // Block common dummy/fake email patterns
     const blockedDomains = ['test.com', 'example.com', 'dummy.com', 'fake.com', 'temp.com'];
     const emailDomain = email.split('@')[1].toLowerCase();
-    
+
     if (blockedDomains.includes(emailDomain)) {
-      return res.status(400).json({ 
-        message: 'Please use a valid email address from a real email provider (Gmail, Outlook, Yahoo, etc.)' 
+      return res.status(400).json({
+        message: 'Please use a valid email address from a real email provider (Gmail, Outlook, Yahoo, etc.)'
       });
     }
 
@@ -73,7 +81,7 @@ const register = async (req, res) => {
 
     // Block registration without Google OAuth for now
     // Users MUST use "Sign in with Google" button
-    return res.status(403).json({ 
+    return res.status(403).json({
       message: 'Direct registration is disabled. Please sign in with Google to ensure email verification.',
       useGoogleAuth: true
     });
@@ -125,13 +133,22 @@ const getProfile = async (req, res) => {
     console.log('=== GET PROFILE CALLED ===');
     console.log('req.user:', JSON.stringify(req.user, null, 2));
     console.log('Looking for user with ID:', req.user._id);
-    
+
     const user = await User.findById(req.user._id).select('-password');
-    
+
     console.log('User found:', user ? 'YES' : 'NO');
-    
+
     if (user) {
       console.log('Returning user:', user.email);
+
+      // Award daily login points (also happens here because students often refresh)
+      try {
+        const { trackDailyLogin } = require('../utils/gamification');
+        await trackDailyLogin(user._id);
+      } catch (gamifyErr) {
+        console.error('Daily login tracking failed in profile:', gamifyErr);
+      }
+
       res.json({
         _id: user._id,
         name: user.name,
@@ -167,7 +184,7 @@ const getProfile = async (req, res) => {
     } else {
       console.log('❌ User not found for ID:', req.user._id);
       console.log('Token user object:', req.user);
-      res.status(404).json({ 
+      res.status(404).json({
         message: 'User not found',
         debug: {
           tokenUserId: req.user._id,
@@ -196,7 +213,7 @@ const updateProfile = async (req, res) => {
       user.university = req.body.university !== undefined ? req.body.university : user.university;
       user.department = req.body.department !== undefined ? req.body.department : user.department;
       user.semester = req.body.semester !== undefined ? req.body.semester : user.semester;
-      
+
       // Update additional profile fields
       user.bio = req.body.bio !== undefined ? req.body.bio : user.bio;
       user.address = req.body.address !== undefined ? req.body.address : user.address;
@@ -215,7 +232,7 @@ const updateProfile = async (req, res) => {
       user.website = req.body.website !== undefined ? req.body.website : user.website;
       user.profilePicture = req.body.profilePicture !== undefined ? req.body.profilePicture : user.profilePicture;
       user.bannerImage = req.body.bannerImage !== undefined ? req.body.bannerImage : user.bannerImage;
-      
+
       if (req.body.password) {
         user.password = req.body.password;
       }
@@ -451,8 +468,8 @@ const deleteCertificate = async (req, res) => {
     }
 
     if (certificate.source === 'platform') {
-      return res.status(403).json({ 
-        message: 'Cannot delete platform-generated certificates' 
+      return res.status(403).json({
+        message: 'Cannot delete platform-generated certificates'
       });
     }
 
@@ -476,7 +493,7 @@ const googleAuthCallback = async (req, res) => {
   try {
     // User is authenticated by passport, available in req.user
     const user = req.user;
-    
+
     if (!user) {
       return res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/login?error=authentication_failed`);
     }
@@ -492,12 +509,12 @@ const googleAuthCallback = async (req, res) => {
   }
 };
 
-module.exports = { 
-  login, 
-  register, 
-  getProfile, 
-  updateProfile, 
-  saveResume, 
+module.exports = {
+  login,
+  register,
+  getProfile,
+  updateProfile,
+  saveResume,
   getResume,
   addCertificate,
   getCertificates,

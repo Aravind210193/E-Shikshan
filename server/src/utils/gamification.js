@@ -17,7 +17,12 @@ const POINTS_CONFIG = {
   CERTIFICATE_EARNED: 150,
   FIRST_TRY_SUCCESS: 25,
   DOUBT_RESOLVED: 20,
-  SUBMISSION_GRADED: 50
+  SUBMISSION_GRADED: 50,
+  PROJECT_SUBMITTED: 30,
+  HACKATHON_JOINED: 25,
+  HACKATHON_SELECTED: 100,
+  HACKATHON_ROUND_CLEARED: 50,
+  HACKATHON_WINNER: 500
 };
 
 // Level calculation
@@ -303,6 +308,27 @@ const trackAssignmentSubmitted = async (userId, assignmentData) => {
   }
 };
 
+// Track project submission
+const trackProjectSubmitted = async (userId, projectData) => {
+  try {
+    const gamification = await UserGamification.findOne({ userId });
+
+    await awardPoints(userId, POINTS_CONFIG.PROJECT_SUBMITTED, 'project_submitted', {
+      courseId: projectData.courseId,
+      roadmapId: projectData.roadmapId,
+      description: `Submitted project: ${projectData.title}`
+    });
+
+    await updateStreak(userId);
+    await checkAndAwardBadges(userId);
+
+    return { success: true, pointsEarned: POINTS_CONFIG.PROJECT_SUBMITTED };
+  } catch (error) {
+    console.error('Error tracking project submission:', error);
+    throw error;
+  }
+};
+
 // Track course progress
 const trackCourseProgress = async (userId, courseData) => {
   try {
@@ -334,6 +360,59 @@ const trackCourseProgress = async (userId, courseData) => {
     return { success: true };
   } catch (error) {
     console.error('Error tracking course:', error);
+    throw error;
+  }
+};
+
+// Track hackathon activity
+const trackHackathonActivity = async (userId, activity, hackathonData = {}) => {
+  try {
+    const gamification = await UserGamification.findOne({ userId });
+
+    let points = 0;
+    let activityType = '';
+    let description = '';
+
+    switch (activity) {
+      case 'joined':
+        points = POINTS_CONFIG.HACKATHON_JOINED;
+        activityType = 'hackathon_joined';
+        description = `Joined hackathon: ${hackathonData.title}`;
+        if (gamification) gamification.achievements.hackathonsJoined += 1;
+        break;
+      case 'selected':
+        points = POINTS_CONFIG.HACKATHON_SELECTED;
+        activityType = 'hackathon_selected';
+        description = `Selected for hackathon: ${hackathonData.title}`;
+        if (gamification) gamification.achievements.hackathonsSelected += 1;
+        break;
+      case 'round_cleared':
+        points = POINTS_CONFIG.HACKATHON_ROUND_CLEARED;
+        activityType = 'hackathon_round_cleared';
+        description = `Cleared round in: ${hackathonData.title}`;
+        if (gamification) gamification.achievements.hackathonRoundsCleared += 1;
+        break;
+      case 'winner':
+        points = POINTS_CONFIG.HACKATHON_WINNER;
+        activityType = 'hackathon_winner';
+        description = `Won/Podium in hackathon: ${hackathonData.title}`;
+        if (gamification) gamification.achievements.hackathonPodiums += 1;
+        break;
+    }
+
+    if (gamification) await gamification.save();
+
+    await awardPoints(userId, points, activityType, {
+      hackathonId: hackathonData.hackathonId,
+      description
+    });
+
+    await updateStreak(userId);
+    await checkAndAwardBadges(userId);
+
+    return { success: true, pointsEarned: points };
+  } catch (error) {
+    console.error('Error tracking hackathon activity:', error);
     throw error;
   }
 };
@@ -370,6 +449,12 @@ const checkAndAwardBadges = async (userId) => {
           break;
         case 'assignments':
           shouldAward = gamification.achievements.assignmentsSubmitted >= badge.criteria.value;
+          break;
+        case 'hackathons':
+          shouldAward = gamification.achievements.hackathonsJoined >= badge.criteria.value;
+          break;
+        case 'hackathon_round':
+          shouldAward = gamification.achievements.hackathonRoundsCleared >= badge.criteria.value;
           break;
       }
 
@@ -460,6 +545,20 @@ const getUserActivity = async (userId, limit = 50) => {
 // Daily login reward
 const trackDailyLogin = async (userId) => {
   try {
+    const gamification = await UserGamification.findOne({ userId });
+
+    if (gamification && gamification.lastActivityDate) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const lastActivity = new Date(gamification.lastActivityDate);
+      lastActivity.setHours(0, 0, 0, 0);
+
+      if (today.getTime() === lastActivity.getTime()) {
+        // Already logged in today
+        return { success: true, alreadyRewarded: true };
+      }
+    }
+
     await awardPoints(userId, POINTS_CONFIG.DAILY_LOGIN, 'login', {
       description: 'Daily login reward'
     });
@@ -510,7 +609,9 @@ module.exports = {
   trackVideoWatched,
   trackQuizCompleted,
   trackAssignmentSubmitted,
+  trackProjectSubmitted,
   trackCourseProgress,
+  trackHackathonActivity,
   checkAndAwardBadges,
   getUserGamification,
   getLeaderboard,

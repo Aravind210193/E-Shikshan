@@ -1,78 +1,51 @@
 [
   {
     "id": 1,
-    "user":"student",
-    "category":"Data Science",
-    "title": "Femtech Innovation Hackathon",
-    "status":"Live",
-    "EventType":"online",
-    "TeamSize":"2",
-    "payment":"paid",
-    "tagline":"Artificial inteeligence",
-  "image":"https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&h=900&fit=crop",
-    "prize": "$5,000 + Incubation Support",
-    "startDate":"2025-09-11",
-    "endDate":"2025-09-16",
+    "user": "student",
+    "category": "Data Science",
+    "title": "Femtech Innovation $10K Challenge",
+    "status": "Live",
+    "EventType": "online",
+    "TeamSize": "2",
+    "payment": "paid",
+    "tagline": "AI for Women's Health",
+    "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&h=900&fit=crop",
+    "prize": "$10,000 + Incubation Support",
+    "startDate": "2025-09-11",
+    "endDate": "2025-09-16",
     "registrationCloses": "2025-09-10",
     "submissionDeadline": "2025-09-15",
-    "overview":"HackHERHealth is a hybrid (both in-person and virtual) innovation hackathon aimed at closing the gender health gap by developing gender-specific health solutions. Participants worldwide—from students to professionals—are invited to collaborate across disciplines and leverage cutting-edge technologies, including AI, to tackle real-world challenges in women's health.",
-    "date":"2025-09-12",
-    "registrationUrl":"/login",
-    "howit":["Hybrid Format: Participants can join online or in-person.","Multidisciplinary Approach: Teams are encouraged to combine technical, clinical, policy, and creative strengths.","AI as a Partner: Generative AI tools are leveraged both for ideation and development"],
+    "overview": "HackHERHealth is a hybrid innovation hackathon aimed at closing the gender health gap by developing gender-specific health solutions using AI.",
+    "leadName": "Hackathon Maestro X",
+    "howit": [
+      "Register Online",
+      "Build your team",
+      "AI development phase"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "HackHERHealth is a hybrid (both in-person and virtual) innovation hackathon aimed at closing the gender health gap by developing gender-specific health solutions. Participants worldwide—from students to professionals—are invited to collaborate across disciplines and leverage cutting-edge technologies, including AI, to tackle real-world challenges in women's health.",
-        "icon": "/why.jpeg"
-      },
-      {
-        "title": "Why!",
-        "description": "Women have historically been underrepresented in clinical trials, often making up just 29–34% of participants. This underrepresentation contributes to a systemic bias in medical research, leading to increased health risks for women. HackHERHealth is designed to confront and correct these disparities.",
-        "icon": "/why.jpeg"
-      },
-      {
-        "title": "How!",
-        "description": "HackHERHealth leverages AI and diverse expertise to tackle key challenges in closing the gender health gap.",
-        "icon": "/why.jpeg"
+        "title": "Vision",
+        "description": "Closing the gender health gap through tech.",
+        "icon": "Zap"
       }
     ],
     "whoCanParticipate": [
       {
-        "title": "Students",
-        "description": "In the Femtech Innovation Hackathon (HackHERHealth), participation is open to students from a wide range of academic backgrounds, not just those in technology or medicine. Any student who is currently enrolled in a recognized high school, college, or university can join, whether they are studying engineering, computer science, healthcare, life sciences, design, business, or even the social sciences. Both undergraduate and postgraduate students are welcome, and many events also allow recent graduates to participate.",
-        "icon": "/ai.jpeg"
-      },
-      {
-        "title": "Professionals",
-        "description": "The Femtech Innovation Hackathon (HackHERHealth) welcomes professionals from a variety of fields, creating a truly multidisciplinary environment. Healthcare professionals such as doctors, nurses, midwives, therapists, and public health specialists can join to provide clinical insight and real-world unders.",
-        "icon": "/ai.jpeg"
-      },
-      {
-        "title": "Innovators",
-        "description": "The Femtech Innovation Hackathon (HackHERHealth) is open to innovators from all walks of life who are passionate about creating impactful solutions for women’s health. This includes entrepreneurs with bold new ideas for products or services, inventors developing novel medical devices or wearable technologies, and creative thinkers exploring unconventional approaches to healthcare challenges. ",
-        "icon": "/ai.jpeg"
+        "title": "All Students",
+        "description": "Open to all backgrounds.",
+        "icon": "Users"
       }
     ],
     "challenges": [
       {
-        "title": "Improving Women's Journey in Obesity",
-        "description": "The hackathon welcomes a diverse range of participants—from clinicians, healthcare providers, and researchers to technologists, students, and policy experts. No coding experience is required: whether you bring a bold idea, a specialized skill, or none at all, you're encouraged to join.",
-        "icon": "/ai.jpeg"
-      },
-      {
-        "title": "Advancing Accessibility & Precision of Diagnosis for Neurodivergent Girls",
-        "description": "Tackle overlooked symptoms and gender diagnostic bias in ASD & ADHD.",
-        "icon": "/ai.jpeg"
-      },
-      {
-        "title": "Rethinking and Innovating Pregnancy and Postpartum Care in Sweden",
-        "description": "Overcome care fragmentation and language barriers for postpartum women.",
-        "icon": "/ai.jpeg"
+        "title": "Diagnosis Bias",
+        "description": "Fix bias in ASD & ADHD diagnosis.",
+        "icon": "Target"
       }
     ]
   },
-    {
+  {
     "id": 2,
     "user": "student",
     "category": "Blockchain",
@@ -82,66 +55,39 @@
     "TeamSize": "3",
     "payment": "paid",
     "tagline": "Decentralized Tomorrow",
-  "image": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1600&h=900&fit=crop",
-    "prize": "$10,000 + Token Rewards",
+    "image": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1600&h=900&fit=crop",
+    "prize": "$25,000 + Token Rewards",
     "startDate": "2025-09-20",
     "endDate": "2025-09-25",
     "registrationCloses": "2025-09-19",
     "submissionDeadline": "2025-09-24",
-    "overview": "CryptoFuture is a cutting-edge Web3 hackathon focused on building decentralized applications that solve real-world problems. Participants will explore blockchain technology, smart contracts, and DeFi solutions while competing for substantial prizes and mentorship opportunities.",
-    "date": "2025-09-22",
-    "registrationUrl": "/login",
-    "howit": ["Hybrid participation with global mentors", "Focus on practical DeFi and NFT solutions", "Integration with major blockchain networks"],
+    "overview": "Build decentralized applications that solve real-world problems using blockchain technology.",
+    "leadName": "Code Sprint Sigma",
+    "howit": [
+      "Hybrid participation",
+      "DeFi solutions",
+      "Blockchain integration"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "A comprehensive Web3 hackathon bringing together developers, designers, and blockchain enthusiasts to create the next generation of decentralized applications and financial solutions.",
-  "icon": "/crypto.png"
-      },
-      {
-        "title": "Why!",
-        "description": "The blockchain ecosystem needs practical, user-friendly applications that can bridge the gap between traditional finance and decentralized systems, making Web3 accessible to mainstream users.",
-  "icon": "/crypto.png"
-      },
-      {
-        "title": "How!",
-        "description": "Through collaborative development, expert mentorship, and access to cutting-edge blockchain tools and infrastructure.",
-  "icon": "/crypto.png"
+        "title": "Mission",
+        "description": "Making Web3 accessible to mainstream users.",
+        "icon": "Shield"
       }
     ],
     "whoCanParticipate": [
       {
-        "title": "Developers",
-        "description": "Blockchain developers, full-stack engineers, smart contract specialists, and anyone with programming experience interested in decentralized technologies and Web3 development.",
-        "icon": "/blockchain.jpeg"
-      },
-      {
-        "title": "Designers",
-        "description": "UX/UI designers passionate about creating intuitive interfaces for complex blockchain applications, making Web3 more accessible and user-friendly.",
-        "icon": "/blockchain.jpeg"
-      },
-      {
-        "title": "Entrepreneurs",
-        "description": "Business innovators and startup founders looking to explore blockchain-based business models and create sustainable decentralized solutions.",
-        "icon": "/blockchain.jpeg"
+        "title": "DApp Developers",
+        "description": "Experienced in Solidity/Web3.",
+        "icon": "Zap"
       }
     ],
     "challenges": [
       {
         "title": "DeFi for Everyone",
-        "description": "Create user-friendly decentralized finance applications that make complex financial instruments accessible to non-technical users.",
-        "icon": "/blockchain.jpeg"
-      },
-      {
-        "title": "Sustainable NFT Marketplace",
-        "description": "Build an eco-friendly NFT platform that addresses environmental concerns while supporting digital artists and creators.",
-        "icon": "/blockchain.jpeg"
-      },
-      {
-        "title": "Cross-Chain Identity Management",
-        "description": "Develop solutions for seamless identity verification and data portability across different blockchain networks.",
-        "icon": "/blockchain.jpeg"
+        "description": "User-friendly financial tools.",
+        "icon": "Trophy"
       }
     ]
   },
@@ -155,66 +101,39 @@
     "TeamSize": "4",
     "payment": "free",
     "tagline": "Climate Solutions for Tomorrow",
-  "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1600&h=900&fit=crop",
+    "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1600&h=900&fit=crop",
     "prize": "$15,000 + Accelerator Program",
     "startDate": "2025-10-01",
     "endDate": "2025-10-06",
     "registrationCloses": "2025-09-28",
     "submissionDeadline": "2025-10-05",
-    "overview": "The Green Innovation Challenge brings together climate-conscious innovators to develop technology solutions for environmental sustainability, carbon reduction, and renewable energy adoption.",
-    "date": "2025-10-03",
-    "registrationUrl": "/login",
-    "howit": ["Focus on scalable climate solutions", "Partnership with environmental organizations", "Access to climate data and APIs"],
+    "overview": "Develop technology solutions for environmental sustainability, carbon reduction, and renewable energy.",
+    "leadName": "Dev Jam Omega",
+    "howit": [
+      "Scalable solutions",
+      "NGO partnerships",
+      "Data insights"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "A global hackathon dedicated to creating innovative technology solutions that address climate change, promote sustainability, and accelerate the transition to a green economy.",
-  "icon": "/why.jpeg"
-      },
-      {
-        "title": "Why!",
-        "description": "Climate change represents one of humanity's greatest challenges, requiring immediate, innovative technological solutions to reduce emissions and adapt to environmental changes.",
-  "icon": "/green.png"
-      },
-      {
-        "title": "How!",
-        "description": "By combining cutting-edge technology with environmental science and sustainable business models to create impactful climate solutions.",
-  "icon": "/green.png"
+        "title": "Goal",
+        "description": "Transitioning to a green economy.",
+        "icon": "Lightbulb"
       }
     ],
     "whoCanParticipate": [
       {
-        "title": "Environmental Scientists",
-        "description": "Researchers and professionals in environmental science, climate studies, renewable energy, and sustainability looking to translate knowledge into practical solutions.",
-  "icon": "/green.png"
-      },
-      {
-        "title": "Tech Innovators",
-        "description": "Software developers, IoT specialists, and data scientists interested in applying technology to solve environmental challenges and create sustainable solutions.",
-  "icon": "/green.png"
-      },
-      {
-        "title": "Policy Experts",
-        "description": "Environmental policy makers, sustainability consultants, and green business strategists focused on systemic change and scalable climate solutions.",
-  "icon": "/green.png"
+        "title": "Scientists & Techies",
+        "description": "Collaboration for impact.",
+        "icon": "Star"
       }
     ],
     "challenges": [
       {
-        "title": "Carbon Footprint Tracker",
-        "description": "Develop AI-powered tools to help individuals and businesses accurately measure and reduce their carbon footprint through actionable insights.",
-        "icon": "/climate.jpeg"
-      },
-      {
-        "title": "Smart Energy Grid Optimization",
-        "description": "Create solutions for optimizing renewable energy distribution and storage in smart grid systems for maximum efficiency.",
-        "icon": "/climate.jpeg"
-      },
-      {
-        "title": "Circular Economy Platform",
-        "description": "Build platforms that facilitate waste reduction, resource reuse, and circular business models in various industries.",
-        "icon": "/climate.jpeg"
+        "title": "Carbon Tracker",
+        "description": "AI tools for measuring footprint.",
+        "icon": "Award"
       }
     ]
   },
@@ -222,72 +141,45 @@
     "id": 4,
     "user": "student",
     "category": "EdTech",
-    "title": "Learn Tomorrow Hackathon",
+    "title": "Learn Tomorrow Global Hack",
     "status": "Live",
     "EventType": "online",
     "TeamSize": "3",
     "payment": "free",
     "tagline": "Revolutionizing Education",
-  "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&h=900&fit=crop",
-    "prize": "$8,000 + Mentorship Program",
+    "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&h=900&fit=crop",
+    "prize": "$12,000 + Mentorship",
     "startDate": "2025-09-15",
     "endDate": "2025-09-20",
     "registrationCloses": "2025-09-14",
     "submissionDeadline": "2025-09-19",
-    "overview": "Learn Tomorrow focuses on creating innovative educational technologies that make learning more accessible, engaging, and effective for students of all ages and backgrounds.",
-    "date": "2025-09-17",
-    "registrationUrl": "/login",
-    "howit": ["Student-centered design approach", "Integration with learning management systems", "Focus on accessibility and inclusion"],
+    "overview": "Focus on creating innovative educational technologies that make learning more accessible and engaging.",
+    "leadName": "Hackathon Maestro X",
+    "howit": [
+      "LMS integration",
+      "Accessibility-first",
+      "User testing"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "An educational technology hackathon aimed at developing innovative digital learning solutions that enhance student engagement and improve educational outcomes.",
-  "icon": "/learn.png"
-      },
-      {
-        "title": "Why!",
-        "description": "Traditional education systems face challenges in adapting to diverse learning styles and modern technological capabilities, creating opportunities for innovative EdTech solutions.",
-  "icon": "/learn.png"
-      },
-      {
-        "title": "How!",
-        "description": "Through user-centered design, educational research integration, and cutting-edge technology to create personalized and engaging learning experiences.",
-  "icon": "/learn.png"
+        "title": "Focus",
+        "description": "Student-centered EdTech design.",
+        "icon": "Rocket"
       }
     ],
     "whoCanParticipate": [
       {
-        "title": "Students",
-        "description": "Students from education, computer science, psychology, and design backgrounds who understand learning challenges and want to create solutions for their peers.",
-  "icon": "/learn.png"
-      },
-      {
-        "title": "Educators",
-        "description": "Teachers, professors, instructional designers, and education professionals who can provide insights into real classroom needs and learning challenges.",
-  "icon": "/learn.png"
-      },
-      {
-        "title": "Developers",
-        "description": "Software developers, UX designers, and technologists interested in applying their skills to create meaningful educational technology solutions.",
-        "icon": "/edtech.jpeg"
+        "title": "EdTech Fans",
+        "description": "Designers, Devs, & Teachers.",
+        "icon": "CheckCircle"
       }
     ],
     "challenges": [
       {
-        "title": "Personalized Learning Paths",
-        "description": "Create AI-driven systems that adapt to individual learning styles and pace, providing customized educational content and assessments.",
-        "icon": "/edtech.jpeg"
-      },
-      {
-        "title": "Virtual Reality Classrooms",
-        "description": "Develop immersive VR learning environments that make complex subjects more engaging and accessible through interactive experiences.",
-        "icon": "/edtech.jpeg"
-      },
-      {
-        "title": "Accessibility in Education",
-        "description": "Build tools that make educational content accessible to students with disabilities, ensuring inclusive learning for all.",
-        "icon": "/edtech.jpeg"
+        "title": "AI Tutoring",
+        "description": "Personalized learning paths.",
+        "icon": "ExternalLink"
       }
     ]
   },
@@ -295,72 +187,45 @@
     "id": 5,
     "user": "professional",
     "category": "FinTech",
-    "title": "Digital Finance Revolution",
+    "title": "Digital Finance Revolution 2.0",
     "status": "Upcoming",
     "EventType": "hybrid",
     "TeamSize": "4",
     "payment": "paid",
     "tagline": "Banking Reimagined",
-  "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1600&h=900&fit=crop",
-    "prize": "$20,000 + Investor Pitch",
+    "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1600&h=900&fit=crop",
+    "prize": "$50,000 + Venture Fund",
     "startDate": "2025-10-10",
     "endDate": "2025-10-15",
     "registrationCloses": "2025-10-08",
     "submissionDeadline": "2025-10-14",
-    "overview": "Digital Finance Revolution challenges participants to reimagine traditional banking and financial services through innovative technology solutions that prioritize user experience and financial inclusion.",
-    "date": "2025-10-12",
-    "registrationUrl": "/login",
-    "howit": ["Industry mentor network", "Real-world banking APIs", "Focus on regulatory compliance"],
+    "overview": "Challenge traditional banking through innovative tech prioritizing user experience and inclusion.",
+    "leadName": "Code Sprint Sigma",
+    "howit": [
+      "Real banking APIs",
+      "Compliance mentorship",
+      "Pitch to VCs"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "A comprehensive FinTech hackathon focused on developing next-generation financial services and banking solutions that leverage emerging technologies.",
-  "icon": "/digital.png"
-      },
-      {
-        "title": "Why!",
-        "description": "The financial services industry is undergoing rapid digital transformation, creating opportunities for innovative solutions that improve accessibility and user experience.",
-  "icon": "/digital.png"
-      },
-      {
-        "title": "How!",
-        "description": "Through collaboration with financial institutions, access to banking APIs, and expert guidance on regulatory requirements and market needs.",
-  "icon": "/digital.png"
+        "title": "Innovation",
+        "description": "Next-gen financial services.",
+        "icon": "Zap"
       }
     ],
     "whoCanParticipate": [
       {
-        "title": "Developers",
-        "description": "Software engineers, mobile app developers, and backend specialists with experience in secure financial systems and payment processing technologies.",
-  "icon": "/digital.png"
-      },
-      {
-        "title": "Financial Professionals",
-        "description": "Banking professionals, financial analysts, and compliance experts who understand industry regulations and real-world financial challenges.",
-  "icon": "/digital.png"
-      },
-      {
-        "title": "UX Designers",
-        "description": "User experience designers specializing in creating intuitive and secure interfaces for complex financial applications and services.",
-        "icon": "/fintech.jpeg"
+        "title": "FinTech Experts",
+        "description": "SEC/FinSafe knowledge preferred.",
+        "icon": "Shield"
       }
     ],
     "challenges": [
       {
-        "title": "Micro-Investment Platform",
-        "description": "Create accessible investment platforms that help users with limited capital start building wealth through automated micro-investing.",
-        "icon": "/fintech.jpeg"
-      },
-      {
-        "title": "AI-Powered Financial Advisory",
-        "description": "Develop intelligent financial advisory systems that provide personalized investment and budgeting recommendations.",
-        "icon": "/fintech.jpeg"
-      },
-      {
-        "title": "Cross-Border Payment Solutions",
-        "description": "Build efficient and affordable international payment systems that reduce fees and processing times for global transactions.",
-        "icon": "/fintech.jpeg"
+        "title": "Micro-Investments",
+        "description": "Accessibility for small capital.",
+        "icon": "Trophy"
       }
     ]
   },
@@ -368,72 +233,45 @@
     "id": 6,
     "user": "student",
     "category": "Gaming",
-    "title": "Indie Game Jam Fest",
+    "title": "Indie Game Jam Fest 2026",
     "status": "Live",
     "EventType": "online",
     "TeamSize": "5",
     "payment": "free",
     "tagline": "Play Create Innovate",
-  "image": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=1600&h=900&fit=crop",
-    "prize": "$12,000 + Publishing Deal",
+    "image": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=1600&h=900&fit=crop",
+    "prize": "$20,000 + Publishing Deal",
     "startDate": "2025-09-18",
     "endDate": "2025-09-23",
     "registrationCloses": "2025-09-17",
     "submissionDeadline": "2025-09-22",
-    "overview": "Indie Game Jam Fest brings together creative minds to develop innovative games that push boundaries in storytelling, mechanics, and player engagement while fostering the indie game development community.",
-    "date": "2025-09-20",
-    "registrationUrl": "/login",
-    "howit": ["48-hour intensive development", "Industry expert judging panel", "Focus on creative innovation over graphics"],
+    "overview": "Develop innovative games that push boundaries in storytelling and mechanics.",
+    "leadName": "Dev Jam Omega",
+    "howit": [
+      "48-hour jam",
+      "Creative freedom",
+      "Industry judging"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "An intensive game development competition where teams create original games from concept to playable prototype, emphasizing creativity and innovation.",
-  "icon": "/indiegame.png"
-      },
-      {
-        "title": "Why!",
-        "description": "The indie game industry thrives on fresh ideas and innovative gameplay mechanics that challenge traditional gaming conventions and create unique player experiences.",
-  "icon": "/indiegame.png"
-      },
-      {
-        "title": "How!",
-        "description": "Through rapid prototyping, creative collaboration, and access to game development tools and resources from industry partners.",
-  "icon": "/indiegame.png"
+        "title": "Creativity",
+        "description": "Pushing indie game boundaries.",
+        "icon": "Target"
       }
     ],
     "whoCanParticipate": [
       {
-        "title": "Game Developers",
-        "description": "Programmers experienced in game engines like Unity, Unreal Engine, or custom frameworks, ready to bring creative game concepts to life.",
-        "icon": "/gaming.jpeg"
-      },
-      {
-        "title": "Artists & Designers",
-        "description": "2D/3D artists, animators, and game designers who can create compelling visuals and engaging gameplay experiences.",
-        "icon": "/gaming.jpeg"
-      },
-      {
-        "title": "Sound Designers",
-        "description": "Audio professionals and music composers who can create immersive soundscapes and memorable game audio experiences.",
-        "icon": "/gaming.jpeg"
+        "title": "Game Devs",
+        "description": "Unity/Unreal/Godot.",
+        "icon": "Star"
       }
     ],
     "challenges": [
       {
-        "title": "Climate Change Awareness Game",
-        "description": "Create engaging games that educate players about environmental issues while providing entertaining gameplay experiences.",
-        "icon": "/gaming.jpeg"
-      },
-      {
-        "title": "Accessibility-First Gaming",
-        "description": "Develop games specifically designed for players with disabilities, ensuring inclusive gaming experiences for all.",
-        "icon": "/gaming.jpeg"
-      },
-      {
-        "title": "Experimental Gameplay Mechanics",
-        "description": "Push the boundaries of traditional game design with innovative mechanics that create entirely new types of player experiences.",
-        "icon": "/gaming.jpeg"
+        "title": "Eco-Gaming",
+        "description": "Games for climate awareness.",
+        "icon": "Award"
       }
     ]
   },
@@ -441,72 +279,45 @@
     "id": 7,
     "user": "professional",
     "category": "IoT",
-    "title": "Smart City Solutions Hack",
+    "title": "Smart City Hub Solutions",
     "status": "Upcoming",
     "EventType": "hybrid",
     "TeamSize": "4",
     "payment": "paid",
     "tagline": "Connected Urban Future",
-  "image": "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1600&h=900&fit=crop",
-    "prize": "$18,000 + Pilot Program",
+    "image": "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1600&h=900&fit=crop",
+    "prize": "$30,000 + Pilot Implementation",
     "startDate": "2025-10-20",
     "endDate": "2025-10-25",
     "registrationCloses": "2025-10-18",
     "submissionDeadline": "2025-10-24",
-    "overview": "Smart City Solutions Hack focuses on developing IoT-based solutions that improve urban living through connected devices, data analytics, and intelligent systems for transportation, energy, and public services.",
-    "date": "2025-10-22",
-    "registrationUrl": "/login",
-    "howit": ["Real city data access", "IoT hardware provided", "Municipal government partnerships"],
+    "overview": "Develop IoT-based solutions that improve urban living through connected devices and data.",
+    "leadName": "Hackathon Maestro X",
+    "howit": [
+      "Real city data",
+      "Hardware kits",
+      "Gov partnerships"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "An IoT-focused hackathon aimed at creating smart city solutions that improve urban infrastructure, sustainability, and quality of life for city residents.",
-  "icon": "/images.png"
-      },
-      {
-        "title": "Why!",
-        "description": "Rapid urbanization creates challenges in traffic management, energy efficiency, and public services that can be addressed through intelligent IoT solutions.",
-  "icon": "/images.png"
-      },
-      {
-        "title": "How!",
-        "description": "By leveraging sensor networks, data analytics, and connected devices to create intelligent urban systems that respond to real-time needs.",
-  "icon": "/images.png"
+        "title": "Urbanism",
+        "description": "Smart tech for better cities.",
+        "icon": "Rocket"
       }
     ],
     "whoCanParticipate": [
       {
         "title": "IoT Engineers",
-        "description": "Hardware and software engineers specializing in Internet of Things technologies, sensor networks, and embedded systems development.",
-        "icon": "/iot.jpeg"
-      },
-      {
-        "title": "Urban Planners",
-        "description": "City planning professionals and public policy experts who understand urban challenges and can design practical smart city solutions.",
-        "icon": "/iot.jpeg"
-      },
-      {
-        "title": "Data Scientists",
-        "description": "Analytics professionals who can process and interpret large datasets from urban sensors to create actionable insights for city management.",
-        "icon": "/iot.jpeg"
+        "description": "Hardware + Backend.",
+        "icon": "Users"
       }
     ],
     "challenges": [
       {
-        "title": "Smart Traffic Management",
-        "description": "Develop IoT systems that optimize traffic flow, reduce congestion, and improve public transportation efficiency in urban areas.",
-        "icon": "/iot.jpeg"
-      },
-      {
-        "title": "Environmental Monitoring Network",
-        "description": "Create sensor networks that monitor air quality, noise levels, and environmental conditions to improve urban sustainability.",
-        "icon": "/iot.jpeg"
-      },
-      {
-        "title": "Smart Waste Management",
-        "description": "Build intelligent waste collection and recycling systems that optimize routes and reduce environmental impact.",
-        "icon": "/iot.jpeg"
+        "title": "Traffic Optimization",
+        "description": "Reduce congestion with AI.",
+        "icon": "Clock"
       }
     ]
   },
@@ -514,72 +325,45 @@
     "id": 8,
     "user": "faculty",
     "category": "Cybersecurity",
-    "title": "SecureNet Defense Challenge",
+    "title": "SecureNet Elite Defense",
     "status": "Live",
     "EventType": "online",
     "TeamSize": "3",
     "payment": "free",
     "tagline": "Defending Digital Frontiers",
-  "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&h=900&fit=crop",
-    "prize": "$7,500 + Security Certification",
+    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&h=900&fit=crop",
+    "prize": "$15,000 + Security Cert",
     "startDate": "2025-09-25",
     "endDate": "2025-09-30",
     "registrationCloses": "2025-09-24",
     "submissionDeadline": "2025-09-29",
-    "overview": "SecureNet Defense Challenge focuses on developing innovative cybersecurity solutions to protect against emerging threats, with emphasis on AI-driven security and privacy-preserving technologies.",
-    "date": "2025-09-27",
-    "registrationUrl": "/login",
-    "howit": ["Capture the Flag competitions", "Real threat scenario simulations", "Industry security expert mentorship"],
+    "overview": "Focus on developing innovative cybersecurity solutions for AI-driven security and privacy.",
+    "leadName": "Code Sprint Sigma",
+    "howit": [
+      "CTF simulations",
+      "Threat scenarios",
+      "Expert mentoring"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "A cybersecurity-focused hackathon where participants develop tools and systems to defend against modern cyber threats and protect digital privacy.",
-  "icon": "/images.png"
-      },
-      {
-        "title": "Why!",
-        "description": "The increasing sophistication of cyber attacks requires innovative security solutions that can adapt to evolving threats and protect critical infrastructure.",
-  "icon": "/images.png"
-      },
-      {
-        "title": "How!",
-        "description": "Through hands-on security challenges, threat modeling exercises, and development of practical cybersecurity tools and systems.",
-  "icon": "/images.png"
+        "title": "Security",
+        "description": "Zero-trust systems.",
+        "icon": "Shield"
       }
     ],
     "whoCanParticipate": [
       {
-        "title": "Security Engineers",
-        "description": "Cybersecurity professionals, ethical hackers, and security researchers with experience in threat detection and defense systems.",
-        "icon": "/security.jpeg"
-      },
-      {
-        "title": "Computer Science Students",
-        "description": "Students studying cybersecurity, computer science, or related fields interested in learning about modern security challenges and solutions.",
-        "icon": "/security.jpeg"
-      },
-      {
-        "title": "Network Specialists",
-        "description": "Network administrators and infrastructure specialists focused on securing communication systems and preventing cyber attacks.",
-        "icon": "/security.jpeg"
+        "title": "White Hats",
+        "description": "Security researchers only.",
+        "icon": "Zap"
       }
     ],
     "challenges": [
       {
-        "title": "AI-Powered Threat Detection",
-        "description": "Develop machine learning systems that can identify and respond to sophisticated cyber attacks in real-time.",
-        "icon": "/security.jpeg"
-      },
-      {
-        "title": "Zero-Trust Network Architecture",
-        "description": "Create security frameworks that assume no implicit trust and verify every transaction within a network system.",
-        "icon": "/security.jpeg"
-      },
-      {
-        "title": "Privacy-Preserving Analytics",
-        "description": "Build systems that enable data analysis while maintaining user privacy through advanced encryption and anonymization techniques.",
-        "icon": "/security.jpeg"
+        "title": "AI Threat Detection",
+        "description": "Real-time ML defense.",
+        "icon": "Target"
       }
     ]
   },
@@ -587,72 +371,45 @@
     "id": 9,
     "user": "professional",
     "category": "AR/VR",
-    "title": "Immersive Reality Expo",
+    "title": "Mixed Reality World Expo",
     "status": "Upcoming",
     "EventType": "hybrid",
     "TeamSize": "4",
     "payment": "paid",
     "tagline": "Beyond Reality",
-  "image": "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=1600&h=900&fit=crop",
-    "prize": "$25,000 + VR Studio Partnership",
+    "image": "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=1600&h=900&fit=crop",
+    "prize": "$40,000 + VR Studio Access",
     "startDate": "2025-11-01",
     "endDate": "2025-11-06",
     "registrationCloses": "2025-10-30",
     "submissionDeadline": "2025-11-05",
-    "overview": "Immersive Reality Expo challenges participants to create groundbreaking AR/VR applications that transform how we work, learn, and interact with digital environments across various industries.",
-    "date": "2025-11-03",
-    "registrationUrl": "/login",
-    "howit": ["Latest VR/AR hardware access", "Industry partnership opportunities", "Focus on practical applications"],
+    "overview": "Create groundbreaking AR/VR applications that transform work and learning.",
+    "leadName": "Dev Jam Omega",
+    "howit": [
+      "Metaspace building",
+      "Spatial UI/UX",
+      "Hardware provided"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "An immersive technology hackathon focused on developing practical AR/VR applications that solve real-world problems across healthcare, education, and enterprise.",
-  "icon": "/images.png"
-      },
-      {
-        "title": "Why!",
-        "description": "AR/VR technologies are reaching maturity and creating opportunities for transformative applications in training, visualization, and human-computer interaction.",
-  "icon": "/images.png"
-      },
-      {
-        "title": "How!",
-        "description": "Through access to cutting-edge hardware, expert mentorship, and partnerships with companies implementing AR/VR solutions in their operations.",
-  "icon": "/images.png"
+        "title": "Immersion",
+        "description": "Future of physical-digital.",
+        "icon": "Star"
       }
     ],
     "whoCanParticipate": [
       {
-        "title": "VR Developers",
-        "description": "Software developers experienced in Unity, Unreal Engine, or specialized VR/AR development frameworks and 3D programming.",
-        "icon": "/arvr.jpeg"
-      },
-      {
-        "title": "3D Artists",
-        "description": "3D modelers, animators, and digital artists who can create immersive visual experiences and realistic virtual environments.",
-        "icon": "/arvr.jpeg"
-      },
-      {
-        "title": "UX Researchers",
-        "description": "User experience professionals specializing in spatial design and human factors for immersive technology interfaces.",
-        "icon": "/arvr.jpeg"
+        "title": "Unity Devs",
+        "description": "3D artists and spatial dev.",
+        "icon": "Users"
       }
     ],
     "challenges": [
       {
-        "title": "Medical Training Simulator",
-        "description": "Create VR training systems for medical professionals to practice procedures in safe, controlled virtual environments.",
-        "icon": "/arvr.jpeg"
-      },
-      {
-        "title": "Remote Collaboration Platform",
-        "description": "Develop AR/VR solutions that enable effective remote teamwork and collaboration in virtual spaces.",
-        "icon": "/arvr.jpeg"
-      },
-      {
-        "title": "Accessibility in VR",
-        "description": "Build VR applications designed specifically for users with physical disabilities, creating inclusive immersive experiences.",
-        "icon": "/arvr.jpeg"
+        "title": "Med-Training",
+        "description": "Virtual surgery training.",
+        "icon": "Award"
       }
     ]
   },
@@ -660,75 +417,506 @@
     "id": 10,
     "user": "student",
     "category": "Social Impact",
-    "title": "Code for Good Initiative",
+    "title": "Code for Good Global",
     "status": "Live",
     "EventType": "online",
     "TeamSize": "4",
     "payment": "free",
     "tagline": "Technology for Humanity",
-  "image": "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=600&fit=crop",
-  "bgimage": "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1600&h=900&fit=crop",
-    "prize": "$6,000 + NGO Partnership",
+    "image": "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1600&h=900&fit=crop",
+    "prize": "$10,000 + NGO Collab",
     "startDate": "2025-09-28",
     "endDate": "2025-10-03",
     "registrationCloses": "2025-09-27",
     "submissionDeadline": "2025-10-02",
-    "overview": "Code for Good Initiative brings together socially conscious developers to create technology solutions that address pressing social issues and support non-profit organizations in their missions.",
-    "date": "2025-09-30",
-    "registrationUrl": "/login",
-    "howit": ["Partnership with local NGOs", "Focus on scalable social solutions", "Community impact measurement"],
+    "overview": "Create technology solutions that address pressing social issues and support community NGOs.",
+    "leadName": "Hackathon Maestro X",
+    "howit": [
+      "Real social cases",
+      "NGO mentorship",
+      "Ethical tech"
+    ],
     "about": [
       {
-        "title": "What!",
-        "description": "A social impact hackathon where participants develop technology solutions that address social challenges and support community organizations in their work.",
-  "icon": "/why.jpeg"
-      },
-      {
-        "title": "Why!",
-        "description": "Many social problems can be alleviated through thoughtful application of technology, but non-profits often lack resources to develop custom solutions.",
-  "icon": "/why.jpeg"
-      },
-      {
-        "title": "How!",
-        "description": "By connecting developers with social organizations and focusing on creating sustainable, impactful technology solutions for community needs.",
-  "icon": "/why.jpeg"
+        "title": "Impact",
+        "description": "Scaling community good.",
+        "icon": "Heart"
       }
     ],
     "whoCanParticipate": [
       {
-        "title": "Student Developers",
-        "description": "Computer science and engineering students passionate about using their technical skills to create positive social impact in their communities.",
-        "icon": "/social.jpeg"
-      },
-      {
-        "title": "Social Workers",
-        "description": "Non-profit professionals, social workers, and community organizers who understand social challenges and can guide technology solutions.",
-        "icon": "/social.jpeg"
-      },
-      {
-        "title": "Design Students",
-        "description": "Design students interested in human-centered design and creating accessible, user-friendly interfaces for diverse populations.",
-        "icon": "/social.jpeg"
+        "title": "Social Coders",
+        "description": "Passion for ethics.",
+        "icon": "Users"
       }
     ],
     "challenges": [
       {
-        "title": "Homelessness Support Platform",
-        "description": "Create digital tools that help homeless individuals access services, resources, and support networks in their communities.",
-        "icon": "/social.jpeg"
-      },
+        "title": "Homeless Support",
+        "description": "Resource platforms.",
+        "icon": "Award"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "user": "student",
+    "category": "AI/ML",
+    "title": "Generative AI Hackathon",
+    "status": "Live",
+    "EventType": "online",
+    "TeamSize": "3",
+    "payment": "free",
+    "tagline": "Next-Gen Intelligence",
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1600&h=900&fit=crop",
+    "prize": "$15,000 + GPU Credits",
+    "startDate": "2025-10-05",
+    "endDate": "2025-10-10",
+    "registrationCloses": "2025-10-04",
+    "submissionDeadline": "2025-10-09",
+    "overview": "Build innovative applications using Generative AI and LLMs for various sectors.",
+    "leadName": "Code Sprint Sigma",
+    "howit": [
+      "API access provided",
+      "Cloud computing support",
+      "Model optimization"
+    ],
+    "about": [
       {
-        "title": "Educational Resource Sharing",
-        "description": "Develop platforms that enable sharing of educational materials and tutoring services in underserved communities.",
-        "icon": "/social.jpeg"
-      },
+        "title": "AI Future",
+        "description": "Empowering creators with LLMs.",
+        "icon": "Zap"
+      }
+    ],
+    "whoCanParticipate": [
       {
-        "title": "Mental Health Support Network",
-        "description": "Build accessible digital platforms that provide mental health resources and peer support for vulnerable populations.",
-        "icon": "/social.jpeg"
+        "title": "ML Engineers",
+        "description": "Python and PyTorch experts.",
+        "icon": "Star"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "LLM Agents",
+        "description": "Autonomous workplace helpers.",
+        "icon": "Target"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "user": "student",
+    "category": "Blockchain",
+    "title": "NFT Gaming Challenge",
+    "status": "Live",
+    "EventType": "online",
+    "TeamSize": "4",
+    "payment": "free",
+    "tagline": "Ownership in Play",
+    "image": "https://images.unsplash.com/photo-1620712943543-bcc4628c7190?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1620712943543-bcc4628c7190?w=1600&h=900&fit=crop",
+    "prize": "$20,000 + NFT Rewards",
+    "startDate": "2025-11-12",
+    "endDate": "2025-11-17",
+    "registrationCloses": "2025-11-11",
+    "submissionDeadline": "2025-11-16",
+    "overview": "Integrate blockchain and NFTs into gaming for true item ownership and economies.",
+    "leadName": "Dev Jam Omega",
+    "howit": [
+      "Solana/Polygon dev",
+      "Game assets design",
+      "Economy balancing"
+    ],
+    "about": [
+      {
+        "title": "Economy",
+        "description": "Player-driven game markets.",
+        "icon": "Zap"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "Game & Web3 Devs",
+        "description": "Cross-discipline teams.",
+        "icon": "Users"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Eco-NFTs",
+        "description": "Sustainable asset minting.",
+        "icon": "Trophy"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "user": "professional",
+    "category": "HealthTech",
+    "title": "HealthTech Innovation Challenge",
+    "status": "Upcoming",
+    "EventType": "hybrid",
+    "TeamSize": "3",
+    "payment": "paid",
+    "tagline": "Technology for Wellness",
+    "image": "https://images.unsplash.com/photo-1576091160550-217359f4ecf8?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1576091160550-217359f4ecf8?w=1600&h=900&fit=crop",
+    "prize": "$25,000 + Med-Lab Incubator",
+    "startDate": "2025-12-01",
+    "endDate": "2025-12-06",
+    "registrationCloses": "2025-11-28",
+    "submissionDeadline": "2025-12-05",
+    "overview": "Solve healthcare challenges using wearable tech, data, and patient-centric portals.",
+    "leadName": "Hackathon Maestro X",
+    "howit": [
+      "Med-data APIs",
+      "Doctor workshops",
+      "Clinical validation"
+    ],
+    "about": [
+      {
+        "title": "Wellness",
+        "description": "Prevention over treatment.",
+        "icon": "Heart"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "Health Pros",
+        "description": "Clinicians and techies.",
+        "icon": "CheckCircle"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Remote Care",
+        "description": "IoT portals for seniors.",
+        "icon": "Award"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "user": "student",
+    "category": "Cloud",
+    "title": "Serverless Scaling Hack",
+    "status": "Live",
+    "EventType": "online",
+    "TeamSize": "3",
+    "payment": "free",
+    "tagline": "Infinite Scalability",
+    "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1600&h=900&fit=crop",
+    "prize": "$10,000 + AWS/GCP Credits",
+    "startDate": "2025-10-15",
+    "endDate": "2025-10-20",
+    "registrationCloses": "2025-10-14",
+    "submissionDeadline": "2025-10-19",
+    "overview": "Focus on cloud-native applications that scale automatically using serverless architecture.",
+    "leadName": "Code Sprint Sigma",
+    "howit": [
+      "Architecture design",
+      "Cost optimization",
+      "Deployment speed"
+    ],
+    "about": [
+      {
+        "title": "Efficiency",
+        "description": "Pay only for what you use.",
+        "icon": "Rocket"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "Cloud Buffs",
+        "description": "DevOps and SRE interests.",
+        "icon": "Shield"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Cold Start Fix",
+        "description": "Optimize serverless latency.",
+        "icon": "Clock"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "user": "professional",
+    "category": "Data Science",
+    "title": "Big Data Global Challenge",
+    "status": "Upcoming",
+    "EventType": "online",
+    "TeamSize": "4",
+    "payment": "paid",
+    "tagline": "Insights from Noise",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&h=900&fit=crop",
+    "prize": "$100,000 Total Prize Pool",
+    "startDate": "2025-11-20",
+    "endDate": "2025-11-25",
+    "registrationCloses": "2025-11-18",
+    "submissionDeadline": "2025-11-24",
+    "overview": "Analyze massive datasets to find patterns in commerce and urbanization.",
+    "leadName": "Dev Jam Omega",
+    "howit": [
+      "Hadoop/Spark tools",
+      "Visualization focus",
+      "Business value"
+    ],
+    "about": [
+      {
+        "title": "Analysis",
+        "description": "Driving decisions with data.",
+        "icon": "Zap"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "Analyst Pros",
+        "description": "Senior data scientists.",
+        "icon": "Star"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Urban Flow",
+        "description": "Predicting city movement.",
+        "icon": "Award"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "user": "student",
+    "category": "Gaming",
+    "title": "Mobile Game Jam Lite",
+    "status": "Live",
+    "EventType": "online",
+    "TeamSize": "2",
+    "payment": "free",
+    "tagline": "Gaming on the Go",
+    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1600&h=900&fit=crop",
+    "prize": "$5,000 + Store Features",
+    "startDate": "2025-10-28",
+    "endDate": "2025-11-02",
+    "registrationCloses": "2025-10-27",
+    "submissionDeadline": "2025-11-01",
+    "overview": "Create hyper-casual or engagement-focused mobile games in 72 hours.",
+    "leadName": "Hackathon Maestro X",
+    "howit": [
+      "Mobile-first design",
+      "Touch controls",
+      "Social integration"
+    ],
+    "about": [
+      {
+        "title": "Fun",
+        "description": "Quick, viral gameplay logic.",
+        "icon": "Zap"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "Casual Devs",
+        "description": "Students new to gaming.",
+        "icon": "Users"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Hyper-Casual",
+        "description": "One-tap mechanic focus.",
+        "icon": "Trophy"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "user": "professional",
+    "category": "Smart Cities",
+    "title": "Urban Transit Hack",
+    "status": "Upcoming",
+    "EventType": "hybrid",
+    "TeamSize": "4",
+    "payment": "paid",
+    "tagline": "Reimagining Commute",
+    "image": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1600&h=900&fit=crop",
+    "prize": "$20,000 + Gov Contracts",
+    "startDate": "2026-01-10",
+    "endDate": "2026-01-15",
+    "registrationCloses": "2026-01-08",
+    "submissionDeadline": "2026-01-14",
+    "overview": "Develop smarter public transit apps and tracking systems for mega-cities.",
+    "leadName": "Code Sprint Sigma",
+    "howit": [
+      "GTFS data analysis",
+      "UX for busy riders",
+      "Hardware GPS integration"
+    ],
+    "about": [
+      {
+        "title": "Transit",
+        "description": "Reducing city travel stress.",
+        "icon": "Rocket"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "City Hackers",
+        "description": "GIS and Backend gurus.",
+        "icon": "Map"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Last Mile",
+        "description": "Connecting buses to homes.",
+        "icon": "Target"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "user": "faculty",
+    "category": "Security",
+    "title": "Identity Theft Defense",
+    "status": "Live",
+    "EventType": "online",
+    "TeamSize": "3",
+    "payment": "free",
+    "tagline": "Protecting Personas",
+    "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1600&h=900&fit=crop",
+    "prize": "$12,000 + Security Certs",
+    "startDate": "2025-11-25",
+    "endDate": "2025-11-30",
+    "registrationCloses": "2025-11-24",
+    "submissionDeadline": "2025-11-29",
+    "overview": "Build portals and tools to help users detect and prevent online identity theft.",
+    "leadName": "Dev Jam Omega",
+    "howit": [
+      "Biometric security",
+      "Phishing simulation",
+      "Credential monitoring"
+    ],
+    "about": [
+      {
+        "title": "ID Protection",
+        "description": "Shielding your digital self.",
+        "icon": "Shield"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "Security Students",
+        "description": "Passionate about privacy.",
+        "icon": "Zap"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Deepfake Detect",
+        "description": "AI to spot face swaps.",
+        "icon": "Target"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "user": "professional",
+    "category": "Space Tech",
+    "title": "Orbit Innovation Jam",
+    "status": "Upcoming",
+    "EventType": "online",
+    "TeamSize": "5",
+    "payment": "free",
+    "tagline": "Final Tech Frontier",
+    "image": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?w=1600&h=900&fit=crop",
+    "prize": "NASA Labs Tour + $50K",
+    "startDate": "2026-02-05",
+    "endDate": "2026-02-10",
+    "registrationCloses": "2026-02-03",
+    "submissionDeadline": "2026-02-09",
+    "overview": "Hack satellite data and debris management software for safer space travel.",
+    "leadName": "Hackathon Maestro X",
+    "howit": [
+      "Spectral data analysis",
+      "Ground station logic",
+      "Launch optimization"
+    ],
+    "about": [
+      {
+        "title": "Space",
+        "description": "Coding the stars.",
+        "icon": "Zap"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "Aerospace Devs",
+        "description": "C++/Embedded experts.",
+        "icon": "Users"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Debris Track",
+        "description": "ML to map orbit junk.",
+        "icon": "Award"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "user": "student",
+    "category": "Social Impact",
+    "title": "Empowered Youth Hack",
+    "status": "Live",
+    "EventType": "online",
+    "TeamSize": "3",
+    "payment": "free",
+    "tagline": "Youth for Youth",
+    "image": "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=800&h=600&fit=crop",
+    "bgimage": "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=1600&h=900&fit=crop",
+    "prize": "$10,000 + Social Grant",
+    "startDate": "2025-11-05",
+    "endDate": "2025-11-10",
+    "registrationCloses": "2025-11-04",
+    "submissionDeadline": "2025-11-09",
+    "overview": "Empower youth through digital literacy and mental wellbeing platforms.",
+    "leadName": "Code Sprint Sigma",
+    "howit": [
+      "Community focus",
+      "Gamified learning",
+      "Safe-space tech"
+    ],
+    "about": [
+      {
+        "title": "Empowerment",
+        "description": "Tech as a ladder.",
+        "icon": "Star"
+      }
+    ],
+    "whoCanParticipate": [
+      {
+        "title": "Under-24s",
+        "description": "Youth-led projects only.",
+        "icon": "Users"
+      }
+    ],
+    "challenges": [
+      {
+        "title": "Mental Shield",
+        "description": "Anti-bullying AI.",
+        "icon": "Award"
       }
     ]
   }
 ]
-
- 

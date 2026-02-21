@@ -25,31 +25,46 @@ async function run() {
   // Clear existing
   await AdminHackathon.deleteMany({});
 
-  const docs = data.map((h) => ({
-    title: h.title,
-    organizer: h.category || 'Organizer',
-    description: h.overview || h.about?.[0]?.description || '',
-    overview: h.overview || '',
-    location: h.category || 'Online',
-    mode: (h.EventType || 'online').toLowerCase(),
-    startDate: h.startDate ? new Date(h.startDate) : undefined,
-    endDate: h.endDate ? new Date(h.endDate) : undefined,
-    registrationCloses: h.registrationCloses ? new Date(h.registrationCloses) : undefined,
-    submissionDeadline: h.submissionDeadline ? new Date(h.submissionDeadline) : undefined,
-    prize: h.prize || '',
-    imageUrl: h.image || '',
-    bgImage: h.bgimage || '',
-    applyUrl: h.registrationUrl || '',
-    tags: [h.category, h.tagline].filter(Boolean),
-    status: mapStatus(h.status, h.startDate, h.endDate),
-    tagline: h.tagline || '',
-    teamSize: h.TeamSize || '',
-    payment: h.payment || '',
-    about: h.about || [],
-    whoCanParticipate: h.whoCanParticipate || [],
-    challenges: h.challenges || [],
-    howit: h.howit || [],
-  }));
+  // Get all instructors
+  const Admin = require('../models/Admin');
+  const instructors = await Admin.find({ role: 'hackathon_instructor' });
+  const instructorMap = {};
+  instructors.forEach(inst => {
+    instructorMap[inst.name.toLowerCase()] = inst._id;
+  });
+
+  const docs = data.map((h) => {
+    const leadName = h.leadName || 'Hackathon Maestro X';
+    const instructorId = instructorMap[leadName.toLowerCase()] || (instructors[0]?._id);
+
+    return {
+      title: h.title,
+      organizer: h.category || 'Organizer',
+      description: h.overview || h.about?.[0]?.description || '',
+      overview: h.overview || '',
+      location: h.category || 'Online',
+      mode: (h.EventType || 'online').toLowerCase(),
+      startDate: h.startDate ? new Date(h.startDate) : undefined,
+      endDate: h.endDate ? new Date(h.endDate) : undefined,
+      registrationCloses: h.registrationCloses ? new Date(h.registrationCloses) : undefined,
+      submissionDeadline: h.submissionDeadline ? new Date(h.submissionDeadline) : undefined,
+      prize: h.prize || '',
+      imageUrl: h.image || '',
+      bgImage: h.bgimage || '',
+      applyUrl: h.registrationUrl || '',
+      tags: [h.category, h.tagline].filter(Boolean),
+      status: mapStatus(h.status, h.startDate, h.endDate),
+      tagline: h.tagline || '',
+      teamSize: h.TeamSize || '',
+      payment: h.payment || '',
+      about: h.about || [],
+      whoCanParticipate: h.whoCanParticipate || [],
+      challenges: h.challenges || [],
+      howit: h.howit || [],
+      leadName: leadName,
+      createdBy: instructorId
+    };
+  });
 
   await AdminHackathon.insertMany(docs);
   console.log(`✅ Seeded ${docs.length} hackathons with full details`);

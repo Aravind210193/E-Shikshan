@@ -163,7 +163,7 @@ exports.getJobById = async (req, res) => {
 // @access  Private
 exports.createJob = async (req, res) => {
   try {
-    const job = await AdminJob.create(req.body);
+    const job = await AdminJob.create({ ...req.body, postedBy: req.admin.id });
     res.status(201).json({ success: true, job });
   } catch (error) {
     console.error('Create job error:', error);

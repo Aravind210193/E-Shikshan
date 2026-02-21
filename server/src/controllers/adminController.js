@@ -9,6 +9,11 @@ const AdminContent = require('../models/AdminContent');
 const AdminCourse = require('../models/AdminCourse');
 const Doubt = require('../models/Doubt');
 const ProjectSubmission = require('../models/ProjectSubmission');
+const HackathonRegistration = require('../models/HackathonRegistration');
+const JobApplication = require('../models/JobApplication');
+const RoadmapEnrollment = require('../models/RoadmapEnrollment');
+const ResumeEnrollment = require('../models/ResumeEnrollment');
+const AdminResumeTemplate = require('../models/AdminResume');
 const sendEmail = require('../utils/sendEmail');
 const Notification = require('../models/Notification');
 const bcrypt = require('bcryptjs');
@@ -32,8 +37,40 @@ const getAllUsers = async (req, res) => {
       userQuery.role = role;
     }
 
+    // Role-based filtering for specialized instructors
+    const adminRole = req.admin?.role?.toLowerCase();
+    const isCourseManager = adminRole === 'course_manager' || adminRole === 'instructor' || adminRole === 'faculty';
+    const isJobInstructor = adminRole === 'job_instructor';
+    const isHackathonInstructor = adminRole === 'hackathon_instructor';
+    const isRoadmapInstructor = adminRole === 'roadmap_instructor';
+    const isLimitedAdmin = isCourseManager || isJobInstructor || isHackathonInstructor || isRoadmapInstructor;
+
+    // If a limited admin is viewing students without any search, only show their OWN students
+    if (isLimitedAdmin && !search) {
+      let registeredStudentIds = [];
+      if (isCourseManager) {
+        // From Enrollment -> Courses
+        const courseModel = require('../models/Course');
+        const myCourses = await courseModel.find({ instructorEmail: req.admin.email }).select('_id');
+        const courseIds = myCourses.map(c => c._id);
+        const enrollmentModel = require('../models/Enrollment');
+        registeredStudentIds = await enrollmentModel.find({ courseId: { $in: courseIds } }).distinct('userId');
+      } else if (isHackathonInstructor) {
+        // From HackathonRegistration
+        const hackathonRegModel = require('../models/HackathonRegistration');
+        registeredStudentIds = await hackathonRegModel.find({ instructor: req.admin._id }).distinct('userId');
+      } else if (isJobInstructor) {
+        // From JobApplication
+        const jobAppModel = require('../models/JobApplication');
+        registeredStudentIds = await jobAppModel.find({ instructor: req.admin._id }).distinct('student');
+      }
+
+      // Apply filter
+      userQuery._id = { $in: registeredStudentIds };
+    }
+
     // Build admin query (include only when appropriate)
-    const includeAdmins = true; // include Admin collection by default
+    const includeAdmins = !isLimitedAdmin; // Regular instructors shouldn't see other admins in this list usually
     const adminQuery = {};
     if (search) {
       adminQuery.$or = [
@@ -149,10 +186,27 @@ const getUserById = async (req, res) => {
     // Try standard user first
     let user = await User.findById(id).select('-password');
     if (user) {
-      const enrollments = await Enrollment.find({ userId: id })
-        .populate('courseId')
-        .sort('-enrolledAt');
-      return res.json({ user, enrollments });
+      const { UserGamification } = require('../models/Gamification');
+      const [enrollments, jobApplications, hackathonRegistrations, roadmapSubmissions, roadmapEnrollments, resumeEnrollments, gamification] = await Promise.all([
+        Enrollment.find({ userId: id }).populate('courseId').sort('-enrolledAt'),
+        JobApplication.find({ student: id }).populate('job').sort('-appliedAt'),
+        HackathonRegistration.find({ userId: id }).populate('hackathonId').sort('-createdAt'),
+        ProjectSubmission.find({ student: id, workType: 'roadmap_project' }).populate('roadmap').sort('-createdAt'),
+        RoadmapEnrollment.find({ userId: id }).populate('roadmapId').sort('-enrolledAt'),
+        ResumeEnrollment.find({ userId: id }).populate('templateId').sort('-enrolledAt'),
+        UserGamification.findOne({ userId: id }).populate('badges.badgeId')
+      ]);
+
+      return res.json({
+        user,
+        enrollments,
+        jobApplications,
+        hackathonRegistrations,
+        roadmapSubmissions,
+        roadmapEnrollments,
+        resumeEnrollments,
+        gamification
+      });
     }
 
     // Try admin account
@@ -427,6 +481,132 @@ const grantCourseAccess = async (req, res) => {
   }
 };
 
+/**
+ * @desc    Grant roadmap access to user
+ * @route   POST /api/admin/roadmaps/grant
+ * @access  Private/Admin
+ */
+const grantRoadmapAccess = async (req, res) => {
+  try {
+    const { userId, roadmapId } = req.body;
+
+    if (!userId || !roadmapId) {
+      return res.status(400).json({ message: 'User ID and Roadmap ID are required' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const roadmap = await AdminRoadmap.findById(roadmapId);
+    if (!roadmap) return res.status(404).json({ message: 'Roadmap not found' });
+
+    const existing = await RoadmapEnrollment.findOne({ userId, roadmapId });
+    if (existing) return res.status(400).json({ message: 'User already has access to this roadmap' });
+
+    const enrollment = await RoadmapEnrollment.create({
+      userId,
+      roadmapId,
+      grantedBy: req.admin._id
+    });
+
+    // Notify Student
+    try {
+      await Notification.create({
+        recipientEmail: user.email,
+        title: 'Roadmap Access Granted',
+        message: `You have been granted access to the roadmap: ${roadmap.title}`,
+        type: 'general',
+        relatedId: roadmapId
+      });
+
+      await sendEmail({
+        to: user.email,
+        subject: `Roadmap Access Granted: ${roadmap.title} - E-Shikshan`,
+        html: `
+          <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+            <h2>Roadmap Access Granted</h2>
+            <p>Hi ${user.name},</p>
+            <p>You have been granted access to the learning roadmap: <b>${roadmap.title}</b>.</p>
+            <p>You can start following the path and submitting your projects now.</p>
+            <br/>
+            <p>Happy Learning!<br/>Team E-Shikshan</p>
+          </div>
+        `
+      });
+    } catch (err) {
+      console.error('Roadmap Grant Notification error:', err);
+    }
+
+    res.status(201).json({ message: 'Roadmap access granted successfully', enrollment });
+  } catch (error) {
+    console.error('Grant roadmap error:', error);
+    res.status(500).json({ message: 'Failed to grant roadmap access', error: error.message });
+  }
+};
+
+/**
+ * @desc    Grant resume template access to user
+ * @route   POST /api/admin/resumes/grant
+ * @access  Private/Admin
+ */
+const grantResumeAccess = async (req, res) => {
+  try {
+    const { userId, templateId } = req.body;
+
+    if (!userId || !templateId) {
+      return res.status(400).json({ message: 'User ID and Template ID are required' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const template = await AdminResumeTemplate.findById(templateId);
+    if (!template) return res.status(404).json({ message: 'Resume template not found' });
+
+    const existing = await ResumeEnrollment.findOne({ userId, templateId });
+    if (existing) return res.status(400).json({ message: 'User already has access to this template' });
+
+    const enrollment = await ResumeEnrollment.create({
+      userId,
+      templateId,
+      grantedBy: req.admin._id
+    });
+
+    // Notify Student
+    try {
+      await Notification.create({
+        recipientEmail: user.email,
+        title: 'Premium Resume Template Unlocked',
+        message: `You now have access to the premium resume template: ${template.name}`,
+        type: 'general',
+        relatedId: templateId
+      });
+
+      await sendEmail({
+        to: user.email,
+        subject: `Premium Resume Template Unlocked: ${template.name}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+            <h2>Resume Template Unlocked</h2>
+            <p>Hi ${user.name},</p>
+            <p>You have been granted access to a premium resume template: <b>${template.name}</b>.</p>
+            <p>You can now use this template to build your professional resume.</p>
+            <br/>
+            <p>Best Regards,<br/>Team E-Shikshan</p>
+          </div>
+        `
+      });
+    } catch (err) {
+      console.error('Resume Grant Notification error:', err);
+    }
+
+    res.status(201).json({ message: 'Resume access granted successfully', enrollment });
+  } catch (error) {
+    console.error('Grant resume error:', error);
+    res.status(500).json({ message: 'Failed to grant resume access', error: error.message });
+  }
+};
+
 // @desc    Revoke course access from user
 // @route   PUT /api/admin/enrollments/:id/revoke
 // @access  Private/Admin
@@ -673,9 +853,17 @@ const getDashboardStats = async (req, res) => {
       const uniqueStudentIds = await Enrollment.distinct('userId', { courseId: { $in: courseIds } });
       totalUsers = uniqueStudentIds.length;
       totalStudents = uniqueStudentIds.length;
-    } else if (isJobInstructor || isHackathonInstructor || isRoadmapInstructor || isResumeInstructor) {
-      // Estimate based on applicants? For now just show 0 or maybe all users is fine?
-      // Let's show all users for now as they might want to see potential pool
+    } else if (isHackathonInstructor) {
+      const uniqueStudentIds = await require('../models/HackathonRegistration').distinct('userId', { instructor: req.admin._id });
+      totalStudents = uniqueStudentIds.length;
+      totalUsers = totalStudents;
+    } else if (isJobInstructor) {
+      const uniqueStudentIds = await require('../models/JobApplication').distinct('student', { instructor: req.admin._id });
+      totalStudents = uniqueStudentIds.length;
+      totalUsers = totalStudents;
+    } else if (isRoadmapInstructor || isResumeInstructor) {
+      // These roles don't have direct "students", maybe we show total pool?
+      // Or 0? Let's show total pool for them since they are more like content creators.
       totalUsers = await User.countDocuments();
       totalStudents = await User.countDocuments({ role: 'student' });
     } else {
@@ -723,6 +911,23 @@ const getDashboardStats = async (req, res) => {
     // Hackathon Stats
     const totalHackathons = await AdminHackathon.countDocuments(hackathonQuery);
     const activeHackathons = await AdminHackathon.countDocuments({ ...hackathonQuery, status: 'active' });
+
+    // Registration and Application Stats - Improved Consistency
+    let totalRegistrations = 0;
+    if (isHackathonInstructor) {
+      // Direct count where this instructor is assigned
+      totalRegistrations = await HackathonRegistration.countDocuments({ instructor: req.admin._id });
+    } else if (!isLimitedAdmin) {
+      totalRegistrations = await HackathonRegistration.countDocuments();
+    }
+
+    let totalApplications = 0;
+    if (isJobInstructor) {
+      // Direct count where this instructor is assigned
+      totalApplications = await JobApplication.countDocuments({ instructor: req.admin._id });
+    } else if (!isLimitedAdmin) {
+      totalApplications = await JobApplication.countDocuments();
+    }
 
     // Courses by category (Course Manager or Admin)
     let coursesByCategory = [];
@@ -935,8 +1140,10 @@ const getDashboardStats = async (req, res) => {
         totalRevenue,
         totalHackathons,
         activeHackathons,
+        totalRegistrations,
         totalJobs,
         activeJobs,
+        totalApplications,
         totalRoadmaps,
         activeRoadmaps,
         totalContent,
@@ -1185,6 +1392,8 @@ module.exports = {
     }
   },
   grantCourseAccess,
+  grantRoadmapAccess,
+  grantResumeAccess,
   revokeCourseAccess,
   restoreCourseAccess,
   deleteEnrollment,

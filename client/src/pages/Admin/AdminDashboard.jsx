@@ -52,8 +52,10 @@ const AdminDashboard = () => {
     totalRevenue: 0,
     totalHackathons: 0,
     activeHackathons: 0,
+    totalRegistrations: 0,
     totalJobs: 0,
     activeJobs: 0,
+    totalApplications: 0,
     totalRoadmaps: 0,
     activeRoadmaps: 0,
   });
@@ -226,22 +228,59 @@ const AdminDashboard = () => {
       {/* Header Bar */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-4 border-b border-[#2d2f45] pb-6">
         <div className="flex items-center gap-6">
-          <span className="text-[#7a7f9a] font-bold text-sm">Status :</span>
+          <span className="text-[#7a7f9a] font-bold text-sm">Target Metrics :</span>
           <div className="flex gap-6">
-            <span className="flex items-center gap-2 text-white text-xs font-semibold">
-              <span className="w-2 h-2 bg-pink-500 rounded-sm"></span> {stats.totalCourses} Courses
-            </span>
-            <span className="flex items-center gap-2 text-white text-xs font-semibold">
-              <span className="w-2 h-2 bg-green-500 rounded-sm"></span> {stats.totalEnrollments} Enrollments
-            </span>
-            {isManager ? (
-              <span className="flex items-center gap-2 text-white text-xs font-semibold">
-                <span className="w-2 h-2 bg-red-500 rounded-sm animate-pulse"></span> {stats.doubtsStats?.pending || 0} Pending Doubts
-              </span>
+            {isHackathonInstructor ? (
+              <>
+                <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                  <span className="w-2 h-2 bg-rose-500 rounded-sm"></span> {stats.totalHackathons || 0} Hackathons
+                </span>
+                <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                  <span className="w-2 h-2 bg-blue-500 rounded-sm"></span> {stats.totalRegistrations || 0} Registrations
+                </span>
+              </>
+            ) : isJobInstructor ? (
+              <>
+                <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                  <span className="w-2 h-2 bg-indigo-500 rounded-sm"></span> {stats.totalJobs || 0} Jobs
+                </span>
+                <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                  <span className="w-2 h-2 bg-purple-500 rounded-sm"></span> {stats.totalApplications || 0} Applicants
+                </span>
+              </>
+            ) : isRoadmapInstructor ? (
+              <>
+                <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                  <span className="w-2 h-2 bg-orange-500 rounded-sm"></span> {stats.totalRoadmaps || 0} Roadmaps
+                </span>
+                <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                  <span className="w-2 h-2 bg-green-500 rounded-sm"></span> {stats.projectStats?.total || 0} Projects
+                </span>
+              </>
+            ) : isResumeInstructor ? (
+              <>
+                <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                  <span className="w-2 h-2 bg-indigo-500 rounded-sm"></span> {stats.total || 0} Templates
+                </span>
+              </>
             ) : (
-              <span className="flex items-center gap-2 text-white text-xs font-semibold">
-                <span className="w-2 h-2 bg-cyan-500 rounded-sm"></span> {stats.totalStudents || 0} Students
-              </span>
+              <>
+                <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                  <span className="w-2 h-2 bg-pink-500 rounded-sm"></span> {stats.totalCourses} Courses
+                </span>
+                <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                  <span className="w-2 h-2 bg-green-500 rounded-sm"></span> {stats.totalEnrollments} Enrollments
+                </span>
+                {isManager ? (
+                  <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                    <span className="w-2 h-2 bg-red-500 rounded-sm animate-pulse"></span> {stats.doubtsStats?.pending || 0} Pending Doubts
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2 text-white text-xs font-semibold">
+                    <span className="w-2 h-2 bg-cyan-500 rounded-sm"></span> {stats.totalStudents || 0} Students
+                  </span>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -253,23 +292,36 @@ const AdminDashboard = () => {
                 <Users className="w-4 h-4 text-indigo-500" /> Users
               </button>
             )}
-            <button onClick={() => navigate(isManager ? '/instructor/courses' : '/admin/courses')} className="flex items-center gap-1 hover:text-white transition-colors">
-              <BookOpen className="w-4 h-4 text-pink-500" /> Courses
-            </button>
+
+            {/* Contextual Quick Links */}
+            {(isManager || !isLimitedAdmin) && (
+              <button onClick={() => navigate(isManager ? '/instructor/courses' : '/admin/courses')} className="flex items-center gap-1 hover:text-white transition-colors">
+                <BookOpen className="w-4 h-4 text-pink-500" /> Courses
+              </button>
+            )}
+
+            {isHackathonInstructor && (
+              <button onClick={() => navigate(`${base}/hackathons`)} className="flex items-center gap-1 hover:text-white transition-colors">
+                <Trophy className="w-4 h-4 text-rose-500" /> Hackathons
+              </button>
+            )}
+
+            {isJobInstructor && (
+              <button onClick={() => navigate(`${base}/jobs`)} className="flex items-center gap-1 hover:text-white transition-colors">
+                <Briefcase className="w-4 h-4 text-indigo-500" /> Jobs
+              </button>
+            )}
+
             <button className="flex items-center gap-1 hover:text-white transition-colors">
               <FileText className="w-4 h-4 text-green-500" /> Reports
             </button>
+
             <button className="flex items-center gap-1 hover:text-white transition-colors" onClick={() => {
               sessionStorage.removeItem('adminToken');
               sessionStorage.removeItem('adminRole');
               sessionStorage.removeItem('adminData');
               window.location.href = '/admin';
             }}><LogOut className="w-4 h-4 text-cyan-500" /> Logout</button>
-          </div>
-          <div className="flex gap-2">
-            <button className="p-2 bg-[#1a1c2c] border border-[#2d2f45] rounded hover:border-indigo-500 transition-all text-[#7a7f9a]"><TrendingUp className="w-4 h-4" /></button>
-            <button className="p-2 bg-[#1a1c2c] border border-[#2d2f45] rounded hover:border-indigo-500 transition-all text-[#7a7f9a]"><Activity className="w-4 h-4" /></button>
-            <button className="p-2 bg-[#1a1c2c] border border-[#2d2f45] rounded hover:border-indigo-500 transition-all text-[#7a7f9a]"><TrendingUp className="w-4 h-4 rotate-90" /></button>
           </div>
         </div>
       </div>
@@ -349,7 +401,7 @@ const AdminDashboard = () => {
                 <Users className="w-6 h-6 text-blue-500" />
               </div>
               <div>
-                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Registrations</p>
+                <p className="text-[#7a7f9a] text-[10px] font-bold uppercase tracking-wider">Total Registrations</p>
                 <h3 className="text-white text-xl font-extrabold mt-0.5">{stats.totalRegistrations || 0}</h3>
               </div>
             </div>
@@ -713,142 +765,143 @@ const AdminDashboard = () => {
       )}
 
       {/* Registered Students Section Based on Course Selection */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-8 shadow-2xl"
-      >
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-          <div>
-            <h3 className="text-2xl font-black text-white tracking-tight">Registered Students</h3>
-            <p className="text-[#7a7f9a] text-sm mt-1">Manage and monitor students enrolled in your courses.</p>
-          </div>
-          <div className="w-full md:w-auto min-w-[300px]">
-            <label className="text-[10px] text-[#7a7f9a] font-black uppercase tracking-widest mb-2 block">Filter by Course</label>
-            <div className="relative">
-              <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 text-indigo-400 w-5 h-5" />
-              <select
-                value={courseFilter}
-                onChange={(e) => setCourseFilter(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-[#131522] border border-[#2d2f45] rounded-xl text-white appearance-none focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-bold text-sm cursor-pointer"
-              >
-                <option value="">Select a course to view students</option>
-                {instructorCourses.map(course => (
-                  <option key={course._id} value={course._id}>{course.title}</option>
-                ))}
-              </select>
+      {(isManager || !isLimitedAdmin) && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="bg-[#1a1c2c] border border-[#2d2f45] rounded-xl p-8 shadow-2xl"
+        >
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+            <div>
+              <h3 className="text-2xl font-black text-white tracking-tight">Registered Students</h3>
+              <p className="text-[#7a7f9a] text-sm mt-1">Manage and monitor students enrolled in your courses.</p>
+            </div>
+            <div className="w-full md:w-auto min-w-[300px]">
+              <label className="text-[10px] text-[#7a7f9a] font-black uppercase tracking-widest mb-2 block">Filter by Course</label>
+              <div className="relative">
+                <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 text-indigo-400 w-5 h-5" />
+                <select
+                  value={courseFilter}
+                  onChange={(e) => setCourseFilter(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 bg-[#131522] border border-[#2d2f45] rounded-xl text-white appearance-none focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-bold text-sm cursor-pointer"
+                >
+                  <option value="">Select a course to view students</option>
+                  {instructorCourses.map(course => (
+                    <option key={course._id} value={course._id}>{course.title}</option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
-        </div>
 
-        {courseFilter ? (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="text-left border-b border-[#2d2f45]">
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider pl-4">Student</th>
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider">Enrollment Date</th>
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider">Payment</th>
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider text-center">Status</th>
-                  <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider text-right pr-4">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#2d2f45]">
-                {studentsLoading ? (
-                  <tr>
-                    <td colSpan="5" className="py-12 text-center text-[#7a7f9a]">
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-                        <span className="font-bold text-sm">Fetching student roster...</span>
-                      </div>
-                    </td>
+          {courseFilter ? (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="text-left border-b border-[#2d2f45]">
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider pl-4">Student</th>
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider">Enrollment Date</th>
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider">Payment</th>
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider text-center">Status</th>
+                    <th className="pb-4 text-[#7a7f9a] font-bold text-[10px] uppercase tracking-wider text-right pr-4">Actions</th>
                   </tr>
-                ) : courseStudents.length > 0 ? (
-                  courseStudents.map((enr) => (
-                    <tr key={enr._id} className="group hover:bg-[#2d2f45]/20 transition-all duration-300">
-                      <td className="py-5 pl-4">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-indigo-500/20">
-                            {enr.userId?.name?.charAt(0).toUpperCase() || 'S'}
-                          </div>
-                          <div>
-                            <p className="text-white font-bold text-sm">{enr.userId?.name || 'Unknown Student'}</p>
-                            <p className="text-[#7a7f9a] text-[10px] font-medium">{enr.userId?.email || 'No email'}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-5">
-                        <span className="text-white text-sm font-bold opacity-80">
-                          {enr.enrolledAt ? new Date(enr.enrolledAt).toLocaleDateString() : '-'}
-                        </span>
-                      </td>
-                      <td className="py-5">
-                        <span className={`text-[10px] font-black uppercase px-2 py-1 rounded-md tracking-tighter ${enr.paymentStatus === 'completed' || enr.paymentStatus === 'free' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
-                          }`}>
-                          {enr.paymentStatus}
-                        </span>
-                      </td>
-                      <td className="py-5 text-center">
-                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${enr.status === 'active' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
-                          }`}>
-                          {enr.status === 'active' ? 'Active' : 'Inactive'}
-                        </span>
-                      </td>
-                      <td className="py-5 pr-4">
-                        <div className="flex items-center justify-end gap-2 text-[10px]">
-                          {enr.status === 'active' ? (
-                            <button
-                              onClick={() => handleEnrollmentAction('revoke', enr._id)}
-                              className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
-                              title="Revoke Access"
-                            >
-                              <ShieldCheck className="w-3 h-3" /> Revoke
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => handleEnrollmentAction('restore', enr._id)}
-                              className="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
-                              title="Restore Access"
-                            >
-                              <RotateCcw className="w-3 h-3" /> Restore
-                            </button>
-                          )}
-                          <button
-                            onClick={() => handleEnrollmentAction('delete', enr._id)}
-                            className="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
-                            title="Delete Enrollment"
-                          >
-                            <Trash2 className="w-3 h-3" /> Delete
-                          </button>
+                </thead>
+                <tbody className="divide-y divide-[#2d2f45]">
+                  {studentsLoading ? (
+                    <tr>
+                      <td colSpan="5" className="py-12 text-center text-[#7a7f9a]">
+                        <div className="flex flex-col items-center gap-3">
+                          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+                          <span className="font-bold text-sm">Fetching student roster...</span>
                         </div>
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5" className="py-12 text-center text-[#7a7f9a]">
-                      <div className="flex flex-col items-center gap-2">
-                        <Users className="w-8 h-8 opacity-20" />
-                        <p className="font-bold text-sm">No students registered for this course yet.</p>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="bg-[#131522] border border-[#2d2f45] border-dashed rounded-2xl py-20 text-center">
-            <div className="max-w-xs mx-auto">
-              <UserPlus className="w-12 h-12 text-indigo-500/30 mx-auto mb-4" />
-              <h4 className="text-white font-bold mb-2">Select a Course</h4>
-              <p className="text-[#7a7f9a] text-xs">Choose a course from the dropdown above to manage its registered students and enrollment status.</p>
+                  ) : courseStudents.length > 0 ? (
+                    courseStudents.map((enr) => (
+                      <tr key={enr._id} className="group hover:bg-[#2d2f45]/20 transition-all duration-300">
+                        <td className="py-5 pl-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-indigo-500/20">
+                              {enr.userId?.name?.charAt(0).toUpperCase() || 'S'}
+                            </div>
+                            <div>
+                              <p className="text-white font-bold text-sm">{enr.userId?.name || 'Unknown Student'}</p>
+                              <p className="text-[#7a7f9a] text-[10px] font-medium">{enr.userId?.email || 'No email'}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-5">
+                          <span className="text-white text-sm font-bold opacity-80">
+                            {enr.enrolledAt ? new Date(enr.enrolledAt).toLocaleDateString() : '-'}
+                          </span>
+                        </td>
+                        <td className="py-5">
+                          <span className={`text-[10px] font-black uppercase px-2 py-1 rounded-md tracking-tighter ${enr.paymentStatus === 'completed' || enr.paymentStatus === 'free' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'
+                            }`}>
+                            {enr.paymentStatus}
+                          </span>
+                        </td>
+                        <td className="py-5 text-center">
+                          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${enr.status === 'active' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
+                            }`}>
+                            {enr.status === 'active' ? 'Active' : 'Inactive'}
+                          </span>
+                        </td>
+                        <td className="py-5 pr-4">
+                          <div className="flex items-center justify-end gap-2 text-[10px]">
+                            {enr.status === 'active' ? (
+                              <button
+                                onClick={() => handleEnrollmentAction('revoke', enr._id)}
+                                className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
+                                title="Revoke Access"
+                              >
+                                <ShieldCheck className="w-3 h-3" /> Revoke
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => handleEnrollmentAction('restore', enr._id)}
+                                className="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
+                                title="Restore Access"
+                              >
+                                <RotateCcw className="w-3 h-3" /> Restore
+                              </button>
+                            )}
+                            <button
+                              onClick={() => handleEnrollmentAction('delete', enr._id)}
+                              className="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-lg transition-all font-black uppercase tracking-tighter flex items-center gap-1.5"
+                              title="Delete Enrollment"
+                            >
+                              <Trash2 className="w-3 h-3" /> Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="py-12 text-center text-[#7a7f9a]">
+                        <div className="flex flex-col items-center gap-2">
+                          <Users className="w-8 h-8 opacity-20" />
+                          <p className="font-bold text-sm">No students registered for this course yet.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
-          </div>
-        )}
-      </motion.div>
-
+          ) : (
+            <div className="bg-[#131522] border border-[#2d2f45] border-dashed rounded-2xl py-20 text-center">
+              <div className="max-w-xs mx-auto">
+                <UserPlus className="w-12 h-12 text-indigo-500/30 mx-auto mb-4" />
+                <h4 className="text-white font-bold mb-2">Select a Course</h4>
+                <p className="text-[#7a7f9a] text-xs">Choose a course from the dropdown above to manage its registered students and enrollment status.</p>
+              </div>
+            </div>
+          )}
+        </motion.div>
+      )}
     </div>
   );
 };

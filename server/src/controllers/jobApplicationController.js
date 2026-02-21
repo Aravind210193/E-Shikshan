@@ -141,8 +141,12 @@ exports.getMyApplications = async (req, res) => {
 // @access  Private (Instructor/Admin)
 exports.getInstructorApplications = async (req, res) => {
     try {
-        const instructorId = req.admin.id;
-        const applications = await JobApplication.find({ instructor: instructorId })
+        const query = {};
+        if (req.admin.role !== 'admin') {
+            query.instructor = req.admin.id;
+        }
+
+        const applications = await JobApplication.find(query)
             .populate('job', 'title company')
             .populate('student', 'name email')
             .sort('-appliedAt');
@@ -284,5 +288,79 @@ exports.deleteApplication = async (req, res) => {
     } catch (error) {
         console.error('Delete job application error:', error);
         res.status(500).json({ message: 'Server error' });
+    }
+};
+
+// @desc    Grant job access/application (Admin/Instructor version)
+exports.grantJobAccess = async (req, res) => {
+    try {
+        const { userId, jobId, resumeUrl, coverLetter } = req.body;
+
+        if (!userId || !jobId) {
+            return res.status(400).json({ message: 'User ID and Job ID are required' });
+        }
+
+        // Check if job exists
+        const job = await AdminJob.findById(jobId);
+        if (!job) {
+            return res.status(404).json({ message: 'Job not found' });
+        }
+
+        // Check if student exists
+        const student = await User.findById(userId).select('name email');
+        if (!student) {
+            return res.status(404).json({ message: 'Student not found' });
+        }
+
+        // Check if already applied
+        const existing = await JobApplication.findOne({ job: jobId, student: userId });
+        if (existing) {
+            return res.status(400).json({ message: 'Student has already applied for this job' });
+        }
+
+        const application = await JobApplication.create({
+            job: jobId,
+            jobModel: 'AdminJob',
+            student: userId,
+            instructor: job.postedBy || req.admin._id,
+            resumeUrl: resumeUrl || student.resume || 'N/A',
+            coverLetter: coverLetter || 'System granted application.',
+            status: 'shortlisted'
+        });
+
+        // Notify Student
+        await Notification.create({
+            recipient: userId,
+            recipientType: 'User',
+            title: 'Job Application Recorded',
+            message: `Your application for "${job.title}" has been manually recorded by an administrator.`,
+            type: 'job_application',
+            relatedId: jobId
+        });
+
+        // Email Notification
+        try {
+            await sendEmail({
+                to: student.email,
+                subject: `Application Recorded: ${job.title}`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+                        <h2>Application Recorded</h2>
+                        <p>Hi ${student.name},</p>
+                        <p>An application has been manually recorded for you for the position: <b>${job.title}</b> at <b>${job.company}</b>.</p>
+                        <p>You can track the progress on your profile page.</p>
+                        <br/>
+                        <p>Best regards,<br/>E-Shikshan Team</p>
+                    </div>
+                `
+            });
+        } catch (e) {
+            console.error("Grant job email failed", e);
+        }
+
+        res.status(201).json({ success: true, message: 'Job application recorded successfully', application });
+    } catch (error) {
+        console.error('Grant job access error:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };

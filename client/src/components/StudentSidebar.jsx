@@ -21,7 +21,7 @@ const StudentSidebar = () => {
         { path: '/dashboard/doubts', icon: MessageSquare, label: 'Doubts' },
         { path: '/dashboard/roadmaps', icon: BookOpen, label: 'My Roadmaps' },
         { path: '/dashboard/job-applications', icon: Briefcase, label: 'Job Applications' },
-        { path: '/dashboard/achievements', icon: Trophy, label: 'Achievements' },
+        { path: '/dashboard/gamification', icon: Trophy, label: 'Achievements & XP' },
         { path: '/profile', icon: User, label: 'Profile' },
         { path: '/settings', icon: Settings, label: 'Settings' },
     ];

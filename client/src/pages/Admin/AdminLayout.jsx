@@ -44,6 +44,7 @@ const AdminLayout = ({ setIsAdminLoggedIn, children }) => {
       : role === 'job_instructor'
         ? [
           { path: `${base}/dashboard`, label: "Dashboard", icon: LayoutDashboard },
+          { path: `${base}/students`, label: "Students", icon: GraduationCap },
           { path: `${base}/jobs`, label: "Jobs", icon: Briefcase },
           { path: `${base}/applications`, label: "Applicants", icon: FileCheck },
           { path: `${base}/settings`, label: "Settings", icon: Settings }
@@ -51,6 +52,7 @@ const AdminLayout = ({ setIsAdminLoggedIn, children }) => {
         : role === 'hackathon_instructor'
           ? [
             { path: `${base}/dashboard`, label: "Dashboard", icon: LayoutDashboard },
+            { path: `${base}/students`, label: "Students", icon: GraduationCap },
             { path: `${base}/hackathons`, label: "Hackathons", icon: Trophy },
             { path: `${base}/applications`, label: "Registrations", icon: FileCheck },
             { path: `${base}/settings`, label: "Settings", icon: Settings }

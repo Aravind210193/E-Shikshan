@@ -147,11 +147,20 @@ export const projectSubmissionAPI = {
   delete: (id) => api.delete(`/project-submissions/${id}`),
 };
 
+export const roadmapAPI = {
+  getAll: (params) => api.get('/roadmaps', { params }),
+  getById: (id) => api.get(`/roadmaps/${id}`),
+};
+
 export const notificationAPI = {
   getNotifications: () => api.get('/notifications'),
   markAsRead: (id) => api.patch(`/notifications/${id}/read`),
   markAllAsRead: () => api.patch('/notifications/read-all'),
   delete: (id) => api.delete(`/notifications/${id}`),
+};
+
+export const aiAPI = {
+  chat: (data) => api.post('/ai/chat', data),
 };
 
 // Content API
@@ -196,13 +205,31 @@ export const adminAPI = {
 
   // Enrollment Management
   grantCourseAccess: (data) => api.post('/admin/enrollments/grant', data),
+  grantHackathonAccess: (data) => api.post('/admin/hackathons/grant', data),
+  grantJobAccess: (data) => api.post('/admin/jobs/grant', data),
+  grantRoadmapAccess: (data) => api.post('/admin/roadmaps/grant', data),
+  grantResumeAccess: (data) => api.post('/admin/resumes/grant', data),
   revokeCourseAccess: (id) => api.put(`/admin/enrollments/${id}/revoke`),
   restoreCourseAccess: (id) => api.put(`/admin/enrollments/${id}/restore`),
   deleteEnrollment: (id) => api.delete(`/admin/enrollments/${id}`)
 };
 
+export const gamificationAPI = {
+  getProfile: () => api.get('/gamification/profile'),
+  getActivity: (params) => api.get('/gamification/activity', { params }),
+  getLeaderboard: (params) => api.get('/gamification/leaderboard', { params }),
+  getBadges: () => api.get('/gamification/badges'),
+  trackVideo: (data) => api.post('/gamification/track/video', data),
+  trackQuiz: (data) => api.post('/gamification/track/quiz', data),
+  trackAssignment: (data) => api.post('/gamification/track/assignment', data)
+};
+
 export const resumeTemplateAPI = {
   getAll: () => api.get('/resume-templates')
+};
+
+export const supportAPI = {
+  contact: (data) => api.post('/support/contact', data)
 };
 
 export default api;

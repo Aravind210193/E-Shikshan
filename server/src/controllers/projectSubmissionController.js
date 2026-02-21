@@ -116,6 +116,26 @@ exports.submitProject = async (req, res) => {
             }
         }
 
+        // Award points based on work type
+        try {
+            const { trackAssignmentSubmitted, trackProjectSubmitted } = require('../utils/gamification');
+            if (workType === 'assignment') {
+                await trackAssignmentSubmitted(userId, {
+                    courseId: courseId,
+                    title: title,
+                    onTime: true // Default to on-time for now
+                });
+            } else if (workType === 'project' || workType === 'roadmap_project') {
+                await trackProjectSubmitted(userId, {
+                    courseId: courseId,
+                    roadmapId: rId,
+                    title: title
+                });
+            }
+        } catch (gamifyErr) {
+            console.error('Gamification tracking failed for submission:', gamifyErr);
+        }
+
         res.status(201).json({
             success: true,
             message: 'Project submitted successfully',

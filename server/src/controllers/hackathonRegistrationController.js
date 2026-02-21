@@ -124,6 +124,17 @@ exports.register = async (req, res) => {
       }
     }
 
+    // Award points for joining
+    try {
+      const { trackHackathonActivity } = require('../utils/gamification');
+      await trackHackathonActivity(userId, 'joined', {
+        hackathonId: hackathonId,
+        title: hackathon.title
+      });
+    } catch (gamifyErr) {
+      console.error('Gamification tracking failed for hackathon registration:', gamifyErr);
+    }
+
     res.status(201).json({
       success: true,
       message: 'Successfully registered for hackathon',
@@ -212,10 +223,13 @@ exports.cancelRegistration = async (req, res) => {
 // Get registrations for instructor
 exports.getInstructorRegistrations = async (req, res) => {
   try {
-    const instructorId = req.admin._id;
+    const query = {};
+    if (req.admin.role !== 'admin') {
+      query.instructor = req.admin._id;
+    }
 
-    // Find registrations where this instructor is assigned
-    const registrations = await HackathonRegistration.find({ instructor: instructorId })
+    // Find registrations
+    const registrations = await HackathonRegistration.find(query)
       .populate('userId', 'name email avatar')
       .populate('hackathonId')
       .sort({ createdAt: -1 });
@@ -243,8 +257,29 @@ exports.updateRegistrationStatus = async (req, res) => {
       return res.status(404).json({ message: 'Registration not found' });
     }
 
+    const oldStatus = registration.status;
     registration.status = status;
     await registration.save();
+
+    // Award points for selection/rounds
+    if (status !== oldStatus) {
+      try {
+        const { trackHackathonActivity } = require('../utils/gamification');
+        if (status === 'approved' || status === 'shortlisted') {
+          await trackHackathonActivity(registration.userId._id, 'selected', {
+            hackathonId: registration.hackathonId._id,
+            title: registration.hackathonId.title
+          });
+        } else if (status === 'further_round') {
+          await trackHackathonActivity(registration.userId._id, 'round_cleared', {
+            hackathonId: registration.hackathonId._id,
+            title: registration.hackathonId.title
+          });
+        }
+      } catch (gamifyErr) {
+        console.error('Gamification tracking failed for hackathon status update:', gamifyErr);
+      }
+    }
 
     // Notify Student
     await Notification.create({
@@ -353,5 +388,99 @@ exports.deleteRegistration = async (req, res) => {
   } catch (err) {
     console.error('Delete hackathon registration error:', err);
     res.status(500).json({ message: 'Server error' });
+  }
+};
+// Grant hackathon access (Admin/Instructor version)
+exports.grantHackathonAccess = async (req, res) => {
+  try {
+    const { userId, hackathonId, teamName, projectTitle } = req.body;
+
+    if (!userId || !hackathonId) {
+      return res.status(400).json({ message: 'User ID and Hackathon ID are required' });
+    }
+
+    // Check if hackathon exists
+    const hackathon = await AdminHackathon.findById(hackathonId);
+    if (!hackathon) {
+      return res.status(404).json({ message: 'Hackathon not found' });
+    }
+
+    // Check if user exists
+    const user = await User.findById(userId).select('name email phone');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if already registered
+    const existing = await HackathonRegistration.findOne({ userId, hackathonId });
+    if (existing) {
+      return res.status(400).json({ message: 'Student is already registered for this hackathon' });
+    }
+
+    // Create registration
+    const registration = await HackathonRegistration.create({
+      userId,
+      hackathonId,
+      instructor: hackathon.createdBy || req.admin._id,
+      userDetails: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone || 'N/A',
+      },
+      teamName: teamName || 'Individual System Grant',
+      teamSize: 1,
+      projectTitle: projectTitle || 'Granted by Admin',
+      status: 'approved'
+    });
+
+    // Notify Student
+    await Notification.create({
+      recipient: userId,
+      recipientType: 'User',
+      title: 'Hackathon Access Granted',
+      message: `You have been granted access to "${hackathon.title}" by an administrator.`,
+      type: 'general',
+      relatedId: hackathonId,
+    });
+
+    // Email Notification
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: `Exclusive Access Granted: ${hackathon.title}`,
+        html: `
+            <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+                <h2>Exclusive Access Granted</h2>
+                <p>Hi ${user.name},</p>
+                <p>You have been manually granted access/registration for the hackathon: <b>${hackathon.title}</b>.</p>
+                <p>You can now view your registration details on your dashboard.</p>
+                <br/>
+                <p>Best regards,<br/>E-Shikshan Team</p>
+            </div>
+        `
+      });
+    } catch (e) {
+      console.error("Grant email failed", e);
+    }
+
+    // Award points for joining (since it's approved)
+    try {
+      const { trackHackathonActivity } = require('../utils/gamification');
+      await trackHackathonActivity(userId, 'joined', {
+        hackathonId: hackathonId,
+        title: hackathon.title
+      });
+      await trackHackathonActivity(userId, 'selected', {
+        hackathonId: hackathonId,
+        title: hackathon.title
+      });
+    } catch (gamifyErr) {
+      console.error('Gamification tracking failed for hackathon grant:', gamifyErr);
+    }
+
+    res.status(201).json({ success: true, message: 'Hackathon access granted successfully', registration });
+  } catch (err) {
+    console.error('Grant hackathon access error:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 };

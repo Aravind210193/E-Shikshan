@@ -31,6 +31,7 @@ const HackathonSchema = new mongoose.Schema(
     whoCanParticipate: { type: [SectionSchema], default: [] },
     challenges: { type: [SectionSchema], default: [] },
     howit: { type: [String], default: [] },
+    leadName: { type: String, default: '' },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin' },
   },
   { timestamps: true }

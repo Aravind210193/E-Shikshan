@@ -8,11 +8,20 @@ const {
   updateUser,
   deleteUser,
   grantCourseAccess,
+  grantRoadmapAccess,
+  grantResumeAccess,
   revokeCourseAccess,
   restoreCourseAccess,
   deleteEnrollment,
   getDashboardStats
 } = require('../controllers/adminController');
+const {
+  getInstructorRegistrations,
+  grantHackathonAccess
+} = require('../controllers/hackathonRegistrationController');
+const {
+  grantJobAccess
+} = require('../controllers/jobApplicationController');
 const notificationController = require('../controllers/notificationController');
 const {
   getDoubtsForInstructor,
@@ -40,8 +49,12 @@ router.put('/users/:id', updateUser);
 router.put('/users/:id/role', updateUserRole);
 router.delete('/users/:id', deleteUser);
 
-// Enrollment management
+// Enrollment / Access management
 router.post('/enrollments/grant', grantCourseAccess);
+router.post('/hackathons/grant', grantHackathonAccess);
+router.post('/jobs/grant', grantJobAccess);
+router.post('/roadmaps/grant', grantRoadmapAccess);
+router.post('/resumes/grant', grantResumeAccess);
 router.put('/enrollments/:id/revoke', revokeCourseAccess);
 router.put('/enrollments/:id/restore', restoreCourseAccess);
 router.delete('/enrollments/:id', deleteEnrollment);

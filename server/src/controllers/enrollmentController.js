@@ -435,7 +435,7 @@ const checkEnrollmentStatus = async (req, res) => {
 const updateProgress = async (req, res) => {
   try {
     const { id } = req.params;
-    const { type, itemId } = req.body; // type: 'video', 'assignment', 'project', 'quiz'
+    const { type, itemId, score } = req.body; // type: 'video', 'assignment', 'project', 'quiz'
     const userId = req.user._id;
 
     const enrollment = await Enrollment.findById(id);
@@ -489,6 +489,19 @@ const updateProgress = async (req, res) => {
       case 'quiz':
         if (!enrollment.progress.quizzesTaken.includes(itemId)) {
           enrollment.progress.quizzesTaken.push(itemId);
+
+          // Award XP for quiz
+          try {
+            const { trackQuizCompleted } = require('../utils/gamification');
+            await trackQuizCompleted(userId, {
+              courseId: enrollment.courseId,
+              quizId: itemId,
+              score: score || 0,
+              passingScore: 60 // Default passing score
+            });
+          } catch (gamifyErr) {
+            console.error('Gamification tracking failed for quiz:', gamifyErr);
+          }
         }
         break;
       default:
@@ -507,11 +520,26 @@ const updateProgress = async (req, res) => {
       enrollment.progress.projectsCompleted.length +
       enrollment.progress.quizzesTaken.length;
 
+    const oldProgress = enrollment.progress.overallProgress;
     enrollment.progress.overallProgress = totalItems > 0
       ? Math.round((completedItems / totalItems) * 100)
       : 0;
 
     await enrollment.save();
+
+    // Check for course completion gamification
+    if (enrollment.progress.overallProgress === 100 && oldProgress < 100) {
+      try {
+        const { trackCourseProgress } = require('../utils/gamification');
+        await trackCourseProgress(userId, {
+          courseId: enrollment.courseId,
+          title: course.title,
+          completed: true
+        });
+      } catch (gamifyErr) {
+        console.error('Gamification tracking failed for course completion:', gamifyErr);
+      }
+    }
 
     res.json({
       message: 'Progress updated successfully',

@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { authAPI, enrollmentAPI, hackathonRegistrationAPI } from '../services/api';
+import { authAPI, enrollmentAPI, hackathonRegistrationAPI, jobsAPI, notificationAPI, gamificationAPI } from '../services/api';
 import toast from 'react-hot-toast';
 
 const StudentDashboard = () => {
@@ -47,18 +47,10 @@ const StudentDashboard = () => {
                 authAPI.getProfile(),
                 enrollmentAPI.getMyCourses(),
                 hackathonRegistrationAPI.getMyRegistrations(),
-                axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/job-applications/my-applications`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                }),
-                axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/notifications`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                }),
-                axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/gamification/profile`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                }),
-                axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/gamification/activity`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                jobsAPI.getMyApplications(),
+                notificationAPI.getNotifications(),
+                gamificationAPI.getProfile(),
+                gamificationAPI.getActivity()
             ]);
 
             setUser(profileRes.data.user);
@@ -172,8 +164,8 @@ const StudentDashboard = () => {
                                             <p className="text-sm text-gray-500 font-bold mb-2">{app.job?.company || 'E-Shikshan Partner'}</p>
                                             <div className="flex items-center gap-4">
                                                 <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${app.status === 'accepted' ? 'bg-green-500/10 text-green-400' :
-                                                        app.status === 'rejected' ? 'bg-red-500/10 text-red-400' :
-                                                            'bg-blue-500/10 text-blue-400'
+                                                    app.status === 'rejected' ? 'bg-red-500/10 text-red-400' :
+                                                        'bg-blue-500/10 text-blue-400'
                                                     }`}>
                                                     {app.status.replace('_', ' ')}
                                                 </span>
@@ -236,7 +228,7 @@ const StudentDashboard = () => {
                 );
             case 'xp':
                 return (
-                    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-10">
                         <div className="flex items-center justify-between">
                             <h2 className="text-2xl font-bold flex items-center gap-2">
                                 <Zap className="text-amber-500" fill="currentColor" />
@@ -244,6 +236,8 @@ const StudentDashboard = () => {
                             </h2>
                             <button onClick={() => setSelectedDetail(null)} className="text-sm text-gray-400 hover:text-white underline">Back to Overview</button>
                         </div>
+
+                        {/* XP Summary Card */}
                         <div className="bg-[#1a1c2e] border border-white/5 rounded-3xl p-10 text-center relative overflow-hidden backdrop-blur-xl">
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-amber-500/10 blur-[100px] rounded-full" />
                             <div className="relative z-10">
@@ -262,28 +256,71 @@ const StudentDashboard = () => {
                             </div>
                         </div>
 
-                        <div className="space-y-4">
-                            <h4 className="font-black uppercase tracking-widest text-[10px] text-gray-500">Recent Activity Activity</h4>
-                            {activities.map((act, i) => (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.05 }}
-                                    key={i}
-                                    className="flex items-center justify-between p-4 bg-[#1a1c2e] border border-white/5 rounded-2xl hover:bg-[#20223a] transition-all"
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500">
-                                            <Zap size={18} fill="currentColor" />
+                        {/* Badges Section */}
+                        <div className="space-y-6">
+                            <div className="flex items-center justify-between px-2">
+                                <h4 className="font-black uppercase tracking-widest text-[10px] text-gray-500">My Earned Badges</h4>
+                                <Link to="/gamification" className="text-[10px] font-black text-indigo-400 uppercase tracking-widest hover:underline">Full Dashboard</Link>
+                            </div>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                                {gamification?.badges?.map((badge, idx) => (
+                                    <motion.div
+                                        initial={{ scale: 0.8, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        transition={{ delay: idx * 0.05 }}
+                                        key={idx}
+                                        className="bg-[#1a1c2e] border border-white/5 rounded-2xl p-4 flex flex-col items-center text-center group hover:border-indigo-500/30 transition-all"
+                                    >
+                                        <div className="text-3xl mb-2 group-hover:scale-110 transition-transform filter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
+                                            {badge.badgeId?.icon || '🏅'}
                                         </div>
-                                        <div>
-                                            <p className="font-bold text-sm">{act.description}</p>
-                                            <p className="text-[10px] text-gray-500 font-bold">{new Date(act.createdAt).toLocaleString()}</p>
-                                        </div>
+                                        <div className="text-[10px] font-bold text-white truncate w-full">{badge.badgeId?.name || 'Badge'}</div>
+                                        <span className={`text-[8px] font-black uppercase mt-1 ${badge.badgeId?.rarity === 'legendary' ? 'text-red-400' :
+                                                badge.badgeId?.rarity === 'epic' ? 'text-amber-400' :
+                                                    badge.badgeId?.rarity === 'rare' ? 'text-purple-400' :
+                                                        'text-emerald-400'
+                                            }`}>
+                                            {badge.badgeId?.rarity || 'Common'}
+                                        </span>
+                                    </motion.div>
+                                ))}
+                                {(!gamification?.badges || gamification.badges.length === 0) && (
+                                    <div className="col-span-full py-8 text-center bg-white/5 rounded-2xl border border-dashed border-white/5">
+                                        <Award className="w-8 h-8 text-gray-600 mx-auto mb-2 opacity-20" />
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-gray-600">No badges earned yet</p>
                                     </div>
-                                    <span className="text-amber-400 font-black tracking-tight">+{act.pointsEarned} XP</span>
-                                </motion.div>
-                            ))}
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Recent Activity Section */}
+                        <div className="space-y-4">
+                            <h4 className="font-black uppercase tracking-widest text-[10px] text-gray-500 px-2">Recent Activity</h4>
+                            <div className="grid grid-cols-1 gap-4">
+                                {activities.map((act, i) => (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.05 }}
+                                        key={i}
+                                        className="flex items-center justify-between p-4 bg-[#1a1c2e] border border-white/5 rounded-2xl hover:bg-[#20223a] transition-all"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500">
+                                                <Zap size={18} fill="currentColor" />
+                                            </div>
+                                            <div>
+                                                <p className="font-bold text-sm">{act.description}</p>
+                                                <p className="text-[10px] text-gray-500 font-bold">{new Date(act.createdAt).toLocaleString()}</p>
+                                            </div>
+                                        </div>
+                                        <span className="text-amber-400 font-black tracking-tight">+{act.pointsEarned} XP</span>
+                                    </motion.div>
+                                ))}
+                                {activities.length === 0 && (
+                                    <p className="text-center py-4 text-gray-600 text-[10px] font-black uppercase tracking-widest">No recent activities</p>
+                                )}
+                            </div>
                         </div>
                     </motion.div>
                 );

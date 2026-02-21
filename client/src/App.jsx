@@ -59,6 +59,7 @@ import StudentDashboard from './pages/StudentDashboard'
 import StudentDoubts from './pages/StudentDoubts'
 import StudentRoadmaps from './pages/StudentRoadmaps'
 import JobApplications from './pages/JobApplications'
+import Gamification from './pages/Gamification'
 import StudentSidebar from './components/StudentSidebar'
 
 const App = () => {
@@ -98,24 +99,25 @@ const App = () => {
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#1a1c2c',
+            background: '#0a0b14',
             color: '#fff',
-            border: '1px solid #2d2f45',
-            borderRadius: '12px',
-            padding: '16px',
-            boxShadow: '0 10px 30px -10px rgba(0,0,0,0.5)',
+            border: '1px solid rgba(99,102,241,0.2)',
+            borderRadius: '20px',
+            padding: '20px',
+            boxShadow: '0 0 50px rgba(0,0,0,0.8), 0 0 20px rgba(99,102,241,0.1)',
             fontSize: '14px',
-            maxWidth: '400px',
+            maxWidth: '450px',
+            fontWeight: '600',
           },
           success: {
             iconTheme: {
-              primary: '#10b981',
+              primary: '#6366f1',
               secondary: '#fff',
             },
             style: {
-              background: '#1a1c2c',
-              border: '1px solid #10b981',
-              color: '#d1fae5',
+              background: '#0a0b14',
+              border: '1px solid rgba(99,102,241,0.4)',
+              color: '#fff',
             },
           },
           error: {
@@ -124,15 +126,15 @@ const App = () => {
               secondary: '#fff',
             },
             style: {
-              background: '#1a1c2c',
-              border: '1px solid #ef4444',
-              color: '#fee2e2',
+              background: '#0a0b14',
+              border: '1px solid rgba(239,68,68,0.4)',
+              color: '#fff',
             },
           },
           loading: {
             style: {
-              background: '#1a1c2c',
-              border: '1px solid #6366f1',
+              background: '#0a0b14',
+              border: '1px solid rgba(255,255,255,0.05)',
               color: '#fff',
             },
           }
@@ -175,6 +177,11 @@ const App = () => {
             <Profile />
           </ProtectedRoute>
         } />
+        <Route path='/gamification' element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <Gamification />
+          </ProtectedRoute>
+        } />
 
 
         <Route path='/dashboard/*' element={
@@ -189,6 +196,7 @@ const App = () => {
                   <Route path="doubts" element={<StudentDoubts />} />
                   <Route path="roadmaps" element={<StudentRoadmaps />} />
                   <Route path="job-applications" element={<JobApplications />} />
+                  <Route path="gamification" element={<Gamification />} />
                 </Routes>
               </main>
             </div>
@@ -273,6 +281,7 @@ const App = () => {
               <AdminLayout setIsAdminLoggedIn={setIsAdminLoggedIn}>
                 <Routes>
                   <Route path='dashboard' element={<AdminDashboard />} />
+                  <Route path='students' element={<AdminStudents />} />
                   <Route path='jobs' element={<AdminJobs />} />
                   <Route path='applications' element={<AdminJobApplications />} />
                   <Route path='settings' element={<AdminSettings />} />
@@ -293,6 +302,7 @@ const App = () => {
               <AdminLayout setIsAdminLoggedIn={setIsAdminLoggedIn}>
                 <Routes>
                   <Route path='dashboard' element={<AdminDashboard />} />
+                  <Route path='students' element={<AdminStudents />} />
                   <Route path='hackathons' element={<AdminHackathons />} />
                   <Route path='applications' element={<AdminHackathonRegistrations />} />
                   <Route path='settings' element={<AdminSettings />} />
