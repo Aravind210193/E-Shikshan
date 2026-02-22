@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Search, Eye, CheckCircle, XCircle, ShieldCheck, RotateCcw, Trash2, PlusCircle, Briefcase, Trophy } from "lucide-react";
+import { Search, Eye, CheckCircle, XCircle, ShieldCheck, RotateCcw, Trash2, PlusCircle, Briefcase, Trophy, Award } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { adminAPI, coursesAPI, jobsAPI, hackathonsAPI, roadmapAPI, resumeTemplateAPI } from "../../services/api";
+import ConfirmationModal from "../../components/Admin/ConfirmationModal";
 
 const AdminStudents = () => {
   const [users, setUsers] = useState([]);
@@ -22,6 +23,15 @@ const AdminStudents = () => {
   const [grantType, setGrantType] = useState("course");
   const [allResources, setAllResources] = useState({ courses: [], jobs: [], hackathons: [] });
   const [grantSubmitting, setGrantSubmitting] = useState(false);
+
+  // Confirmation Modal State
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => { },
+    type: "danger"
+  });
 
   const adminRole = (sessionStorage.getItem('adminRole') || 'admin').toLowerCase();
   const isManager = ['course_manager', 'instructor', 'faculty'].includes(adminRole);
@@ -202,39 +212,63 @@ const AdminStudents = () => {
   };
 
   const handleRevoke = async (enrollmentId) => {
-    try {
-      await adminAPI.revokeCourseAccess(enrollmentId);
-      toast.success("Access revoked");
-      await refreshUserDetails();
-      await fetchUsers();
-    } catch (err) {
-      console.error("Revoke failed", err);
-      toast.error(err?.response?.data?.message || "Failed to revoke access");
-    }
+    setConfirmModal({
+      isOpen: true,
+      title: "Revoke Course Access",
+      message: "Are you sure you want to revoke this student's access to the course? They will no longer be able to access the curriculum until restored.",
+      type: "warning",
+      onConfirm: async () => {
+        try {
+          await adminAPI.revokeCourseAccess(enrollmentId);
+          toast.success("Access revoked");
+          await refreshUserDetails();
+          await fetchUsers();
+        } catch (err) {
+          console.error("Revoke failed", err);
+          toast.error(err?.response?.data?.message || "Failed to revoke access");
+        }
+      }
+    });
   };
 
   const handleRestore = async (enrollmentId) => {
-    try {
-      await adminAPI.restoreCourseAccess(enrollmentId);
-      toast.success("Access restored");
-      await refreshUserDetails();
-      await fetchUsers();
-    } catch (err) {
-      console.error("Restore failed", err);
-      toast.error(err?.response?.data?.message || "Failed to restore access");
-    }
+    setConfirmModal({
+      isOpen: true,
+      title: "Restore Course Access",
+      message: "This will restore the student's access to the course content. Proceed?",
+      type: "info",
+      onConfirm: async () => {
+        try {
+          await adminAPI.restoreCourseAccess(enrollmentId);
+          toast.success("Access restored");
+          await refreshUserDetails();
+          await fetchUsers();
+        } catch (err) {
+          console.error("Restore failed", err);
+          toast.error(err?.response?.data?.message || "Failed to restore access");
+        }
+      }
+    });
   };
 
   const handleDelete = async (enrollmentId) => {
-    try {
-      await adminAPI.deleteEnrollment(enrollmentId);
-      toast.success("Enrollment deleted");
-      await refreshUserDetails();
-      await fetchUsers();
-    } catch (err) {
-      console.error("Delete failed", err);
-      toast.error(err?.response?.data?.message || "Failed to delete enrollment");
-    }
+    setConfirmModal({
+      isOpen: true,
+      title: "Delete Enrollment Permanently",
+      message: "Are you sure you want to permanently delete this enrollment record? All progress and analytics for this student on this course will be purged. This action is irreversible.",
+      type: "danger",
+      onConfirm: async () => {
+        try {
+          await adminAPI.deleteEnrollment(enrollmentId);
+          toast.success("Enrollment deleted");
+          await refreshUserDetails();
+          await fetchUsers();
+        } catch (err) {
+          console.error("Delete failed", err);
+          toast.error(err?.response?.data?.message || "Failed to delete enrollment");
+        }
+      }
+    });
   };
 
   return (
@@ -661,6 +695,15 @@ const AdminStudents = () => {
           </div>
         </div>
       )}
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={confirmModal.isOpen}
+        onClose={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
+        onConfirm={confirmModal.onConfirm}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        type={confirmModal.type}
+      />
     </div>
   );
 };

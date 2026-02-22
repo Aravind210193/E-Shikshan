@@ -16,25 +16,46 @@ const QUICK_ACTIONS = [
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "Hello! I am your E-Shikshan AI Consultant. I'm connected to the platform's core to provide you with real-time navigation support, career guidance, and technical insights. How may I assist you today?",
-      sender: "bot",
-      timestamp: new Date(),
-    },
-  ]);
-  const [inputMessage, setInputMessage] = useState("");
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem("chat_history");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        // Map old format to new format if needed, but let's assume we want a fresh start if it's broken
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch (e) {
+        console.error("Failed to parse chat history", e);
+      }
+    }
+    return [
+      {
+        id: "initial-1",
+        text: "Greetings, Specialist. I am your E-Shikshan AI Interface. I'm connected to the platform's core to provide you with real-time navigation support, career guidance, and technical insights. How may I assist your learning trajectory today?",
+        sender: "bot",
+        timestamp: new Date().toISOString(),
+      }
+    ];
+  });
+  
+  const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isAiOnline, setIsAiOnline] = useState(true);
   const [isSupportMode, setIsSupportMode] = useState(false);
   const [supportData, setSupportData] = useState({ name: "", email: "", message: "" });
   const [isSendingSupport, setIsSendingSupport] = useState(false);
-  const messagesEndRef = useRef(null);
+  
+  const scrollRef = useRef(null);
   const containerRef = useRef(null);
 
+  // Persistence
+  useEffect(() => {
+    localStorage.setItem("chat_history", JSON.stringify(messages));
+  }, [messages]);
+
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -46,18 +67,11 @@ const Chatbot = () => {
   // Handle outside clicks and keyboard
   useEffect(() => {
     if (!isOpen) return;
-    const handleClickOutside = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
-        // Optional: setOpen(false) or just ignore to keep persistent
-      }
-    };
     const handleEsc = (e) => {
       if (e.key === "Escape") setIsOpen(false);
     };
-    document.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("keydown", handleEsc);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("keydown", handleEsc);
     };
   }, [isOpen]);
@@ -65,39 +79,42 @@ const Chatbot = () => {
   const getOfflineResponse = (query) => {
     const lowerQuery = query.toLowerCase();
     if (lowerQuery.includes("where") || lowerQuery.includes("how to") || lowerQuery.includes("page")) {
-      return "I'm currently in high-performance local mode. \n\n📍 Destinations:\n- /courses: Browse all learning material\n- /jobs: Explore career opportunities\n- /content: Academic resources\n- /profile: Manage your growth";
+      return "I'm currently in high-performance local mode. \n\n📍 Destinations:\n- Courses: Browse all learning material\n- Jobs: Explore career opportunities\n- Roadmap: Learning paths\n- Profile: Manage your growth";
     }
     return "The Generative AI model is currently recalibrating. I am available with my core knowledge base. Please try after a quick page refresh!";
   };
 
   const handleSendMessage = async (queryOverride) => {
-    const userQuery = queryOverride || inputMessage.trim();
+    const userQuery = queryOverride || input.trim();
     if (!userQuery) return;
 
     const userMessage = {
-      id: Date.now(),
+      id: Date.now().toString(),
       text: userQuery,
       sender: "user",
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInputMessage("");
+    setInput("");
     setIsTyping(true);
 
     try {
       const response = await aiAPI.chat({
         message: userQuery,
-        history: messages.slice(-6)
+        history: messages.slice(-6).map(m => ({
+            role: m.sender === 'bot' ? 'assistant' : 'user',
+            content: m.text
+        }))
       });
 
       setIsAiOnline(!response.data.isOffline);
 
       const botResponse = {
-        id: Date.now() + 1,
+        id: (Date.now() + 1).toString(),
         text: response.data.response || getOfflineResponse(userQuery),
         sender: "bot",
-        timestamp: new Date(),
+        timestamp: new Date().toISOString(),
       };
 
       setMessages((prev) => [...prev, botResponse]);
@@ -105,10 +122,10 @@ const Chatbot = () => {
       console.error("AI Assistant Error:", error);
       setIsAiOnline(false);
       setMessages((prev) => [...prev, {
-        id: Date.now() + 1,
+        id: (Date.now() + 1).toString(),
         text: "My neural link is currently resetting. I am switching to auxiliary knowledge systems. Navigation: Try /courses, /jobs, or /roadmap!",
         sender: "bot",
-        timestamp: new Date(),
+        timestamp: new Date().toISOString(),
       }]);
     } finally {
       setIsTyping(false);
@@ -129,10 +146,10 @@ const Chatbot = () => {
         style: { background: '#10b981', color: '#fff' }
       });
       setMessages(prev => [...prev, {
-        id: Date.now(),
+        id: Date.now().toString(),
         text: `Support request received, ${supportData.name}. Our engineering team has been notified. We will reach out to ${supportData.email} shortly.`,
         sender: 'bot',
-        timestamp: new Date()
+        timestamp: new Date().toISOString()
       }]);
       setIsSupportMode(false);
       setSupportData({ name: "", email: "", message: "" });
@@ -144,17 +161,26 @@ const Chatbot = () => {
   };
 
   const clearChat = () => {
-    setMessages([
-      {
-        id: Date.now(),
-        text: "Knowledge buffers cleared. I am ready for a fresh session. What's on your mind?",
-        sender: "bot",
-        timestamp: new Date(),
-      }
-    ]);
+    if (!window.confirm("Purge consultation history? This cannot be undone.")) return;
+    const initialMsg = {
+      id: "cleared-" + Date.now(),
+      text: "Knowledge buffers cleared. I am ready for a fresh session. What's on your mind?",
+      sender: "bot",
+      timestamp: new Date().toISOString(),
+    };
+    setMessages([initialMsg]);
+    localStorage.setItem("chat_history", JSON.stringify([initialMsg]));
     toast.success("Consultation history reset", {
       style: { background: '#1e293b', color: '#fff', border: '1px solid #334155' }
     });
+  };
+
+  const formatTime = (isoString) => {
+    try {
+        return new Date(isoString).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    } catch (e) {
+        return "--:--";
+    }
   };
 
   return (
@@ -191,7 +217,7 @@ const Chatbot = () => {
             ref={containerRef}
             className="fixed z-[60] bottom-0 right-0 sm:bottom-6 sm:right-6 w-full sm:w-[420px] h-[100dvh] sm:h-[520px] bg-slate-950/95 backdrop-blur-2xl sm:rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-slate-800 flex flex-col overflow-hidden ring-1 ring-white/5"
           >
-            {/* Professional Header - Compacted */}
+            {/* Header */}
             <div className="relative py-3 px-5 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between shadow-2xl">
               <div className="flex items-center gap-3">
                 <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600/10 border border-indigo-500/20 group overflow-hidden">
@@ -227,7 +253,7 @@ const Chatbot = () => {
               </div>
             </div>
 
-            {/* AI Status Banner - Compacted */}
+            {/* AI Status Banner */}
             <div className="bg-indigo-600/5 px-5 py-1.5 border-b border-slate-800 flex items-center justify-between overflow-x-auto no-scrollbar">
               <div className="flex items-center gap-3 text-[9px] text-indigo-400/80 font-bold uppercase tracking-tighter whitespace-nowrap">
                 <span className="flex items-center gap-1"><ShieldCheck className="w-2.5 h-2.5" /> Secure</span>
@@ -237,8 +263,8 @@ const Chatbot = () => {
             </div>
 
             {/* Chat Content */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-6 custom-scrollbar bg-[radial-gradient(circle_at_top_right,rgba(30,41,59,0.3),transparent)]">
-              {messages.map((message, idx) => (
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 space-y-6 custom-scrollbar bg-[radial-gradient(circle_at_top_right,rgba(30,41,59,0.3),transparent)]">
+              {messages.map((message) => (
                 <motion.div
                   key={message.id}
                   initial={{ opacity: 0, x: message.sender === "user" ? 20 : -20 }}
@@ -255,7 +281,6 @@ const Chatbot = () => {
                     >
                       <p className="text-sm leading-relaxed font-medium whitespace-pre-line">{message.text}</p>
 
-                      {/* Decorative elements for bot */}
                       {message.sender === "bot" && (
                         <div className="absolute top-0 right-0 p-1 opacity-10">
                           <Sparkles className="w-10 h-10" />
@@ -263,7 +288,7 @@ const Chatbot = () => {
                       )}
                     </div>
                     <span className="text-[9px] text-slate-500 font-black uppercase mt-2 tracking-widest px-1">
-                      {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                      {formatTime(message.timestamp)}
                     </span>
                   </div>
                 </motion.div>
@@ -281,7 +306,6 @@ const Chatbot = () => {
                   </div>
                 </div>
               )}
-              <div ref={messagesEndRef} />
             </div>
 
             {/* Support Mode Overlay */}
@@ -329,16 +353,17 @@ const Chatbot = () => {
                       disabled={isSendingSupport}
                       className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2"
                     >
-                      {isSendingSupport ? "TRANSMITTING..." : "DISPATCH MESSAGE"}
+                      {isSendingSupport ? (
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      ) : "DISPATCH MESSAGE"}
                     </button>
                   </form>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* Footer / Interaction Area */}
+            {/* Footer */}
             <div className="p-5 bg-slate-900/80 border-t border-slate-800">
-              {/* Quick Suggestions */}
               <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar pb-1">
                 {QUICK_ACTIONS.map((action) => (
                   <button
@@ -358,15 +383,15 @@ const Chatbot = () => {
               <div className="relative group">
                 <input
                   type="text"
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                  placeholder="Ask a question or enter command..."
+                  placeholder="Ask a question..."
                   className="w-full bg-slate-950/50 text-white placeholder-slate-600 pl-4 pr-14 py-4 rounded-2xl border border-slate-800 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all text-sm font-medium"
                 />
                 <button
                   onClick={() => handleSendMessage()}
-                  disabled={!inputMessage.trim() || isTyping}
+                  disabled={!input.trim() || isTyping}
                   className="absolute right-2 top-2 bottom-2 aspect-square flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-lg shadow-indigo-600/20 transition-all disabled:opacity-0 disabled:scale-90"
                 >
                   <Send className="w-5 h-5" />
@@ -407,4 +432,3 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
-

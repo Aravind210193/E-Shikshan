@@ -473,7 +473,8 @@ const deleteCertificate = async (req, res) => {
       });
     }
 
-    certificate.remove();
+    // Delete the certificate using pull() which is more robust in Mongoose 6+
+    user.certificatesAndBadges.pull(id);
     await user.save();
 
     res.json({
@@ -482,7 +483,11 @@ const deleteCertificate = async (req, res) => {
     });
   } catch (error) {
     console.error('Error deleting certificate:', error);
-    res.status(500).json({ message: 'Server error deleting certificate' });
+    res.status(500).json({
+      success: false,
+      message: 'Server error deleting certificate',
+      error: error.message
+    });
   }
 };
 

@@ -18,9 +18,9 @@ const getUserAchievements = async (req, res) => {
 // @access  Private
 const getUserCertificates = async (req, res) => {
   try {
-    const certificates = await Achievement.find({ 
-      user: req.user.id, 
-      type: 'certificate' 
+    const certificates = await Achievement.find({
+      user: req.user.id,
+      type: 'certificate'
     });
     res.json(certificates);
   } catch (error) {
@@ -35,7 +35,7 @@ const getUserCertificates = async (req, res) => {
 const createAchievement = async (req, res) => {
   try {
     const { userId, title, description, type, date, image, metadata } = req.body;
-    
+
     // Create new achievement
     const achievement = new Achievement({
       user: userId,
@@ -46,7 +46,7 @@ const createAchievement = async (req, res) => {
       image,
       metadata
     });
-    
+
     const savedAchievement = await achievement.save();
     res.status(201).json(savedAchievement);
   } catch (error) {
@@ -61,16 +61,20 @@ const createAchievement = async (req, res) => {
 const deleteAchievement = async (req, res) => {
   try {
     const achievement = await Achievement.findById(req.params.id);
-    
+
     if (!achievement) {
       return res.status(404).json({ message: 'Achievement not found' });
     }
-    
-    await achievement.remove();
+
+    await Achievement.findByIdAndDelete(req.params.id);
     res.json({ message: 'Achievement removed' });
   } catch (error) {
     console.error('Error deleting achievement:', error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({
+      success: false,
+      message: 'Server error deleting achievement',
+      error: error.message
+    });
   }
 };
 

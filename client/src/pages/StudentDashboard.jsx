@@ -22,6 +22,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { authAPI, enrollmentAPI, hackathonRegistrationAPI, jobsAPI, notificationAPI, gamificationAPI } from '../services/api';
 import toast from 'react-hot-toast';
+import CertificatePreviewModal from '../components/CertificatePreviewModal';
 
 const StudentDashboard = () => {
     const [user, setUser] = useState(null);
@@ -33,6 +34,8 @@ const StudentDashboard = () => {
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedDetail, setSelectedDetail] = useState(null);
+    const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+    const [selectedCertificate, setSelectedCertificate] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -205,16 +208,24 @@ const StudentDashboard = () => {
                             {user?.certificatesAndBadges?.map((cert, idx) => (
                                 <div key={idx} className="bg-[#1a1c2e] border border-white/5 rounded-2xl p-6 relative group border-emerald-500/20">
                                     <div className="flex items-center gap-4 mb-4">
-                                        <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-500">
-                                            <Award size={24} />
+                                        <div className="w-14 h-14 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20 shadow-lg shadow-emerald-500/10">
+                                            <Award size={28} />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-sm">{cert.title}</h4>
-                                            <p className="text-[10px] text-gray-500 uppercase font-black">{cert.type}</p>
+                                            <h4 className="font-black text-white text-sm uppercase tracking-tight line-clamp-1">{cert.title}</h4>
+                                            <p className="text-[10px] text-emerald-500/80 uppercase font-black tracking-widest">{cert.type}</p>
                                         </div>
                                     </div>
-                                    <p className="text-xs text-gray-400 mb-6 line-clamp-2">{cert.description || 'Achievement earned on E-Shikshan'}</p>
-                                    <button className="w-full py-2.5 bg-gray-800 hover:bg-emerald-600 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">View Credential</button>
+                                    <p className="text-xs text-gray-500 mb-6 line-clamp-2 leading-relaxed font-medium">{cert.description || 'Verified achievement earned on the E-Shikshan platform.'}</p>
+                                    <button
+                                        onClick={() => {
+                                            setSelectedCertificate(cert);
+                                            setIsPreviewModalOpen(true);
+                                        }}
+                                        className="w-full py-2.5 bg-gray-800 hover:bg-emerald-600 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
+                                    >
+                                        View Full Certificate
+                                    </button>
                                 </div>
                             ))}
                             {(!user?.certificatesAndBadges || user.certificatesAndBadges.length === 0) && (
@@ -276,9 +287,9 @@ const StudentDashboard = () => {
                                         </div>
                                         <div className="text-[10px] font-bold text-white truncate w-full">{badge.badgeId?.name || 'Badge'}</div>
                                         <span className={`text-[8px] font-black uppercase mt-1 ${badge.badgeId?.rarity === 'legendary' ? 'text-red-400' :
-                                                badge.badgeId?.rarity === 'epic' ? 'text-amber-400' :
-                                                    badge.badgeId?.rarity === 'rare' ? 'text-purple-400' :
-                                                        'text-emerald-400'
+                                            badge.badgeId?.rarity === 'epic' ? 'text-amber-400' :
+                                                badge.badgeId?.rarity === 'rare' ? 'text-purple-400' :
+                                                    'text-emerald-400'
                                             }`}>
                                             {badge.badgeId?.rarity || 'Common'}
                                         </span>
@@ -546,6 +557,13 @@ const StudentDashboard = () => {
                     )}
                 </AnimatePresence>
             </div>
+
+            <CertificatePreviewModal
+                isOpen={isPreviewModalOpen}
+                onClose={() => setIsPreviewModalOpen(false)}
+                certificate={selectedCertificate}
+                userData={user}
+            />
         </div>
     );
 };

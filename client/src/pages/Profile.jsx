@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { authAPI, enrollmentAPI, hackathonRegistrationAPI, coursesAPI } from '../services/api';
 import toast from 'react-hot-toast';
+import CertificatePreviewModal from '../components/CertificatePreviewModal';
 import {
   Book,
   Award,
@@ -89,6 +90,8 @@ const Profile = () => {
 
   const [recommendations, setRecommendations] = useState([]);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+  const [selectedCertificate, setSelectedCertificate] = useState(null);
   const pdfContainerRef = React.useRef(null);
 
   const downloadCertificatesAsPDF = async (certList, title = 'Certificates') => {
@@ -1481,15 +1484,27 @@ const Profile = () => {
                           >
                             <div className="absolute top-0 left-0 right-0 h-1 bg-blue-500" />
                             <div className="p-5 sm:p-8">
-                              <div className="aspect-[4/3] rounded-2xl mb-6 bg-gradient-to-br from-blue-900/20 to-indigo-900/20 flex flex-col items-center justify-center border border-blue-500/10">
+                              <div className="aspect-[4/3] rounded-2xl mb-6 bg-gradient-to-br from-blue-900/40 via-indigo-900/20 to-purple-900/40 flex flex-col items-center justify-center border border-blue-500/10 relative group-hover:scale-[1.02] transition-transform overflow-hidden shadow-inner">
                                 {cert.imageUrl ? (
                                   <img src={cert.imageUrl} className="w-full h-full object-cover" />
                                 ) : (
-                                  <>
-                                    <Trophy className="w-16 h-16 text-blue-400" />
-                                    <span className="text-xs font-black text-blue-500 uppercase mt-4">Verified Certificate</span>
-                                  </>
+                                  <div className="relative flex flex-col items-center">
+                                    <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full" />
+                                    <Shield className="w-16 h-16 text-blue-400 relative z-10" />
+                                    <span className="text-[10px] font-black text-blue-500 uppercase mt-4 tracking-widest relative z-10">Authentic Merit</span>
+                                  </div>
                                 )}
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                                  <button
+                                    onClick={() => {
+                                      setSelectedCertificate(cert);
+                                      setIsPreviewModalOpen(true);
+                                    }}
+                                    className="p-3 bg-blue-600 rounded-xl text-white hover:bg-blue-500 transition-all transform translate-y-4 group-hover:translate-y-0"
+                                  >
+                                    <ExternalLink size={20} />
+                                  </button>
+                                </div>
                               </div>
                               <div className="space-y-4">
                                 <h4 className="text-lg font-black text-white uppercase tracking-tight line-clamp-1">{cert.title}</h4>
@@ -1498,8 +1513,14 @@ const Profile = () => {
                                   <span className="text-xs font-black text-blue-400 uppercase">Issued: {new Date(cert.issuedDate).toLocaleDateString()}</span>
                                 </div>
                                 <div className="pt-4 flex gap-2">
-                                  <button className="flex-1 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 py-2.5 rounded-xl font-black text-xs uppercase tracking-widest transition-all">
-                                    View Details
+                                  <button
+                                    onClick={() => {
+                                      setSelectedCertificate(cert);
+                                      setIsPreviewModalOpen(true);
+                                    }}
+                                    className="flex-1 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 py-2.5 rounded-xl font-black text-xs uppercase tracking-widest transition-all"
+                                  >
+                                    View Full Certificate
                                   </button>
                                 </div>
                               </div>
@@ -1823,6 +1844,12 @@ const Profile = () => {
             </div>
           </div>
           {/* Modals */}
+          <CertificatePreviewModal
+            isOpen={isPreviewModalOpen}
+            onClose={() => setIsPreviewModalOpen(false)}
+            certificate={selectedCertificate}
+            userData={user}
+          />
           {isEditModalOpen && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center p-4 z-[100] overflow-y-auto">
               <motion.div
