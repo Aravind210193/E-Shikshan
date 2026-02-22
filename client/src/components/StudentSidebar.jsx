@@ -10,14 +10,14 @@ import {
     User,
     Trophy,
     Home,
-    Briefcase
+    Briefcase,
+    X
 } from 'lucide-react';
 
-const StudentSidebar = () => {
+const StudentSidebar = ({ onClose }) => {
     const menuItems = [
-        { path: '/', icon: Home, label: 'Main Website' },
+        { path: '/', icon: Home, label: 'Main Website', exact: true },
         { path: '/dashboard', icon: Layout, label: 'Overview', exact: true },
-
         { path: '/dashboard/doubts', icon: MessageSquare, label: 'Doubts' },
         { path: '/dashboard/roadmaps', icon: BookOpen, label: 'My Roadmaps' },
         { path: '/dashboard/job-applications', icon: Briefcase, label: 'Job Applications' },
@@ -34,23 +34,40 @@ const StudentSidebar = () => {
 
     return (
         <div className="w-64 bg-[#1a1c2e] border-r border-gray-800 flex flex-col h-screen sticky top-0">
+
+            {/* Header */}
             <div className="p-6">
-                <div className="flex items-center gap-3 mb-8">
-                    <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl">
-                        E
+                <div className="flex items-center justify-between gap-3 mb-8">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-600/30">
+                            E
+                        </div>
+                        <div>
+                            <h1 className="text-lg font-bold text-white leading-tight">Student</h1>
+                            <p className="text-[10px] uppercase font-black text-indigo-400 tracking-wider">Portal</p>
+                        </div>
                     </div>
-                    <div>
-                        <h1 className="text-lg font-bold text-white leading-tight">Student</h1>
-                        <p className="text-[10px] uppercase font-black text-indigo-400 tracking-wider">Portal</p>
-                    </div>
+
+                    {/* Close button — only shown on mobile (when onClose is provided) */}
+                    {onClose && (
+                        <button
+                            onClick={onClose}
+                            className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all lg:hidden"
+                            aria-label="Close menu"
+                        >
+                            <X size={16} />
+                        </button>
+                    )}
                 </div>
 
+                {/* Nav Links */}
                 <nav className="space-y-1">
                     {menuItems.map((item) => (
                         <NavLink
                             key={item.path}
                             to={item.path}
                             end={item.exact}
+                            onClick={onClose}   /* closes mobile sidebar on tap */
                             className={({ isActive }) =>
                                 `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${isActive
                                     ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
@@ -60,7 +77,10 @@ const StudentSidebar = () => {
                         >
                             {({ isActive }) => (
                                 <>
-                                    <item.icon size={20} className={isActive ? 'text-white' : 'text-gray-400 group-hover:text-indigo-400 transition-colors'} />
+                                    <item.icon
+                                        size={20}
+                                        className={isActive ? 'text-white' : 'text-gray-400 group-hover:text-indigo-400 transition-colors'}
+                                    />
                                     <span className="font-bold text-sm">{item.label}</span>
                                 </>
                             )}
@@ -69,6 +89,7 @@ const StudentSidebar = () => {
                 </nav>
             </div>
 
+            {/* Logout */}
             <div className="mt-auto p-6 border-t border-gray-800">
                 <button
                     onClick={handleLogout}
