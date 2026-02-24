@@ -106,12 +106,15 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
         <div className='max-w-7xl mx-auto flex items-center justify-between px-3 sm:px-4 md:px-6 py-3'>
 
           <div className='hidden md:flex items-center flex-shrink-0'>
-            <Link to='/' className='transition-all duration-300'>
-              <div className='flex items-center'>
-                <span className='text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent hover:from-blue-500 hover:via-purple-600 hover:to-pink-600 transition-all'>
-                  E-Shikshan
-                </span>
-              </div>
+            <Link to='/' className='flex items-center gap-3 group transition-all duration-300'>
+              <img
+                src="/logo.png"
+                alt="E-Shikshan Logo"
+                className='w-10 h-10 object-contain rounded-xl bg-white p-0.5 shadow-md group-hover:scale-105 transition-transform duration-300'
+              />
+              <span className='text-xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent group-hover:from-blue-300 group-hover:to-pink-300 transition-all'>
+                E-Shikshan
+              </span>
             </Link>
           </div>
           <div className='hidden md:flex rounded-full border border-gray-700 p-1 mx-4'>
@@ -218,6 +221,18 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, children }) => {
         <button onClick={() => setMenuOpen(true)} className="flex-shrink-0 p-2 hover:bg-gray-800 rounded-lg transition-colors touch-manipulation">
           <MenuIcon className="w-6 h-6 text-white" />
         </button>
+
+        {/* Centered logo on mobile */}
+        <Link to="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
+          <img
+            src="/logo.png"
+            alt="E-Shikshan"
+            className="w-8 h-8 object-contain rounded-lg bg-white p-0.5 shadow"
+          />
+          <span className="text-sm font-black bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            E-Shikshan
+          </span>
+        </Link>
 
         {/* Login/Profile section */}
         <div className='flex-shrink-0 ml-auto'>
